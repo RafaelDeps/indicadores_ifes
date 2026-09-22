@@ -211,29 +211,75 @@ const fontFaceCss = pesos
         });
       })();
 
-      /* Propagação automática de parâmetros de consulta (?campus=...&ano=...)
-         em todos os links internos para manter a continuidade da navegação. */
+      /* Normalização universal de links internos para GitHub Pages e
+         propagação contínua de parâmetros (?campus=...&ano=...).
+         Garante que nenhum link gere erro 404 em subpastas de repositório. */
       (function () {
+        const path = window.location.pathname;
+        const repoName = 'indicadores_ifes';
+        const basePath =
+          path.startsWith('/' + repoName) || path.includes('/' + repoName + '/')
+            ? '/' + repoName
+            : '';
+
+        function normalizarHref(href) {
+          if (
+            !href ||
+            href.startsWith('//') ||
+            href.startsWith('#') ||
+            href.startsWith('http:') ||
+            href.startsWith('https:') ||
+            href.startsWith('mailto:')
+          ) {
+            return href;
+          }
+          let destino = href;
+          if (
+            basePath &&
+            destino.startsWith('/') &&
+            !destino.startsWith(basePath + '/') &&
+            destino !== basePath
+          ) {
+            destino = destino === '/' ? basePath + '/' : basePath + destino;
+          }
+          return destino;
+        }
+
         function propagarContexto() {
           const params = new URLSearchParams(window.location.search);
           const campus = params.get('campus');
           const ano = params.get('ano');
-          if (!campus && !ano) return;
 
-          document.querySelectorAll('a[href^="/"]').forEach(function (link) {
-            const href = link.getAttribute('href');
-            if (!href || href.startsWith('//') || href.startsWith('/#')) return;
-            try {
-              const url = new URL(href, window.location.origin);
-              if (campus && !url.searchParams.has('campus')) {
-                url.searchParams.set('campus', campus);
+          document.querySelectorAll('a[href]').forEach(function (link) {
+            const raw = link.getAttribute('href');
+            if (
+              !raw ||
+              raw.startsWith('//') ||
+              raw.startsWith('#') ||
+              raw.startsWith('http:') ||
+              raw.startsWith('https:')
+            )
+              return;
+
+            let resolvido = normalizarHref(raw);
+
+            if (campus || ano) {
+              try {
+                const url = new URL(resolvido, window.location.origin);
+                if (campus && !url.searchParams.has('campus')) {
+                  url.searchParams.set('campus', campus);
+                }
+                if (ano && !url.searchParams.has('ano')) {
+                  url.searchParams.set('ano', ano);
+                }
+                resolvido = url.pathname + url.search + url.hash;
+              } catch {
+                /* ignora erros de url inválida */
               }
-              if (ano && !url.searchParams.has('ano')) {
-                url.searchParams.set('ano', ano);
-              }
-              link.setAttribute('href', url.pathname + url.search + url.hash);
-            } catch {
-              /* ignora erros de url inválida */
+            }
+
+            if (resolvido !== raw) {
+              link.setAttribute('href', resolvido);
             }
           });
         }
@@ -244,6 +290,31 @@ const fontFaceCss = pesos
           propagarContexto();
         }
         window.addEventListener('popstate', propagarContexto);
+
+        /* Interceptor de cliques: assegura que qualquer clique em link relativo
+           seja redirecionado para a rota correta do repositório antes de disparar 404 */
+        document.addEventListener(
+          'click',
+          function (e) {
+            const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+            if (!a) return;
+            const raw = a.getAttribute('href');
+            if (
+              !raw ||
+              raw.startsWith('//') ||
+              raw.startsWith('#') ||
+              raw.startsWith('http:') ||
+              raw.startsWith('https:')
+            )
+              return;
+
+            const normalizado = normalizarHref(raw);
+            if (normalizado !== raw) {
+              a.setAttribute('href', normalizado);
+            }
+          },
+          true,
+        );
       })();
     </script>
   </body>

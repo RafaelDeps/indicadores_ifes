@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Página não encontrada — Indicadores IFES">
+  <script is:inline>
+    /* Redirecionamento automático caso a requisição tenha caído na raiz do domínio do GitHub Pages */
+    (function () {
+      const path = window.location.pathname;
+      const repo = '/indicadores_ifes';
+      if (!path.startsWith(repo)) {
+        const destino =
+          repo +
+          (path.startsWith('/') ? path : '/' + path) +
+          window.location.search +
+          window.location.hash;
+        window.location.replace(destino);
+      }
+    })();
+  </script>
+
+  <div class="pagina-erro">
+    <div class="codigo-erro">404</div>
+    <h1>Página não encontrada</h1>
+    <p class="mensagem">
+      O endereço solicitado não foi localizado ou o indicador foi reorganizado na estrutura dos
+      pilares.
+    </p>
+    <a href="/" class="botao-inicio">
+      Voltar para o início <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</BaseLayout>
+
+<style>
+  .pagina-erro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 1rem;
+    min-height: 50vh;
+  }
+
+  .codigo-erro {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .mensagem {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    max-width: 28rem;
+    line-height: 1.6;
+    margin: 0 0 1.75rem 0;
+  }
+
+  .botao-inicio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-primary);
+    color: var(--color-surface);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition:
+      background 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .botao-inicio:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+</style>
