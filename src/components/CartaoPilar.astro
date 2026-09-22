@@ -1,0 +1,197 @@
+---
+export interface MetricaPilar {
+  sigla: string;
+  valor: string | number;
+  unidade?: string;
+  rotulo?: string;
+}
+
+interface Props {
+  numero: number;
+  titulo: string;
+  descricao: string;
+  status: 'ativo' | 'em-breve';
+  href?: string;
+  metricas?: MetricaPilar[];
+}
+
+const { numero, titulo, descricao, status, href, metricas = [] } = Astro.props;
+const Tag = status === 'ativo' && href ? 'a' : 'div';
+---
+
+<Tag class="cartao" href={Tag === 'a' ? href : undefined}>
+  <div class="cartao-topo">
+    <p class="rotulo">Pilar {numero}</p>
+    {status === 'em-breve' && <span class="estado em-breve">Em breve</span>}
+  </div>
+  <h2 class="titulo">{titulo}</h2>
+  <p class="descricao">{descricao}</p>
+
+  {
+    metricas.length > 0 && (
+      <div class="grade-metricas">
+        {metricas.map((m) => (
+          <div class="item-metrica">
+            <span class="metrica-sigla">{m.sigla}</span>
+            <div class="metrica-linha">
+              <span class="metrica-valor">{m.valor}</span>
+              {m.unidade && <span class="metrica-unidade">{m.unidade}</span>}
+            </div>
+            {m.rotulo && <span class="metrica-rotulo">{m.rotulo}</span>}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    status === 'ativo' && (
+      <span class="acao">
+        Ver indicadores <span aria-hidden="true">→</span>
+      </span>
+    )
+  }
+</Tag>
+
+<style>
+  .cartao {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  a.cartao:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(23, 132, 71, 0.1);
+    transform: translateY(-2px);
+  }
+
+  a.cartao:hover .acao {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  a.cartao:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  div.cartao {
+    opacity: 0.75;
+  }
+
+  .cartao-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rotulo {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(23, 132, 71, 0.15);
+  }
+
+  .titulo {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.3;
+  }
+
+  .descricao {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .grade-metricas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+
+  .item-metrica {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .metrica-sigla {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+  }
+
+  .metrica-linha {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .metrica-valor {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metrica-unidade {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  .metrica-rotulo {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .estado {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .em-breve {
+    color: var(--color-muted);
+    background: var(--color-bg);
+  }
+
+  .acao {
+    margin-top: auto;
+    padding-top: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+</style>

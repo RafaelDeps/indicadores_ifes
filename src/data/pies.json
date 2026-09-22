@@ -1,0 +1,33 @@
+{
+  "sigla": "PIES",
+  "slug": "pies",
+  "nome": "Percentual de estudantes da instituição envolvidos em projetos de pesquisa (PIES)",
+  "oQueMede": "Mensurar o percentual de estudantes do ensino técnico, de graduação e das pós-graduações lato e stricto sensu envolvidos em projetos de pesquisa executados no ano base.",
+  "formula": "PIES = (NEP / NTE) × 100",
+  "variaveis": [
+    {
+      "sigla": "NEP",
+      "descricao": "Número de estudantes envolvidos em projetos de pesquisa da instituição no ano."
+    },
+    {
+      "sigla": "NTE",
+      "descricao": "Número total de estudantes com matrícula ativa em pelo menos um dia do ano."
+    }
+  ],
+  "polaridade": "maior-e-melhor",
+  "fonteDados": "db/horizon.db (team_members/roles) e data/exports/researchers_canonical.json",
+  "dataAtualizacao": "2026-09-21",
+  "motivoIndisponivel": "NTE (número total de estudantes matriculados) não encontrado nos dados — não existe registro de matrícula acadêmica no repositório.",
+  "valores": [],
+  "componentes": [
+    {
+      "sigla": "NEP",
+      "nome": "Número de estudantes envolvidos em projetos de pesquisa",
+      "valores": [
+        { "ano": 2024, "quantidade": 344 },
+        { "ano": 2025, "quantidade": 465 },
+        { "ano": 2026, "quantidade": 376 }
+      ]
+    }
+  ]
+}

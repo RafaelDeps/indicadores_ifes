@@ -1,0 +1,32 @@
+{
+  "sigla": "QSPP",
+  "slug": "qspp",
+  "nome": "Quantitativo de servidores e servidoras desenvolvendo projetos de pesquisa (QSPP)",
+  "oQueMede": "Mensurar a quantidade de servidores e servidoras da instituição que atuam no desenvolvimento de projetos de pesquisa formalmente registrados, aprovados e/ou em execução no ano de referência.",
+  "formula": "QSPP = Σ SUPP",
+  "variaveis": [
+    {
+      "sigla": "SUPP",
+      "descricao": "Servidores únicos participantes de projetos de pesquisa no ano de referência (proxy pelo papel no projeto; não há CPF/SIAPE nos dados)."
+    }
+  ],
+  "polaridade": "maior-e-melhor",
+  "fonteDados": "db/horizon.db (team_members, roles, persons) e data/exports/researchers_canonical.json",
+  "dataAtualizacao": "2026-09-21",
+  "valores": [
+    { "ano": 2024, "valor": 226 },
+    { "ano": 2025, "valor": 211 },
+    { "ano": 2026, "valor": 202 }
+  ],
+  "componentes": [
+    {
+      "sigla": "QSPP_ESTRITO",
+      "nome": "Leitura estrita (somente pessoas classificadas como researcher)",
+      "valores": [
+        { "ano": 2024, "quantidade": 135 },
+        { "ano": 2025, "quantidade": 130 },
+        { "ano": 2026, "quantidade": 133 }
+      ]
+    }
+  ]
+}

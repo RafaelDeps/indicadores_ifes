@@ -1,0 +1,124 @@
+---
+import { ANO_EM_ANDAMENTO } from '../lib/anoEmAndamento';
+import { datasetPadrao, obterCampiDisponiveis } from '../lib/dataset';
+
+interface Props {
+  anos: number[];
+  selecionado: number;
+  campusSelecionado?: string;
+}
+
+const { anos, selecionado, campusSelecionado = 'serra' } = Astro.props;
+const campi = obterCampiDisponiveis(datasetPadrao);
+---
+
+<div class="controles-filtros">
+  <label class="seletor">
+    <span class="rotulo">Campus</span>
+    <select data-seletor-campus>
+      {
+        campi.map((c) => (
+          <option value={c.slug} selected={c.slug === campusSelecionado}>
+            {c.nome}
+          </option>
+        ))
+      }
+    </select>
+  </label>
+
+  <label class="seletor">
+    <span class="rotulo">Ano de referência</span>
+    <select data-seletor-ano>
+      {
+        anos.map((ano) => (
+          <option value={ano} selected={ano === selecionado}>
+            {ano === ANO_EM_ANDAMENTO ? `${ano} — em andamento` : ano}
+          </option>
+        ))
+      }
+    </select>
+  </label>
+</div>
+
+<script is:inline>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const campusAtual = params.get('campus');
+    const anoAtual = params.get('ano');
+
+    if (campusAtual) {
+      document.querySelectorAll('[data-seletor-campus]').forEach(function (el) {
+        el.value = campusAtual;
+      });
+    }
+    if (anoAtual) {
+      document.querySelectorAll('[data-seletor-ano]').forEach(function (el) {
+        el.value = anoAtual;
+      });
+    }
+
+    document.querySelectorAll('[data-seletor-campus]').forEach(function (seletor) {
+      seletor.addEventListener('change', function () {
+        const destino = new URL(location.href);
+        destino.searchParams.set('campus', seletor.value);
+        location.href = destino.href;
+      });
+    });
+
+    document.querySelectorAll('[data-seletor-ano]').forEach(function (seletor) {
+      seletor.addEventListener('change', function () {
+        const destino = new URL(location.href);
+        destino.searchParams.set('ano', seletor.value);
+        location.href = destino.href;
+      });
+    });
+  })();
+</script>
+
+<style>
+  .controles-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding: 0.85rem 1.15rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  .seletor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .rotulo {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  select {
+    font-family: var(--font-sans);
+    font-size: 0.925rem;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  select:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-emerald-50);
+  }
+</style>

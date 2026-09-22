@@ -1,0 +1,408 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CartaoPilar from '../components/CartaoPilar.astro';
+import { obterIndicadoresPorPilar } from '../lib/selectors';
+import { formatValor, TEXTO_INDISPONIVEL } from '../lib/formatters';
+
+const pilar1 = obterIndicadoresPorPilar(1);
+const pilar2 = obterIndicadoresPorPilar(2);
+const pilar3 = obterIndicadoresPorPilar(3);
+
+const ntpp = pilar1.find((i) => i.sigla === 'NTPP');
+const qspp = pilar1.find((i) => i.sigla === 'QSPP');
+const pies = pilar1.find((i) => i.sigla === 'PIES');
+const nepP1 = pies?.componentes.find((c) => c.sigla === 'NEP')?.valores[0]?.quantidade;
+
+const pinv = pilar2.find((i) => i.sigla === 'PINV');
+const pipdi = pilar2.find((i) => i.sigla === 'PIPDI');
+
+const pipro = pilar3.find((i) => i.sigla === 'PIPRO');
+const piprot = pilar3.find((i) => i.sigla === 'PIPROT');
+const piprotr = pilar3.find((i) => i.sigla === 'PIPROTR');
+
+const metricasP1 = [
+  {
+    sigla: 'NTPP',
+    valor:
+      ntpp?.valores[0]?.valor !== null && ntpp?.valores[0]?.valor !== undefined
+        ? formatValor(ntpp.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    unidade: ntpp?.valores[0]?.valor !== null ? 'projetos' : undefined,
+    rotulo: 'Projetos de pesquisa',
+  },
+  {
+    sigla: 'QSPP',
+    valor:
+      qspp?.valores[0]?.valor !== null && qspp?.valores[0]?.valor !== undefined
+        ? formatValor(qspp.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    unidade: qspp?.valores[0]?.valor !== null ? 'servidores' : undefined,
+    rotulo: 'Servidores em pesquisa',
+  },
+  {
+    sigla: 'NEP',
+    valor: nepP1 !== null && nepP1 !== undefined ? formatValor(nepP1) : TEXTO_INDISPONIVEL,
+    unidade: nepP1 !== null ? 'estudantes' : undefined,
+    rotulo: 'Estudantes envolvidos',
+  },
+  {
+    sigla: 'PIES',
+    valor: TEXTO_INDISPONIVEL,
+    rotulo: 'Percentual discente',
+  },
+];
+
+const metricasP2 = [
+  {
+    sigla: 'PINV',
+    valor:
+      pinv?.valores[0]?.valor !== null && pinv?.valores[0]?.valor !== undefined
+        ? formatValor(pinv.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    rotulo: 'Investimento em P&I',
+  },
+  {
+    sigla: 'PIPDI',
+    valor:
+      pipdi?.valores[0]?.valor !== null && pipdi?.valores[0]?.valor !== undefined
+        ? formatValor(pipdi.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    rotulo: 'Acordos de parceria',
+  },
+];
+
+const metricasP3 = [
+  {
+    sigla: 'PIPRO',
+    valor:
+      pipro?.valores[0]?.valor !== null && pipro?.valores[0]?.valor !== undefined
+        ? formatValor(pipro.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    unidade: pipro?.valores[0]?.valor !== null ? 'produções' : undefined,
+    rotulo: 'Produção intelectual',
+  },
+  {
+    sigla: 'PIPROT',
+    valor:
+      piprot?.valores[0]?.valor !== null && piprot?.valores[0]?.valor !== undefined
+        ? formatValor(piprot.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    unidade: piprot?.valores[0]?.valor !== null ? 'ativos' : undefined,
+    rotulo: 'Ativos de PI',
+  },
+  {
+    sigla: 'PIPROTR',
+    valor:
+      piprotr?.valores[0]?.valor !== null && piprotr?.valores[0]?.valor !== undefined
+        ? formatValor(piprotr.valores[0].valor)
+        : TEXTO_INDISPONIVEL,
+    rotulo: 'Ativos transferidos',
+  },
+];
+
+const valorDestaqueNtpp = ntpp?.valores[0]?.valor ?? null;
+const valorDestaqueQspp = qspp?.valores[0]?.valor ?? null;
+const valorDestaqueNep = nepP1 ?? null;
+const valorDestaquePipro = pipro?.valores[0]?.valor ?? null;
+---
+
+<BaseLayout title="Indicadores de Pesquisa e Inovação — pilares CONIF">
+  <div class="apresentacao">
+    <div class="distintivo">Painel institucional</div>
+    <h1>Indicadores de Pesquisa e Inovação</h1>
+    <p class="subtitulo">
+      Visão geral dos pilares do modelo CONIF. Acompanhe os resultados consolidados de pesquisa,
+      inovação e propriedade intelectual.
+    </p>
+  </div>
+
+  <section class="secao-destaques" aria-label="Resultados consolidados">
+    <h2 class="titulo-secao">Destaques institucionais</h2>
+    <div class="grade-destaques">
+      <div class="card-kpi">
+        <div class="kpi-icone" aria-hidden="true">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-2.5L14 9V3"></path>
+            <path d="M7.5 15h9"></path>
+          </svg>
+        </div>
+        <div class="kpi-corpo">
+          <span class="kpi-rotulo">Projetos de pesquisa (NTPP)</span>
+          <div class="kpi-valor-linha">
+            <span class="kpi-numero"
+              >{
+                valorDestaqueNtpp !== null ? formatValor(valorDestaqueNtpp) : TEXTO_INDISPONIVEL
+              }</span
+            >
+            {valorDestaqueNtpp !== null && <span class="kpi-unidade">projetos</span>}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-kpi">
+        <div class="kpi-icone" aria-hidden="true">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="kpi-corpo">
+          <span class="kpi-rotulo">Servidores em pesquisa (QSPP)</span>
+          <div class="kpi-valor-linha">
+            <span class="kpi-numero"
+              >{
+                valorDestaqueQspp !== null ? formatValor(valorDestaqueQspp) : TEXTO_INDISPONIVEL
+              }</span
+            >
+            {valorDestaqueQspp !== null && <span class="kpi-unidade">servidores</span>}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-kpi">
+        <div class="kpi-icone" aria-hidden="true">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path>
+          </svg>
+        </div>
+        <div class="kpi-corpo">
+          <span class="kpi-rotulo">Estudantes em pesquisa (NEP)</span>
+          <div class="kpi-valor-linha">
+            <span class="kpi-numero"
+              >{
+                valorDestaqueNep !== null ? formatValor(valorDestaqueNep) : TEXTO_INDISPONIVEL
+              }</span
+            >
+            {valorDestaqueNep !== null && <span class="kpi-unidade">estudantes</span>}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-kpi">
+        <div class="kpi-icone" aria-hidden="true">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"></path>
+            <path d="M14 2v6h6M8 13h8M8 17h6"></path>
+          </svg>
+        </div>
+        <div class="kpi-corpo">
+          <span class="kpi-rotulo">Produção intelectual (PIPRO)</span>
+          <div class="kpi-valor-linha">
+            <span class="kpi-numero"
+              >{
+                valorDestaquePipro !== null ? formatValor(valorDestaquePipro) : TEXTO_INDISPONIVEL
+              }</span
+            >
+            {valorDestaquePipro !== null && <span class="kpi-unidade">produções</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao-pilares" aria-label="Visão geral dos pilares">
+    <h2 class="titulo-secao">Visão geral dos pilares</h2>
+    <div class="grade">
+      <CartaoPilar
+        numero={1}
+        titulo="Engajamento Acadêmico e Inclusão"
+        descricao="Participação de pesquisadores, servidores e estudantes em iniciativas de pesquisa e inovação."
+        status="ativo"
+        href="/pilar-1/"
+        metricas={metricasP1}
+      />
+      <CartaoPilar
+        numero={2}
+        titulo="Fomento e Conexão com o Ecossistema"
+        descricao="Captação de recursos externos e acordos de cooperação com parceiros para projetos de PDeI."
+        status="ativo"
+        href="/pilar-2/"
+        metricas={metricasP2}
+      />
+      <CartaoPilar
+        numero={3}
+        titulo="Produtividade e Propriedade Intelectual"
+        descricao="Produção acadêmica, proteção de ativos intangíveis e transferência de tecnologia institucional."
+        status="ativo"
+        href="/pilar-3/"
+        metricas={metricasP3}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .apresentacao {
+    margin-bottom: 2rem;
+  }
+
+  .distintivo {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(23, 132, 71, 0.15);
+  }
+
+  h1 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-ink);
+    margin: 0 0 0.4rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitulo {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0;
+    max-width: 48rem;
+  }
+
+  .titulo-secao {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0 0 1rem 0;
+  }
+
+  .secao-destaques {
+    margin-bottom: 2.25rem;
+  }
+
+  .grade-destaques {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 520px) {
+    .grade-destaques {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .grade-destaques {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .card-kpi {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .kpi-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    background: var(--color-emerald-50);
+    color: var(--color-primary);
+    border: 1px solid rgba(23, 132, 71, 0.15);
+    flex-shrink: 0;
+  }
+
+  .kpi-corpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .kpi-rotulo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    line-height: 1.3;
+  }
+
+  .kpi-valor-linha {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+
+  .kpi-numero {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .kpi-unidade {
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+
+  .secao-pilares {
+    margin-top: 1rem;
+  }
+
+  .grade {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .grade {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

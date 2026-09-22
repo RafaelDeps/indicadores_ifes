@@ -1,0 +1,360 @@
+---
+import type { Indicador } from '../data/indicadores';
+import { anoPadrao } from '../lib/ano';
+import { avisoAnoEmAndamento } from '../lib/anoEmAndamento';
+import { calcularDelta } from '../lib/delta';
+import { formatValor } from '../lib/formatters';
+import { valuesForYear } from '../lib/selectors';
+
+export interface Props {
+  indicador: Indicador;
+  campus?: string;
+  campusSelecionado?: string;
+  ano?: number;
+  anoSelecionado?: number;
+  pilarSlug?: string;
+}
+
+const {
+  indicador,
+  campus: campusProp,
+  campusSelecionado,
+  ano: anoProp,
+  anoSelecionado,
+} = Astro.props;
+
+const campus = campusProp ?? campusSelecionado;
+const ano = anoProp ?? anoSelecionado ?? anoPadrao(indicador);
+const valorItem = ano !== null ? valuesForYear(indicador, ano) : null;
+const valor = valorItem?.valor ?? null;
+const aviso = valorItem !== null ? avisoAnoEmAndamento(valorItem.ano) : null;
+const pilarNum = indicador.pilarNumero ?? 1;
+
+// Variação em relação ao ano imediatamente anterior
+const serieValores = indicador.valores.filter(
+  (v) => !campus || v.campus === campus || v.campus === 'todos' || !v.campus,
+);
+const delta =
+  ano !== null
+    ? calcularDelta(serieValores, ano)
+    : {
+        tipo: 'sem_base' as const,
+        valorFormatado: 'Sem base anterior',
+        positivo: null,
+      };
+
+// Parâmetros para navegação preservada
+const params = new URLSearchParams();
+if (campus) params.set('campus', campus);
+if (ano) params.set('ano', String(ano));
+const queryString = params.toString() ? `?${params.toString()}` : '';
+const hrefDestino = `/pilar-${pilarNum}/${indicador.slug}/${queryString}`;
+const icone = indicador.icone ?? 'default';
+---
+
+<a class="cartao cartao-indicador" href={hrefDestino}>
+  <div class="cartao-cabecalho">
+    <div class="icone-container" aria-hidden="true">
+      {
+        icone === 'academic' && (
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+          </svg>
+        )
+      }
+      {
+        icone === 'network' && (
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="18" cy="5" r="3" />
+            <circle cx="6" cy="12" r="3" />
+            <circle cx="18" cy="19" r="3" />
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+          </svg>
+        )
+      }
+      {
+        icone === 'patent' && (
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        )
+      }
+      {
+        icone === 'project' && (
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+        )
+      }
+      {
+        icone === 'chart' && (
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+        )
+      }
+      {
+        icone === 'default' && (
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+          </svg>
+        )
+      }
+    </div>
+    <div class="titulos">
+      <h2 class="sigla">{indicador.sigla}</h2>
+      <p class="nome">{indicador.nome}</p>
+    </div>
+  </div>
+
+  <div class="cartao-corpo">
+    <div class="cartao-valor">
+      {
+        valor !== null && ano !== null ? (
+          <div class="valor-grupo">
+            <span class="valor-numero">{formatValor(valor)}</span>
+            {indicador.unidade && <span class="unidade">{indicador.unidade}</span>}
+          </div>
+        ) : (
+          <span class="badge-indisponivel">Dado indisponível</span>
+        )
+      }
+    </div>
+
+    <div
+      class:list={[
+        'cartao-delta',
+        `delta-${delta.tipo}`,
+        { positivo: delta.positivo === true, negativo: delta.positivo === false },
+      ]}
+    >
+      <span class="delta-rotulo">{delta.valorFormatado}</span>
+      {delta.tipo !== 'sem_base' && <span class="delta-subtexto">em relação a {ano! - 1}</span>}
+    </div>
+
+    {aviso && <p class="aviso-ano">{aviso}</p>}
+  </div>
+
+  <div class="cartao-rodape">
+    <span class="link-detalhes">Ver detalhes →</span>
+  </div>
+</a>
+
+<style>
+  .cartao-indicador {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .cartao-indicador:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .cartao-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .icone-container {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--color-emerald-50);
+    color: var(--color-emerald-700);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .titulos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sigla {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    letter-spacing: -0.01em;
+  }
+
+  .nome {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+  }
+
+  .cartao-corpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .cartao-valor {
+    min-height: 2.5rem;
+    display: flex;
+    align-items: baseline;
+  }
+
+  .valor-grupo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .valor-numero {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+
+  .unidade {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .badge-indisponivel {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
+    background: var(--color-badge-unavailable);
+    color: var(--color-badge-unavailable-text);
+  }
+
+  .cartao-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .cartao-delta.positivo {
+    color: var(--color-primary);
+  }
+
+  .cartao-delta.negativo {
+    color: var(--color-red-primary);
+  }
+
+  .cartao-delta.delta-sem_base {
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+
+  .delta-subtexto {
+    font-weight: 400;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+  .aviso-ano {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-notice-text);
+  }
+
+  .cartao-rodape {
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  .link-detalhes {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.15s ease;
+  }
+
+  .cartao-indicador:hover .link-detalhes {
+    color: var(--color-primary);
+  }
+</style>

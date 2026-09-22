@@ -1,0 +1,112 @@
+---
+import type { Componente } from '../data/indicadores';
+import { formatValor } from '../lib/formatters';
+
+interface Props {
+  componente: Componente;
+  mostrarAvisoPercentual?: boolean;
+}
+
+const { componente, mostrarAvisoPercentual = false } = Astro.props;
+---
+
+<div class="componente">
+  <div class="componente-cabecalho">
+    <h3>{componente.sigla}</h3>
+    <span class="nome-componente">{componente.nome}</span>
+  </div>
+  <ul class="contagens">
+    {
+      componente.valores.map((valor) => (
+        <li class="contagem-item">
+          <span class="contagem-ano">{valor.ano}</span>
+          <span class="contagem-quantidade">{formatValor(valor.quantidade)}</span>
+          {valor.motivoIndisponivel && <span class="motivo"> — {valor.motivoIndisponivel}</span>}
+        </li>
+      ))
+    }
+  </ul>
+  {
+    mostrarAvisoPercentual && (
+      <p class="aviso">Contagem absoluta — não é o percentual do indicador</p>
+    )
+  }
+</div>
+
+<style>
+  .componente {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .componente-cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .componente h3 {
+    margin: 0;
+    color: var(--color-primary-dark);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .nome-componente {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+  }
+
+  .contagens {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .contagem-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .contagem-ano {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+
+  .contagem-quantidade {
+    font-weight: 700;
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .motivo {
+    color: var(--color-notice-text);
+    font-size: 0.8rem;
+  }
+
+  .aviso {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-notice-text);
+    background: var(--color-notice-bg);
+    border: 1px solid var(--color-notice-border);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    display: inline-block;
+  }
+</style>

@@ -1,0 +1,33 @@
+{
+  "sigla": "PICOT",
+  "slug": "picot",
+  "nome": "Percentual de estudantes matriculados por meio de cotas envolvidos em projetos de pesquisa (PICOT)",
+  "oQueMede": "Percentual de estudantes que ingressaram por meio de cotas e participam de projetos de pesquisa, dentre o total de estudantes envolvidos em pesquisa.",
+  "formula": "PICOT = (NTECPP / NEP) × 100",
+  "variaveis": [
+    {
+      "sigla": "NTECPP",
+      "descricao": "Estudantes que ingressaram por cotas e estão envolvidos em projetos de pesquisa."
+    },
+    {
+      "sigla": "NEP",
+      "descricao": "Número de estudantes envolvidos em projetos de pesquisa (mesmo do PIES)."
+    }
+  ],
+  "polaridade": "maior-e-melhor",
+  "fonteDados": "db/horizon.db, exports canônicos e arquivos SigPesq (nenhum campo de cota encontrado)",
+  "dataAtualizacao": "2026-09-21",
+  "motivoIndisponivel": "NTECPP não encontrado — não há registro da modalidade de ingresso (cota) em nenhuma fonte de dados.",
+  "valores": [],
+  "componentes": [
+    {
+      "sigla": "NEP",
+      "nome": "Número de estudantes envolvidos em projetos de pesquisa",
+      "valores": [
+        { "ano": 2024, "quantidade": 344 },
+        { "ano": 2025, "quantidade": 465 },
+        { "ano": 2026, "quantidade": 376 }
+      ]
+    }
+  ]
+}

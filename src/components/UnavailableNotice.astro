@@ -1,0 +1,26 @@
+---
+interface Props {
+  motivo?: string;
+}
+
+const { motivo } = Astro.props;
+---
+
+<p class="indisponivel">Dado indisponível</p>
+{motivo && motivo.trim() !== '' && <p class="motivo">{motivo}</p>}
+
+<style>
+  .indisponivel {
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+
+  .motivo {
+    color: var(--color-notice-text);
+    background: var(--color-notice-bg);
+    border: 1px solid var(--color-notice-border);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+</style>

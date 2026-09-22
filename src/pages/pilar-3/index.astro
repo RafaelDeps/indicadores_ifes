@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IndicatorCard from '../../components/IndicatorCard.astro';
+import { obterIndicadoresPorPilar } from '../../lib/selectors';
+
+const indicadoresP3 = obterIndicadoresPorPilar(3, 'serra');
+---
+
+<BaseLayout title="Pilar 3 — Produtividade e Propriedade Intelectual | Indicadores IFES">
+  <nav class="trilha" aria-label="Trilha de navegação">
+    <a href="/">Início</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Pilar 3</span>
+  </nav>
+  <h1>Indicadores do Pilar 3</h1>
+  <p class="subtitulo">
+    Produtividade e Propriedade Intelectual — produção acadêmica, proteção de ativos intangíveis e
+    transferência de tecnologia.
+  </p>
+  <div class="grade">
+    {indicadoresP3.map((indicador) => <IndicatorCard indicador={indicador} />)}
+  </div>
+</BaseLayout>
+
+<style>
+  .trilha {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitulo {
+    color: var(--color-muted);
+    margin-top: 0;
+  }
+
+  .grade {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .grade {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

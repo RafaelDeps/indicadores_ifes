@@ -1,0 +1,67 @@
+/*
+ * Tokens de design — Identidade Institucional IFES (modelo CONIF).
+ * Cores baseadas na paleta verde esmeralda e ardósia institucional.
+ * Grade do logotipo oficial: Círculo vermelho (#e6323e) e 8 quadrados verdes (#178447).
+ * Contraste verificado para conformidade estrita WCAG AA (>= 4.5:1).
+ */
+
+:root {
+  /* Paleta institucional — modo claro */
+  --color-primary: #178447; /* verde institucional oficial (logo e acentos) */
+  --color-primary-dark: #0c3929; /* verde escuro (cabeçalho, títulos, notas metodológicas) */
+  --color-primary-light: #22a35b;
+  --color-red-primary: #e6323e; /* círculo superior esquerdo do logo IFES */
+  --color-emerald-50: #ecfdf5; /* fundo suave de ícones e destaques */
+  --color-emerald-700: #047857; /* texto em contraste sobre fundo claro */
+
+  --color-ink: #0f172a; /* texto principal slate-900 (contraste 14.8:1) */
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-muted: #475569; /* texto secundário slate-600 */
+
+  --color-bg: #f7f9f8; /* superfície geral suave */
+  --color-surface: #ffffff; /* cartões e componentes */
+  --color-surface-bg: #f7f9f8;
+  --color-surface-card: #ffffff;
+  --color-border: #e2e8f0;
+
+  /* Avisos e status */
+  --color-accent-amber: #b45309;
+  --color-notice-text: #7a4d00;
+  --color-notice-bg: #fcf4e4;
+  --color-notice-border: #b45309;
+  --color-badge-unavailable: #f1f5f9;
+  --color-badge-unavailable-text: #475569;
+
+  /* Tipografia */
+  --font-sans: 'Manrope', 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+[data-theme='escuro'] {
+  /* Paleta institucional — modo escuro */
+  --color-primary: #22a35b;
+  --color-primary-dark: #34d399;
+  --color-primary-light: #4ade80;
+  --color-red-primary: #f87171;
+  --color-emerald-50: #064e3b;
+  --color-emerald-700: #6ee7b7;
+
+  --color-ink: #f8fafc;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-muted: #94a3b8;
+
+  --color-bg: #091711;
+  --color-surface: #0f291e;
+  --color-surface-bg: #091711;
+  --color-surface-card: #0f291e;
+  --color-border: rgba(255, 255, 255, 0.12);
+
+  --color-accent-amber: #fbbf24;
+  --color-notice-text: #fbbf24;
+  --color-notice-bg: #2b2411;
+  --color-notice-border: #fbbf24;
+  --color-badge-unavailable: #1e293b;
+  --color-badge-unavailable-text: #94a3b8;
+}

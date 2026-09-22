@@ -1,0 +1,74 @@
+---
+import type { ValorAnual } from '../data/indicadores';
+import { ANO_EM_ANDAMENTO, AVISO_ANO_EM_ANDAMENTO } from '../lib/anoEmAndamento';
+import { formatValor } from '../lib/formatters';
+
+interface Props {
+  valores: ValorAnual[];
+}
+
+const { valores } = Astro.props;
+const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO);
+---
+
+<table class="serie">
+  <thead>
+    <tr>
+      <th scope="col">Ano</th>
+      <th scope="col">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      valores.map((valor) => (
+        <tr>
+          <th scope="row">{valor.ano}</th>
+          <td>
+            {formatValor(valor.valor)}
+            {valor.motivoIndisponivel && (
+              <span class="motivo-ano"> — {valor.motivoIndisponivel}</span>
+            )}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+{temAnoEmAndamento && <p class="aviso-serie">{AVISO_ANO_EM_ANDAMENTO}</p>}
+
+<style>
+  .serie {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+
+  .serie th,
+  .serie td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .serie tbody tr:last-child th,
+  .serie tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .serie td {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .motivo-ano {
+    color: var(--color-notice-text);
+    font-size: 0.9rem;
+  }
+
+  .aviso-serie {
+    margin: 0.4rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-notice-text);
+  }
+</style>

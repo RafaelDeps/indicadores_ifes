@@ -1,0 +1,22 @@
+{
+  "sigla": "NTPP",
+  "slug": "ntpp",
+  "nome": "Número Total de Projetos de Pesquisa (NTPP)",
+  "oQueMede": "Mensurar a quantidade absoluta de projetos de pesquisa (básica e aplicada) formalmente registrados, aprovados e em execução na instituição durante pelo menos um dia do ano de referência.",
+  "formula": "NTPP = Σ PP",
+  "variaveis": [
+    {
+      "sigla": "PP",
+      "descricao": "Projetos de pesquisa formalmente registrados, aprovados e/ou em execução no ano de referência."
+    }
+  ],
+  "polaridade": "maior-e-melhor",
+  "fonteDados": "db/horizon.db (tabela initiatives, tipo 1 \"Research Project\") e registro SigPesq (coluna ParecerDiretoria)",
+  "dataAtualizacao": "2026-09-21",
+  "valores": [
+    { "ano": 2024, "valor": 514 },
+    { "ano": 2025, "valor": 644 },
+    { "ano": 2026, "valor": 534 }
+  ],
+  "componentes": []
+}

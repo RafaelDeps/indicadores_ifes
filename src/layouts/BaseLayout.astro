@@ -1,0 +1,482 @@
+---
+import HeaderMarca from '../components/HeaderMarca.astro';
+import '../styles/tokens.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Indicadores de Pesquisa e Inovação dos 3 pilares do modelo CONIF' } =
+  Astro.props;
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/' || pathname === '';
+const isPilar1 = pathname.startsWith('/pilar-1');
+const isPilar2 = pathname.startsWith('/pilar-2');
+const isPilar3 = pathname.startsWith('/pilar-3');
+
+const base = import.meta.env.BASE_URL;
+
+const pesos = [400, 600, 700];
+
+const fontFaceCss = pesos
+  .map(
+    (peso) => `@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: ${peso};
+  font-display: swap;
+  src: url('${base}fonts/source-sans-3-${peso}.woff2') format('woff2');
+}`,
+  )
+  .join('\n');
+---
+
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <style is:global set:html={fontFaceCss}></style>
+    <script is:inline>
+      /* Modo escuro desativado por enquanto: manter sempre visual branco institucional com as cores do IFES.
+         Mantém menções para compatibilidade: data-theme="auto" e prefers-color-scheme */
+      (function () {
+        // Forçar visual limpo e claro com as cores do IFES
+        // if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        //   document.documentElement.setAttribute('data-theme', 'escuro');
+        // }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="topo cabecalho-fixo" role="banner">
+      <div class="topo-container">
+        <div class="marca-bloco">
+          <HeaderMarca />
+          <span class="painel-badge">Indicadores IFES</span>
+        </div>
+
+        <nav class="nav-pilares" aria-label="Navegação por pilares CONIF">
+          <a
+            href="/"
+            class:list={['nav-aba', { ativa: isHome }]}
+            aria-current={isHome ? 'page' : undefined}
+          >
+            Visão geral
+          </a>
+          <a
+            href="/pilar-1/"
+            class:list={['nav-aba', { ativa: isPilar1 }]}
+            aria-current={isPilar1 ? 'page' : undefined}
+          >
+            Pilar 1
+          </a>
+          <a
+            href="/pilar-2/"
+            class:list={['nav-aba', { ativa: isPilar2 }]}
+            aria-current={isPilar2 ? 'page' : undefined}
+          >
+            Pilar 2
+          </a>
+          <a
+            href="/pilar-3/"
+            class:list={['nav-aba', { ativa: isPilar3 }]}
+            aria-current={isPilar3 ? 'page' : undefined}
+          >
+            Pilar 3
+          </a>
+        </nav>
+
+        <button
+          class="btn-menu-drawer"
+          aria-label="Abrir menu de navegação"
+          aria-expanded="false"
+          aria-controls="mobile-drawer"
+        >
+          <svg
+            class="icone-menu"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Gaveta Móvel (Slide-Over Drawer) -->
+      <div
+        id="mobile-drawer"
+        class="mobile-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+      >
+        <div class="drawer-backdrop" tabindex="-1"></div>
+        <div class="drawer-conteudo">
+          <div class="drawer-cabecalho">
+            <span class="drawer-titulo">Menu de Navegação</span>
+            <button class="btn-fechar-drawer" aria-label="Fechar menu">✕</button>
+          </div>
+          <nav class="drawer-nav" aria-label="Menu móvel de pilares">
+            <a
+              href="/"
+              class:list={['drawer-link', { ativa: isHome }]}
+              aria-current={isHome ? 'page' : undefined}
+            >
+              Visão geral
+            </a>
+            <a
+              href="/pilar-1/"
+              class:list={['drawer-link', { ativa: isPilar1 }]}
+              aria-current={isPilar1 ? 'page' : undefined}
+            >
+              Pilar 1
+            </a>
+            <a
+              href="/pilar-2/"
+              class:list={['drawer-link', { ativa: isPilar2 }]}
+              aria-current={isPilar2 ? 'page' : undefined}
+            >
+              Pilar 2
+            </a>
+            <a
+              href="/pilar-3/"
+              class:list={['drawer-link', { ativa: isPilar3 }]}
+              aria-current={isPilar3 ? 'page' : undefined}
+            >
+              Pilar 3
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="rodape">
+      <p>
+        Valores transcritos do relatório oficial. Indicadores sem dados são exibidos como “Dado
+        indisponível” — nenhum valor é estimado.
+      </p>
+    </footer>
+
+    <script is:inline>
+      /* Controle da gaveta móvel (Slide-Over Drawer) */
+      (function () {
+        const btnAbrir = document.querySelector('.btn-menu-drawer');
+        const drawer = document.getElementById('mobile-drawer');
+        const btnFechar = document.querySelector('.btn-fechar-drawer');
+        const backdrop = document.querySelector('.drawer-backdrop');
+
+        if (!btnAbrir || !drawer) return;
+
+        function abrirDrawer() {
+          drawer.classList.add('aberto');
+          drawer.setAttribute('aria-hidden', 'false');
+          btnAbrir.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+          if (btnFechar) btnFechar.focus();
+        }
+
+        function fecharDrawer() {
+          drawer.classList.remove('aberto');
+          drawer.setAttribute('aria-hidden', 'true');
+          btnAbrir.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+          btnAbrir.focus();
+        }
+
+        btnAbrir.addEventListener('click', abrirDrawer);
+        if (btnFechar) btnFechar.addEventListener('click', fecharDrawer);
+        if (backdrop) backdrop.addEventListener('click', fecharDrawer);
+
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && drawer.classList.contains('aberto')) {
+            fecharDrawer();
+          }
+        });
+      })();
+
+      /* Propagação automática de parâmetros de consulta (?campus=...&ano=...)
+         em todos os links internos para manter a continuidade da navegação. */
+      (function () {
+        function propagarContexto() {
+          const params = new URLSearchParams(window.location.search);
+          const campus = params.get('campus');
+          const ano = params.get('ano');
+          if (!campus && !ano) return;
+
+          document.querySelectorAll('a[href^="/"]').forEach(function (link) {
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('//') || href.startsWith('/#')) return;
+            try {
+              const url = new URL(href, window.location.origin);
+              if (campus && !url.searchParams.has('campus')) {
+                url.searchParams.set('campus', campus);
+              }
+              if (ano && !url.searchParams.has('ano')) {
+                url.searchParams.set('ano', ano);
+              }
+              link.setAttribute('href', url.pathname + url.search + url.hash);
+            } catch {
+              /* ignora erros de url inválida */
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', propagarContexto);
+        } else {
+          propagarContexto();
+        }
+        window.addEventListener('popstate', propagarContexto);
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-bg);
+    line-height: 1.55;
+  }
+
+  a {
+    color: var(--color-primary-dark);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 600;
+  }
+</style>
+
+<style>
+  .topo {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .topo-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .marca-bloco {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .painel-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    background: var(--color-emerald-50);
+    color: var(--color-emerald-700);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .nav-pilares {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  @media (min-width: 768px) {
+    .nav-pilares {
+      display: flex;
+    }
+    .btn-menu-drawer {
+      display: none;
+    }
+  }
+
+  .nav-aba {
+    padding: 0.45rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-muted);
+    border-radius: 6px;
+    border-bottom: 2px solid transparent;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease;
+  }
+
+  .nav-aba:hover {
+    color: var(--color-primary-dark);
+    background: var(--color-emerald-50);
+  }
+
+  .nav-aba.ativa,
+  .nav-aba[aria-current='page'] {
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+    border-bottom-color: var(--color-primary);
+  }
+
+  .btn-menu-drawer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+
+  .btn-menu-drawer:hover {
+    background: var(--color-emerald-50);
+  }
+
+  /* Slide-over Drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    visibility: hidden;
+    transition: visibility 0.25s ease;
+  }
+
+  .mobile-drawer.aberto {
+    visibility: visible;
+  }
+
+  .drawer-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .mobile-drawer.aberto .drawer-backdrop {
+    opacity: 1;
+  }
+
+  .drawer-conteudo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 80vw;
+    background: var(--color-surface);
+    padding: 1.5rem;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .mobile-drawer.aberto .drawer-conteudo {
+    transform: translateX(0);
+  }
+
+  .drawer-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .drawer-titulo {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-ink);
+  }
+
+  .btn-fechar-drawer {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: var(--color-muted);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .btn-fechar-drawer:hover {
+    color: var(--color-ink);
+    background: var(--color-emerald-50);
+  }
+
+  .drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .drawer-link {
+    padding: 0.65rem 0.85rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-ink);
+    border-radius: 6px;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .drawer-link:hover,
+  .drawer-link.ativa {
+    background: var(--color-emerald-50);
+    color: var(--color-primary);
+  }
+
+  main {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .rodape {
+    border-top: 1px solid var(--color-border);
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    text-align: center;
+  }
+</style>

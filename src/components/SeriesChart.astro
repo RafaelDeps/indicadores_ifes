@@ -1,0 +1,197 @@
+---
+import type { ValorAnual } from '../data/indicadores';
+import { formatValor } from '../lib/formatters';
+import { construirLinha, mapearPontos, calcularEscala } from '../lib/chart';
+
+interface Props {
+  valores: ValorAnual[];
+}
+
+const { valores } = Astro.props;
+const LARGURA = 560;
+const ALTURA = 240;
+const MARGEM = 36;
+
+const pontos = mapearPontos(valores, LARGURA, ALTURA, MARGEM);
+const linha = construirLinha(pontos);
+const escala = calcularEscala(valores, ALTURA, MARGEM);
+
+function rotuloDoPonto(ano: number): string {
+  const item = valores.find((v) => v.ano === ano);
+  return `${ano}: ${formatValor(item?.valor ?? null)}`;
+}
+---
+
+{
+  pontos.length > 0 ? (
+    <div class="grafico-wrapper">
+      <svg
+        class="grafico"
+        viewBox={`0 0 ${LARGURA} ${ALTURA}`}
+        role="img"
+        aria-label="Série histórica do indicador com rótulos numéricos e eixos de escala"
+      >
+        {/* Linhas de grade e referências da escala vertical */}
+        {escala &&
+          escala.linhas.map((l) => (
+            <g class="grade-linha">
+              <line class="linha-guia" x1={MARGEM} y1={l.y} x2={LARGURA - MARGEM} y2={l.y} />
+              <text class="rotulo-escala" x={MARGEM - 6} y={l.y + 4} text-anchor="end">
+                {l.rotulo}
+              </text>
+            </g>
+          ))}
+
+        {/* Eixo horizontal (tempo) */}
+        <line
+          class="eixo"
+          x1={MARGEM}
+          y1={ALTURA - MARGEM}
+          x2={LARGURA - MARGEM}
+          y2={ALTURA - MARGEM}
+        />
+
+        {/* Linha da série de dados */}
+        {linha !== '' && <path class="linha" d={linha} fill="none" />}
+
+        {/* Pontos de dados com rótulos visíveis e tooltips */}
+        {pontos.map((ponto) => (
+          <g class="grupo-ponto" tabindex="0">
+            {/* Rótulo numérico visível sobre o ponto */}
+            <text class="rotulo-dado" x={ponto.rotuloX} y={ponto.rotuloY} text-anchor="middle">
+              {ponto.textoRotulo}
+            </text>
+
+            {/* Rótulo do ano no eixo horizontal */}
+            <text class="rotulo-ano" x={ponto.x} y={ALTURA - MARGEM + 18} text-anchor="middle">
+              {ponto.ano}
+            </text>
+
+            {/* Círculo do ponto */}
+            <circle class="ponto" cx={ponto.x} cy={ponto.y} r="6">
+              <title>{rotuloDoPonto(ponto.ano)}</title>
+            </circle>
+
+            {/* Tooltip contextual no hover/foco */}
+            <g class="tooltip-svg" pointer-events="none">
+              <rect
+                class="tooltip-bg"
+                x={ponto.x - 45}
+                y={ponto.y - 38}
+                width="90"
+                height="26"
+                rx="4"
+              />
+              <text class="tooltip-texto" x={ponto.x} y={ponto.y - 21} text-anchor="middle">
+                {ponto.ano}: {ponto.textoRotulo}
+              </text>
+            </g>
+          </g>
+        ))}
+      </svg>
+    </div>
+  ) : (
+    <p class="sem-grafico">Não há valores suficientes para desenhar o gráfico.</p>
+  )
+}
+
+<style>
+  .grafico-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .grafico {
+    width: 100%;
+    height: auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    overflow: visible;
+  }
+
+  .eixo {
+    stroke: var(--color-border);
+    stroke-width: 1.5;
+  }
+
+  .linha-guia {
+    stroke: var(--color-border);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    opacity: 0.6;
+  }
+
+  .rotulo-escala {
+    font-size: 0.72rem;
+    fill: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rotulo-ano {
+    font-size: 0.78rem;
+    fill: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .linha {
+    stroke: var(--color-primary);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .grupo-ponto {
+    outline: none;
+    cursor: pointer;
+  }
+
+  .ponto {
+    fill: var(--color-primary);
+    stroke: var(--color-surface);
+    stroke-width: 2;
+    transition:
+      r 0.15s ease,
+      fill 0.15s ease;
+  }
+
+  .grupo-ponto:hover .ponto,
+  .grupo-ponto:focus-visible .ponto {
+    r: 8;
+    fill: var(--color-primary-dark);
+  }
+
+  .rotulo-dado {
+    font-size: 0.82rem;
+    font-weight: 700;
+    fill: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tooltip-svg {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .grupo-ponto:hover .tooltip-svg,
+  .grupo-ponto:focus-visible .tooltip-svg {
+    opacity: 1;
+  }
+
+  .tooltip-bg {
+    fill: var(--color-ink);
+    opacity: 0.9;
+  }
+
+  .tooltip-texto {
+    fill: var(--color-surface);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .sem-grafico {
+    color: var(--color-muted);
+    font-style: italic;
+  }
+</style>
