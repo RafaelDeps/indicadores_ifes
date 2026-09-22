@@ -16,7 +16,8 @@ const isPilar1 = pathname.startsWith('/pilar-1');
 const isPilar2 = pathname.startsWith('/pilar-2');
 const isPilar3 = pathname.startsWith('/pilar-3');
 
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
 const pesos = [400, 600, 700];
 

@@ -47,12 +47,18 @@ export function propagarParametrosNosLinksInternos(): void {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const { campus, ano } = obterParametrosUrl();
-  if (!campus && !ano) return;
+  const basePath = window.location.pathname.startsWith('/indicadores_ifes')
+    ? '/indicadores_ifes'
+    : '';
 
   const links = document.querySelectorAll<HTMLAnchorElement>('a[href^="/"]');
   links.forEach((link) => {
-    const href = link.getAttribute('href');
+    let href = link.getAttribute('href');
     if (!href || href.startsWith('//') || href.startsWith('/#')) return;
+
+    if (basePath && !href.startsWith(basePath)) {
+      href = href === '/' ? `${basePath}/` : `${basePath}${href}`;
+    }
 
     try {
       const url = new URL(href, window.location.origin);
