@@ -59,3 +59,38 @@ export function construirQueryString(campus?: string, ano?: number | null): stri
   const str = params.toString();
   return str ? `?${str}` : '';
 }
+
+export interface OpcaoCampusMinima {
+  slug: string;
+  nome?: string;
+}
+
+export function resolverContextoFiltro(
+  paramCampus: string | null | undefined,
+  paramAno: string | null | undefined,
+  campiValidos: OpcaoCampusMinima[],
+  anosValidos: number[],
+): { campus: string; ano: number } {
+  const anoMaisRecente = anosValidos[0] || 2026;
+
+  let campusFinal = 'todos';
+  if (paramCampus) {
+    const slugLimpo = paramCampus.trim().toLowerCase();
+    if (campiValidos.some((c) => c.slug === slugLimpo)) {
+      campusFinal = slugLimpo;
+    }
+  }
+
+  let anoFinal = anoMaisRecente;
+  if (paramAno) {
+    const anoNum = parseInt(paramAno, 10);
+    if (!isNaN(anoNum) && anosValidos.includes(anoNum)) {
+      anoFinal = anoNum;
+    }
+  }
+
+  return {
+    campus: campusFinal,
+    ano: anoFinal,
+  };
+}

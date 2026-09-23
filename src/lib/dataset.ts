@@ -9,6 +9,22 @@ import {
   type Componente,
 } from '../data/indicadores';
 
+export interface CampusOpcao {
+  slug: string;
+  nome: string;
+}
+
+export interface AnoOpcao {
+  ano: number;
+  rotulo: string;
+  padrao?: boolean;
+}
+
+export interface ContextoFiltro {
+  campus: string;
+  ano: number;
+}
+
 export interface CampusInfo {
   slug: string;
   nome: string;
@@ -116,6 +132,23 @@ export function obterAnosDisponiveis(dataset: DatasetCompleto, campusSlug?: stri
   if (!campusSlug) return dataset.anos;
   const campus = dataset.campi.find((c) => c.slug === campusSlug);
   return campus ? campus.anos : dataset.anos;
+}
+
+export function obterCampiParaSelect(dataset?: DatasetCompleto): CampusOpcao[] {
+  const dados = dataset ?? datasetPadrao;
+  const listaCampi = dados.campi.filter((c) => c.slug !== 'todos');
+
+  listaCampi.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' }));
+
+  return [
+    { slug: 'todos', nome: '(Todos)' },
+    ...listaCampi.map((c) => ({ slug: c.slug, nome: c.nome })),
+  ];
+}
+
+export function obterAnosParaSelect(dataset?: DatasetCompleto): number[] {
+  const dados = dataset ?? datasetPadrao;
+  return [...dados.anos].sort((a, b) => b - a);
 }
 
 /**

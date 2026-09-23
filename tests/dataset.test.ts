@@ -6,6 +6,8 @@ import {
   obterAnosDisponiveis,
   obterIndicadoresDoPilar,
   obterIndicadorCompleto,
+  obterCampiParaSelect,
+  obterAnosParaSelect,
   type DatasetCompleto,
 } from '../src/lib/dataset';
 
@@ -103,5 +105,47 @@ describe('Orquestrador de Dataset Multi-Campus (src/lib/dataset.ts)', () => {
     expect(indicador).toBeDefined();
     expect(indicador?.sigla).toBe('NTPP');
     expect(indicador?.valores.length).toBeGreaterThan(0);
+  });
+
+  it('obterCampiParaSelect deve retornar (Todos) como primeiro item e ordenar alfabeticamente', () => {
+    const opcoes = obterCampiParaSelect(dataset);
+    expect(opcoes.length).toBeGreaterThan(0);
+    expect(opcoes[0]).toEqual({ slug: 'todos', nome: '(Todos)' });
+
+    // Testar ordenação alfabética com dataset sintético contendo múltiplos campi e acentos
+    const datasetMock: DatasetCompleto = {
+      campi: [
+        { slug: 'todos', nome: 'Todos os Campi', anos: [2026] },
+        { slug: 'vitoria', nome: 'Vitória', anos: [2026] },
+        { slug: 'alegre', nome: 'Alegre', anos: [2026] },
+        { slug: 'serra', nome: 'Serra', anos: [2026] },
+        { slug: 'aracruz', nome: 'Aracruz', anos: [2026] },
+      ],
+      anos: [2026],
+      entradas: [],
+    };
+
+    const mockOpcoes = obterCampiParaSelect(datasetMock);
+    expect(mockOpcoes[0]).toEqual({ slug: 'todos', nome: '(Todos)' });
+    expect(mockOpcoes.map((o) => o.nome)).toEqual([
+      '(Todos)',
+      'Alegre',
+      'Aracruz',
+      'Serra',
+      'Vitória',
+    ]);
+  });
+
+  it('obterAnosParaSelect deve retornar anos em ordem estritamente decrescente', () => {
+    const anos = obterAnosParaSelect(dataset);
+    expect(anos.length).toBeGreaterThan(0);
+
+    const datasetMockAnos: DatasetCompleto = {
+      campi: [],
+      anos: [2024, 2026, 2025],
+      entradas: [],
+    };
+    const anosOrdenados = obterAnosParaSelect(datasetMockAnos);
+    expect(anosOrdenados).toEqual([2026, 2025, 2024]);
   });
 });
