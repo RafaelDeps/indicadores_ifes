@@ -80,11 +80,16 @@ describe('identidade própria do site', () => {
   });
 
   it('não referencia fontes por CDN externo', () => {
-    // Única exceção: script do plugin de acessibilidade UserWay (integração intencional).
-    const urlPermitida = 'https://cdn.userway.org/widget.js';
+    // Exceções intencionais: plugins de acessibilidade (UserWay) e analytics (Google gtag).
+    const urlsPermitidas = [
+      'https://cdn.userway.org/widget.js',
+      'https://www.googletagmanager.com/gtag/js',
+    ];
     for (const arquivo of arquivosAstro('src/layouts')) {
       const urls = readFileSync(arquivo, 'utf-8').match(/https?:\/\/[^"'\s)]+/g) ?? [];
-      const naoPermitidas = urls.filter((url) => !url.startsWith(urlPermitida));
+      const naoPermitidas = urls.filter(
+        (url) => !urlsPermitidas.some((permitida) => url.startsWith(permitida)),
+      );
       expect(naoPermitidas, `URL externa em ${arquivo}`).toEqual([]);
     }
   });

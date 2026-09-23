@@ -55,6 +55,18 @@ const fontFaceCss = pesos
 
     <!-- Plugin de acessibilidade UserWay -->
     <script is:inline src="https://cdn.userway.org/widget.js" data-account="Jmxwgqf2MY"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ETH675FGB0"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args) {
+        dataLayer.push(args);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-ETH675FGB0');
+    </script>
   </head>
   <body>
     <header class="topo cabecalho-fixo" role="banner">

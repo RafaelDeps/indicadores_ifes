@@ -46,6 +46,12 @@ describe('Auditoria de Remoções e Elementos Descontinuados', () => {
     expect(layout.toLowerCase()).toContain('userway');
   });
 
+  it('possui injeção de script do Google Analytics (gtag) no layout', () => {
+    const layout = readFileSync('src/layouts/BaseLayout.astro', 'utf-8');
+    expect(layout).toContain('googletagmanager.com/gtag/js');
+    expect(layout).toContain('G-ETH675FGB0');
+  });
+
   it('não possui arquivos de dados legados nos pilares 2 e 3', () => {
     expect(existsSync('src/pages/pilar-2/[sigla]/dados.csv.ts')).toBe(false);
     expect(existsSync('src/pages/pilar-2/[sigla]/dados.json.ts')).toBe(false);
