@@ -80,10 +80,11 @@ describe('identidade própria do site', () => {
   });
 
   it('não referencia fontes por CDN externo', () => {
-    // Exceções intencionais: plugins de acessibilidade (UserWay) e analytics (Google gtag).
+    // Exceções intencionais: plugins de acessibilidade (UserWay) e analytics (Google gtag, Microsoft Clarity).
     const urlsPermitidas = [
       'https://cdn.userway.org/widget.js',
       'https://www.googletagmanager.com/gtag/js',
+      'https://www.clarity.ms/tag/',
     ];
     for (const arquivo of arquivosAstro('src/layouts')) {
       const urls = readFileSync(arquivo, 'utf-8').match(/https?:\/\/[^"'\s)]+/g) ?? [];

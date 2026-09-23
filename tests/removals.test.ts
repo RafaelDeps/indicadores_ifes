@@ -52,6 +52,12 @@ describe('Auditoria de Remoções e Elementos Descontinuados', () => {
     expect(layout).toContain('G-ETH675FGB0');
   });
 
+  it('possui injeção de script do Microsoft Clarity no layout', () => {
+    const layout = readFileSync('src/layouts/BaseLayout.astro', 'utf-8');
+    expect(layout).toContain('clarity.ms/tag/');
+    expect(layout).toContain('ymumc7n161');
+  });
+
   it('não possui arquivos de dados legados nos pilares 2 e 3', () => {
     expect(existsSync('src/pages/pilar-2/[sigla]/dados.csv.ts')).toBe(false);
     expect(existsSync('src/pages/pilar-2/[sigla]/dados.json.ts')).toBe(false);
