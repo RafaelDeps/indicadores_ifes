@@ -5,6 +5,7 @@ import {
   campusPadrao,
   campusSolicitado,
   construirQueryString,
+  resolverContextoFiltro,
 } from '../src/lib/ano';
 import type { Indicador } from '../src/data/indicadores';
 
@@ -101,5 +102,47 @@ describe('construirQueryString', () => {
 
   it('retorna string vazia quando nenhum parâmetro é fornecido', () => {
     expect(construirQueryString()).toBe('');
+  });
+});
+
+describe('resolverContextoFiltro', () => {
+  const campiValidos = [
+    { slug: 'todos', nome: '(Todos)' },
+    { slug: 'serra', nome: 'Serra' },
+    { slug: 'vitoria', nome: 'Vitória' },
+  ];
+  const anosValidos = [2026, 2025, 2024];
+
+  it('retorna os padrões (todos e ano mais recente) quando os parâmetros são nulos ou vazios', () => {
+    expect(resolverContextoFiltro(null, null, campiValidos, anosValidos)).toEqual({
+      campus: 'todos',
+      ano: 2026,
+    });
+    expect(resolverContextoFiltro('', '', campiValidos, anosValidos)).toEqual({
+      campus: 'todos',
+      ano: 2026,
+    });
+  });
+
+  it('retorna os valores requisitados quando válidos', () => {
+    expect(resolverContextoFiltro('serra', '2025', campiValidos, anosValidos)).toEqual({
+      campus: 'serra',
+      ano: 2025,
+    });
+    expect(resolverContextoFiltro('vitoria', '2024', campiValidos, anosValidos)).toEqual({
+      campus: 'vitoria',
+      ano: 2024,
+    });
+  });
+
+  it('degrada graciosamente para os padrões quando os parâmetros são desconhecidos ou inválidos', () => {
+    expect(resolverContextoFiltro('desconhecido', '9999', campiValidos, anosValidos)).toEqual({
+      campus: 'todos',
+      ano: 2026,
+    });
+    expect(resolverContextoFiltro('serra', 'invalido', campiValidos, anosValidos)).toEqual({
+      campus: 'serra',
+      ano: 2026,
+    });
   });
 });
