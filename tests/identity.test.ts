@@ -80,9 +80,12 @@ describe('identidade própria do site', () => {
   });
 
   it('não referencia fontes por CDN externo', () => {
+    // Única exceção: script do plugin de acessibilidade UserWay (integração intencional).
+    const urlPermitida = 'https://cdn.userway.org/widget.js';
     for (const arquivo of arquivosAstro('src/layouts')) {
       const urls = readFileSync(arquivo, 'utf-8').match(/https?:\/\/[^"'\s)]+/g) ?? [];
-      expect(urls, `URL externa em ${arquivo}`).toEqual([]);
+      const naoPermitidas = urls.filter((url) => !url.startsWith(urlPermitida));
+      expect(naoPermitidas, `URL externa em ${arquivo}`).toEqual([]);
     }
   });
 });

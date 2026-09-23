@@ -41,9 +41,9 @@ describe('Auditoria de Remoções e Elementos Descontinuados', () => {
     }
   });
 
-  it('não possui injeção de script do plugin UserWay no layout', () => {
+  it('possui injeção de script do plugin UserWay no layout', () => {
     const layout = readFileSync('src/layouts/BaseLayout.astro', 'utf-8');
-    expect(layout.toLowerCase()).not.toContain('userway');
+    expect(layout.toLowerCase()).toContain('userway');
   });
 
   it('não possui arquivos de dados legados nos pilares 2 e 3', () => {
