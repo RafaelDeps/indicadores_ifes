@@ -1,5 +1,6 @@
 import * as path from 'node:path';
 import { extrairZip } from './zip';
+import { slugificarCampus } from './slugificar';
 import {
   INDICADORES_META,
   PILARES,
@@ -37,15 +38,6 @@ export interface DatasetCompleto {
 }
 
 const CAMINHO_PADRAO_ZIP = path.resolve(process.cwd(), 'indicadores.zip');
-
-function slugificarCampus(nome: string): string {
-  return nome
-    .trim()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]/g, '');
-}
 
 /**
  * Lê todos os arquivos `pilar{N}_{campus}_{year}.json` de dentro de `indicadores.zip`
