@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pilar 3 - Produtividade e Propriedade Intelectual",
+  "type": "object",
+  "required": ["campus", "ano_referencia", "pilar", "indicadores"],
+  "additionalProperties": false,
+  "properties": {
+    "campus": { "type": "string" },
+    "ano_referencia": { "type": "integer" },
+    "pilar": { "type": "string", "const": "Produtividade e Propriedade Intelectual" },
+    "indicadores": {
+      "type": "object",
+      "required": ["PIPRO", "PIPROT", "PIPROTR"],
+      "additionalProperties": false,
+      "properties": {
+        "PIPRO": {
+          "type": "object",
+          "required": [
+            "descricao",
+            "NPB_producoes_academicas_bibliograficas",
+            "NPT_producoes_tecnicas_tecnologicas",
+            "total_producao_PIPRO"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "NPB_producoes_academicas_bibliograficas": { "type": "integer", "minimum": 0 },
+            "NPT_producoes_tecnicas_tecnologicas": { "type": "integer", "minimum": 0 },
+            "total_producao_PIPRO": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "PIPROT": {
+          "type": "object",
+          "required": ["descricao", "valores_totais_por_tipo", "total_acumulado_PIPROT"],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "valores_totais_por_tipo": {
+              "type": "object",
+              "required": [
+                "PA_patentes_e_modelos_utilidade",
+                "RM_registros_marca",
+                "DI_desenhos_industriais",
+                "C_cultivares",
+                "TC_topografia_circuitos",
+                "PC_programas_computador",
+                "OGM_organismos_geneticamente_modificados"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "PA_patentes_e_modelos_utilidade": { "type": "integer", "minimum": 0 },
+                "RM_registros_marca": { "type": "null" },
+                "DI_desenhos_industriais": { "type": "integer", "minimum": 0 },
+                "C_cultivares": { "type": "null" },
+                "TC_topografia_circuitos": { "type": "null" },
+                "PC_programas_computador": { "type": "integer", "minimum": 0 },
+                "OGM_organismos_geneticamente_modificados": { "type": "null" }
+              }
+            },
+            "total_acumulado_PIPROT": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "PIPROTR": {
+          "type": "object",
+          "required": ["descricao", "valores_totais_por_tipo", "total_transferidos_PIPROTR"],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "valores_totais_por_tipo": {
+              "type": "object",
+              "required": [
+                "CT_contratos_transferencia_tecnologia",
+                "CL_contratos_licenciamento",
+                "CC_contratos_cessao"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "CT_contratos_transferencia_tecnologia": { "type": "null" },
+                "CL_contratos_licenciamento": { "type": "null" },
+                "CC_contratos_cessao": { "type": "null" }
+              }
+            },
+            "total_transferidos_PIPROTR": { "type": "null" }
+          }
+        }
+      }
+    }
+  }
+}

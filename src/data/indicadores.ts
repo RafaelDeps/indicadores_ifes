@@ -1,8 +1,3 @@
-import ntpp from './ntpp.json';
-import qspp from './qspp.json';
-import pies from './pies.json';
-import picot from './picot.json';
-
 export interface Variavel {
   sigla: string;
   descricao: string;
@@ -430,7 +425,7 @@ export function validarIndicador(indicador: Indicador): void {
   }
 }
 
-function validarColecao(lista: Indicador[]): void {
+export function validarColecao(lista: Indicador[]): void {
   const slugs = new Set<string>();
   for (const indicador of lista) {
     validarIndicador(indicador);
@@ -439,23 +434,6 @@ function validarColecao(lista: Indicador[]): void {
     }
     slugs.add(indicador.slug);
   }
-}
-
-export const indicadores: Indicador[] = [ntpp, qspp, pies, picot].map(
-  (arquivo) =>
-    ({
-      ...arquivo,
-      pilarNumero: 1,
-      tipoValor: (arquivo.sigla === 'PIES' || arquivo.sigla === 'PICOT'
-        ? 'percentual'
-        : 'quantidade') as 'quantidade' | 'percentual',
-    }) as Indicador,
-);
-
-validarColecao(indicadores);
-
-export function obterIndicadorPorSlug(slug: string): Indicador | undefined {
-  return indicadores.find((indicador) => indicador.slug === slug);
 }
 
 export function obterPilarPorNumero(numero: 1 | 2 | 3): PilarInfo | undefined {

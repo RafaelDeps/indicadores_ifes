@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pilar 2 - Fomento e Conexão com o Ecossistema",
+  "type": "object",
+  "required": ["campus", "ano_referencia", "pilar", "indicadores"],
+  "additionalProperties": false,
+  "properties": {
+    "campus": { "type": "string" },
+    "ano_referencia": { "type": "integer" },
+    "pilar": { "type": "string", "const": "Fomento e Conexao com o Ecossistema" },
+    "indicadores": {
+      "type": "object",
+      "required": ["PINV", "PIPDI"],
+      "additionalProperties": false,
+      "properties": {
+        "PINV": {
+          "type": "object",
+          "required": [
+            "descricao",
+            "TAFPPI_valor_total_aporte_pesquisa",
+            "OCC_valor_orcamento_total_capital_custeio",
+            "percentual_calculado_PINV"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "TAFPPI_valor_total_aporte_pesquisa": { "type": "null" },
+            "OCC_valor_orcamento_total_capital_custeio": { "type": "null" },
+            "percentual_calculado_PINV": { "type": "null" }
+          }
+        },
+        "PIPDI": {
+          "type": "object",
+          "required": ["descricao", "NAPPCT_acordos_parceria_firmados", "total_acumulado_PIPDI"],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "NAPPCT_acordos_parceria_firmados": { "type": "null" },
+            "total_acumulado_PIPDI": { "type": "null" }
+          }
+        }
+      }
+    }
+  }
+}

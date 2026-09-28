@@ -1,5 +1,5 @@
 node_modules/
-dist/
+/dist/
 .astro/
 coverage/
 .env
@@ -7,3 +7,23 @@ coverage/
 *.log
 .DS_Store
 Thumbs.db
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.tmp-*
+
+# Governança de Dados (Padrão Horizon)
+data/canonical/*
+!data/canonical/.gitkeep
+
+# Pacotes parciais e de desenvolvimento de campus
+data/dist/indicadores_*.zip
+indicadores_*.zip
+
+# Zips soltos na raiz (rejeição total)
+/*.zip

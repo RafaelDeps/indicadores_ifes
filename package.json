@@ -8,9 +8,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "etl": "tsx src/etl/main.ts",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "etl": "python3 -m etl.main",
+    "test": "vitest run tests/web",
+    "test:web": "vitest run tests/web",
+    "test:watch": "vitest tests/web",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

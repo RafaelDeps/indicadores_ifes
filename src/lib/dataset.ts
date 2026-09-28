@@ -1,3 +1,4 @@
+import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { extrairZip } from './zip';
 import { slugificarCampus } from './slugificar';
@@ -37,12 +38,23 @@ export interface DatasetCompleto {
   entradas: RegistroEntradaZip[];
 }
 
-const CAMINHO_PADRAO_ZIP = path.resolve(process.cwd(), 'indicadores.zip');
+const CAMINHO_PADRAO_ZIP = path.resolve(process.cwd(), 'data/dist/indicadores.zip');
 
 /**
  * Lê todos os arquivos `pilar{N}_{campus}_{year}.json` de dentro de `indicadores.zip`
  */
 export function carregarDataset(caminhoZip = CAMINHO_PADRAO_ZIP): DatasetCompleto {
+  if (!fs.existsSync(caminhoZip)) {
+    console.warn(
+      `[Aviso] Pacote de indicadores não encontrado em ${caminhoZip}. Execute 'make etl' para gerar o dataset.`,
+    );
+    return {
+      campi: [{ slug: 'todos', nome: 'Todos os Campi', anos: [] }],
+      anos: [],
+      entradas: [],
+    };
+  }
+
   const mapaArquivos = extrairZip(caminhoZip);
   const entradas: RegistroEntradaZip[] = [];
   const campiMap = new Map<string, { nome: string; anos: Set<number> }>();

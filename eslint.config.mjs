@@ -3,7 +3,7 @@ import astro from 'eslint-plugin-astro';
 
 export default tseslint.config(
   {
-    ignores: ['dist/', '.astro/', 'node_modules/', 'coverage/'],
+    ignores: ['dist/', '.astro/', 'node_modules/', 'coverage/', '.venv/'],
   },
   ...tseslint.configs.recommended,
   ...astro.configs['flat/recommended'],
