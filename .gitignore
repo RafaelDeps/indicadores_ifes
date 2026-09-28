@@ -21,9 +21,18 @@ venv/
 data/canonical/*
 !data/canonical/.gitkeep
 
+
+# Dados (do campus Serra)
+data/raw/*
+!data/raw/.gitkeep
+
+
 # Pacotes parciais e de desenvolvimento de campus
 data/dist/indicadores_*.zip
 indicadores_*.zip
+
+# Relatório de execução do ETL de listagens (regerado a cada execução)
+data/reports/etl_listagens_run_report.md
 
 # Zips soltos na raiz (rejeição total)
 /*.zip

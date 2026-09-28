@@ -20,6 +20,16 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-etl.txt
+      # Princípio VI — testes-first no ETL em Python
+      - run: |
+          PYTHONPATH=. python -m flake8 etl tests/etl
+          PYTHONPATH=. python -m isort --check-only etl tests/etl
+          PYTHONPATH=. python -m black --check etl tests/etl
+          PYTHONPATH=. python -m pytest -q tests/etl
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test

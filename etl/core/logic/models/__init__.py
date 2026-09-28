@@ -19,6 +19,7 @@ from etl.core.logic.models.indicators import (
     AgregadosPilar2,
     AgregadosPilar3,
 )
+from etl.core.logic.models.listagens import EstudanteListagem, ListagensExtraidas
 
 __all__ = [
     "RefCampus",
@@ -37,4 +38,6 @@ __all__ = [
     "AgregadosPilar2",
     "AgregadosPilar3",
     "AgregadosCampus",
+    "EstudanteListagem",
+    "ListagensExtraidas",
 ]

@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from etl.core.logic.calculators.papeis import (
+    eh_estudante_em_pesquisa,
+    eh_pesquisador_em_pesquisa,
+)
 from etl.core.logic.models import (
     AgregadosCampus,
     AgregadosPilar1,
@@ -128,18 +132,8 @@ def agregar_indicadores(
                     papeis = membro.roles
                     papeis_str = " ".join(papeis).lower()
 
-                    eh_pesquisador = (
-                        (pessoa and pessoa.classification == "researcher")
-                        or "coord" in papeis_str
-                        or "pesquisador" in papeis_str
-                        or "researcher" in papeis_str
-                    )
-                    eh_estudante = (
-                        (pessoa and pessoa.classification == "student")
-                        or "student" in papeis_str
-                        or "estudante" in papeis_str
-                        or "bolsista" in papeis_str
-                    )
+                    eh_pesquisador = eh_pesquisador_em_pesquisa(pessoa, papeis_str)
+                    eh_estudante = eh_estudante_em_pesquisa(pessoa, papeis_str)
 
                     if eh_pesquisador:
                         staff_unicos[esc][ano].add(membro.person_id)

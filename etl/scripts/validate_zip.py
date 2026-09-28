@@ -15,6 +15,7 @@ if raiz_repo not in sys.path:
 
 from etl.adapters.sinks.zip_indicadores_sink import validar_arquivos_pilar  # noqa: E402
 from etl.core.logic.models import RegistroPilarJson  # noqa: E402
+from etl.flows.listagens_flow import CAMPOS_DERIVAVEIS_LISTAGENS  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -43,7 +44,10 @@ def main(argv: list[str] | None = None) -> int:
                 conteudo = zf.read(nome).decode("utf-8")
                 registros.append(RegistroPilarJson(nome=nome, conteudo=conteudo))
 
-        validar_arquivos_pilar(registros)
+        # Como o pacote pode ser o canônico mesclado pelas listagens (merge-listagens),
+        # NTE_total_estudantes_matriculados e NTECPP_cotistas_em_pesquisa são
+        # aceitos preenchidos (int >= 0) — demais campos não coletáveis devem ser null.
+        validar_arquivos_pilar(registros, campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)
         print(
             f"Sucesso: todos os {len(registros)} arquivos atendem rigorosamente ao contrato CONIF."
         )
