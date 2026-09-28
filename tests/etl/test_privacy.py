@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import io
 import json
 import zipfile
 from pathlib import Path
@@ -14,9 +15,20 @@ def test_zero_pii_em_indicadores_zip() -> None:
     caminho_canonica = Path("data/canonical/exports_canonical.zip")
     if caminho_canonica.exists():
         with zipfile.ZipFile(caminho_canonica) as zf_can:
-            pesquisadores = json.loads(
-                zf_can.read("researchers_canonical.json").decode("utf-8")
-            )
+            # O pacote canônico pode ter o export aninhado (exports_canonical.zip
+            # dentro de outro zip) ou flat (JSONs na raiz); detecta o layout.
+            zf_fonte = zf_can
+            if "exports_canonical.zip" in zf_can.namelist():
+                zf_fonte = zipfile.ZipFile(
+                    io.BytesIO(zf_can.read("exports_canonical.zip"))
+                )
+            try:
+                pesquisadores = json.loads(
+                    zf_fonte.read("researchers_canonical.json").decode("utf-8")
+                )
+            finally:
+                if zf_fonte is not zf_can:
+                    zf_fonte.close()
             nomes_pesquisadores = [
                 p["name"] for p in pesquisadores[:50] if len(p.get("name", "")) > 5
             ]

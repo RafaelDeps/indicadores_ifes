@@ -26,6 +26,14 @@ def campus_serra() -> Campus:
 
 
 @pytest.fixture
+def pasta_listagens(tmp_path: Path) -> Path:
+    """Diretório temporário para os arquivos de listagem dos testes."""
+    pasta = tmp_path / "listagens"
+    pasta.mkdir(parents=True, exist_ok=True)
+    return pasta
+
+
+@pytest.fixture
 def campus_vitoria() -> Campus:
     return Campus(id=2, name="Vitória")
 

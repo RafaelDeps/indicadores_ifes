@@ -10,9 +10,9 @@ class AgregadosPilar1:
     ntpp_projetos_pesquisa_ativos: int = 0
     qspp_docentes_pesquisa: int = 0
     nep_estudantes_pesquisa: int = 0
-    nte_total_estudantes_matriculados: None = None
+    nte_total_estudantes_matriculados: int | None = None
     percentual_calculado_pies: None = None
-    ntecpp_cotistas_pesquisa: None = None
+    ntecpp_cotistas_pesquisa: int | None = None
     percentual_calculado_picot: None = None
 
 

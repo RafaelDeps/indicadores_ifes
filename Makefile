@@ -9,7 +9,7 @@ PYTHON := PYTHONPATH=. $(PYTHON_BIN)
 CAMPUS ?=
 SAIDA ?=
 
-.PHONY: help setup install dev build preview etl etl-campus test test-etl test-web test-watch lint format format-check check clean
+.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens test test-etl test-web test-watch lint format format-check check clean
 
 help: ## Exibe os comandos disponíveis
 	@echo "Indicadores IFES - Comandos disponíveis"
@@ -45,6 +45,12 @@ etl-campus: ## Executa o ETL para apenas 1 campus em zip dedicado (padrão: CAMP
 	saida="$${SAIDA:-data/dist/indicadores_$$slug.zip}"; \
 	echo "Executando ETL em Python para o campus: $$campus (saída: $$saida)"; \
 	$(PYTHON) -m etl.main --campus "$$campus" --saida "$$saida"
+
+etl-listagens: ## Executa o ETL das listagens de matrícula gerando data/dist/indicadores_listagens.zip (Pilar 1: NTE e cotistas)
+	$(PYTHON) -m etl.main_listagens
+
+merge-listagens: ## Integra NTE/NTECPP das listagens em data/dist/indicadores.zip preservando todos os demais campos canônicos
+	$(PYTHON) -m etl.scripts.merge_listagens_indicadores --listagens data/dist/indicadores_listagens.zip --canonical data/dist/indicadores.zip --saida data/dist/indicadores.zip
 
 test: test-etl test-web ## Executa a suíte completa de testes automatizados (pytest e vitest)
 

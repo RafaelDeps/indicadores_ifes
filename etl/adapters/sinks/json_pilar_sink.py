@@ -44,12 +44,12 @@ def _montar_pilar1(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:
             "PIES": {
                 "descricao": DESCRICOES["PIES"],
                 "NEP_estudantes_em_pesquisa": p1.nep_estudantes_pesquisa,
-                "NTE_total_estudantes_matriculados": None,
+                "NTE_total_estudantes_matriculados": p1.nte_total_estudantes_matriculados,
                 "percentual_calculado_PIES": None,
             },
             "PICOT": {
                 "descricao": DESCRICOES["PICOT"],
-                "NTECPP_cotistas_em_pesquisa": None,
+                "NTECPP_cotistas_em_pesquisa": p1.ntecpp_cotistas_pesquisa,
                 "NEP_total_estudantes_em_pesquisa": p1.nep_estudantes_pesquisa,
                 "percentual_calculado_PICOT": None,
             },

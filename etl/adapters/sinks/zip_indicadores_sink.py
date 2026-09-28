@@ -47,13 +47,22 @@ def _valor_valido(valor: Any) -> bool:
     return isinstance(valor, int) and valor >= 0
 
 
-def validar_arquivos_pilar(arquivos: list[RegistroPilarJson]) -> None:
+def validar_arquivos_pilar(
+    arquivos: list[RegistroPilarJson],
+    campos_derivaveis: frozenset[str] = frozenset(),
+) -> None:
     """
     Executa a validação do contrato de saída para todos os arquivos JSON gerados:
     - Nomenclatura pilar{N}_{campus}_{year}.json
     - Parse JSON válido
     - Cabeçalhos obrigatórios e conformidade com o nome do arquivo
     - Fidelidade estrita a nulos (Princípio III) e valores numéricos não-negativos
+
+    ``campos_derivaveis``: conjunto de campos (de ``CAMPOS_QUE_DEVEM_SER_NULOS``)
+    que, excepcionalmente, PODEM ser preenchidos nesta execução (por exemplo,
+    ``NTE_total_estudantes_matriculados`` no fluxo das listagens). Por padrão
+    (conjunto vazio), o contrato exige null em todos os campos não coletáveis —
+    comportamento atual do pipeline canônico, inalterado.
     """
     violacoes: list[str] = []
 
@@ -127,7 +136,11 @@ def validar_arquivos_pilar(arquivos: list[RegistroPilarJson]) -> None:
                             )
                     continue
 
-                if campo in CAMPOS_QUE_DEVEM_SER_NULOS and valor is not None:
+                if (
+                    campo in CAMPOS_QUE_DEVEM_SER_NULOS
+                    and campo not in campos_derivaveis
+                    and valor is not None
+                ):
                     violacoes.append(
                         f"{nome}: violação de fidelidade — campo não coletável "
                         f"'{sigla}.{campo}' deve ser null (recebeu {valor})"
@@ -150,11 +163,16 @@ def validar_arquivos_pilar(arquivos: list[RegistroPilarJson]) -> None:
 class ZipIndicadoresSink(ISink):
     """Adaptador de persistência atômica e determinística no pacote indicadores.zip."""
 
-    def __init__(self, caminho_zip: Path | str) -> None:
+    def __init__(
+        self,
+        caminho_zip: Path | str,
+        campos_derivaveis: frozenset[str] = frozenset(),
+    ) -> None:
         self.caminho_zip = Path(caminho_zip)
+        self.campos_derivaveis = campos_derivaveis
 
     def load(self, arquivos: list[RegistroPilarJson]) -> None:
-        validar_arquivos_pilar(arquivos)
+        validar_arquivos_pilar(arquivos, self.campos_derivaveis)
 
         self.caminho_zip.parent.mkdir(parents=True, exist_ok=True)
         nome_tmp = (
