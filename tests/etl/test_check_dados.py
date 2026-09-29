@@ -146,6 +146,10 @@ def test_check_dados_canonico_mais_novo_aviso(tmp_path: Path, capsys) -> None:
     _escrever_zip(pacote, [_registro_pilar1()])
     canonical = _arquivo(tmp_path / "exports_canonical.zip", T0 + 100)
     listagens = _arquivo(tmp_path / "listagens.zip", T0 - 1000)
+    # `--raw` explícito: sem ele a pasta padrão `data/raw` do repositório seria
+    # lida, e a presença de planilhas no checkout local (gitignored) decides se
+    # sai a linha INFO: — o teste ficaria verde aqui e vermelho no CI.
+    planilha = _arquivo(tmp_path / "raw" / "listagem_2025_1.xlsx", T0 - 1000)
     os.utime(pacote, (T0, T0))
 
     rc = main(
@@ -156,6 +160,8 @@ def test_check_dados_canonico_mais_novo_aviso(tmp_path: Path, capsys) -> None:
             str(canonical),
             "--listagens",
             str(listagens),
+            "--raw",
+            str(planilha.parent),
         ]
     )
 
@@ -176,6 +182,8 @@ def test_check_dados_listagens_mais_novo_aviso_proveniencia(
     _escrever_zip(pacote, [_registro_pilar1()])
     canonical = _arquivo(tmp_path / "exports_canonical.zip", T0 - 1000)
     listagens = _arquivo(tmp_path / "listagens.zip", T0 + 500)
+    # `--raw` explícito: ver comentário no cenário 3.
+    planilha = _arquivo(tmp_path / "raw" / "listagem_2025_1.xlsx", T0 - 1000)
     os.utime(pacote, (T0, T0))  # listagens mais recente que o pacote
 
     rc = main(
@@ -186,6 +194,8 @@ def test_check_dados_listagens_mais_novo_aviso_proveniencia(
             str(canonical),
             "--listagens",
             str(listagens),
+            "--raw",
+            str(planilha.parent),
         ]
     )
 
