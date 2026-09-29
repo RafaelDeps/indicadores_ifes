@@ -69,11 +69,11 @@ Este documento consolida as decisões técnicas e padrões de arquitetura para r
 
 ## Constitution Alignment & Compliance Matrix
 
-| Princípio                        | Requisito da Constituição                              | Como o Design Garante                                                                                            |
-| :------------------------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
-| **I. Simplicity**                | Estrutura padrão Astro em `src/`, dependências mínimas | Frontend permanece intacto em `src/`; ETL usa apenas biblioteca padrão Python em tempo de execução.              |
-| **II. Test-First**               | Vitest para web; testes antes da implementação         | Separação em `tests/web/` e `tests/etl/` com 100% de cobertura prévia e comandos dedicados.                      |
-| **III. Fidelity to Report Data** | Fidelidade estrita a nulos; nada inventado ou estimado | Validador do sink garante nulls estritos para métricas não coletadas; todos os arquivos JSON (quantidade variável) mantêm paridade exata.   |
-| **IV. Aggregated Data Only**     | LGPD rigorosa; sem nomes de alunos ou CPFs no Git      | Relatórios em `data/reports/` e JSONs em `data/dist/` contêm estritamente dados agregados e contagens numéricas. |
-| **V. Basic Quality**             | Zero erros de lint e formatação; pt-BR                 | `pyproject.toml` e linters unificados em `make check` (flake8, eslint, black, prettier).                         |
-| **VI. Automated Deployment**     | Deploy automático via GitHub Actions após gates        | `data/dist/indicadores.zip` versionado permite que o workflow do GitHub Pages execute puramente com Node.js 20.  |
+| Princípio                        | Requisito da Constituição                              | Como o Design Garante                                                                                                                     |
+| :------------------------------- | :----------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
+| **I. Simplicity**                | Estrutura padrão Astro em `src/`, dependências mínimas | Frontend permanece intacto em `src/`; ETL usa apenas biblioteca padrão Python em tempo de execução.                                       |
+| **II. Test-First**               | Vitest para web; testes antes da implementação         | Separação em `tests/web/` e `tests/etl/` com 100% de cobertura prévia e comandos dedicados.                                               |
+| **III. Fidelity to Report Data** | Fidelidade estrita a nulos; nada inventado ou estimado | Validador do sink garante nulls estritos para métricas não coletadas; todos os arquivos JSON (quantidade variável) mantêm paridade exata. |
+| **IV. Aggregated Data Only**     | LGPD rigorosa; sem nomes de alunos ou CPFs no Git      | Relatórios em `data/reports/` e JSONs em `data/dist/` contêm estritamente dados agregados e contagens numéricas.                          |
+| **V. Basic Quality**             | Zero erros de lint e formatação; pt-BR                 | `pyproject.toml` e linters unificados em `make check` (flake8, eslint, black, prettier).                                                  |
+| **VI. Automated Deployment**     | Deploy automático via GitHub Actions após gates        | `data/dist/indicadores.zip` versionado permite que o workflow do GitHub Pages execute puramente com Node.js 20.                           |

@@ -14,13 +14,13 @@ O ETL Python é executado como módulo: `python3 -m etl.main [OPTIONS]`.
 
 ### Argumentos e Opções
 
-| Opção       | Flag | Tipo      | Padrão                                                         | Descrição                                                                                                                                             |
-| :---------- | :--- | :-------- | :------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--entrada` | `-i` | Caminho   | `exports_canonical.zip`                                       | Caminho do pacote ZIP canônico de entrada.                                                                                                            |
-| `--saida`   | `-o` | Caminho   | `indicadores.zip` (ou `indicadores_<campus>.zip` se filtrado) | Caminho do pacote ZIP de saída gerado.                                                                                                                 |
+| Opção       | Flag | Tipo      | Padrão                                                        | Descrição                                                                                                                                                           |
+| :---------- | :--- | :-------- | :------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--entrada` | `-i` | Caminho   | `exports_canonical.zip`                                       | Caminho do pacote ZIP canônico de entrada.                                                                                                                          |
+| `--saida`   | `-o` | Caminho   | `indicadores.zip` (ou `indicadores_<campus>.zip` se filtrado) | Caminho do pacote ZIP de saída gerado.                                                                                                                              |
 | `--campus`  | `-c` | String    | `None` (processa todos os campi do export + `todos`)          | Campus específico a processar. Aceita o nome oficial (ex.: `Serra`, `Vitória`) ou o slug (ex.: `serra`, `vitoria`). Insensível a maiúsculas/minúsculas e a acentos. |
-| `--anos`    | `-a` | List[int] | `[2024, 2025, 2026]`                                          | Lista de anos civis-alvo separados por vírgula.                                                                                                       |
-| `--help`    | `-h` | Booleano  | -                                                             | Exibe a ajuda de uso e sai com status 0.                                                                                                              |
+| `--anos`    | `-a` | List[int] | `[2024, 2025, 2026]`                                          | Lista de anos civis-alvo separados por vírgula.                                                                                                                     |
+| `--help`    | `-h` | Booleano  | -                                                             | Exibe a ajuda de uso e sai com status 0.                                                                                                                            |
 
 ### Variáveis de Ambiente
 

@@ -219,6 +219,7 @@ toggles absent) and by running the contrast and register audits.
   > download CSV/JSON foi **removido** pela spec 004 (FR-009/FR-010, "botões
   > de download CSV/JSON descontinuados") e reafirmado pela 005. A regra
   > vigente no frontend atual é a ausência desses botões.
+
 - **FR-011**: The in-app accessibility control panel MUST be removed
   entirely; semantic HTML, labels, landmarks and WCAG AA color contrast in
   the base styles MUST be preserved. The site keeps light and dark
