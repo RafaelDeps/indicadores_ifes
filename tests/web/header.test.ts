@@ -33,4 +33,24 @@ describe('Cabeçalho Fixo, Abas de Pilares e Gaveta Móvel', () => {
     expect(layout).toMatch(/aria-modal=["']true["']/);
     expect(layout).toMatch(/drawer-backdrop/);
   });
+
+  it('[US1] contém seletor de campus no cabeçalho com rótulo acessível e mapeamento de opções', () => {
+    expect(layout).toContain('cabecalho-filtros');
+    expect(layout).toMatch(/select[^>]*name=["']campus["']/);
+    expect(layout).toMatch(/aria-label=["'][^"']*campus/i);
+    expect(layout).toContain('campiOpcoes.map');
+  });
+
+  it('[US2] contém seletor de ano no cabeçalho com rótulo acessível e ordenação decrescente', () => {
+    expect(layout).toMatch(/select[^>]*name=["']ano["']/);
+    expect(layout).toMatch(/aria-label=["'][^"']*ano/i);
+  });
+
+  it('[US3] contém seletores móveis na gaveta (drawer) antes da navegação', () => {
+    expect(layout).toContain('drawer-filtros');
+    const indiceDrawerFiltros = layout.indexOf('drawer-filtros');
+    const indiceDrawerNav = layout.indexOf('drawer-nav');
+    expect(indiceDrawerFiltros).toBeGreaterThan(0);
+    expect(indiceDrawerNav).toBeGreaterThan(indiceDrawerFiltros);
+  });
 });

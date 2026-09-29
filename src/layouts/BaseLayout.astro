@@ -1,5 +1,7 @@
 ---
 import HeaderMarca from '../components/HeaderMarca.astro';
+import { obterCampiParaSelect, obterAnosParaSelect } from '../lib/dataset';
+import { resolverContextoFiltro } from '../lib/ano';
 import '../styles/tokens.css';
 
 interface Props {
@@ -15,6 +17,12 @@ const isHome = pathname === '/' || pathname === '';
 const isPilar1 = pathname.startsWith('/pilar-1');
 const isPilar2 = pathname.startsWith('/pilar-2');
 const isPilar3 = pathname.startsWith('/pilar-3');
+
+const campiOpcoes = obterCampiParaSelect();
+const anosOpcoes = obterAnosParaSelect();
+const urlCampus = Astro.url.searchParams.get('campus');
+const urlAno = Astro.url.searchParams.get('ano');
+const contextoInicial = resolverContextoFiltro(urlCampus, urlAno, campiOpcoes, anosOpcoes);
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -51,6 +59,37 @@ const fontFaceCss = pesos
         //   document.documentElement.setAttribute('data-theme', 'escuro');
         // }
       })();
+    </script>
+
+    <!-- Plugin de acessibilidade UserWay -->
+    <script is:inline src="https://cdn.userway.org/widget.js" data-account="Jmxwgqf2MY"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ETH675FGB0"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args) {
+        dataLayer.push(args);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-ETH675FGB0');
+    </script>
+
+    <!-- Microsoft Clarity -->
+    <script is:inline type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function (...args) {
+            (c[a].q = c[a].q || []).push(args);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', 'ymumc7n161');
     </script>
   </head>
   <body>
@@ -92,6 +131,44 @@ const fontFaceCss = pesos
           </a>
         </nav>
 
+        <div class="cabecalho-filtros" role="group" aria-label="Filtros de indicadores">
+          <div class="campo-filtro">
+            <label for="filtro-campus-topo" class="sr-only">Campus do IFES</label>
+            <select
+              id="filtro-campus-topo"
+              name="campus"
+              class="seletor-cabecalho"
+              aria-label="Selecionar campus do IFES"
+            >
+              {
+                campiOpcoes.map((c) => (
+                  <option value={c.slug} selected={c.slug === contextoInicial.campus}>
+                    {c.nome}
+                  </option>
+                ))
+              }
+            </select>
+          </div>
+
+          <div class="campo-filtro">
+            <label for="filtro-ano-topo" class="sr-only">Ano de referência</label>
+            <select
+              id="filtro-ano-topo"
+              name="ano"
+              class="seletor-cabecalho"
+              aria-label="Selecionar ano de referência"
+            >
+              {
+                anosOpcoes.map((ano) => (
+                  <option value={ano} selected={ano === contextoInicial.ano}>
+                    {ano}
+                  </option>
+                ))
+              }
+            </select>
+          </div>
+        </div>
+
         <button
           class="btn-menu-drawer"
           aria-label="Abrir menu de navegação"
@@ -131,6 +208,46 @@ const fontFaceCss = pesos
             <span class="drawer-titulo">Menu de Navegação</span>
             <button class="btn-fechar-drawer" aria-label="Fechar menu">✕</button>
           </div>
+
+          <!-- Filtros de Seleção Móvel -->
+          <div class="drawer-filtros" role="group" aria-label="Filtros de visualização móvel">
+            <div class="drawer-campo">
+              <label for="filtro-campus-drawer" class="drawer-label">Campus:</label>
+              <select
+                id="filtro-campus-drawer"
+                name="campus"
+                class="seletor-drawer"
+                aria-label="Selecionar campus do IFES"
+              >
+                {
+                  campiOpcoes.map((c) => (
+                    <option value={c.slug} selected={c.slug === contextoInicial.campus}>
+                      {c.nome}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+
+            <div class="drawer-campo">
+              <label for="filtro-ano-drawer" class="drawer-label">Ano:</label>
+              <select
+                id="filtro-ano-drawer"
+                name="ano"
+                class="seletor-drawer"
+                aria-label="Selecionar ano de referência"
+              >
+                {
+                  anosOpcoes.map((ano) => (
+                    <option value={ano} selected={ano === contextoInicial.ano}>
+                      {ano}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+          </div>
+
           <nav class="drawer-nav" aria-label="Menu móvel de pilares">
             <a
               href="/"
@@ -316,6 +433,84 @@ const fontFaceCss = pesos
           true,
         );
       })();
+
+      /* Sincronização e interação dos seletores de Campus e Ano (Desktop e Mobile Drawer) */
+      (function () {
+        const selectCampusTopo = document.getElementById('filtro-campus-topo');
+        const selectAnoTopo = document.getElementById('filtro-ano-topo');
+        const selectCampusDrawer = document.getElementById('filtro-campus-drawer');
+        const selectAnoDrawer = document.getElementById('filtro-ano-drawer');
+
+        function sincronizarValoresDaUrl() {
+          const params = new URLSearchParams(window.location.search);
+          const campus = params.get('campus');
+          const ano = params.get('ano');
+
+          if (campus) {
+            if (selectCampusTopo) selectCampusTopo.value = campus;
+            if (selectCampusDrawer) selectCampusDrawer.value = campus;
+          }
+          if (ano) {
+            if (selectAnoTopo) selectAnoTopo.value = ano;
+            if (selectAnoDrawer) selectAnoDrawer.value = ano;
+          }
+        }
+
+        function aplicarFiltro(novoCampus, novoAno) {
+          const url = new URL(window.location.href);
+          if (novoCampus && novoCampus !== 'todos') {
+            url.searchParams.set('campus', novoCampus);
+          } else {
+            url.searchParams.delete('campus');
+          }
+          if (novoAno) {
+            url.searchParams.set('ano', String(novoAno));
+          } else {
+            url.searchParams.delete('ano');
+          }
+          window.location.href = url.pathname + url.search + url.hash;
+        }
+
+        function sincronizarPar(topo, drawer, onChange) {
+          if (topo) {
+            topo.addEventListener('change', function () {
+              if (drawer) drawer.value = topo.value;
+              onChange(topo.value);
+            });
+          }
+          if (drawer) {
+            drawer.addEventListener('change', function () {
+              if (topo) topo.value = drawer.value;
+              onChange(drawer.value);
+            });
+          }
+        }
+
+        sincronizarPar(selectCampusTopo, selectCampusDrawer, function (campusVal) {
+          const anoAtual = selectAnoTopo
+            ? selectAnoTopo.value
+            : selectAnoDrawer
+              ? selectAnoDrawer.value
+              : undefined;
+          aplicarFiltro(campusVal, anoAtual);
+        });
+
+        sincronizarPar(selectAnoTopo, selectAnoDrawer, function (anoVal) {
+          const campusAtual = selectCampusTopo
+            ? selectCampusTopo.value
+            : selectCampusDrawer
+              ? selectCampusDrawer.value
+              : undefined;
+          aplicarFiltro(campusAtual, anoVal);
+        });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', sincronizarValoresDaUrl);
+        } else {
+          sincronizarValoresDaUrl();
+        }
+        window.addEventListener('popstate', sincronizarValoresDaUrl);
+      })();
     </script>
   </body>
 </html>
@@ -347,7 +542,7 @@ const fontFaceCss = pesos
     z-index: 50;
     background: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
-    padding: 0.75rem 1.25rem;
+    padding: 0.3rem 1.25rem;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   }
 
@@ -383,13 +578,105 @@ const fontFaceCss = pesos
     gap: 0.35rem;
   }
 
+  .cabecalho-filtros {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   @media (min-width: 768px) {
     .nav-pilares {
+      display: flex;
+    }
+    .cabecalho-filtros {
       display: flex;
     }
     .btn-menu-drawer {
       display: none;
     }
+  }
+
+  .campo-filtro {
+    display: flex;
+    align-items: center;
+  }
+
+  .seletor-cabecalho {
+    padding: 0.35rem 0.65rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .seletor-cabecalho:hover {
+    border-color: var(--color-primary);
+  }
+
+  .seletor-cabecalho:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Drawer filtros móveis */
+  .drawer-filtros {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .drawer-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .drawer-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .seletor-drawer {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .seletor-drawer:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .nav-aba {
