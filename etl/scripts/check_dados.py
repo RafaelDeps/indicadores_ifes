@@ -36,7 +36,7 @@ def criar_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Valida o contrato do pacote indicadores.zip e alerta sobre frescor "
-            "por mtime (canônico mais novo, listagens antigas, planilhas novas)."
+            "por mtime (canônico mais novo, listagens mais novas, planilhas novas)."
         )
     )
     parser.add_argument(
@@ -136,10 +136,11 @@ def main(argv: list[str] | None = None) -> int:
         ausentes.append(rotulo_canonical)
 
     if caminho_listagens is not None and caminho_listagens.exists():
-        if mtime_pacote > caminho_listagens.stat().st_mtime:
+        if caminho_listagens.stat().st_mtime > mtime_pacote:
             sys.stderr.write(
-                "AVISO: proveniência: NTE/NTECPP do pacote podem vir de execução "
-                "anterior (zip de listagens mais antigo).\n"
+                "AVISO: proveniência: o zip de listagens é mais recente que o "
+                "pacote — o merge não foi reexecutado, então NTE/NTECPP podem "
+                "vir de execução anterior.\n"
             )
     else:
         ausentes.append(rotulo_listagens)

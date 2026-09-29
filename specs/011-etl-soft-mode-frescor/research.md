@@ -75,7 +75,9 @@ preenchidos (pacote pós-merge) e exige `null` nos demais campos não coletávei
 (importa `validar_arquivos_pilar` + `CAMPOS_DERIVAVEIS_LISTAGENS`) — zero
 duplicação de contrato — e adiciona os três avisos de frescor por `mtime`
 (FR-008): canônico mais novo que o pacote; `indicadores_listagens.zip` mais
-antigo que o pacote (proveniência do merge — o aviso crítico); planilha
+novo que o pacote (proveniência do merge — o aviso crítico, ver
+[contracts/check-dados.md §5.1](contracts/check-dados.md) para o sentido da
+condição e sua cegueira conhecida); planilha
 `data/raw/listagem_*.xlsx` mais nova que o pacote.
 
 **Rationale**: um script, duas responsabilidades já documentadas (validação +

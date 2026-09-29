@@ -59,7 +59,8 @@ Esperado:
 | Pacote íntegro e em dia (entradas presentes, nenhum mtime anterior ao pacote) | exit `0`, sem avisos e **sem** linha `INFO:` (silêncio)                            |
 | Apenas algumas entradas ausentes (ex.: sem zip de listagens)                  | comparação feita só para as presentes; linha `INFO:` lista as ausentes; exit `0`   |
 | `exports_canonical.zip` com mtime > pacote                                    | `AVISO:` "possivelmente desatualizado", exit `0`                                   |
-| `indicadores_listagens.zip` mais antigo que o pacote                          | `AVISO:` de proveniência NTE/NTECPP, exit `0`                                      |
+| `indicadores_listagens.zip` mais novo que o pacote                            | `AVISO:` de proveniência (merge não reexecutado), exit `0`                         |
+| Pacote mais novo que as listagens (ordem normal do `make dados`)              | silêncio — sem `AVISO:` de proveniência                                            |
 | Planilha `data/raw/listagem_*.xlsx` mais nova que o pacote                    | `AVISO:` "não incorporada", exit `0`                                               |
 | Contrato violado (corromper uma chave de um JSON do zip)                      | `ERRO:` + exit `1`                                                                 |
 

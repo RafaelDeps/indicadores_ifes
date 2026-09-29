@@ -254,15 +254,20 @@ silenciosa de campos misturados.
 - **FR-008**: As regras de frescor do `check-dados` DEVERÃO comparar `mtime`
   e avisar quando: (a) `exports_canonical.zip` é mais novo que
   `indicadores.zip` → pacote "possivelmente desatualizado"; (b)
-  `indicadores_listagens.zip` é mais antigo que `indicadores.zip` → NTE/NTECPP
-  podem vir de execução anterior (proveniência do merge); (c) qualquer
-  `data/raw/listagem_*.xlsx` é mais nova que `indicadores.zip` → há planilha
-  não incorporada. Entradas ausentes DEVERÃO ser ignoradas (sem comparação,
-  sem falso alarme) **e** listadas em uma **linha única `INFO:`** no stderr,
-  deixando explícito que a frescor não foi avaliada para elas (apenas o
-  contrato foi validado); a linha `INFO:` é informativa, nunca um `AVISO:`, e
-  DEVE ser emitida somente quando houver pelo menos uma entrada de frescor
-  ausente (todas presentes ⇒ silêncio).
+  `indicadores_listagens.zip` é mais novo que `indicadores.zip` → o merge não
+  foi reexecutado e os NTE/NTECPP publicados não vêm da execução atual das
+  listagens (proveniência do merge); (c) qualquer `data/raw/listagem_*.xlsx` é
+  mais nova que `indicadores.zip` → há planilha não incorporada. Entradas
+  ausentes DEVERÃO ser ignoradas (sem comparação, sem falso alarme) **e**
+  listadas em uma **linha única `INFO:`** no stderr, deixando explícito que a
+  frescor não foi avaliada para elas (apenas o contrato foi validado); a linha
+  `INFO:` é informativa, nunca um `AVISO:`, e DEVE ser emitida somente quando
+  houver pelo menos uma entrada de frescor ausente (todas presentes ⇒ silêncio).
+  A condição (b) é `>` estrita e não pode acusar proveniência na ordem saudável
+  do `make dados` (`etl` → `etl-listagens` → `merge-listagens`), na qual o merge
+  escreve o pacote por último e o deixa necessariamente mais novo que as
+  listagens; a cegueira decorrente está registrada em
+  [contracts/check-dados.md §5.1](contracts/check-dados.md).
 - **FR-009**: O sistema DEVE documentar e respeitar a limitação do mtime: o
   Git **não preserva mtimes**, portanto a checagem de frescor só é significativa
   na máquina onde o ETL gerou o pacote; em clone limpo/CI o `check-dados`
@@ -300,7 +305,10 @@ silenciosa de campos misturados.
   aborta na primeira etapa com `ERRO:` + exit 1 (fail-fast do contrato 006).
 - **SC-004**: `make check-dados`: contrato violado → exit 1; pacote em dia →
   exit 0 sem avisos de frescor; canônico mais novo → exit 0 com `AVISO:`;
-  listagens mais antigo que o pacote → exit 0 com `AVISO:` de proveniência.
+  listagens mais novo que o pacote → exit 0 com `AVISO:` de proveniência. Na
+  ordem saudável do `make dados` (pacote mais novo que as listagens, por conta
+  do merge por último) o `check-dados` é **silencioso** — sem `AVISO:` de
+  proveniência espúrio.
 - **SC-005**: Nenhum cenário soft produz pacote com campos de execuções
   diferentes: se o canônico rodou e o listagens foi pulado, NTE/NTECPP ficam
   `null` (Princípio III) — nunca o valor de uma execução anterior.

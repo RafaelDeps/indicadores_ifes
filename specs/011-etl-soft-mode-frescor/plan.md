@@ -18,9 +18,10 @@ dados, sem nova dependência e sem mudar o contrato de saída:
 2. **`make check-dados`** → `etl/scripts/check_dados.py`: valida o contrato do
    pacote (reusa `validar_arquivos_pilar` + `CAMPOS_DERIVAVEIS_LISTAGENS`;
    violação ⇒ `ERRO:` + exit 1) e emite `AVISO:` de frescor por `mtime` (exit
-   0): canônico mais novo que o pacote; `indicadores_listagens.zip` mais antigo
-   que o pacote (proveniência NTE/NTECPP); planilha `data/raw/listagem_*.xlsx`
-   mais nova que o pacote. Entradas ausentes não geram comparação.
+   0): canônico mais novo que o pacote; `indicadores_listagens.zip` mais novo
+   que o pacote (proveniência NTE/NTECPP — merge não reexecutado); planilha
+   `data/raw/listagem_*.xlsx` mais nova que o pacote. Entradas ausentes não
+   geram comparação.
 3. **`make dados`** (target único): `etl` → `etl-listagens` →
    `merge-listagens` em sequência, parando no primeiro erro, repassando o soft
    via `SOFT=1`.

@@ -65,25 +65,25 @@ indicadores_ifes/
 
 A automação do projeto é centralizada no `Makefile`:
 
-| Comando                        | Finalidade                                                                                                                |
-| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| `make setup`                   | Cria o ambiente virtual `.venv`, instala dependências Python e Node.js                                                    |
-| `make etl`                     | Executa o pipeline Python lendo de `data/canonical/` e gerando `data/dist/indicadores.zip`                                |
-| `make etl-campus CAMPUS=Serra` | Executa o pipeline para um campus individual gerando `data/dist/indicadores_<slug>.zip`                                   |
-| `make etl-listagens`           | Executa o ETL das listagens de matrícula gerando `data/dist/indicadores_listagens.zip` (Pilar 1: NTE e cotistas)          |
-| `make merge-listagens`         | Integra NTE/NTECPP das listagens em `data/dist/indicadores.zip` preservando todos os demais campos canônicos              |
-| `make dados`                   | Orquestra o pacote completo na ordem `etl` → `etl-listagens` → `merge-listagens`, parando no 1º erro                      |
-| `make check-dados`             | Valida o contrato e a frescor do pacote `data/dist/indicadores.zip` (`AVISO:`/`INFO:` informativos; violação → `ERRO:`+1) |
-| `make test`                    | Executa a suíte de testes completa (`make test-etl` + `make test-web`)                                                    |
-| `make test-etl`                | Executa exclusivamente os testes de dados com Pytest (`tests/etl/`)                                                       |
-| `make test-web`                | Executa exclusivamente os testes do frontend com Vitest (`tests/web/`)                                                    |
-| `make lint`                    | Executa análise estática com `flake8` (Python) e `eslint` (Astro/TS)                                                      |
-| `make format`                  | Formata o código com `isort`, `black` e `prettier`                                                                        |
-| `make format-check`            | Verifica a conformidade de estilo e formatação                                                                            |
-| `make check`                   | Validação completa de CI local (`lint` + `format-check` + `test`)                                                         |
-| `make dev`                     | Inicia o servidor local de desenvolvimento do Astro                                                                       |
-| `make build`                   | Executa o build de produção estático do Astro em `dist/`                                                                  |
-| `make clean`                   | Limpa caches, artefatos temporários e zips parciais de teste                                                              |
+| Comando                        | Finalidade                                                                                                                                                                                  |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `make setup`                   | Cria o ambiente virtual `.venv`, instala dependências Python e Node.js                                                                                                                      |
+| `make etl`                     | Executa o pipeline Python lendo de `data/canonical/` e gerando `data/dist/indicadores.zip` **sem NTE/NTECPP** (esses campos vêm do merge) — para o pacote público completo use `make dados` |
+| `make etl-campus CAMPUS=Serra` | Executa o pipeline para um campus individual gerando `data/dist/indicadores_<slug>.zip`                                                                                                     |
+| `make etl-listagens`           | Executa o ETL das listagens de matrícula gerando `data/dist/indicadores_listagens.zip` (Pilar 1: NTE e cotistas)                                                                            |
+| `make merge-listagens`         | Integra NTE/NTECPP das listagens em `data/dist/indicadores.zip` preservando todos os demais campos canônicos                                                                                |
+| `make dados`                   | Orquestra o pacote completo na ordem `etl` → `etl-listagens` → `merge-listagens`, parando no 1º erro                                                                                        |
+| `make check-dados`             | Valida o contrato e a frescor do pacote `data/dist/indicadores.zip` (`AVISO:`/`INFO:` informativos; violação → `ERRO:`+1)                                                                   |
+| `make test`                    | Executa a suíte de testes completa (`make test-etl` + `make test-web`)                                                                                                                      |
+| `make test-etl`                | Executa exclusivamente os testes de dados com Pytest (`tests/etl/`)                                                                                                                         |
+| `make test-web`                | Executa exclusivamente os testes do frontend com Vitest (`tests/web/`)                                                                                                                      |
+| `make lint`                    | Executa análise estática com `flake8` (Python) e `eslint` (Astro/TS)                                                                                                                        |
+| `make format`                  | Formata o código com `isort`, `black` e `prettier`                                                                                                                                          |
+| `make format-check`            | Verifica a conformidade de estilo e formatação                                                                                                                                              |
+| `make check`                   | Validação completa de CI local (`lint` + `format-check` + `test`)                                                                                                                           |
+| `make dev`                     | Inicia o servidor local de desenvolvimento do Astro                                                                                                                                         |
+| `make build`                   | Executa o build de produção estático do Astro em `dist/`                                                                                                                                    |
+| `make clean`                   | Limpa caches, artefatos temporários e zips parciais de teste                                                                                                                                |
 
 > **Modo soft (spec 011):** a variável `SOFT=1` (ou a flag `--soft`) torna as
 > etapas `etl`, `etl-listagens`, `merge-listagens` e `dados` tolerantes a

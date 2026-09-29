@@ -80,15 +80,16 @@ pacote ⇒ `AVISO:` + exit 0; pacote em dia ⇒ exit 0 sem avisos.
 
 - [x] T006 [P] [US3] Write `tests/etl/test_check_dados.py` — 9 cenários: 1. contrato violado (chave removida de um JSON do zip) → exit 1 (`ERRO:`) 2. pacote em dia (zip mais novo que todas as entradas presentes) → exit
       0, sem aviso de frescor e **sem** linha `INFO:` 3. `exports_canonical.zip` mais novo que o pacote → exit 0 com `AVISO:`
-      "possivelmente desatualizado" 4. `indicadores_listagens.zip` mais antigo que o pacote → exit 0 com
-      `AVISO:` de proveniência NTE/NTECPP 5. `data/raw/listagem_*.xlsx` mais nova que o pacote → exit 0 com `AVISO:` 6. **todas** as entradas de frescor ausentes (só o zip) → exit 0, nenhuma
+      "possivelmente desatualizado" 4. `indicadores_listagens.zip` mais novo que o pacote → exit 0 com
+      `AVISO:` de proveniência (merge não reexecutado) 5. `data/raw/listagem_*.xlsx` mais nova que o pacote → exit 0 com `AVISO:` 6. **todas** as entradas de frescor ausentes (só o zip) → exit 0, nenhuma
       comparação, **uma única** linha `INFO:` listando os caminhos ausentes
       ("apenas o contrato foi validado") — sem falso alarme e sem silêncio
       ambíguo 7. **parcialmente** presentes (ex.: só `--canonical`) → comparação feita
       apenas para as presentes; linha `INFO:` lista somente as ausentes;
       exit 0 8. `--raw` sem planilhas conta como ausente (entra na linha `INFO:`);
       `--raw` com planilhas presentes é comparado 9. `--canonical ""` suprime a comparação e faz a entrada constar na
-      linha `INFO:`
+      linha `INFO:` 10. pacote mais novo que as listagens (a ordem saudável do `make dados`, em que o merge
+      escreve por último) → exit 0 e **silêncio total**: trava contra o falso positivo de proveniência.
 
 ### Implementation for User Story 3
 
@@ -144,6 +145,15 @@ etapa com exit 1.
       (flake8/black/isort; pytest legado + novos; vitest) — tudo verde, sem
       regressão do pipeline canônico (`test_fidelity.py`, `test_adapters.py`,
       `test_flow.py`, `test_listagens_*.py`, `test_privacy.py`)
+- [x] T013 Inverter a condição da regra b de frescor em `check_dados.py`
+      (`mtime(listagens) > mtime(pacote)`) — a condição original acusava
+      proveniência na **ordem saudável** do `make dados`, em que o merge escreve
+      o pacote por último: falso positivo garantido em toda execução completa.
+      Atualizar contrato §3 (+ bloco de sentido da regra), FR-008, SC-004,
+      `data-model.md`, `quickstart.md`, `research.md`, `plan.md`, T006 e o
+      cabeçalho de cenários dos testes; registrar a cegueira decorrente em
+      `check-dados.md` §5.1 e mitigá-la no README (não regenerar o pacote
+      público com `make etl` isolado)
 
 ---
 

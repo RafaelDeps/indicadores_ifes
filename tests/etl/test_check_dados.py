@@ -12,12 +12,13 @@ from etl.scripts.check_dados import main
 #  1. contrato violado                          → 1 (ERRO:)
 #  2. pacote em dia (mais novo que as entradas) → 0, sem AVISO: e sem INFO:
 #  3. canônico mais novo que o pacote           → 0, AVISO: "possivelmente desatualizado"
-#  4. zip de listagens mais antigo que o pacote → 0, AVISO: "proveniência"
+#  4. zip de listagens mais novo que o pacote    → 0, AVISO: "proveniência"
 #  5. planilha mais nova que o pacote           → 0, AVISO: "não incorporada"
 #  6. todas as entradas ausentes (só o zip)     → 0, uma INFO: "apenas o contrato"
 #  7. parcialmente presentes (só --canonical)   → comparação parcial + INFO: só ausentes
 #  8. --raw sem planilhas conta ausente; com planilhas é comparado
 #  9. --canonical "" suprime comparação e entra na INFO:
+# 10. pacote mais novo que as listagens (ordem saudável do `make dados`) → 0, sem AVISO:
 
 T0 = 1_700_000_000.0  # época de referência p/ os.utime (determinístico)
 
@@ -165,17 +166,17 @@ def test_check_dados_canonico_mais_novo_aviso(tmp_path: Path, capsys) -> None:
     assert "INFO:" not in err
 
 
-# --- 4. Zip de listagens mais antigo → AVISO: proveniência --------------------
+# --- 4. Zip de listagens mais novo → AVISO: proveniência ----------------------
 
 
-def test_check_dados_listagens_mais_antigo_aviso_proveniencia(
+def test_check_dados_listagens_mais_novo_aviso_proveniencia(
     tmp_path: Path, capsys
 ) -> None:
     pacote = tmp_path / "indicadores.zip"
     _escrever_zip(pacote, [_registro_pilar1()])
     canonical = _arquivo(tmp_path / "exports_canonical.zip", T0 - 1000)
-    listagens = _arquivo(tmp_path / "listagens.zip", T0 - 500)
-    os.utime(pacote, (T0, T0))  # pacote mais recente que o zip de listagens
+    listagens = _arquivo(tmp_path / "listagens.zip", T0 + 500)
+    os.utime(pacote, (T0, T0))  # listagens mais recente que o pacote
 
     rc = main(
         [
@@ -191,7 +192,7 @@ def test_check_dados_listagens_mais_antigo_aviso_proveniencia(
     err = capsys.readouterr().err
     assert rc == 0
     assert "proveniência" in err
-    assert "execução anterior" in err
+    assert "merge" in err
     assert "INFO:" not in err
 
 
@@ -386,3 +387,41 @@ def test_check_dados_canonical_vazio_suprime_e_entra_na_info(
     assert (
         "AVISO:" not in err
     )  # listagens/planilha presentes e mais antigas → sem aviso
+
+
+# --- 10. Ordem saudável do `make dados` → silêncio -----------------------------
+#
+# `make dados` roda etl → etl-listagens → merge-listagens, e o merge é a última
+# etapa a escrever o pacote. O pacote fica, portanto, SEMPRE mais novo que o zip
+# de listagens num fluxo bem-sucedido. A regra de proveniência não pode acusar
+# essa ordem — seria um falso positivo garantido em toda execução completa.
+
+
+def test_check_dados_ordem_saudavel_do_make_dados_silencioso(
+    tmp_path: Path, capsys
+) -> None:
+    pacote = tmp_path / "indicadores.zip"
+    _escrever_zip(pacote, [_registro_pilar1()])
+    canonical = _arquivo(tmp_path / "exports_canonical.zip", T0 - 1000)
+    listagens = _arquivo(tmp_path / "listagens.zip", T0 - 500)
+    planilha = _arquivo(tmp_path / "raw" / "listagem_2025_1.xlsx", T0 - 1000)
+    os.utime(pacote, (T0, T0))  # merge por último: pacote mais novo que tudo
+
+    rc = main(
+        [
+            "--pacote",
+            str(pacote),
+            "--canonical",
+            str(canonical),
+            "--listagens",
+            str(listagens),
+            "--raw",
+            str(planilha.parent),
+        ]
+    )
+
+    err = capsys.readouterr().err
+    assert rc == 0
+    assert "AVISO:" not in err
+    assert "proveniência" not in err
+    assert "INFO:" not in err

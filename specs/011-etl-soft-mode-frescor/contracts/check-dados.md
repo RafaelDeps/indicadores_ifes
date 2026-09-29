@@ -34,11 +34,20 @@ Comparação apenas com entradas **presentes**; entrada ausente é ignorada (sem
 falso alarme) e entra na linha `INFO:` da §3.1. Avisos em `AVISO:` (stderr),
 **exit 0** sempre.
 
-| #   | Condição (mtime)                                                    | Texto do `AVISO:` (semântica)                                                                      |
-| --- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| a   | `mtime(exports_canonical.zip)` > `mtime(--pacote)`                  | "pacote possivelmente desatualizado — export canônico mais recente que o pacote"                   |
-| b   | `mtime(--pacote)` > `mtime(indicadores_listagens.zip)`              | "proveniência: NTE/NTECPP do pacote podem vir de execução anterior (zip de listagens mais antigo)" |
-| c   | qualquer `data/raw/listagem_*.xlsx` com `mtime` > `mtime(--pacote)` | "planilha <nome> mais recente que o pacote — não incorporada ao último pacote"                     |
+| #   | Condição (mtime)                                                    | Texto do `AVISO:` (semântica)                                                                                                                 |
+| --- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| a   | `mtime(exports_canonical.zip)` > `mtime(--pacote)`                  | "pacote possivelmente desatualizado — export canônico mais recente que o pacote"                                                              |
+| b   | `mtime(indicadores_listagens.zip)` > `mtime(--pacote)`              | "proveniência: o zip de listagens é mais recente que o pacote — o merge não foi reexecutado, então NTE/NTECPP podem vir de execução anterior" |
+| c   | qualquer `data/raw/listagem_*.xlsx` com `mtime` > `mtime(--pacote)` | "planilha <nome> mais recente que o pacote — não incorporada ao último pacote"                                                                |
+
+> **Sentido da regra b.** O `make dados` roda `etl` → `etl-listagens` →
+> `merge-listagens`, e o merge é a última etapa a escrever o pacote. Num fluxo
+> bem-sucedido o pacote fica, portanto, **sempre** mais novo que o zip de
+> listagens — acusar proveniência nessa ordem seria um falso positivo
+> garantido. Só há motivo para suspeitar no sentido inverso: listagens mais
+> recente que o pacote significa que o merge não rodou depois da última geração
+> das listagens, e os NTE/NTECPP publicados não vêm do zip atual. A condição é
+> `>` estrita — mtimes iguais (snapshot sem gap temporal) são silenciosos.
 
 ## 3.1 Entradas de frescor ausentes — linha informativa (`INFO:`)
 
@@ -87,6 +96,36 @@ Regras da linha `INFO:`:
   alarme em CI (spec FR-009) — e imprime a linha `INFO:` (§3.1) com as entradas
   ausentes, deixando explícito que apenas o contrato foi avaliado.
 - A checagem de frescor **só é significativa na máquina geradora** do pacote.
+- `mtime` é sensível a operações de arquivo: `cp` sem `-p`, `rsync` sem
+  `--times`, `scp` ou restauração de backup embaralham a ordem sem que o dado
+  mude, podendo produzir `AVISO:` espúrio. Consequentemente o aviso **sugere**
+  desordem, não a prova.
+
+### 5.1 Cegueira conhecida da regra b
+
+A regra b ordena a última execução do merge contra a última geração das
+listagens. Ela **não** detecta o cenário em que o merge deixou de ser executado
+no ciclo seguinte:
+
+```text
+make dados   → T1 pacote, T2 listagens, T3 pacote   (saudável; b silencia ✓)
+make etl     → T4 pacote                            (só canônico; NTE/NTECPP
+                                                       voltam a null; b
+                                                       silencia ✗)
+```
+
+Nesse caso o pacote é o arquivo mais novo de todos e nenhuma regra de frescor
+dispara, embora o pacote publicado tenha perdido os NTE/NTECPP. **Nenhuma
+ferramenta do repositório pega essa regressão**: `test_fidelity.py` aceita
+`None` em NTE/NTECPP (o valor `null` é legítimo pelo Princípio III) e a
+suíte web não verifica esses campos — a degradação é visível no site como
+"Dado indisponível", não como número incorreto.
+
+Mitigação vigente: é vedado regenerar o pacote público com `make etl` isolado;
+o fluxo suportado é `make dados` (ou os três passos na ordem). Detectar o
+cenário exigiria comparar o **conteúdo** de NTE/NTECPP entre o pacote e o zip
+de listagens — capacidade não coberta por este contrato, e limitada pelo fato
+de `indicadores_listagens.zip` ser gitignored (ausente em CI).
 
 ## 6. Uso no CI (Princípio VI)
 
