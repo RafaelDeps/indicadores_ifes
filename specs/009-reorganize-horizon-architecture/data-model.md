@@ -50,7 +50,7 @@ Representa os cálculos de domínio dos Pilares 1, 2 e 3 do CONIF antes da seria
   - **Pilar 2**: `pinv: None`, `pipdi: None` (indicadores com campos estritamente `None`).
   - **Pilar 3**: `npb: int`, `npt: int`, `pc: int`, `pa: int = 0` (patentes ausentes comprovadas como 0; PIPROTR = `None`).
 - **`AgregadosAno`**:
-  - Dicionário mapeando `campus_slug -> AgregadosCampusAno`, contendo os 23 campi individuais e o escopo consolidado institucional `"todos"`.
+  - Dicionário mapeando `campus_slug -> AgregadosCampusAno`, contendo cada campus individual do export e o escopo consolidado institucional `"todos"`.
 
 ### 2.3. Módulo `export.py` (Transferência e Saída)
 
@@ -59,7 +59,7 @@ Representa os cálculos de domínio dos Pilares 1, 2 e 3 do CONIF antes da seria
   - `conteudo: str`: JSON serializado e formatado conforme o schema contratual.
 - **`ResultadoFlow`**:
   - `codigo_saida: int`: 0 para sucesso, 1 para falha.
-  - `total_arquivos: int`: 216 em execução completa (ou 9 em execução parcial por campus).
+  - `total_arquivos: int`: variável, derivado do export — (nº de campi + `todos`) × 3 pilares × 3 anos em execução completa, ou 3 pilares × 3 anos por campus em execução parcial.
   - `avisos: list[str]`: Lista de alertas de anomalia de dados (iniciativas sem campus, etc.).
   - `erros: list[str]`: Mensagens de erro em caso de exceção.
 
@@ -95,7 +95,7 @@ class ExecutionMetrics:
 
 ## 4. Contrato de Schema de Saída (`pilar{N}_{campus}_{ano}.json`)
 
-Todos os 216 arquivos gerados obedecem rigorosamente a esta estrutura top-level:
+Todos os arquivos `pilar{N}_{campus}_{year}.json` gerados obedecem rigorosamente a esta estrutura top-level:
 
 ```json
 {

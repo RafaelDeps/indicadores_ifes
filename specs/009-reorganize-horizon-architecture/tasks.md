@@ -43,7 +43,7 @@
 
 **Goal**: O pipeline ETL e o comando CLI operam estritamente lendo de `data/canonical/exports_canonical.zip` e gravando em `data/dist/indicadores.zip`, sem interagir com arquivos zip na raiz.
 
-**Independent Test**: Executar `python -m etl.main` e validar que o pacote é gerado em `data/dist/indicadores.zip` com 216 arquivos válidos, sem recriar nenhum `.zip` na raiz.
+**Independent Test**: Executar `python -m etl.main` e validar que o pacote é gerado em `data/dist/indicadores.zip` com todos os arquivos `pilar{N}_{campus}_{year}.json` derivados do export (quantidade variável), sem recriar nenhum `.zip` na raiz.
 
 ### Tests for User Story 1 (MANDATÓRIO per Princípio II) ⚠️
 
@@ -119,7 +119,7 @@
 **Purpose**: Verificação global, formatação final e documentação.
 
 - [x] T020 [P] Executar `make format` para garantir conformidade estrita de estilo em todo o código Python e TypeScript/Astro
-- [x] T021 Executar validação de ponta a ponta seguindo o roteiro de `specs/009-reorganize-horizon-architecture/quickstart.md` (`make etl`, `make check`, `npm run build`), verificando os 216 arquivos gerados e ausência de zips na raiz
+- [x] T021 Executar validação de ponta a ponta seguindo o roteiro de `specs/009-reorganize-horizon-architecture/quickstart.md` (`make etl`, `make check`, `npm run build`), verificando todos os arquivos gerados (quantidade variável) e ausência de zips na raiz
 - [x] T022 [P] Atualizar a documentação em `README.md` refletindo a nova arquitetura inspirada no `horizon_etl` (estrutura `data/`, comandos do `Makefile` e segregação de testes)
 
 ---
@@ -195,7 +195,7 @@ flowchart TD
 
 ## Implementation Strategy & MVP Recommendation
 
-1. **MVP Scope**: Concluir as Fases 1, 2 e 3 (Tarefas `T001` a `T009`). Ao final do MVP, o repositório já resolve a dor mais urgente apontada: a raiz está livre de arquivos `.zip`, os dados de 23.5 MB estão isolados e ignorados em `data/canonical/`, o pacote de saída está em `data/dist/` e o pipeline opera com segurança.
+1. **MVP Scope**: Concluir as Fases 1, 2 e 3 (Tarefas `T001` a `T009`). Ao final do MVP, o repositório já resolve a dor mais urgente apontada: a raiz está livre de arquivos `.zip`, os dados do export (tamanho variável) estão isolados e ignorados em `data/canonical/`, o pacote de saída está em `data/dist/` e o pipeline opera com segurança.
 2. **Incremento 2 (Observabilidade & Governança)**: Executar a Fase 4 (`T010` a `T013`), adicionando tracking automático e relatórios de auditoria no estilo do `horizon_etl`.
 3. **Incremento 3 (Frontend & Testes)**: Executar a Fase 5 (`T014` a `T017`), limpando a duplicidade de dados em `src/data/` e separando os ambientes de teste.
 4. **Incremento 4 (Tooling & Conclusão)**: Executar as Fases 6 e 7 (`T018` a `T022`) para finalizar a automação no `Makefile`, linters e documentação do `README.md`.

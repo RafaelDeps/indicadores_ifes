@@ -1,172 +1,172 @@
-# Tasks: Python Hexagonal ETL Pipeline
+# Tarefas: Pipeline ETL Python (Hexagonal / Ports & Adapters)
 
-**Input**: Design documents from `/specs/008-python-hexagonal-etl/`  
-**Prerequisites**: [plan.md](./plan.md) (required), [spec.md](./spec.md) (required for user stories), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/)
+**Input**: Documentos de design de `/specs/008-python-hexagonal-etl/`  
+**Prerequisites**: [plan.md](./plan.md) (obrigatório), [spec.md](./spec.md) (obrigatório para as histórias de usuário), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/)
 
-**Tests**: Tests are MANDATORY for this project per Constitution Principle II (Test-First Development). Unit and integration tests in `tests/etl/` must be written first and observed to fail before implementing the corresponding logic.
+**Tests**: Os testes são OBRIGATÓRIOS para este projeto conforme o Princípio II da Constituição (Desenvolvimento Orientado por Testes). Os testes unitários e de integração em `tests/etl/` devem ser escritos primeiro e observados falhando antes da implementação da lógica correspondente.
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story increment.
+**Organization**: As tarefas são agrupadas por história de usuário para permitir a implementação e os testes independentes de cada incremento.
 
 ---
 
 ## Format: `[ID] [P?] [Story] Description`
 
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
-- Every task includes the exact file path
+- **[P]**: Pode ser executada em paralelo (arquivos distintos, sem dependências)
+- **[Story]**: A qual história de usuário esta tarefa pertence (`[US1]`, `[US2]`, `[US3]`)
+- Cada tarefa inclui o caminho exato do arquivo
 
 ---
 
-## Phase 1: Setup (Shared Infrastructure)
+## Fase 1: Setup (Infraestrutura Compartilhada)
 
-**Purpose**: Python environment setup, directory scaffolding, and elimination of legacy TypeScript ETL code.
+**Purpose**: Configuração do ambiente Python, criação da estrutura de diretórios e eliminação do código ETL legado em TypeScript.
 
-- [x] T001 Initialize Python ETL requirements file in `requirements-etl.txt` with pytest, pytest-cov, black, isort, and flake8
-- [x] T002 Create Python module directory structure and `__init__.py` files across `etl/`, `etl/core/`, `etl/core/ports/`, `etl/core/logic/`, `etl/core/logic/resolvers/`, `etl/core/logic/temporal/`, `etl/core/logic/calculators/`, `etl/adapters/`, `etl/adapters/sources/`, `etl/adapters/sinks/`, `etl/flows/`, and `tests/etl/`
-- [x] T003 Remove legacy TypeScript ETL files in `src/etl/` and TypeScript tests in `tests/etl/*.test.ts`, and update `"etl"` script in `package.json` to `"python3 -m etl.main"`
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Core hexagonal ports, pure domain entities, resolvers, temporal filters, and test fixtures that all user stories depend on.
-
-**⚠️ CRITICAL**: No user story implementation can begin until this foundational phase is complete.
-
-- [x] T004 [P] Define `ISource` abstract base class with `extract() -> ExportCanonicos` in `etl/core/ports/source.py`
-- [x] T005 [P] Define `ISink` abstract base class with `load(arquivos: list[RegistroPilarJson]) -> None` in `etl/core/ports/sink.py`
-- [x] T006 [P] Implement core canonical dataclasses and domain entities in `etl/core/logic/models.py`
-- [x] T007 [P] Implement temporal calendar year activity filter in `etl/core/logic/temporal/activity_filter.py`
-- [x] T008 [P] Implement hierarchical campus resolver (declared -> coordinator -> team member) in `etl/core/logic/resolvers/campus_resolver.py`
-- [x] T009 [P] Implement unified people registry and collision resolution in `etl/core/logic/resolvers/people_registry.py`
-- [x] T010 [P] Implement pytest fixtures and synthetic canonical dataset helpers in `tests/etl/conftest.py`
-- [x] T011 [P] Implement unit tests for temporal filter in `tests/etl/test_temporal.py`
-- [x] T012 [P] Implement unit tests for campus resolver and people registry in `tests/etl/test_resolvers.py`
-
-**Checkpoint**: Foundation ready — domain models, ports, resolvers, and base tests verified.
+- [x] T001 Inicializar o arquivo de requisitos Python do ETL em `requirements-etl.txt` com pytest, pytest-cov, black, isort e flake8
+- [x] T002 Criar a estrutura de diretórios de módulos Python e os arquivos `__init__.py` em `etl/`, `etl/core/`, `etl/core/ports/`, `etl/core/logic/`, `etl/core/logic/resolvers/`, `etl/core/logic/temporal/`, `etl/core/logic/calculators/`, `etl/adapters/`, `etl/adapters/sources/`, `etl/adapters/sinks/`, `etl/flows/` e `tests/etl/`
+- [x] T003 Remover os arquivos legados do ETL em TypeScript em `src/etl/` e os testes TypeScript em `tests/etl/*.test.ts`, e atualizar o script `"etl"` em `package.json` para `"python3 -m etl.main"`
 
 ---
 
-## Phase 3: User Story 1 - Execução do Pipeline Completo e Geração de Indicadores (Priority: P1) 🎯 MVP
+## Fase 2: Fundamental (Pré-requisitos Bloqueantes)
 
-**Goal**: Transform `exports_canonical.zip` into `indicadores.zip` containing all 216 files for 23 campuses and institutional `todos` across years 2024–2026, preserving CONIF formulas and Astro frontend compatibility.
+**Purpose**: Portas hexagonais do núcleo, entidades de domínio puras, resolvers, filtros temporais e fixtures de teste, dos quais dependem todas as histórias de usuário.
 
-**Independent Test**: Execute `python3 -m etl.main` and verify that `indicadores.zip` is created with 216 valid JSON files matching contract schemas and passing `npm test`.
+**⚠️ CRÍTICO**: Nenhuma implementação de história de usuário pode começar antes que esta fase fundamental esteja completa.
 
-### Tests for User Story 1 (MANDATORY per Principle II) ⚠️
+- [x] T004 [P] Definir a classe base abstrata `ISource` com `extract() -> ExportCanonicos` em `etl/core/ports/source.py`
+- [x] T005 [P] Definir a classe base abstrata `ISink` com `load(arquivos: list[RegistroPilarJson]) -> None` em `etl/core/ports/sink.py`
+- [x] T006 [P] Implementar os dataclasses canônicos do núcleo e as entidades de domínio em `etl/core/logic/models.py`
+- [x] T007 [P] Implementar o filtro de atividade por ano civil em `etl/core/logic/temporal/activity_filter.py`
+- [x] T008 [P] Implementar o resolver hierárquico de campus (declarado -> coordenador -> membro da equipe) em `etl/core/logic/resolvers/campus_resolver.py`
+- [x] T009 [P] Implementar o registro unificado de pessoas e a resolução de colisões em `etl/core/logic/resolvers/people_registry.py`
+- [x] T010 [P] Implementar as fixtures do pytest e os auxiliares de dataset canônico sintético em `tests/etl/conftest.py`
+- [x] T011 [P] Implementar os testes unitários do filtro temporal em `tests/etl/test_temporal.py`
+- [x] T012 [P] Implementar os testes unitários do resolver de campus e do registro de pessoas em `tests/etl/test_resolvers.py`
 
-> **NOTE: Write these tests FIRST and ensure they FAIL before implementing the calculators and sinks**
-
-- [x] T013 [P] [US1] Implement unit tests for Pillar 1, Pillar 2, and Pillar 3 calculators in `tests/etl/test_calculators.py`
-- [x] T014 [P] [US1] Implement unit tests for multi-campus aggregation and institutional 'todos' deduplication in `tests/etl/test_aggregator.py`
-- [x] T015 [P] [US1] Implement unit tests for `ZipCanonicalSource`, `JsonPilarSink`, and `ZipIndicadoresSink` in `tests/etl/test_adapters.py`
-- [x] T016 [P] [US1] Implement integration test for complete execution pipeline in `tests/etl/test_flow.py`
-
-### Implementation for User Story 1
-
-- [x] T017 [P] [US1] Implement Pillar 1 metrics calculator (NTPP, QSPP, NEP, nulls for census) in `etl/core/logic/calculators/pillar1.py`
-- [x] T018 [P] [US1] Implement Pillar 2 metrics calculator (strict nulls for PINV and PIPDI) in `etl/core/logic/calculators/pillar2.py`
-- [x] T019 [P] [US1] Implement Pillar 3 metrics calculator (NPB, NPT, PC softwares, PA=0) in `etl/core/logic/calculators/pillar3.py`
-- [x] T020 [US1] Implement multi-campus and institutional aggregator in `etl/core/logic/calculators/aggregator.py`
-- [x] T021 [P] [US1] Implement canonical zip source adapter validating 8 mandatory canonical files in `etl/adapters/sources/zip_canonical_source.py`
-- [x] T022 [P] [US1] Implement JSON indicator serialization sink adhering to contract schemas in `etl/adapters/sinks/json_pilar_sink.py`
-- [x] T023 [US1] Implement deterministic atomic ZIP persistence sink with contract validation in `etl/adapters/sinks/zip_indicadores_sink.py`
-- [x] T024 [US1] Implement pipeline orchestrator flow connecting source, core, and sink in `etl/flows/indicadores_flow.py`
-- [x] T025 [US1] Implement CLI runner entrypoint in `etl/main.py` supporting default input/output paths
-
-**Checkpoint**: User Story 1 is complete. Executing `python3 -m etl.main` generates `indicadores.zip` with 216 files compatible with the Astro dashboard.
+**Checkpoint**: Fundação pronta — modelos de domínio, portas, resolvers e testes básicos verificados.
 
 ---
 
-## Phase 4: User Story 2 - Execução Filtrada por Campus Individual com Saída Isolada (Priority: P2)
+## Fase 3: User Story 1 - Execução do Pipeline Completo e Geração de Indicadores (Priority: P1) 🎯 MVP
 
-**Goal**: Allow filtering pipeline execution by a single campus (e.g. `--campus Serra`) and directing output to a dedicated ZIP file (e.g. `indicadores_serra.zip`) containing 9 files without touching `indicadores.zip`.
+**Goal**: Transformar `exports_canonical.zip` em `indicadores.zip` contendo os arquivos `pilar{N}_{campus}_{year}.json` dos campi do export e do escopo institucional `todos` nos anos 2024–2026 (quantidade variável, derivada do export), preservando as fórmulas CONIF e a compatibilidade com o frontend Astro.
 
-**Independent Test**: Execute `python3 -m etl.main --campus Serra --saida indicadores_serra.zip` and verify that `indicadores_serra.zip` contains 9 files and `indicadores.zip` remains untouched.
+**Independent Test**: Executar `python3 -m etl.main` e verificar que `indicadores.zip` é criado com os arquivos JSON `pilar{N}_{campus}_{year}.json` válidos (quantidade variável, derivada do export), em conformidade com os schemas de contrato e passando em `npm test`.
 
-### Tests for User Story 2 (MANDATORY per Principle II) ⚠️
+### Testes para a User Story 1 (OBRIGATÓRIO conforme o Princípio II) ⚠️
 
-> **NOTE: Write these tests FIRST and ensure they FAIL before implementing CLI options**
+> **NOTA: Escreva estes testes PRIMEIRO e garanta que eles FALHAM antes de implementar os calculators e os sinks**
 
-- [x] T026 [P] [US2] Implement tests for CLI argument parsing, campus normalization (case/accent insensitivity), and custom output routing in `tests/etl/test_cli.py`
+- [x] T013 [P] [US1] Implementar os testes unitários dos calculators dos Pilares 1, 2 e 3 em `tests/etl/test_calculators.py`
+- [x] T014 [P] [US1] Implementar os testes unitários da agregação multi-campus e da deduplicação institucional 'todos' em `tests/etl/test_aggregator.py`
+- [x] T015 [P] [US1] Implementar os testes unitários de `ZipCanonicalSource`, `JsonPilarSink` e `ZipIndicadoresSink` em `tests/etl/test_adapters.py`
+- [x] T016 [P] [US1] Implementar o teste de integração da execução completa do pipeline em `tests/etl/test_flow.py`
 
-### Implementation for User Story 2
+### Implementação da User Story 1
 
-- [x] T027 [US2] Extend `etl/core/logic/calculators/aggregator.py` and `etl/flows/indicadores_flow.py` to support filtered single-campus scope
-- [x] T028 [US2] Implement full argument parsing (`--campus`, `--entrada`, `--saida`, `--anos`), environment variable resolution, and exit codes in `etl/main.py`
-- [x] T029 [US2] Update `Makefile` target `etl-campus` to execute `python3 -m etl.main` with `--campus` and dedicated `--saida`
+- [x] T017 [P] [US1] Implementar o calculator de métricas do Pilar 1 (NTPP, QSPP, NEP, nulos para o censo) em `etl/core/logic/calculators/pillar1.py`
+- [x] T018 [P] [US1] Implementar o calculator de métricas do Pilar 2 (nulos estritos para PINV e PIPDI) em `etl/core/logic/calculators/pillar2.py`
+- [x] T019 [P] [US1] Implementar o calculator de métricas do Pilar 3 (NPB, NPT, PC de softwares, PA=0) em `etl/core/logic/calculators/pillar3.py`
+- [x] T020 [US1] Implementar o agregador multi-campus e institucional em `etl/core/logic/calculators/aggregator.py`
+- [x] T021 [P] [US1] Implementar o adaptador de fonte ZIP canônico validando os 8 arquivos canônicos obrigatórios em `etl/adapters/sources/zip_canonical_source.py`
+- [x] T022 [P] [US1] Implementar o sink de serialização JSON de indicadores em conformidade com os schemas de contrato em `etl/adapters/sinks/json_pilar_sink.py`
+- [x] T023 [US1] Implementar o sink de persistência ZIP atômico determinístico com validação de contrato em `etl/adapters/sinks/zip_indicadores_sink.py`
+- [x] T024 [US1] Implementar o flow orquestrador do pipeline conectando source, core e sink em `etl/flows/indicadores_flow.py`
+- [x] T025 [US1] Implementar o entrypoint da CLI em `etl/main.py` com suporte a caminhos de entrada/saída padrão
 
-**Checkpoint**: User Story 2 complete. Individual campus filtering and dedicated output packages functional and tested.
-
----
-
-## Phase 5: User Story 3 - Qualidade, Testabilidade e Conformidade (Priority: P3)
-
-**Goal**: Enforce Python code quality tooling (`pytest`, `black`, `isort`, `flake8`) alongside Astro frontend tooling (`eslint`, `prettier`, `vitest`) with unified `Makefile` automation and CI checks.
-
-**Independent Test**: Run `make check` and verify that linting, formatting check, pytest, and vitest all pass with zero errors.
-
-### Tests for User Story 3 (MANDATORY per Principle II) ⚠️
-
-- [x] T030 [P] [US3] Implement schema contract fidelity test in `tests/etl/test_fidelity.py`
-- [x] T031 [P] [US3] Implement LGPD privacy verification test in `tests/etl/test_privacy.py`
-
-### Implementation for User Story 3
-
-- [x] T032 [P] [US3] Configure linting and formatting rules for Python in `setup.cfg`
-- [x] T033 [US3] Update `Makefile` automation targets (`etl`, `etl-campus`, `test-etl`, `lint`, `format`, `format-check`, `check`) with Python virtual environment detection
-
-**Checkpoint**: User Story 3 complete. Full suite of quality tools integrated and unified in `Makefile`.
+**Checkpoint**: User Story 1 concluída. Executar `python3 -m etl.main` gera `indicadores.zip` com os arquivos `pilar{N}_{campus}_{year}.json` compatíveis com o dashboard Astro.
 
 ---
 
-## Phase 6: Polish & Cross-Cutting Concerns
+## Fase 4: User Story 2 - Execução Filtrada por Campus Individual com Saída Isolada (Priority: P2)
 
-**Purpose**: Final end-to-end verification, performance check, and system integration.
+**Goal**: Permitir filtrar a execução do pipeline por um único campus (por exemplo, `--campus Serra`) e direcionar a saída para um arquivo ZIP dedicado (por exemplo, `indicadores_serra.zip`) contendo 9 arquivos, sem alterar `indicadores.zip`.
 
-- [x] T034 Execute end-to-end verification running `make etl` and validating `indicadores.zip` generation in < 5 seconds
-- [x] T035 Execute full Astro test suite `npm test` and build `npm run build` verifying complete frontend compatibility
-- [x] T036 Execute unified validation `make check` confirming 100% compliance across Python and TypeScript layers
+**Independent Test**: Executar `python3 -m etl.main --campus Serra --saida indicadores_serra.zip` e verificar que `indicadores_serra.zip` contém 9 arquivos e que `indicadores.zip` permanece intacto.
+
+### Testes para a User Story 2 (OBRIGATÓRIO conforme o Princípio II) ⚠️
+
+> **NOTA: Escreva estes testes PRIMEIRO e garanta que eles FALHAM antes de implementar as opções da CLI**
+
+- [x] T026 [P] [US2] Implementar os testes de parsing de argumentos da CLI, normalização de campus (insensibilidade a maiúsculas/minúsculas e acentuação) e roteamento de saída customizado em `tests/etl/test_cli.py`
+
+### Implementação da User Story 2
+
+- [x] T027 [US2] Estender `etl/core/logic/calculators/aggregator.py` e `etl/flows/indicadores_flow.py` para suportar o escopo filtrado de campus único
+- [x] T028 [US2] Implementar o parsing completo de argumentos (`--campus`, `--entrada`, `--saida`, `--anos`), a resolução de variáveis de ambiente e os códigos de saída em `etl/main.py`
+- [x] T029 [US2] Atualizar o alvo `etl-campus` do `Makefile` para executar `python3 -m etl.main` com `--campus` e um `--saida` dedicado
+
+**Checkpoint**: User Story 2 concluída. Filtragem por campus individual e pacotes de saída dedicados funcionais e testados.
 
 ---
 
-## Dependencies & Execution Order
+## Fase 5: User Story 3 - Qualidade, Testabilidade e Conformidade (Priority: P3)
+
+**Goal**: Impôr as ferramentas de qualidade de código Python (`pytest`, `black`, `isort`, `flake8`) em conjunto com as ferramentas do frontend Astro (`eslint`, `prettier`, `vitest`), com automação unificada no `Makefile` e verificações de CI.
+
+**Independent Test**: Executar `make check` e verificar que o lint, a checagem de formatação, o pytest e o vitest passam sem erros.
+
+### Testes para a User Story 3 (OBRIGATÓRIO conforme o Princípio II) ⚠️
+
+- [x] T030 [P] [US3] Implementar o teste de fidelidade ao contrato de schema em `tests/etl/test_fidelity.py`
+- [x] T031 [P] [US3] Implementar o teste de verificação de privacidade LGPD em `tests/etl/test_privacy.py`
+
+### Implementação da User Story 3
+
+- [x] T032 [P] [US3] Configurar as regras de lint e formatação para Python em `setup.cfg`
+- [x] T033 [US3] Atualizar os alvos de automação do `Makefile` (`etl`, `etl-campus`, `test-etl`, `lint`, `format`, `format-check`, `check`) com detecção de ambiente virtual Python
+
+**Checkpoint**: User Story 3 concluída. Suíte completa de ferramentas de qualidade integrada e unificada no `Makefile`.
+
+---
+
+## Fase 6: Polimento & Preocupações Transversais
+
+**Purpose**: Verificação final ponta a ponta, checagem de performance e integração do sistema.
+
+- [x] T034 Executar a verificação ponta a ponta rodando `make etl` e validando a geração de `indicadores.zip` em menos de 5 segundos
+- [x] T035 Executar a suíte completa de testes Astro `npm test` e o build `npm run build` verificando a compatibilidade total do frontend
+- [x] T036 Executar a validação unificada `make check` confirmando 100% de conformidade nas camadas Python e TypeScript
+
+---
+
+## Dependências & Ordem de Execução
 
 ```mermaid
 flowchart TD
-    Setup["Phase 1: Setup (T001-T003)"] --> Foundational["Phase 2: Foundational (T004-T012)"]
-    Foundational --> US1_Tests["US1 Tests: Calculators & Adapters (T013-T016)"]
-    US1_Tests --> US1_Impl["US1 Implementation: Core & Sinks (T017-T025)"]
-    US1_Impl --> US2_Tests["US2 Tests: CLI & Filtering (T026)"]
-    US2_Tests --> US2_Impl["US2 Implementation: CLI & Flow (T027-T029)"]
-    US1_Impl --> US3_Tests["US3 Tests: Fidelity & Privacy (T030-T031)"]
-    US3_Tests --> US3_Impl["US3 Implementation: Tooling & Makefile (T032-T033)"]
-    US2_Impl --> Polish["Phase 6: Polish & E2E Validation (T034-T036)"]
+    Setup["Fase 1: Setup (T001-T003)"] --> Foundational["Fase 2: Fundamental (T004-T012)"]
+    Foundational --> US1_Tests["Testes US1: Calculators e Adapters (T013-T016)"]
+    US1_Tests --> US1_Impl["Implementação US1: Core e Sinks (T017-T025)"]
+    US1_Impl --> US2_Tests["Testes US2: CLI e Filtragem (T026)"]
+    US2_Tests --> US2_Impl["Implementação US2: CLI e Flow (T027-T029)"]
+    US1_Impl --> US3_Tests["Testes US3: Fidelidade e Privacidade (T030-T031)"]
+    US3_Tests --> US3_Impl["Implementação US3: Tooling e Makefile (T032-T033)"]
+    US2_Impl --> Polish["Fase 6: Polimento e Validação E2E (T034-T036)"]
     US3_Impl --> Polish
 ```
 
-### Parallel Opportunities
+### Oportunidades de Paralelismo
 
-- **Phase 2 (Foundational)**:
-  - T004 (`source.py`), T005 (`sink.py`), T006 (`models.py`), T007 (`activity_filter.py`), T008 (`campus_resolver.py`), T009 (`people_registry.py`) can be implemented in parallel.
-  - T010 (`conftest.py`), T011 (`test_temporal.py`), T012 (`test_resolvers.py`) can be implemented in parallel.
-- **Phase 3 (User Story 1)**:
-  - Tests T013 (`test_calculators.py`), T014 (`test_aggregator.py`), T015 (`test_adapters.py`), T016 (`test_flow.py`) can be written in parallel.
-  - Calculators T017 (`pillar1.py`), T018 (`pillar2.py`), T019 (`pillar3.py`) can be implemented in parallel.
-  - Adapters T021 (`zip_canonical_source.py`) and T022 (`json_pilar_sink.py`) can be implemented in parallel.
-- **Phase 5 (User Story 3)**:
-  - T030 (`test_fidelity.py`), T031 (`test_privacy.py`), and T032 (`setup.cfg`) can run in parallel.
+- **Fase 2 (Fundamental)**:
+  - T004 (`source.py`), T005 (`sink.py`), T006 (`models.py`), T007 (`activity_filter.py`), T008 (`campus_resolver.py`), T009 (`people_registry.py`) podem ser implementadas em paralelo.
+  - T010 (`conftest.py`), T011 (`test_temporal.py`), T012 (`test_resolvers.py`) podem ser implementadas em paralelo.
+- **Fase 3 (User Story 1)**:
+  - Os testes T013 (`test_calculators.py`), T014 (`test_aggregator.py`), T015 (`test_adapters.py`), T016 (`test_flow.py`) podem ser escritos em paralelo.
+  - Os calculators T017 (`pillar1.py`), T018 (`pillar2.py`), T019 (`pillar3.py`) podem ser implementados em paralelo.
+  - Os adaptadores T021 (`zip_canonical_source.py`) e T022 (`json_pilar_sink.py`) podem ser implementados em paralelo.
+- **Fase 5 (User Story 3)**:
+  - T030 (`test_fidelity.py`), T031 (`test_privacy.py`) e T032 (`setup.cfg`) podem ser executadas em paralelo.
 
 ---
 
-## Implementation Strategy
+## Estratégia de Implementação
 
-1. **MVP (Minimal Viable Product)**:
-   - Complete Phase 1 (Setup) and Phase 2 (Foundational).
-   - Complete Phase 3 (User Story 1): Test-driven development of calculators, source, sinks, and flow.
-   - Run `python3 -m etl.main` and verify that `indicadores.zip` is generated and compatible with Astro.
-2. **Incremental Enhancements**:
-   - Deliver User Story 2: add CLI arguments, single-campus filtering, and dedicated output zip.
-   - Deliver User Story 3: integrate `pytest`, `black`, `isort`, `flake8` with `Makefile` and enforce CI quality gates.
-3. **Final Verification**:
-   - Run `make check`, `npm test`, and `npm run build` to confirm zero regressions.
+1. **MVP (Produto Mínimo Viável)**:
+   - Concluir a Fase 1 (Setup) e a Fase 2 (Fundamental).
+   - Concluir a Fase 3 (User Story 1): desenvolvimento orientado por testes dos calculators, source, sinks e flow.
+   - Executar `python3 -m etl.main` e verificar que `indicadores.zip` é gerado e compatível com o Astro.
+2. **Melhorias Incrementais**:
+   - Entregar a User Story 2: adicionar argumentos de CLI, filtragem por campus único e ZIP de saída dedicado.
+   - Entregar a User Story 3: integrar `pytest`, `black`, `isort`, `flake8` ao `Makefile` e impor os portões de qualidade no CI.
+3. **Verificação Final**:
+   - Executar `make check`, `npm test` e `npm run build` para confirmar zero regressões.

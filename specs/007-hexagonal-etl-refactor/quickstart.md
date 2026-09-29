@@ -42,10 +42,13 @@ npm run etl
 
 - Saída no terminal informando:
   ```text
-  ETL concluído: 216 arquivos gerados (23 campi + todos), anos 2024–2026.
+  ETL concluído: N arquivos gerados (M campi + todos), anos 2024–2026.
   ```
 - Código de retorno `0`.
 - Arquivo `indicadores.zip` atualizado na raiz do projeto.
+
+> **Nota**: `N`/`M` são **variáveis** conforme o export canônico vigente
+> (nº de campi + escopo "todos", × 3 pilares × 3 anos).
 
 ---
 

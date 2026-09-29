@@ -26,7 +26,7 @@ Refatorar o módulo `src/etl/` da estrutura procedural plana atual para a arquit
 
 **Constraints**: Determinismo estrito, preservação de `null` vs `0` (Princípio III), nenhuma exposição de PII (Princípio IV), paridade arquitetural com `horizon_etl`.
 
-**Scale/Scope**: 3 pilares × (23 campi + `todos`) × 3 anos (2024–2026) ≈ 216 arquivos JSON gerados por execução.
+**Scale/Scope**: 3 pilares × (campi do export + `todos`) × 3 anos (2024–2026); nº de arquivos JSON gerados por execução é **variável** conforme o export.
 
 ## Constitution Check
 

@@ -1,12 +1,19 @@
-# Feature Specification: Python ETL Pipeline (Hexagonal / Ports & Adapters)
+# Especificação de Feature: Pipeline ETL Python (Hexagonal / Ports & Adapters)
 
 **Feature Branch**: `008-python-hexagonal-etl`
 
 **Created**: 2026-09-25
 
-**Status**: Draft
+**Status**: Finalizado (implementado)
 
 **Input**: User description: "Implement Python ETL pipeline mirroring the Hexagonal/Ports & Adapters architecture of horizon_etl/src/"
+
+> **Nota de vigência**: esta spec descreve o layout original (artefatos na raiz
+> do repositório). A partir da spec 009 as entradas/saídas vivem em
+> `data/canonical/` e `data/dist/` (`make etl` → `data/dist/indicadores.zip`).
+> O código Python aqui especificado é o **mesmo** pipeline vigente (reorganizado
+> de diretório pela 009, estendido pelas 010/011); apenas os caminhos diferem
+> do layout atual.
 
 ## Clarifications
 
@@ -19,15 +26,15 @@
 
 ### User Story 1 - Execução do Pipeline Completo e Geração de Indicadores (Priority: P1)
 
-Como mantenedor ou sistema de automação, executo o pipeline de ETL em Python para transformar os dados brutos de `exports_canonical.zip` no pacote final `indicadores.zip`, contendo todos os 216 arquivos dos Pilares 1, 2 e 3 para os 23 campi e o escopo institucional `todos` (anos 2024–2026), garantindo total compatibilidade com o dashboard público em Astro.
+Como mantenedor ou sistema de automação, executo o pipeline de ETL em Python para transformar os dados brutos de `exports_canonical.zip` no pacote final `indicadores.zip`, contendo os arquivos `pilar{N}_{campus}_{year}.json` dos Pilares 1, 2 e 3 para os campi do export e o escopo institucional `todos` (anos 2024–2026; quantidade **variável**, derivada do export), garantindo total compatibilidade com o dashboard público em Astro.
 
 **Why this priority**: É a funcionalidade central e mais crítica do pipeline de dados. Sem ela, o dashboard público não possui indicadores para exibição.
 
-**Independent Test**: Pode ser testado de forma totalmente isolada executando `python3 -m etl.main` e inspecionando se o arquivo `indicadores.zip` gerado contém os 216 arquivos com as métricas CONIF matematicamente corretas e compatíveis com a renderização do Astro.
+**Independent Test**: Pode ser testado de forma totalmente isolada executando `python3 -m etl.main` e inspecionando se o arquivo `indicadores.zip` gerado contém os arquivos `pilar{N}_{campus}_{year}.json` esperados (quantidade variável, derivada do export) com as métricas CONIF matematicamente corretas e compatíveis com a renderização do Astro.
 
 **Acceptance Scenarios**:
 
-1. **Given** o arquivo `exports_canonical.zip` válido na raiz do repositório, **When** executo o comando `python3 -m etl.main` ou `make etl`, **Then** o arquivo `indicadores.zip` é criado ou substituído atomicamente na raiz com exit code 0, contendo 216 arquivos JSON rigorosamente aderentes ao schema `pilar{N}_{campus}_{year}.json`.
+1. **Given** o arquivo `exports_canonical.zip` válido na raiz do repositório, **When** executo o comando `python3 -m etl.main` ou `make etl`, **Then** o arquivo `indicadores.zip` é criado ou substituído atomicamente na raiz com exit code 0, contendo os arquivos JSON `pilar{N}_{campus}_{year}.json` (quantidade variável, derivada do export) rigorosamente aderentes ao schema.
 2. **Given** os arquivos gerados pelo pipeline em Python, **When** o frontend Astro executa a validação de dataset (`npm test`), **Then** todos os testes do Astro passam sem falhas e o build estático (`npm run build`) completa com sucesso.
 3. **Given** métricas não coletáveis na origem (ex.: `NTE_total_estudantes_matriculados`, `TAFPPI_valor_total_aporte_pesquisa`, `NAPPCT_acordos_parceria_firmados`), **When** os arquivos de indicadores são gerados, **Then** esses campos permanecem estritamente `null` (Princípio III), enquanto contagens comprovadas nulas (ex.: patentes `PA`) registram o numeral `0`.
 
@@ -122,7 +129,7 @@ Como engenheiro de software, quero que o código do ETL siga os mesmos padrões 
 
 ### Measurable Outcomes
 
-- **SC-001**: O pipeline em Python processa a base canônica completa e gera todos os 216 arquivos em menos de 5 segundos.
+- **SC-001**: O pipeline em Python processa a base canônica completa e gera todos os arquivos `pilar{N}_{campus}_{year}.json` (quantidade variável, derivada do export) em menos de 5 segundos.
 - **SC-002**: Os arquivos JSON contidos em `indicadores.zip` gerados pelo pipeline Python são 100% compatíveis com o frontend Astro, mantendo todos os 267 testes da suíte Vitest e o build estático aprovados com zero erros.
 - **SC-003**: 100% dos testes unitários e de integração em Python executados com `pytest` passam com zero falhas.
 - **SC-004**: O código Python atinge 100% de conformidade com `black`, `isort` e `flake8` com zero violações.

@@ -15,7 +15,7 @@ Este documento consolida as decisões técnicas e padrões de arquitetura para r
 ### Decision 1: Governança e Ciclo de Vida do Diretório `data/`
 
 - **Decisão**: Criar o diretório de dados em primeiro nível `data/` com três subpastas bem delimitadas:
-  - `data/canonical/`: hospeda o arquivo de entrada `exports_canonical.zip` (23.5 MB) fornecido pelo `horizon_etl`. Ignorado no Git (preservando apenas `.gitkeep`).
+  - `data/canonical/`: hospeda o arquivo de entrada `exports_canonical.zip` (tamanho variável) fornecido pelo `horizon_etl`. Ignorado no Git (preservando apenas `.gitkeep`).
   - `data/dist/`: hospeda o pacote determinístico final `indicadores.zip` (212 KB) e arquivos parciais de campus (`indicadores_<campus>.zip`). `indicadores.zip` é **versionado no Git** como artefato oficial de distribuição.
   - `data/reports/`: hospeda o relatório determinístico de integridade e auditoria `etl_run_report.md`, também **versionado no Git**.
 - **Justificativa**: Elimina a poluição da raiz por binários pesados e separa claramente o ciclo de vida do dado bruto (não versionado) do artefato de produção (versionado para viabilizar deploy estático rápido).
@@ -73,7 +73,7 @@ Este documento consolida as decisões técnicas e padrões de arquitetura para r
 | :------------------------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
 | **I. Simplicity**                | Estrutura padrão Astro em `src/`, dependências mínimas | Frontend permanece intacto em `src/`; ETL usa apenas biblioteca padrão Python em tempo de execução.              |
 | **II. Test-First**               | Vitest para web; testes antes da implementação         | Separação em `tests/web/` e `tests/etl/` com 100% de cobertura prévia e comandos dedicados.                      |
-| **III. Fidelity to Report Data** | Fidelidade estrita a nulos; nada inventado ou estimado | Validador do sink garante nulls estritos para métricas não coletadas; 216 arquivos JSON mantêm paridade exata.   |
+| **III. Fidelity to Report Data** | Fidelidade estrita a nulos; nada inventado ou estimado | Validador do sink garante nulls estritos para métricas não coletadas; todos os arquivos JSON (quantidade variável) mantêm paridade exata.   |
 | **IV. Aggregated Data Only**     | LGPD rigorosa; sem nomes de alunos ou CPFs no Git      | Relatórios em `data/reports/` e JSONs em `data/dist/` contêm estritamente dados agregados e contagens numéricas. |
 | **V. Basic Quality**             | Zero erros de lint e formatação; pt-BR                 | `pyproject.toml` e linters unificados em `make check` (flake8, eslint, black, prettier).                         |
 | **VI. Automated Deployment**     | Deploy automático via GitHub Actions após gates        | `data/dist/indicadores.zip` versionado permite que o workflow do GitHub Pages execute puramente com Node.js 20.  |

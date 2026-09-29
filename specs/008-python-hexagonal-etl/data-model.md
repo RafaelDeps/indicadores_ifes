@@ -1,16 +1,16 @@
-# Data Model: Python Hexagonal ETL Pipeline
+# Modelo de Dados: Pipeline ETL Python (Hexagonal / Ports & Adapters)
 
 **Feature Branch**: `008-python-hexagonal-etl`  
 **Date**: 2026-09-25  
 **Spec Reference**: [spec.md](./spec.md)
 
-This document formalizes the canonical data entities, domain objects, intermediate aggregates, and sink delivery structures implemented in `etl/core/logic/models.py`.
+Este documento formaliza as entidades de dados canônicas, os objetos de domínio, os agregados intermediários e as estruturas de entrega do sink implementadas em `etl/core/logic/models.py`.
 
 ---
 
-## 1. Input Canonical Entities (Ports / Ingestion)
+## 1. Entidades Canônicas de Entrada (Portas / Ingestão)
 
-These entities represent records extracted from `exports_canonical.zip` via `ZipCanonicalSource`.
+Estas entidades representam registros extraídos de `exports_canonical.zip` via `ZipCanonicalSource`.
 
 ```mermaid
 classDiagram
@@ -88,65 +88,65 @@ classDiagram
     Iniciativa *-- MembroEquipe
 ```
 
-### Entity Specifications
+### Especificação das Entidades
 
 #### `Iniciativa`
 
-- **Fields**:
-  - `id: int`: Unique identifier from SIGPESQ/canonical export.
-  - `name: str`: Project title.
-  - `status: str | None`: Status description (e.g., "EM_EXECUCAO", "CONCLUIDO").
-  - `start_date: str | None`: ISO date `YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SS`.
-  - `end_date: str | None`: ISO date or `None` if ongoing.
-  - `initiative_type: dict[str, Any] | None`: Object containing `{"id": int, "name": str}`.
-  - `campus: RefCampus | None`: Directly assigned campus.
-  - `team: list[MembroEquipe]`: List of team participants.
-- **Validation Rules**:
-  - If `start_date` is missing or invalid, the initiative is considered never active (`AVISO: iniciativa {id} sem start_date — tratada como nunca ativa`).
+- **Campos**:
+  - `id: int`: Identificador único do SIGPESQ/export canônico.
+  - `name: str`: Título do projeto.
+  - `status: str | None`: Descrição do status (ex.: "EM_EXECUCAO", "CONCLUIDO").
+  - `start_date: str | None`: Data ISO `YYYY-MM-DD` ou `YYYY-MM-DDTHH:MM:SS`.
+  - `end_date: str | None`: Data ISO ou `None` se em andamento.
+  - `initiative_type: dict[str, Any] | None`: Objeto contendo `{"id": int, "name": str}`.
+  - `campus: RefCampus | None`: Campus atribuído diretamente.
+  - `team: list[MembroEquipe]`: Lista de participantes da equipe.
+- **Regras de Validação**:
+  - Se `start_date` estiver ausente ou for inválida, a iniciativa é considerada nunca ativa (`AVISO: iniciativa {id} sem start_date — tratada como nunca ativa`).
 
 #### `Pessoa`
 
-- **Fields**:
-  - `id: int`: Unique identifier.
-  - `name: str`: Person's name (never exported to public indicator JSONs - Principle IV).
-  - `classification: str | None`: Institutional role ("researcher", "student", etc.).
-  - `campus: RefCampus | None`: Associated campus.
-  - `articles: list[dict[str, Any]] | None`: Optional list of publication references.
-- **Validation Rules**:
-  - Researchers from `researchers_canonical.json` take precedence over students from `students_canonical.json` upon ID collisions.
+- **Campos**:
+  - `id: int`: Identificador único.
+  - `name: str`: Nome da pessoa (nunca exportado para os JSONs públicos de indicadores — Princípio IV).
+  - `classification: str | None`: Papel institucional ("researcher", "student", etc.).
+  - `campus: RefCampus | None`: Campus de vínculo.
+  - `articles: list[dict[str, Any]] | None`: Lista opcional de referências a publicações.
+- **Regras de Validação**:
+  - Pesquisadores de `researchers_canonical.json` têm precedência sobre estudantes de `students_canonical.json` em caso de colisão de IDs.
 
 #### `Campus`
 
-- **Fields**:
-  - `id: int`: Numeric ID (e.g. 1 to 23).
-  - `name: str`: Official name (e.g., "Serra", "Vitória", "Cariacica").
-- **Slug Generation**:
-  - Normalized ASCII lowercase string without accents or spaces (e.g., "Vitória" → "vitoria", "Vila Velha" → "vilavelha").
-  - Institutional consolidated slug is `"todos"`.
+- **Campos**:
+  - `id: int`: ID numérico (ex.: de 1 a 23).
+  - `name: str`: Nome oficial (ex.: "Serra", "Vitória", "Cariacica").
+- **Geração de Slug**:
+  - String ASCII normalizada em minúsculas, sem acentos nem espaços (ex.: "Vitória" → "vitoria", "Vila Velha" → "vilavelha").
+  - O slug do escopo institucional consolidado é `"todos"`.
 
 ---
 
-## 2. Core Domain Logic & Resolvers
+## 2. Lógica de Domínio do Núcleo e Resolvers
 
-### Campus Resolution Logic (`CampusResolver`)
+### Lógica de Resolução de Campus (`CampusResolver`)
 
-Resolves an initiative to its owning campus via a 3-tier hierarchy:
+Resolve uma iniciativa ao seu campus de lotação por meio de uma hierarquia de 3 níveis:
 
-1. **Tier 1 (Direct)**: Declared `iniciativa.campus`.
-2. **Tier 2 (Coordinator)**: Campus of the team member with role matching "Coordenador" / "Coordinator".
-3. **Tier 3 (First Team Member)**: Campus of the first team member who possesses an associated campus.
-4. **Fallback**: If unresolvable, the initiative is not assigned to any individual campus, but is counted in the institutional aggregate `todos` (emitting a warning if active during target years).
+1. **Nível 1 (Direto)**: `iniciativa.campus` declarado.
+2. **Nível 2 (Coordenador)**: Campus do membro da equipe cujo papel corresponde a "Coordenador" / "Coordinator".
+3. **Nível 3 (Primeiro Membro da Equipe)**: Campus do primeiro membro da equipe que possui um campus associado.
+4. **Fallback**: Se não for resolvível, a iniciativa não é atribuída a nenhum campus individual, mas é contabilizada no agregado institucional `todos` (emitindo um aviso se estiver ativa nos anos-alvo).
 
-### Activity Filter (`ActivityFilter`)
+### Filtro de Atividade (`ActivityFilter`)
 
-Evaluates whether an entity (initiative or membership) was active during target calendar year `Y` (2024, 2025, 2026):
+Avalia se uma entidade (iniciativa ou vínculo) esteve ativa durante o ano civil-alvo `Y` (2024, 2025, 2026):
 $$\text{Ativo}(Y) \iff \text{start\_date} \le \text{31/12/}Y \land (\text{end\_date is None} \lor \text{end\_date} \ge \text{01/01/}Y)$$
 
 ---
 
-## 3. Domain Aggregates
+## 3. Agregados de Domínio
 
-Pure calculation records computed by `Pillar1Calculator`, `Pillar2Calculator`, and `Pillar3Calculator`.
+Registros de cálculo puros computados por `Pillar1Calculator`, `Pillar2Calculator` e `Pillar3Calculator`.
 
 ```mermaid
 classDiagram
@@ -198,35 +198,35 @@ classDiagram
 
 ---
 
-## 4. Delivery & Output Models (Sinks)
+## 4. Modelos de Entrega e Saída (Sinks)
 
 ### `RegistroPilarJson`
 
-- `nome: str`: File name adhering to pattern `pilar{N}_{campus}_{year}.json` (e.g. `pilar1_serra_2026.json`).
-- `conteudo: str`: UTF-8 serialized JSON string.
+- `nome: str`: Nome de arquivo em conformidade com o padrão `pilar{N}_{campus}_{year}.json` (ex.: `pilar1_serra_2026.json`).
+- `conteudo: str`: String JSON serializada em UTF-8.
 
-### Output JSON Structure Specification
+### Especificação da Estrutura do JSON de Saída
 
-#### Header Fields (Common to Pilares 1, 2, 3)
+#### Campos de Cabeçalho (Comuns aos Pilares 1, 2 e 3)
 
-- `campus: str`: Official campus name (or "Todos os Campi").
-- `ano_referencia: int`: Reference year (e.g., 2026).
+- `campus: str`: Nome oficial do campus (ou "Todos os Campi").
+- `ano_referencia: int`: Ano de referência (ex.: 2026).
 - `pilar: str`:
   - Pilar 1: `"Engajamento Academico e Inclusao"`
   - Pilar 2: `"Fomento e Conexao com o Ecossistema"`
   - Pilar 3: `"Produtividade e Propriedade Intelectual"`
 - `indicadores: dict[str, IndicadorDetalhe]`
 
-#### Indicator Schema (`IndicadorDetalhe`)
+#### Schema de Indicador (`IndicadorDetalhe`)
 
-- `descricao: str`: Human-readable description.
-- Metric values: Integers for collected/calculated counts, `null` for uncollected census/budget indicators.
-- In Pilar 3, includes `valores_totais_por_tipo: dict[str, int]`.
+- `descricao: str`: Descrição legível por humanos.
+- Valores das métricas: inteiros para contagens coletadas/calculadas, `null` para indicadores de censo/orçamento não coletados.
+- No Pilar 3, inclui `valores_totais_por_tipo: dict[str, int]`.
 
 ---
 
-## 5. Invariants & Data Integrity Rules
+## 5. Invariantes e Regras de Integridade de Dados
 
-1. **Principle III Fidelity**: Uncollected indicators (`NTE`, `PIES`, `PICOT`, `TAFPPI`, `PINV`, `PIPDI`, `PIPROTR`) MUST NEVER be set to `0` or estimated; they must strictly serialize as `null`.
-2. **Principle IV LGPD Privacy**: No personal names, identification numbers, CPF, email, or individual publication lists may appear in `RegistroPilarJson`.
-3. **Idempotence**: Running the ETL pipeline multiple times against the same `exports_canonical.zip` must yield identical, bitwise-reproducible zip bytes.
+1. **Fidelidade do Princípio III**: Indicadores não coletados (`NTE`, `PIES`, `PICOT`, `TAFPPI`, `PINV`, `PIPDI`, `PIPROTR`) NUNCA devem ser definidos como `0` nem estimados; devem serializar estritamente como `null`.
+2. **Privacidade LGPD do Princípio IV**: Nomes pessoais, números de identificação, CPF, e-mail ou listas individuais de publicações podem NÃO aparecer em `RegistroPilarJson`.
+3. **Idempotência**: Executar o pipeline ETL múltiplas vezes sobre o mesmo `exports_canonical.zip` deve produzir bytes de zip idênticos e reprodutíveis bit a bit.

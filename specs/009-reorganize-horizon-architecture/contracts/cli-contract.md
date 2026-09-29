@@ -18,7 +18,7 @@ python -m etl.main [-h] [--entrada ENTRADA] [--saida SAIDA] [--campus CAMPUS] [-
 | :---------- | :--------: | :------------------: | :------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
 | `--entrada` |    `-i`    |      `ENTRADA`       | `data/canonical/exports_canonical.zip`                                                 | Caminho do pacote canônico de entrada. Suporta caminhos relativos ou absolutos (ex.: `../horizon_etl/data/exports/...`). |
 | `--saida`   |    `-o`    |       `SAIDA`        | `data/dist/indicadores.zip` (ou `data/dist/indicadores_<slug>.zip` se campus filtrado) | Caminho de gravação do pacote de saída.                                                                                  |
-| `--campus`  |    `-c`    |       `CAMPUS`       | `None` (execução global de todos os 23 campi + 'todos')                                | Nome ou slug do campus para execução filtrada.                                                                           |
+| `--campus`  |    `-c`    |       `CAMPUS`       | `None` (execução global de todos os campi do export + 'todos')                              | Nome ou slug do campus para execução filtrada.                                                                           |
 | `--anos`    |    `-a`    |        `ANOS`        | `2024,2025,2026`                                                                       | Anos civis de apuração separados por vírgula.                                                                            |
 
 ### 1.2. Códigos de Saída (Exit Codes)

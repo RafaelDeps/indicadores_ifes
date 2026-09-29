@@ -2,6 +2,12 @@
 
 **Feature**: `006-deterministic-etl-pipeline` | **Date**: 2026-09-23
 
+> **Nota de vigência**: layout histórico (peca na raiz do repositório). A
+> partir da spec 009 o pacote é gerado em `data/dist/indicadores.zip` pelo
+> pipeline Python (specs 008/009/010). O **contrato de conteúdo** (nomenclatura,
+> schemas, regras semânticas e determinismo) permanece vigente e é herdado por
+> essas specs — ver [009/contracts/](../009-reorganize-horizon-architecture/contracts/)
+
 Contrato do pacote gerado pelo ETL. **Base normativa**: [`specs/004-pillars-campi-zip-rework/contracts/ingestion-contract.md`](../../004-pillars-campi-zip-rework/contracts/ingestion-contract.md) — este documento especializa o contrato 004 para a geração automatizada e não o contradiz.
 
 ## 1. Nomenclatura e Cobertura

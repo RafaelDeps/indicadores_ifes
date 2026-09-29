@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-25
 
-**Status**: Draft
+**Status**: Finalizado (implementado; arquitetura TS superada pela implementação Python das specs 008/009)
 
 **Input**: User description: "Refactor `src/etl` to mirror the Hexagonal/Ports & Adapters ETL architecture of `horizon_etl/src/` with zero behavioral regressions. Context: Existing ETL logic works and passes tests, but is trapped in a flat procedural directory (`src/etl/*.ts`). Refactor it to follow the exact `adapters`, `core` (ports + logic), and `flows` architecture used in `horizon_etl`. Requirements: 1. ARCHITECTURAL LAYERS (Mirrored from horizon_etl): `src/etl/core/ports/` (`source.ts`, `sink.ts`), `src/etl/core/logic/` (Resolvers, Temporal, Calculators), `src/etl/adapters/` (`sources/zip_canonical_source.ts`, `sinks/json_pilar_sink.ts`, `sinks/zip_indicadores_sink.ts`), `src/etl/flows/` (`indicadores_flow.ts`), `src/etl/main.ts` (CLI entrypoint). 2. CONSTRAINTS: Preserve 100% of existing verified business logic, formulas, date intervals, and strict Principle III fidelity (`null` vs `0`). Zero new runtime dependencies; all 231 existing Vitest tests must continue passing. Reorganize `tests/etl/` to mirror the `adapters/`, `core/`, and `flows/` structure."
 

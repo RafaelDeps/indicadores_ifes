@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-26
 
-**Status**: Draft
+**Status**: Finalizado (implementado)
 
 **Input**: User description: "Reestruturação arquitetural do projeto indicadores_ifes inspirada no horizon_etl. Reorganizar a arquitetura do repositório indicadores_ifes aplicando a disciplina de pastas, separação de responsabilidades e padrões de engenharia de dados do horizon_etl, resolvendo o atrito entre o frontend Astro e o pipeline Python ETL."
 
@@ -14,7 +14,7 @@
 
 - Q: Qual deve ser a localização física definitiva do frontend Astro no repositório? → A: O frontend Astro permanece em `src/` conforme o padrão original do Astro e o Princípio I da Constituição, com `etl/` e `data/` como diretórios irmãos na raiz.
 - Q: O que deve ser feito com os arquivos .json legados em src/data/? → A: Remover os arquivos JSON estáticos de `src/data/`, consolidando `data/dist/indicadores.zip` como a única fonte da verdade para o frontend, mantendo apenas definições e metadados TypeScript em `src/data/indicadores.ts`.
-- Q: O arquivo gerado data/dist/indicadores.zip deve ser versionado no Git? → A: Sim, `data/dist/indicadores.zip` (212 KB) deve ser versionado no Git como artefato de distribuição consumido pelo frontend, enquanto `data/canonical/exports_canonical.zip` (23.5 MB) e zips parciais de campus (`data/dist/indicadores_*.zip`) permanecem estritamente ignorados no `.gitignore`.
+- Q: O arquivo gerado data/dist/indicadores.zip deve ser versionado no Git? → A: Sim, `data/dist/indicadores.zip` (tamanho variável, derivado do export) deve ser versionado no Git como artefato de distribuição consumido pelo frontend, enquanto `data/canonical/exports_canonical.zip` (tamanho variável) e zips parciais de campus (`data/dist/indicadores_*.zip`) permanecem estritamente ignorados no `.gitignore`.
 - Q: Como o relatório de auditoria em data/reports/ deve ser gerenciado e versionado? → A: O relatório `data/reports/etl_run_report.md` é um arquivo único determinístico, sobrescrito a cada execução do pipeline completo e versionado no Git juntamente com `data/dist/indicadores.zip` como comprovação pública de auditoria da versão publicada.
 - Q: Como o pipeline deve resolver o pacote canônico de entrada e lidar com sua ausência? → A: O pipeline busca por padrão em `data/canonical/exports_canonical.zip`, mas aceita override via CLI (`--entrada` / `-i`), variável de ambiente (`ENTRADA`) e `.env`, emitindo mensagem amigável e orientativa de resolução caso o arquivo não seja localizado.
 
@@ -24,14 +24,14 @@
 
 Como desenvolvedor ou operador de automação de dados, desejo que todos os arquivos de dados brutos de entrada, pacotes de distribuição gerados e relatórios de auditoria residam sob um diretório segregado `data/` (`data/canonical/`, `data/dist/`, `data/reports/`), impedindo a poluição da raiz do repositório e o versionamento acidental de arquivos binários pesados no Git.
 
-**Why this priority**: A presença de arquivos de dados como `exports_canonical.zip` (23.5 MB) e `indicadores.zip` soltos na raiz viola as boas práticas de engenharia, contamina o controle de versão e confunde a navegação de arquivos do projeto.
+**Why this priority**: A presença de arquivos de dados como `exports_canonical.zip` (tamanho variável) e `indicadores.zip` soltos na raiz viola as boas práticas de engenharia, contamina o controle de versão e confunde a navegação de arquivos do projeto.
 
 **Independent Test**: Pode ser testado de forma independente verificando a inexistência de arquivos `.zip` na raiz do repositório e comprovando que a execução do pipeline consome a entrada de `data/canonical/exports_canonical.zip` e grava o pacote final em `data/dist/indicadores.zip`.
 
 **Acceptance Scenarios**:
 
 1. **Given** o arquivo canônico localizado em `data/canonical/exports_canonical.zip`, **When** o pipeline de ETL é executado via `make etl`, **Then** o arquivo de saída `indicadores.zip` é criado estritamente em `data/dist/` e nenhum arquivo `.zip` é criado ou modificado na raiz do repositório.
-2. **Given** a raiz do repositório, **When** verificada a árvore de arquivos e o arquivo `.gitignore`, **Then** a pasta `data/canonical/` (23.5 MB) e zips parciais de campus sob `data/dist/indicadores_*.zip` estão devidamente ignorados, enquanto `data/dist/indicadores.zip` (212 KB) é versionado como artefato de produção para viabilizar o deploy do Astro no CI.
+2. **Given** a raiz do repositório, **When** verificada a árvore de arquivos e o arquivo `.gitignore`, **Then** a pasta `data/canonical/` (tamanho variável) e zips parciais de campus sob `data/dist/indicadores_*.zip` estão devidamente ignorados, enquanto `data/dist/indicadores.zip` (tamanho variável) é versionado como artefato de produção para viabilizar o deploy do Astro no CI.
 3. **Given** uma execução parcial para um campus específico (ex.: `make etl-campus CAMPUS=Serra`), **When** o pipeline finaliza, **Then** o arquivo resultante é gerado como `data/dist/indicadores_serra.zip`.
 
 ---
@@ -114,7 +114,7 @@ Como colaborador do projeto, quero uma interface padronizada de desenvolvimento 
   - `tests/web/`: exclusivo para a suíte em TypeScript / Vitest, validando componentes Astro, formatação, rotas e acessibilidade.
 - **FR-011**: O frontend Astro DEVE permanecer localizado em `src/` (em estrita observância ao Princípio I da Constituição) e seu módulo de carregamento de dados (`src/lib/dataset.ts`) DEVE ler o pacote a partir de `data/dist/indicadores.zip`, fornecendo mensagens orientativas claras no console caso o arquivo não seja encontrado.
 - **FR-012**: O arquivo `.gitignore` DEVE ser configurado para ignorar `data/canonical/*` (preservando o diretório via `.gitkeep`) e arquivos parciais de campus sob `data/dist/indicadores_*.zip`, enquanto o pacote consolidado de produção `data/dist/indicadores.zip` (212 KB) DEVE ser versionado para viabilizar o build e deploy do Astro no CI sem dependência de runtime Python.
-- **FR-013**: Os 216 arquivos gerados no pacote final `indicadores.zip` (3 pilares × 24 escopos de campus × 3 anos) DEVEM manter 100% de paridade numérica e conformidade estrita aos schemas `pilar{N}_{campus}_{year}.json` definidos nas especificações dos pilares.
+- **FR-013**: Os arquivos gerados no pacote final `indicadores.zip` (3 pilares × (campi do export + `todos`) × 3 anos — quantidade **variável**) DEVEM manter 100% de paridade numérica e conformidade estrita aos schemas `pilar{N}_{campus}_{year}.json` definidos nas especificações dos pilares.
 - **FR-014**: O projeto DEVE adotar um arquivo `pyproject.toml` na raiz para unificar as configurações das ferramentas Python (`black`, `isort`, `flake8`, `pytest`).
 - **FR-015**: O `Makefile` DEVE fornecer alvos claros e atualizados: `make setup`, `make etl`, `make etl-campus`, `make test`, `make test-etl`, `make test-web`, `make lint`, `make format` e `make check`.
 - **FR-016**: Os arquivos JSON legados em `src/data/` (`qspp.json`, `ntpp.json`, `picot.json`, `pies.json`) DEVEM ser removidos, consolidando `data/dist/indicadores.zip` como a única fonte da verdade para o frontend, mantendo apenas metadados e tipagens TypeScript em `src/data/indicadores.ts`.
@@ -125,7 +125,7 @@ Como colaborador do projeto, quero uma interface padronizada de desenvolvimento 
 
 - **DatasetCanônico (`data/canonical/exports_canonical.zip`)**: Coleção de arquivos JSON normalizados de entrada (campuses, initiatives, researchers, students, productions, etc.) fornecidos pelo ecossistema upstream.
 - **RelatórioDeExecução (`data/reports/etl_run_report.md`)**: Artefato de auditoria gerado pelo módulo `tracking/`, contendo o sumário de processamento, contadores por campus e avisos de qualidade emitidos durante o pipeline.
-- **PacoteDeIndicadores (`data/dist/indicadores.zip`)**: Pacote determinístico contendo a coleção completa dos 216 arquivos JSON validados conforme o schema de entrega dos Pilares 1, 2 e 3 do CONIF.
+- **PacoteDeIndicadores (`data/dist/indicadores.zip`)**: Pacote determinístico contendo a coleção completa de arquivos JSON validados conforme o schema de entrega dos Pilares 1, 2 e 3 do CONIF (quantidade variável, derivada do export).
 - **RegistroPilarJson**: Entidade de transferência que encapsula o nome normalizado (`pilar{N}_{campus}_{ano}.json`) e o conteúdo JSON validado contra nulos e tipos estritos.
 
 ## Success Criteria _(mandatory)_
@@ -133,7 +133,7 @@ Como colaborador do projeto, quero uma interface padronizada de desenvolvimento 
 ### Measurable Outcomes
 
 - **SC-001**: 0 (zero) arquivos binários `.zip` soltos na raiz do repositório após a execução de qualquer comando do pipeline ou do build.
-- **SC-002**: 100% de paridade matemática e contratual nos 216 arquivos gerados sob `data/dist/indicadores.zip` em comparação com os valores canônicos oficiais homologados.
+- **SC-002**: 100% de paridade matemática e contratual nos arquivos gerados sob `data/dist/indicadores.zip` em comparação com os valores canônicos oficiais homologados.
 - **SC-003**: 100% dos testes unitários e de integração executam e passam com sucesso tanto no comando `make test-etl` quanto em `make test-web`.
 - **SC-004**: Toda execução do comando `make etl` gera automaticamente o arquivo `data/reports/etl_run_report.md` com tempo total de pipeline inferior a 5 segundos para o processamento de todo o conjunto de dados.
 - **SC-005**: 0 (zero) erros ou advertências nos linters e checadores estáticos (`make check` conclui com exit code 0).

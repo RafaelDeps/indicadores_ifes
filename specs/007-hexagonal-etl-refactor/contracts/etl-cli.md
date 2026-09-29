@@ -2,6 +2,14 @@
 
 **Feature**: `007-hexagonal-etl-refactor` | **Date**: 2026-09-25
 
+> **Nota de vigência**: layout/implementação históricos (CLI TypeScript
+> `npm run etl` ativando `src/etl/main.ts`, pacote na raiz). A partir das
+> specs 008/009 o pipeline é Python (`python3 -m etl.main` / `make etl`) com
+> saída em `data/dist/indicadores.zip` — ver
+> [009/contracts/](../009-reorganize-horizon-architecture/contracts/). A
+> mensagem de conclusão com `{N}`/`{C}` variáveis é mantida nas versões
+> atuais.
+
 Este contrato preserva a interface de linha de comando operada pelos mantenedores e scripts de automação.
 
 ---

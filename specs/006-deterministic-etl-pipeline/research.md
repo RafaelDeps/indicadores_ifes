@@ -8,7 +8,7 @@ Pesquisa baseada em inspeção direta do `exports_canonical.zip` real (arquivos 
 
 **Decision**: Reutilizar o leitor ZIP existente `src/lib/zip.ts` (`extrairZip`, sem dependências externas, suporta STORE e DEFLATE) para ler `exports_canonical.zip` inteiramente em memória.
 
-**Rationale**: Já está em produção no site (ingestão do `indicadores.zip`), possui testes (`tests/zip.test.ts`) e atende ao volume de entrada (~23 MB compactados, ~350 MB descompactados — cabe folgado em memória de máquina de desenvolvimento).
+**Rationale**: Já está em produção no site (ingestão do `indicadores.zip`), possui testes (`tests/zip.test.ts`) e atende ao volume de entrada (variável conforme o export vigente — para um export completo de 23 campi, ~23 MB compactados, ~350 MB descompactados; cabe folgado em memória de máquina de desenvolvimento).
 
 **Alternatives considered**: dependências como `fflate`/`adm-zip`/`yauzl` (rejeitadas: adicionariam dependência sem ganho — Principle I); streaming com `unzip` CLI (rejeitado: dependência de plataforma e parsing de saída frágil).
 
@@ -16,7 +16,7 @@ Pesquisa baseada em inspeção direta do `exports_canonical.zip` real (arquivos 
 
 **Decision**: Implementar um escritor ZIP minimalista em `src/etl/zipwriter.ts` usando método **STORE** (sem compressão), campos de data fixados em 1980-01-01 00:00:00 e CRC32 implementado localmente (tabela padrão IEEE 802.3, ~15 linhas). Escrita atômica: arquivo temporário + `rename`.
 
-**Rationale**: STORE elimina qualquer variação de compressão; datas fixas eliminam carimbos de tempo — o resultado é **byte-idêntico** entre execuções (requisito SC-002). Os arquivos são JSON pequenos (total esperado < 2 MB), então a ausência de compressão é irrelevante. O leitor do site (`extrairZip`) e qualquer leitor padrão leem STORE normalmente. CRC32 é o único algoritmo necessário e não justifica dependência.
+**Rationale**: STORE elimina qualquer variação de compressão; datas fixas eliminam carimbos de tempo — o resultado é **byte-idêntico** entre execuções (requisito SC-002). Os arquivos são JSON pequenos (total variável, dependente do export), então a ausência de compressão é irrelevante. O leitor do site (`extrairZip`) e qualquer leitor padrão leem STORE normalmente. CRC32 é o único algoritmo necessário e não justifica dependência.
 
 **Alternatives considered**: `fflate`/`jszip` (dependência nova + variação de metadados); CLI `zip` (metadados não determinísticos entre plataformas); DEFLATE com nível fixo (ainda dependente da implementação da lib).
 

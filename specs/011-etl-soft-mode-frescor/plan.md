@@ -57,7 +57,8 @@ Makefile/GNU make.
 o pacote hexagonal.
 
 **Performance Goals**: os novos testes terminam em segundos; `make check-dados`
-< 5 s (validação de 18 arquivos JSON + 3 stat de mtime).
+< 5 s (validação de todos os JSON do pacote — quantidade variável, derivada do
+export — + 3 stat de mtime).
 
 **Constraints**: mensagens de console em pt-BR; `AVISO:`/`ERRO:` no stderr;
 determinismo e atomicidade do pipeline preservados; modo soft **opt-in** (o

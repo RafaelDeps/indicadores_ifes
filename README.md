@@ -86,10 +86,10 @@ A automação do projeto é centralizada no `Makefile`:
 ## 🔒 Governança de Dados, Fidelidade e LGPD
 
 1. **Fidelidade Matemática Estrita (Princípio CONIF III)**:
-   - Os cálculos dos 9 indicadores cobrem 24 escopos institucionais (23 campi + agregador "todos") ao longo dos anos de apuração (2024–2026), totalizando 216 arquivos contratuais no pacote distribuído.
+   - Os cálculos dos 9 indicadores cobrem todos os escopos do export canônico (campi individuais + agregador "todos") ao longo dos anos de apuração (2024–2026); o número de arquivos no pacote `indicadores.zip` é **variável**, derivado do export vigente (nº de campi + `todos`, × 3 pilares × 3 anos).
    - Aplicação rigorosa das regras de nulidade: denominadores nulos resultam em `null` com motivo formal cadastrado.
 
 2. **Privacidade e LGPD (Princípio CONIF IV)**:
    - O repositório e os pacotes de distribuição contêm exclusivamente dados agregados e desidentificados.
    - O módulo `etl/tracking/` sanitiza automaticamente qualquer identificador discente ou pessoal em logs e atestados de auditoria (`data/reports/etl_run_report.md`).
-   - A fonte canônica de 23.5 MB (`exports_canonical.zip`) permanece estritamente isolada sob `data/canonical/` e é permanentemente ignorada pelo Git.
+   - A fonte canônica (`exports_canonical.zip`, tamanho variável conforme o export) permanece estritamente isolada sob `data/canonical/` e é permanentemente ignorada pelo Git.

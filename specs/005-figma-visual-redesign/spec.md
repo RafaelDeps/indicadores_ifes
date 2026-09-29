@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-22
 
-**Status**: Draft
+**Status**: Finalizado (implementado — identidade visual vigente no frontend)
 
 **Input**: User description: "Visual redesign of frontend inspired by Figma mock, adapted to CONIF 3-pillar Astro SSG: 1. Visual Identity & Tokens: Official IFES 9-block grid logo (1 red circle #e6323e, 8 green squares #178447); Color system: Institutional emerald/green palette (#178447, dark green #0c3929, emerald-50, emerald-700, slate-900, surface bg #f7f9f8); Modern typography (Manrope or clean sans) and crisp inline SVG icons. 2. Navigation & Header: Sticky header with Brand, CONIF pillar navigation tabs (Visão geral, Pilar 1, Pilar 2, Pilar 3); FilterSelect dropdowns for dynamic Campus (from dataset, default 'Todos') and Year-base with URL sync (?campus=...&ano=...); Mobile menu drawer support. 3. Components & Pages (Astro Native, no React runtime): IndicatorCard: Clean card with themed icon container, large numeric value (or elegant 'Dado indisponível' badge when null), unit, change delta, and 'Ver detalhes' footer link; Detail page: Header banner with large highlight result box, 2-column layout (Main: What it measures, Purpose, Calculation formula in highlighted mono block, Variables table; Aside: Recent historical evolution chart, Component counts breakdown, and dark-green methodological note card). 4. Constraints & Exclusions: No 'Fonte dos dados' card, no CSV/JSON export downloads; Strict null handling: never render 0 for missing data; Full WCAG AA contrast compliance and zero regressions on existing 117 tests."
 

@@ -1,151 +1,151 @@
-# Implementation Plan: Python Hexagonal ETL Pipeline
+# Plano de Implementação: Pipeline ETL Python (Hexagonal / Ports & Adapters)
 
 **Branch**: `008-python-hexagonal-etl` | **Date**: 2026-09-25 | **Spec**: [spec.md](./spec.md)
 
-**Input**: Feature specification from `/specs/008-python-hexagonal-etl/spec.md`
+**Input**: Especificação de feature em `/specs/008-python-hexagonal-etl/spec.md`
 
 ---
 
-## Summary
+## Resumo
 
-Implement a high-performance Python ETL pipeline (>= 3.11/3.12) located at `etl/`, mirroring the exact Ports & Adapters (Hexagonal) architecture used in `horizon_etl/src/`. The pipeline processes canonical data from `exports_canonical.zip` and generates a deterministic, contract-validated `indicadores.zip` (containing 216 files for 23 campuses and institutional `todos` across 2024–2026). The runtime pipeline uses zero external dependencies (Python standard library only). Legacy TypeScript ETL code in `src/etl/` and `tests/etl/*.test.ts` is completely removed, leaving `src/` dedicated to the Astro dashboard and `tests/etl/` dedicated to `pytest`.
+Implementar um pipeline ETL em Python de alto desempenho (>= 3.11/3.12) localizado em `etl/`, espelhando exatamente a arquitetura Ports & Adapters (Hexagonal) utilizada em `horizon_etl/src/`. O pipeline processa dados canônicos de `exports_canonical.zip` e gera um `indicadores.zip` determinístico e validado contra os contratos (arquivos `pilar{N}_{campus}_{year}.json` para os campi do export e o escopo institucional `todos` nos anos 2024–2026; quantidade variável, derivada do export). O pipeline em tempo de execução utiliza zero dependências externas (exclusivamente a biblioteca padrão do Python). O código ETL legado em TypeScript em `src/etl/` e os testes em `tests/etl/*.test.ts` são completamente removidos, deixando `src/` dedicado ao dashboard Astro e `tests/etl/` dedicado ao `pytest`.
 
 ---
 
-## Technical Context
+## Contexto Técnico
 
-**Language/Version**: Python >= 3.11 (tested on Python 3.14) + Node.js >= 20 (for Astro dashboard and Vitest).
+**Language/Version**: Python >= 3.11 (testado no Python 3.14) + Node.js >= 20 (para o dashboard Astro e o Vitest).
 
 **Primary Dependencies**:
 
-- Runtime: Zero external dependencies (exclusive use of Python standard library: `zipfile`, `json`, `dataclasses`, `pathlib`, `argparse`, `abc`, `typing`).
-- Development & Testing: `pytest`, `pytest-cov`, `black`, `isort`, `flake8` managed via `requirements-etl.txt`.
+- Runtime: zero dependências externas (uso exclusivo da biblioteca padrão do Python: `zipfile`, `json`, `dataclasses`, `pathlib`, `argparse`, `abc`, `typing`).
+- Desenvolvimento e testes: `pytest`, `pytest-cov`, `black`, `isort`, `flake8` gerenciados via `requirements-etl.txt`.
 
-**Storage**: File-based ZIP archives (`exports_canonical.zip` as input; `indicadores.zip` as deterministic atomic output).
+**Storage**: arquivos ZIP em disco (`exports_canonical.zip` como entrada; `indicadores.zip` como saída determinística e atômica).
 
-**Testing**: `pytest` for Python ETL (`tests/etl/`); `vitest` for Astro frontend (`tests/*.test.ts`).
+**Testing**: `pytest` para o ETL Python (`tests/etl/`); `vitest` para o frontend Astro (`tests/*.test.ts`).
 
-**Target Platform**: Linux / POSIX workstation and CI/CD runners.
+**Target Platform**: estações de trabalho e runners de CI/CD em Linux / POSIX.
 
-**Project Type**: Data transformation CLI pipeline + static website dashboard.
+**Project Type**: pipeline CLI de transformação de dados + dashboard de site estático.
 
-**Performance Goals**: Complete pipeline execution under 5 seconds for all 216 files.
+**Performance Goals**: execução completa do pipeline em menos de 5 segundos para todos os arquivos gerados (quantidade variável, derivada do export).
 
 **Constraints**:
 
-- Strict null fidelity per CONIF guidelines (uncollected census/budget indicators must be `null`, not `0`).
-- Strict LGPD privacy per Constitution Principle IV (no PII in output files).
-- Deterministic ZIP generation (DOS timestamp 1980-01-01, sorted entries, atomic rename).
+- Fidelidade estrita de nulos conforme as diretrizes CONIF (indicadores de censo/orçamento não coletados devem ser `null`, e não `0`).
+- Privacidade LGPD estrita conforme o Princípio IV da Constituição (nenhum dado pessoal identificável nos arquivos de saída).
+- Geração determinística de ZIP (timestamp DOS 1980-01-01, entradas ordenadas, renomeação atômica).
 
-**Scale/Scope**: 23 campuses + consolidated `todos` × 3 pilares × 3 reference years (2024, 2025, 2026) = 216 JSON files.
-
----
-
-## Constitution Check
-
-_GATE: Must pass before Phase 0 research. Re-checked after Phase 1 design._
-
-| Principle                                       | Status   | Justification                                                                                                                                                                                                                          |
-| :---------------------------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **I. Simplicity**                               | **PASS** | The runtime ETL uses zero external packages (standard library only). The hexagonal architecture decouples domain logic cleanly without over-engineering or third-party framework overhead. Astro structure in `src/` remains standard. |
-| **II. Test-First Development**                  | **PASS** | Test suite implemented in `tests/etl/` using `pytest`, covering unit logic (resolvers, temporal, calculators), adapters, flows, and CLI end-to-end. Vitest continues covering Astro frontend.                                          |
-| **III. Fidelity to Report Data**                | **PASS** | Output schemas strictly enforce `null` for uncollected metrics (`NTE`, `PIES`, `PICOT`, `TAFPPI`, `PINV`, `PIPDI`, `PIPROTR`) and `0` for verified zero counts (`PA`). Validated automatically by sink contract.                       |
-| **IV. Aggregated Data Only (LGPD)**             | **PASS** | `Pessoa` and `MembroEquipe` names/IDs are used strictly in-memory during aggregation and are excluded from all generated indicator files. Sink validator checks schema compliance.                                                     |
-| **V. Basic Quality**                            | **PASS** | Code quality enforced via `flake8`, `black`, and `isort` for Python, and `eslint` + `prettier` for TypeScript. User-facing text in pt-BR.                                                                                              |
-| **VI. Automated Deployment with Quality Gates** | **PASS** | `Makefile` provides unified targets: `make check` executes formatting check, linting, Python pytest, and Astro Vitest before any build or deployment.                                                                                  |
+**Scale/Scope**: campi do export + `todos` consolidado × 3 pilares × 3 anos de referência (2024, 2025, 2026) = arquivos JSON em quantidade variável, derivada do export.
 
 ---
 
-## Project Structure
+## Verificação da Constituição
 
-### Documentation (this feature)
+_PORTÃO: Deve ser aprovado antes da pesquisa da Fase 0. Reverificado após o design da Fase 1._
+
+| Princípio                                       | Status   | Justificativa                                                                                                                                                                                                                                              |
+| :---------------------------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **I. Simplicity**                               | **PASS** | O ETL em tempo de execução utiliza zero pacotes externos (somente a biblioteca padrão). A arquitetura hexagonal desacopla a lógica de domínio de forma limpa, sem over-engineering nem o custo de frameworks de terceiros. A estrutura Astro em `src/` permanece padrão.                     |
+| **II. Test-First Development**                  | **PASS** | Suíte de testes implementada em `tests/etl/` usando `pytest`, cobrindo a lógica unitária (resolvers, temporal, calculators), os adaptadores, os fluxos e a CLI de ponta a ponta. O Vitest continua cobrindo o frontend Astro.                                                                                             |
+| **III. Fidelity to Report Data**                | **PASS** | Os schemas de saída impõem estritamente `null` para métricas não coletadas (`NTE`, `PIES`, `PICOT`, `TAFPPI`, `PINV`, `PIPDI`, `PIPROTR`) e `0` para contagens verificadas iguais a zero (`PA`). Validado automaticamente pelo contrato do sink.                                                                        |
+| **IV. Aggregated Data Only (LGPD)**             | **PASS** | Nomes/IDs de `Pessoa` e `MembroEquipe` são usados estritamente em memória durante a agregação e são excluídos de todos os arquivos de indicadores gerados. O validador do sink verifica a conformidade com o schema.                                                                                      |
+| **V. Basic Quality**                            | **PASS** | A qualidade do código é imposta via `flake8`, `black` e `isort` para o Python, e `eslint` + `prettier` para o TypeScript. Texto voltado ao usuário em pt-BR.                                                                                                                                     |
+| **VI. Automated Deployment with Quality Gates** | **PASS** | O `Makefile` fornece alvos unificados: `make check` executa a verificação de formatação, o lint, o pytest do Python e o Vitest do Astro antes de qualquer build ou implantação.                                                                                                                                           |
+
+---
+
+## Estrutura do Projeto
+
+### Documentação (esta feature)
 
 ```text
 specs/008-python-hexagonal-etl/
-├── spec.md              # Feature specification
-├── plan.md              # This implementation plan
-├── research.md          # Technical decisions and architectural rationale
-├── data-model.md        # Canonical entities, domain objects, and aggregate schemas
-├── quickstart.md        # End-to-end execution and validation guide
-├── contracts/           # Interface contracts and JSON schemas
+├── spec.md              # Especificação da feature
+├── plan.md              # Este plano de implementação
+├── research.md          # Decisões técnicas e fundamentação arquitetural
+├── data-model.md        # Entidades canônicas, objetos de domínio e schemas agregados
+├── quickstart.md        # Guia de execução e validação ponta a ponta
+├── contracts/           # Contratos de interface e schemas JSON
 │   ├── cli-contract.md
 │   ├── canonical-source-contract.md
 │   ├── pilar1-schema.json
 │   ├── pilar2-schema.json
 │   └── pilar3-schema.json
 └── checklists/
-    └── requirements.md  # Specification quality checklist
+    └── requirements.md  # Checklist de qualidade da especificação
 ```
 
-### Source Code (repository root)
+### Código-Fonte (raiz do repositório)
 
 ```text
 etl/
 ├── core/
 │   ├── ports/
 │   │   ├── __init__.py
-│   │   ├── source.py                 # ISource(ABC) contract
-│   │   └── sink.py                   # ISink(ABC) contract
+│   │   ├── source.py                 # contrato ISource(ABC)
+│   │   └── sink.py                   # contrato ISink(ABC)
 │   └── logic/
 │       ├── __init__.py
-│       ├── models.py                 # Domain dataclasses & aggregates
+│       ├── models.py                 # dataclasses de domínio e agregados
 │       ├── resolvers/
 │       │   ├── __init__.py
-│       │   ├── campus_resolver.py    # Hierarchical campus resolution
-│       │   └── people_registry.py    # Merged researchers & students
+│       │   ├── campus_resolver.py    # resolução hierárquica de campus
+│       │   └── people_registry.py    # pesquisadores e estudantes unificados
 │       ├── temporal/
 │       │   ├── __init__.py
-│       │   └── activity_filter.py    # Calendar year window check
+│       │   └── activity_filter.py    # verificação da janela do ano civil
 │       └── calculators/
 │           ├── __init__.py
-│           ├── pillar1.py            # NTPP, QSPP, NEP calculations
-│           ├── pillar2.py            # PINV, PIPDI strict nulls
+│           ├── pillar1.py            # cálculos de NTPP, QSPP, NEP
+│           ├── pillar2.py            # PINV, PIPDI com nulos estritos
 │           ├── pillar3.py            # NPB, NPT, PC software, PA=0
-│           └── aggregator.py         # Multi-campus and 'todos' aggregation
+│           └── aggregator.py         # agregação multi-campus e 'todos'
 ├── adapters/
 │   ├── __init__.py
 │   ├── sources/
 │   │   ├── __init__.py
-│   │   └── zip_canonical_source.py   # ISource: reads exports_canonical.zip
+│   │   └── zip_canonical_source.py   # ISource: lê exports_canonical.zip
 │   └── sinks/
 │       ├── __init__.py
-│       ├── json_pilar_sink.py        # Formats pilar{N}_{campus}_{year}.json
-│       └── zip_indicadores_sink.py   # ISink: deterministic atomic ZIP writer
+│       ├── json_pilar_sink.py        # formata pilar{N}_{campus}_{year}.json
+│       └── zip_indicadores_sink.py   # ISink: escritor ZIP atômico determinístico
 ├── flows/
 │   ├── __init__.py
-│   └── indicadores_flow.py           # Pipeline orchestrator
+│   └── indicadores_flow.py           # orquestrador do pipeline
 ├── __init__.py
-└── main.py                           # CLI entrypoint (argparse)
+└── main.py                           # entrypoint da CLI (argparse)
 
 tests/
-├── etl/                              # Python test suite (pytest)
+├── etl/                              # suíte de testes Python (pytest)
 │   ├── __init__.py
-│   ├── conftest.py                   # Fixtures and synthetic canonical zips
-│   ├── test_resolvers.py             # Campus resolution & people registry
-│   ├── test_temporal.py              # Activity filter logic
-│   ├── test_calculators.py           # Pillar 1, 2, 3 formulas & nulls
-│   ├── test_aggregator.py            # Multi-campus and institutional 'todos'
+│   ├── conftest.py                   # fixtures e ZIPs canônicos sintéticos
+│   ├── test_resolvers.py             # resolução de campus e registro de pessoas
+│   ├── test_temporal.py              # lógica do filtro de atividade
+│   ├── test_calculators.py           # fórmulas e nulos dos Pilares 1, 2 e 3
+│   ├── test_aggregator.py            # agregação multi-campus e institucional 'todos'
 │   ├── test_adapters.py              # ZipCanonicalSource, JsonPilarSink, ZipIndicadoresSink
-│   ├── test_flow.py                  # IndicadoresFlow integration
-│   ├── test_cli.py                   # CLI options, arguments, exit codes
-│   ├── test_fidelity.py              # Contract & schema compliance
-│   └── test_privacy.py               # Zero PII verification
-├── ano.test.ts                       # Astro Vitest test suites (frontend)
+│   ├── test_flow.py                  # integração do IndicadoresFlow
+│   ├── test_cli.py                   # opções, argumentos e códigos de saída da CLI
+│   ├── test_fidelity.py              # conformidade com contrato e schema
+│   └── test_privacy.py               # verificação de ausência de dados pessoais
+├── ano.test.ts                       # suítes de testes Astro/Vitest (frontend)
 ├── dataset.test.ts
 ├── zip.test.ts
-└── ... (other Astro tests)
+└── ... (outros testes Astro)
 
-src/                                  # Astro frontend ONLY (components, layouts, pages, lib)
-Makefile                              # Automation targets (make etl, make check, etc.)
-requirements-etl.txt                  # Python dev dependencies (pytest, black, flake8, isort)
-package.json                          # Node configuration (updated "etl": "python3 -m etl.main")
+src/                                  # SOMENTE frontend Astro (componentes, layouts, páginas, lib)
+Makefile                              # alvos de automação (make etl, make check, etc.)
+requirements-etl.txt                  # dependências de desenvolvimento Python (pytest, black, flake8, isort)
+package.json                          # configuração Node (com "etl": "python3 -m etl.main" atualizado)
 ```
 
 ---
 
-## Complexity Tracking
+## Rastreamento de Complexidade
 
-| Violation                                                      | Why Needed                                                                                                                                                                                                                                 | Simpler Alternative Rejected Because                                                                                                                           |
-| :------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Dual Language Stack** (Python for ETL, TypeScript for Astro) | Ingestion and canonical source generation (`horizon_etl`) is already Python. Implementing the CONIF transformation in Python mirrors the upstream domain model and enables data engineers to maintain both pipelines in the same language. | Keeping ETL in TypeScript required duplicating data engineering patterns, lacked synergy with `horizon_etl`, and ran into JavaScript zip serialization quirks. |
-| **Hexagonal Architecture** (Ports & Adapters in `etl/`)        | Decouples pure CONIF calculation logic from storage format (ZIP vs directory vs database) and allows 100% test coverage of domain rules without file I/O.                                                                                  | A flat script mixes file parsing, validation, and domain math into a single file, making regression testing difficult and violating FR-002.                    |
+| Violação                                                       | Motivo da Necessidade                                                                                                                                                                                                                     | Alternativa Mais Simples Rejeitada Porque                                                                                                    |
+| :------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stack de Duas Linguagens** (Python para o ETL, TypeScript para o Astro) | A ingestão e a geração da fonte canônica (`horizon_etl`) já são em Python. Implementar a transformação CONIF em Python espelha o modelo de domínio upstream e permite que engenheiros de dados mantenham os dois pipelines na mesma linguagem. | Manter o ETL em TypeScript exigiria duplicar padrões de engenharia de dados, não gera sinergia com `horizon_etl` e esbarra em peculiaridades de serialização ZIP do JavaScript. |
+| **Arquitetura Hexagonal** (Ports & Adapters em `etl/`)          | Desacopla a lógica de cálculo pura do CONIF do formato de armazenamento (ZIP vs diretório vs banco de dados) e permite 100% de cobertura de teste das regras de domínio sem I/O de arquivos.                                                         | Um script plano mistura parsing de arquivos, validação e matemática de domínio em um único arquivo, dificultando testes de regressão e violando o FR-002.         |

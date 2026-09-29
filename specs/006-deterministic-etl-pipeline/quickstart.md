@@ -2,12 +2,17 @@
 
 **Feature**: `006-deterministic-etl-pipeline`
 
+> **Nota de caminhos**: esta spec é a mais antiga do pipeline e descreve o
+> layout original (arquivos na raiz do repositório). A partir da spec 009 o
+> layout mudou para `data/canonical/exports_canonical.zip` (entrada) e
+> `data/dist/indicadores.zip` (saída). Ver [009/quickstart.md](../009-reorganize-horizon-architecture/quickstart.md).
+
 Guia de validação ponta a ponta: gera o `indicadores.zip` a partir do `exports_canonical.zip` e comprova determinismo, conformidade contratual e integridade dos testes.
 
 ## Pré-requisitos
 
 - Node.js >= 20 e npm.
-- `exports_canonical.zip` na raiz do repositório (entrada; ~23 MB).
+- `exports_canonical.zip` na raiz do repositório (entrada; tamanho **variável**, dependente do export vigente).
 - Dependências instaladas.
 
 ```bash

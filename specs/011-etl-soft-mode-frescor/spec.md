@@ -62,6 +62,12 @@ Nada é fabricado, deletado ou misturado.
    (`SOFT=1` ou `--soft`); sem ele, o comportamento de `ERRO:` + exit 1 da
    spec 006 permanece intacto.
 
+   > **Nota de contrato**: quando esta spec cita "contrato 006", refere-se à
+   > regra fail-fast **original** da spec 006, consolidada e vigente nas specs
+   > 008–010 (pipeline Python, contratos de saída e CLI + `make etl`). A
+   > localização dos artefatos segue a 009/010 (`data/canonical/`,
+   > `data/dist/`), não o layout original da raiz.
+
 **Consequências desejadas**:
 
 - Se `make etl` roda (canônico novo) e a etapa de listagens é pulada, o
@@ -76,7 +82,7 @@ Nada é fabricado, deletado ou misturado.
 ### User Story 1 - Pipeline tolerante a entradas ausentes (modo soft) (Priority: P1)
 
 Um operador precisa rodar a sequência completa do ETL mesmo sem todas as
-entradas (ex.: clone limpo, CI sem o export de 23,5 MB, ou planilhas ainda não
+entradas (ex.: clone limpo, CI sem o export canônico, ou planilhas ainda não
 posicionadas). Com `SOFT=1`, cada etapa cuja entrada falta é pulada com
 `AVISO:` no stderr e o pipeline termina com exit 0, preservando o último
 pacote coerente. Sem `SOFT`, o comportamento atual (`ERRO:` + exit 1) é
@@ -305,8 +311,8 @@ silenciosa de campos misturados.
 ## Assumptions
 
 - Continuação da feature 010: entradas permanecem fora do Git; o pacote
-  agregado (17 KB, só contagens) é commitado e é a forma como o site publica os
-  dados; o CI **não** executa o ETL (não tem entradas).
+  agregado (só contagens, tamanho variável) é commitado e é a forma como o
+  site publica os dados; o CI **não** executa o ETL (não tem entradas).
 - O "fallback" desejado pelo usuário é alcançado pelo **reuso por não-toque**
   (preservar o último snapshot coerente), e não pela reescrita/sobreposição de
   valores antigos — a opção "C" (reusar literalmente valores antigos) foi

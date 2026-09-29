@@ -18,8 +18,9 @@ constar na linha `INFO:` da §3.1.
 
 ## 2. Etapa 1 — Validação de contrato (reuso)
 
-- Lê todos os arquivos de `--pacote` (esperado: 18 arquivos
-  `pilar{N}_{campus}_{year}.json`).
+- Lê **todos** os arquivos `pilar{N}_{campus}_{year}.json` de `--pacote` (a
+  quantidade é **variável**, derivada do export: nº de campi + escopo `todos`
+  × 3 pilares × 3 anos).
 - Valida via `validar_arquivos_pilar(registros,
   campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)` — mesma chamada do
   `validate_zip.py` existente: **aceita** NTE/NTECPP preenchidos (`int ≥ 0`,

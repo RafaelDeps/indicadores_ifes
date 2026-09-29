@@ -22,11 +22,13 @@ Substituir o processamento manual (assistido por IA) que hoje produz o `indicado
 
 **Project Type**: CLI de transformação de dados (build-time tool) dentro de um projeto Astro estático existente.
 
-**Performance Goals**: Regeneração completa em < 5 minutos (entrada de ~23 MB compactados: 4.095 iniciativas, 9.635 pessoas, 2.027 artigos, 951 produções).
+**Performance Goals**: Regeneração completa em < 5 minutos (volume de
+entrada **variável**, dependente do export canônico vigente; ex. ~23 MB
+compactados para um export completo de 23 campi).
 
 **Constraints**: Saída byte-idêntica em execuções repetidas (determinismo); `null` estrito para ausência de dado (Princípio III); nenhum dado individual de pessoa nos arquivos de saída (Princípio IV); falha rápida sem produzir pacote parcial.
 
-**Scale/Scope**: 3 pilares × (campi de `campuses_canonical.json` + `todos`) × 3 anos ≈ até ~230 arquivos JSON por execução.
+**Scale/Scope**: 3 pilares × (campi de `campuses_canonical.json` + `todos`) × 3 anos — número de arquivos JSON por execução é **variável**, derivado do export (nº de campi + `todos`, × 3 pilares × 3 anos).
 
 ## Constitution Check
 

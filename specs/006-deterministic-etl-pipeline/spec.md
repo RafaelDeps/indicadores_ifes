@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-23
 
-**Status**: Draft
+**Status**: Finalizado (implementado; pipeline TS superado pela implementação Python das specs 008/009 — contrato fail-fast mantido pela spec 011)
 
 **Input**: User description: "Implement deterministic ETL pipeline (Source -> Transform -> Sync) reading `exports_canonical.zip` and outputting `indicadores.zip` conforming to `specs/004-pillars-campi-zip-rework/contracts/ingestion-contract.md`. Context: Replace manual AI processing of `exports_canonical.zip` with automated Node/TS pipeline generating `pilar{N}_{campus}_{year}.json` files packaged into root `indicadores.zip`. [...]"
 

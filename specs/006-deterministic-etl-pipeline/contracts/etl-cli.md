@@ -4,6 +4,12 @@
 
 Interface de linha de comando do pipeline ETL determinístico.
 
+> **Nota de vigência**: layout histórico (raiz do repositório, implementação
+> TypeScript `src/etl/main.ts`). A partir das specs 008/009 o pipeline é
+> Python (`python3 -m etl.main`) com saída em `data/dist/indicadores.zip`. O
+> comportamento fail-fast aqui especificado (exit 1 em entrada ausente) é o
+> mesmo que a spec 011 mantém como default.
+
 ## Comando
 
 ```bash

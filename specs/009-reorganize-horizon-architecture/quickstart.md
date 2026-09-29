@@ -44,7 +44,7 @@ make etl
 
 ### O que verificar:
 
-1. O arquivo `data/dist/indicadores.zip` foi criado/atualizado com exatamente 216 arquivos.
+1. O arquivo `data/dist/indicadores.zip` foi criado/atualizado com todos os arquivos `pilar{N}_{campus}_{year}.json` do export vigente (número **variável**: nº de campi + escopo `todos`, × 3 pilares × 3 anos).
 2. O relatório `data/reports/etl_run_report.md` foi gerado com os contadores de projetos e campi.
 3. **Nenhum** arquivo `.zip` foi gerado na raiz do repositório:
    ```bash

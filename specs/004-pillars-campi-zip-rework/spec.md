@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-22
 
-**Status**: Draft
+**Status**: Finalizado (implementado)
 
 **Input**: User description: "Rework dashboard for all 3 CONIF pillars with multi-campus and zip ingestion: 1. Scope & Pillars: P1 (Engajamento Academico e Inclusao): NTPP, QSPP, PIES, PICOT; P2 (Fomento e Conexao com o Ecossistema): PINV, PIPDI; P3 (Produtividade e Propriedade Intelectual): PIPRO, PIPROT, PIPROTR; Home (/) activates all 3 pillars; individual pages: /pilar-1/, /pilar-2/, /pilar-3/ and /pilar-<n>/<sigla>/. 2. Data Ingestion & Contract: Ingest root `indicadores.zip` containing `pilar{N}_{campus}_{year}.json`; Multi-campus: support individual campuses (e.g., 'serra') plus institutional aggregate campus 'todos'; Strict rule: uncollected/missing metrics MUST be `null` ('Dado indisponível'). Value `0` is strictly reserved for verified zero counts. 3. UI & Navigation: URL query sync: reflect campus and year in URL (?campus=serra&ano=2026); Improved charts: add visible data labels on points, readable axes, and contextual tooltips; Removals: delete CSV/JSON download buttons and 'Fonte dos dados' field. 4. Deferred: UserWay plugin is postponed (out of scope for this feature)."
 

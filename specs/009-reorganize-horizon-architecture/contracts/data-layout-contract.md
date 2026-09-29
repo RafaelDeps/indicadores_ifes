@@ -12,7 +12,7 @@ O diretório `data/` isola categoricamente o fluxo de dados em três estágios f
 data/
 ├── canonical/
 │   ├── .gitkeep                 # Versionado no Git para preservar o diretório
-│   └── exports_canonical.zip    # IGNORADO no Git (23.5 MB). Fonte bruta upstream.
+│   └── exports_canonical.zip    # IGNORADO no Git (tamanho variável). Fonte bruta upstream.
 ├── dist/
 │   ├── indicadores.zip          # VERSIONADO no Git (212 KB). Pacote oficial de produção.
 │   └── indicadores_*.zip        # IGNORADO no Git. Pacotes de teste/desenvolvimento de campus.

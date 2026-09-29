@@ -34,9 +34,9 @@ Reorganizar o repositório `indicadores_ifes` aplicando a disciplina de pastas, 
 
 - Zero dependências externas de runtime Python (apenas `zipfile`, `json`, `dataclasses`, `pathlib`, `argparse`, `typing`).
 - Conformidade estrita com LGPD (Princípio IV): zero PII em arquivos versionados.
-- Paridade matemática total: exatamente 216 arquivos gerados com os mesmos valores numéricos e campos nulos homologados.
+- Paridade matemática total: exatamente todos os arquivos derivados do export (nº de campi + `todos`) × 3 pilares × 3 anos gerados com os mesmos valores numéricos e campos nulos homologados.
 
-**Scale/Scope**: 24 escopos institucionais (23 campi + 'todos') × 3 anos (2024, 2025, 2026) × 3 pilares = 216 arquivos JSON gerados deterministicamente.
+**Scale/Scope**: (campi do export + 'todos') × 3 anos (2024, 2025, 2026) × 3 pilares = arquivos JSON gerados deterministicamente (quantidade variável, derivada do export).
 
 ---
 
@@ -48,7 +48,7 @@ _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 | :------------------------------- | :----------------------------------------------------- | :-----: | :------------------------------------------------------------------------------------------------------------------------------------- |
 | **I. Simplicity**                | Estrutura Astro padrão em `src/`, dependências mínimas | ✅ PASS | Frontend preservado integralmente em `src/`; zero bibliotecas extras de runtime no Python ou Astro.                                    |
 | **II. Test-First**               | Vitest para web; testes cobrem regras e formatação     | ✅ PASS | Suíte dividida em `tests/web/` e `tests/etl/`; testes de contrato e fidelidade pré-existentes são mantidos e adaptados às novas rotas. |
-| **III. Fidelity to Report Data** | Valores fiéis; campos ausentes estritamente nulos      | ✅ PASS | O validador do sink garante nulidade estrita em métricas não coletadas; paridade de 100% nos 216 arquivos.                             |
+| **III. Fidelity to Report Data** | Valores fiéis; campos ausentes estritamente nulos      | ✅ PASS | O validador do sink garante nulidade estrita em métricas não coletadas; paridade de 100% em todos os arquivos (quantidade variável).                             |
 | **IV. Aggregated Data Only**     | LGPD rigorosa; sem nomes de alunos ou CPFs             | ✅ PASS | `data/reports/` e `data/dist/` contêm apenas métricas agregadas e IDs públicos de projetos.                                            |
 | **V. Basic Quality**             | Zero erros de ESLint/Prettier/Flake8/Black; pt-BR      | ✅ PASS | Validação consolidada no comando `make check` através de `pyproject.toml`.                                                             |
 | **VI. Automated Deployment**     | Deploy automático via GitHub Actions após gates        | ✅ PASS | `data/dist/indicadores.zip` é versionado no Git, permitindo que o CI web continue rodando puramente com Node 20 sem requerer Python.   |
@@ -80,7 +80,7 @@ indicadores_ifes/
 ├── data/                               # Camada de governança de dados (padrão Horizon)
 │   ├── canonical/                      # Pacote canônico de entrada (ignorado no git)
 │   │   ├── .gitkeep
-│   │   └── exports_canonical.zip       # (local apenas, 23.5 MB)
+│   │   └── exports_canonical.zip       # (local apenas, tamanho variável)
 │   ├── dist/                           # Pacotes gerados para distribuição
 │   │   ├── indicadores.zip             # Pacote consolidado oficial (versionado no git, 212 KB)
 │   │   └── indicadores_*.zip           # Pacotes parciais por campus (ignorados no git)

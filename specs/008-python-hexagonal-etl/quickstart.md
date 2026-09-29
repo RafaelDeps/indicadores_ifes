@@ -1,33 +1,39 @@
-# Quickstart & Validation Guide: Python Hexagonal ETL Pipeline
+# Guia de Início Rápido e Validação: Pipeline ETL Python (Hexagonal / Ports & Adapters)
 
 **Feature Branch**: `008-python-hexagonal-etl`  
 **Date**: 2026-09-25  
 **Spec Reference**: [spec.md](./spec.md) | **Plan Reference**: [plan.md](./plan.md)
 
-This guide documents runnable validation scenarios that demonstrate the Python ETL pipeline operating end-to-end, validating data fidelity against CONIF rules and contract compatibility with the Astro web dashboard.
+Este guia documenta cenários de validação executáveis que demonstram o pipeline ETL Python operando de ponta a ponta, validando a fidelidade dos dados conforme as regras CONIF e a compatibilidade com os contratos do dashboard web Astro.
+
+> **Nota de vigência**: layout histórico (arquivos na raiz do repositório). A
+> partir da spec 009 as entradas/saídas vivem em `data/canonical/` e
+> `data/dist/` (ex.: `make etl` → `data/dist/indicadores.zip`). Os exemplos
+> abaixo usam os caminhos raiz originais desta spec; para o layout atual ver
+> [009/quickstart.md](../009-reorganize-horizon-architecture/quickstart.md).
 
 ---
 
-## 1. Prerequisites
+## 1. Pré-requisitos
 
-- **Python**: Version >= 3.11 (tested on Python 3.14).
-- **Node.js**: Version >= 20.x (for Astro dashboard and Vitest).
-- **Source Data**: `exports_canonical.zip` located at the root of the repository.
+- **Python**: versão >= 3.11 (testado no Python 3.14).
+- **Node.js**: versão >= 20.x (para o dashboard Astro e o Vitest).
+- **Dados de Origem**: `exports_canonical.zip` localizado na raiz do repositório.
 
 ---
 
-## 2. Environment Setup
+## 2. Configuração do Ambiente
 
-Install Python development tooling (tests, formatting, linting):
+Instalar as ferramentas de desenvolvimento Python (testes, formatação, lint):
 
 ```bash
-# Create local virtualenv (recommended) and install requirements
+# Criar o virtualenv local (recomendado) e instalar os requisitos
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-etl.txt
 ```
 
-Verify that development binaries are operational:
+Verificar se os binários de desenvolvimento estão operacionais:
 
 ```bash
 python3 -m pytest --version
@@ -37,107 +43,108 @@ python3 -m black --version
 
 ---
 
-## 3. Validation Scenarios
+## 3. Cenários de Validação
 
-### Scenario 1: Full Pipeline Execution (Global Package)
+### Cenário 1: Execução Completa do Pipeline (Pacote Global)
 
-Generates the complete dataset for all 23 campuses plus consolidated `todos` for years 2024, 2025, and 2026 (216 files total).
+Gera o dataset completo para todos os campi do export canônico mais o `todos` consolidado nos anos 2024, 2025 e 2026. O número de arquivos no pacote é **variável**, derivado do export (nº de campi + `todos`, × 3 pilares × 3 anos).
 
 ```bash
-# Run using Make target
+# Executar usando o alvo do Make
 make etl
 
-# Or run directly via Python CLI
+# Ou executar diretamente via CLI Python
 python3 -m etl.main --entrada exports_canonical.zip --saida indicadores.zip
 ```
 
-**Expected Outcome**:
+**Resultado Esperado**:
 
-- Process terminates with exit code `0`.
-- Output file `indicadores.zip` is created or replaced in the repository root.
-- Verification command passes:
+- O processo termina com código de saída `0`.
+- O arquivo de saída `indicadores.zip` é criado ou substituído na raiz do repositório.
+- O comando de verificação passa (valida o padrão de nomes e reporta a
+  quantidade, que depende do export):
   ```bash
-  python3 -c "import zipfile; z = zipfile.ZipFile('indicadores.zip'); assert len(z.namelist()) == 216, f'Expected 216 files, found {len(z.namelist())}'; print('Success: 216 files verified.')"
+  python3 -c "import zipfile, re; names=zipfile.ZipFile('indicadores.zip').namelist(); assert all(re.fullmatch(r'pilar[123]_[a-z0-9]+_\d{4}\.json', n) for n in names); print(f'Sucesso: {len(names)} arquivos pilar validados (quantidade varia com o export).')"
   ```
 
 ---
 
-### Scenario 2: Single-Campus Filtered Execution
+### Cenário 2: Execução Filtrada por Campus Único
 
-Executes the pipeline targeting exclusively a single campus without modifying `indicadores.zip`.
+Executa o pipeline direcionado exclusivamente a um único campus, sem modificar `indicadores.zip`.
 
 ```bash
-# Run for campus Serra
+# Executar para o campus Serra
 make etl-campus CAMPUS=Serra
 
-# Or run directly via Python CLI
+# Ou executar diretamente via CLI Python
 python3 -m etl.main --campus Serra --saida indicadores_serra.zip
 ```
 
-**Expected Outcome**:
+**Resultado Esperado**:
 
-- Process terminates with exit code `0`.
-- File `indicadores_serra.zip` contains exactly 9 files (3 pilares × 3 anos):
+- O processo termina com código de saída `0`.
+- O arquivo `indicadores_serra.zip` contém exatamente 9 arquivos (3 pilares × 3 anos):
   ```bash
   python3 -c "import zipfile; z = zipfile.ZipFile('indicadores_serra.zip'); assert len(z.namelist()) == 9; print('Success: 9 campus files verified.')"
   ```
-- File `indicadores.zip` remains untouched.
+- O arquivo `indicadores.zip` permanece intacto.
 
 ---
 
-### Scenario 3: Execution of Python ETL Tests
+### Cenário 3: Execução dos Testes do ETL Python
 
-Runs all unit and integration tests written in `pytest`.
+Executa todos os testes unitários e de integração escritos em `pytest`.
 
 ```bash
 make test-etl
 ```
 
-**Expected Outcome**:
+**Resultado Esperado**:
 
-- All tests in `tests/etl/` execute and pass with 0 failures:
-  - Resolution of campus hierarchy (declared -> coordinator -> team members).
-  - Merged people registry and researcher collision precedence.
-  - Activity window logic (`activity_filter.py`).
-  - Strict null fidelity (Principle III) across Pilares 1, 2, 3.
-  - Deterministic ZIP generation and checksum reproducibility.
-  - CLI arguments and error scenarios.
+- Todos os testes em `tests/etl/` são executados e passam com 0 falhas:
+  - Resolução da hierarquia de campus (declarado -> coordenador -> membros da equipe).
+  - Registro unificado de pessoas e precedência em caso de colisão entre pesquisadores.
+  - Lógica da janela de atividade (`activity_filter.py`).
+  - Fidelidade estrita de nulos (Princípio III) nos Pilares 1, 2 e 3.
+  - Geração determinística de ZIP e reprodutibilidade dos checksums.
+  - Argumentos da CLI e cenários de erro.
 
 ---
 
-### Scenario 4: Code Quality and Linting
+### Cenário 4: Qualidade de Código e Lint
 
-Verifies styling and syntax rules mirroring `horizon_etl`.
+Verifica as regras de estilo e de sintaxe espelhando o `horizon_etl`.
 
 ```bash
-# Check formatting
+# Verificar a formatação
 make format-check
 
-# Run linter
+# Executar o linter
 make lint
 ```
 
-**Expected Outcome**:
+**Resultado Esperado**:
 
-- `flake8`, `black --check`, and `isort --check` pass with 0 errors on `etl/` and `tests/etl/`.
-- `eslint` and `prettier --check` pass on Astro frontend files.
+- `flake8`, `black --check` e `isort --check` passam com 0 erros em `etl/` e `tests/etl/`.
+- `eslint` e `prettier --check` passam nos arquivos do frontend Astro.
 
 ---
 
-### Scenario 5: Full System Integration Check
+### Cenário 5: Verificação de Integração Completa do Sistema
 
-Runs the end-to-end integration check across both Python data engineering and Astro frontend presentation.
+Executa a checagem de integração ponta a ponta abrangendo tanto a engenharia de dados em Python quanto a apresentação no frontend Astro.
 
 ```bash
-# 1. Run full CI check target
+# 1. Executar o alvo completo de CI
 make check
 
-# 2. Verify Astro static build
+# 2. Verificar o build estático do Astro
 npm run build
 ```
 
-**Expected Outcome**:
+**Resultado Esperado**:
 
-- Python tests and linter pass.
-- Astro Vitest test suite passes all 267 tests against the newly generated `indicadores.zip`.
-- Astro builds the static production distribution in `dist/` with 0 errors.
+- Os testes e o linter do Python passam.
+- A suíte de testes Vitest do Astro passa em todos os 267 testes contra o `indicadores.zip` recém-gerado.
+- O Astro constrói a distribuição estática de produção em `dist/` com 0 erros.
