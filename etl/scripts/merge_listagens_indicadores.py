@@ -182,7 +182,8 @@ def main(argv: list[str] | None = None) -> int:
         if _modo_soft(args):
             sys.stderr.write(
                 f"AVISO: pacote de listagens ausente ('{args.listagens}') — "
-                f"etapa pulada; pacote existente preservado ('{args.saida}').\n"
+                f"etapa pulada; '{args.saida}' não foi tocado por esta etapa "
+                f"(NTE/NTECPP permanecem como estiverem).\n"
             )
             return 0
         sys.stderr.write(

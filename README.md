@@ -93,6 +93,15 @@ A automação do projeto é centralizada no `Makefile`:
 > O ETL é **manual/local** (as entradas são gitignored e o CI não o executa); o
 > pacote `data/dist/indicadores.zip` é commitado e o CI valida seu contrato via
 > `make check-dados` em cada PR.
+>
+> ⚠️ **`make dados` exige entrada para o merge.** O pacote público é saída de uma
+> cadeia: `etl` regenera o pacote **sem** NTE/NTECPP (esses campos só existem no
+> merge) e `merge-listagens` é quem os repõe. Se você rodar `make dados` sem o
+> zip de listagens **e** sem planilhas em `data/raw/`, o merge não terá o que
+> mesclar — então a cadeia inteira é pulada **antes** de reescrever qualquer
+> coisa (`AVISO:` + exit 0 com `SOFT=1`; `ERRO:` + exit 1 sem), preservando o
+> pacote em vez de apagar NTE/NTECPP silenciosamente. Use `make dados` (nunca
+> `make etl` isolado) para o pacote público.
 
 ---
 

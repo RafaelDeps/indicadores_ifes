@@ -43,6 +43,34 @@ make dados        # sem SOFT, com /tmp ainda guardando as entradas
 Esperado: `ERRO:` + exit `1` na **primeira** etapa com entrada ausente e
 **nenhuma** etapa subsequente executada (contrato 006 preservado).
 
+## Validação 2b — `make dados` sem entrada para o merge (SC-009/SC-010)
+
+Este é o cenário que motivou o guarda de cadeia: com o canônico presente, mas
+**sem** zip de listagens e **sem** planilhas, o merge não teria entrada para
+repor NTE/NTECPP — e a etapa 1 já teria reescrito o pacote sem eles.
+
+```bash
+mv data/canonical/exports_canonical.zip /tmp/      # isolar a ausência do canônico
+mv data/raw /tmp/data_raw_backup                  # sem planilhas
+mv data/dist/indicadores_listagens.zip /tmp/       # e sem o artefato intermediário
+mv data/canonical/exports_canonical.zip /tmp/exports_canonical.zip  # canônico de volta
+sha256sum data/dist/indicadores.zip
+
+SOFT=1 make dados   # deve bloquear a cadeia inteira
+make dados          # idem, mas falhando
+sha256sum data/dist/indicadores.zip                # idêntico nas duas vezes
+```
+
+Esperado:
+
+| Comando             | Resultado                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------ |
+| `SOFT=1 make dados` | `AVISO:` do guarda + exit `0`; **nenhuma** etapa executou; sha256 do pacote **inalterado** |
+| `make dados`        | `ERRO:` do guarda + exit `1`; **nenhuma** etapa executou; sha256 do pacote **inalterado**  |
+
+A distinção essencial: o pacote é degradado **antes** de qualquer `AVISO:` de
+etapa pulada, não depois. Restaurar com `mv /tmp/… ` de volta.
+
 ## Validação 3 — `make check-dados` (SC-004)
 
 ```bash

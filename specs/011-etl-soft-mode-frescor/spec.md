@@ -278,6 +278,15 @@ silenciosa de campos misturados.
   pipeline: quando a etapa roda normalmente, a saída continua
   byte-a-byte-determinística e escrita atômica; quando é pulada, o artefato
   pré-existente fica intacto (nenhuma reescrita, mesmo vazia).
+- **FR-013**: O sistema DEVE tratar o pacote público como saída de **cadeia**, e
+  não de etapa isolada: `make dados` DEVE verificar, antes de executar qualquer
+  etapa, se a cadeia pode concluir. Se a etapa 1 for reescrever o pacote e o
+  merge não tiver entrada para repor `NTE_total_estudantes_matriculados` e
+  `NTECPP_cotistas_em_pesquisa` (zip de listagens ausente **e** sem planilhas
+  para gerá-lo), a cadeia DEVE ser abortada antes de qualquer escrita: no soft,
+  com `AVISO:` + exit 0 e pacote preservado por não-toque; no estrito, com `ERRO:`
+  - exit 1. Uma etapa pulada NÃO DEVE anunciar preservação que uma etapa anterior
+    da mesma cadeia já violou.
 
 ### Key Entities _(o modo soft opera sobre artefatos de arquivo, não novos dados)_
 
@@ -312,6 +321,16 @@ silenciosa de campos misturados.
 - **SC-005**: Nenhum cenário soft produz pacote com campos de execuções
   diferentes: se o canônico rodou e o listagens foi pulado, NTE/NTECPP ficam
   `null` (Princípio III) — nunca o valor de uma execução anterior.
+- **SC-009**: `SOFT=1 make dados` com canônico presente, **sem** zip de listagens
+  e **sem** planilhas em `data/raw/` → exit 0, cadeia pulada **antes** da etapa 1
+  (`AVISO:` do guarda) e `data/dist/indicadores.zip` **byte a byte idêntico**
+  (sha256 igual), com NTE/NTECPP preservados.
+- **SC-010**: O mesmo cenário **sem** soft → exit 1 com `ERRO:`, e nenhuma etapa
+  executou: o sha256 do pacote é idêntico. O fail-fast falha **antes** de
+  sobrescrever, não depois de apagar.
+- **SC-011**: `SOFT=1 make dados` com canônico presente e **planilhas presentes**
+  (sem zip de listagens ainda) → a cadeia roda por inteiro e o merge repõe
+  NTE/NTECPP; o pacote resultante é byte-idêntico ao de uma execução completa.
 - **SC-006**: Testes novos escritos e observados falhar (red) **antes** da
   implementação (Princípio II); `make check` verde ao final (lint + format +
   pytest + vitest) e CI `deploy.yml` inalterado na topologia atual.

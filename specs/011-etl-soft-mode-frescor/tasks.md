@@ -154,6 +154,15 @@ etapa com exit 1.
       cabeçalho de cenários dos testes; registrar a cegueira decorrente em
       `check-dados.md` §5.1 e mitigá-la no README (não regenerar o pacote
       público com `make etl` isolado)
+- [x] T014 Coerência da cadeia: guarda que aborta `make dados` antes de reescrever
+      o pacote quando o merge não terá entrada (canônico presente + zip de
+      listagens ausente + sem planilhas) — sem ele, a etapa 1 apagava NTE/NTECPP
+      e a cadeia reportava exit 0. Testes red-first em
+      `tests/etl/test_cadeia_dados.py`; novo `etl/scripts/cadeia_dados.py`
+      (exit 0 pode rodar / exit 3 bloqueado); fiação no alvo `dados`;
+      correção do `AVISO:` do merge (não pode afirmar "pacote preservado" quando
+      a cadeia o degradou); FR-013, SC-009/SC-010/SC-011, invariante 6 e §4.1 em
+      `etl-cli.md`, README e quickstart (§Validação 2b)
 
 ---
 

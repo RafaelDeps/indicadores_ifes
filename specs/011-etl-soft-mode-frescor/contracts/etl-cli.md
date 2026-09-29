@@ -28,7 +28,11 @@ spec 006 é mantido integralmente (`ERRO:` + exit 1 quando a entrada falta).
 > **Nota**: o caso "planilhas ausentes + soft" no `etl.main_listagens` **não**
 > gera `indicadores_listagens.zip`. Se um zip stale existir no disco, ele
 > permanece — e a desatualização dele é sinalizada pelo `check-dados` (aviso de
-> proveniência), não pelo fluxo.
+> proveniência), não pelo fluxo. Se **não** houver zip stale, a cadeia não tem
+> entrada para o merge — situação tratada por §4.1.
+>
+> **A matriz acima é por etapa.** Ela não cobre a degradação do pacote causada
+> por uma cadeia _incompleta_: ver §4.1 e o invariante 6 em §5.
 
 ## 3. Códigos de saída e mensagens
 
@@ -37,7 +41,9 @@ spec 006 é mantido integralmente (`ERRO:` + exit 1 quando a entrada falta).
 - `1` — falha fatal (`ERRO:` no stderr): entrada ausente em modo estrito, ou
   modo soft sem pacote a preservar, ou anomalia de contrato/corrupção.
 - Formato de mensagens em pt-BR, no padrão já adotado:
-  - `AVISO: <motivo> — etapa pulada; pacote existente preservado.` (soft)
+  - `AVISO: <motivo> — etapa pulada; <arquivo> não foi tocado por esta etapa.`
+    (soft). A redação é **por etapa** e não pode afirmar "pacote preservado": uma
+    etapa anterior da mesma cadeia pode já ter reescrito o pacote (ver §4.1).
   - `ERRO: <motivo>` + sugestão de correção quando aplicável.
 
 ## 4. `make dados` — orquestração do pacote completo
@@ -53,6 +59,35 @@ dados: etl → etl-listagens → merge-listagens
 - `SOFT=1 make dados` repassa `--soft` às três etapas.
 - É intencionalmente **sempre executado** (sem dependências de arquivos do GNU
   make): rodar `make dados` regera o pacote; não é uma regra "se desatualizado".
+
+### 4.1 Pré-condição de cadeia (guarda de coerência)
+
+O pacote `indicadores.zip` é **saída de uma cadeia**, não de uma etapa. O merge
+é quem acrescenta `NTE_total_estudantes_matriculados` e
+`NTECPP_cotistas_em_pesquisa`; a etapa 1 regenera o pacote **apenas** do export
+canônico, que não carrega esses campos.
+
+Logo, se a etapa 1 reescrever o pacote e o merge não tiver entrada para repor
+esses campos, o último snapshot coerente é apagado **em silêncio** — o comando
+termina com exit 0 e o único sinal é um `AVISO:` de etapa pulada. Por isso, antes
+de qualquer etapa, `make dados` roda o guarda
+`etl/scripts/cadeia_dados.py`, que bloqueia a cadeia em exatamente um caso:
+
+```text
+canônico presente (etapa 1 vai reescrever)
+  ∧ zip de listagens ausente (etapa 3 não tem entrada)
+  ∧ sem planilhas listagem_*.xlsx em data/raw (etapa 2 não poderá gerá-lo)
+```
+
+| Modo    | Saída do guarda | Efeito                                                                                  |
+| ------- | --------------- | --------------------------------------------------------------------------------------- |
+| Estrito | `ERRO:` + 3     | `make dados` termina com exit 1 **antes de executar ou sobrescrever qualquer etapa**    |
+| Soft    | `AVISO:` + 3    | `make dados` termina com exit 0; cadeia inteira pulada; pacote preservado por não-toque |
+
+Sem bloqueio (guarda exit 0), a cadeia segue normalmente e nenhuma mensagem é
+emitida. O guarda **não** roda nos alvos `etl`, `etl-listagens` ou
+`merge-listagens` isolados — que continuam sendo executados sob a matriz §2
+(ver a mitigação em `check-dados.md` §5.1 para a cegueira do `make etl` isolado).
 
 Uso:
 
@@ -71,3 +106,8 @@ make check-dados           # depois: "posso confiar neste zip?"
    toca o arquivo (conteúdo e mtime).
 4. **Aviso obrigatório** — todo pulo em modo soft imprime `AVISO:` no stderr.
 5. **Contrato 006 intacto** — sem soft, entrada ausente ⇒ `ERRO:` + exit 1.
+6. **Coerência da cadeia** — o pacote público só é reescrito se a cadeia puder
+   completá-lo. Se o merge não terá entrada, a cadeia inteira não roda: no soft o
+   último snapshot coerente é preservado por não-toque (invariante 3), e no
+   estrito a falha é antecipada, sem tocar em nada. Uma etapa pulada **nunca**
+   pode anunciar preservação que uma etapa anterior da mesma cadeia já negatei.

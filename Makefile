@@ -56,7 +56,11 @@ merge-listagens: ## Integra NTE/NTECPP das listagens em data/dist/indicadores.zi
 	$(PYTHON) -m etl.scripts.merge_listagens_indicadores --listagens data/dist/indicadores_listagens.zip --canonical data/dist/indicadores.zip --saida data/dist/indicadores.zip $(SOFT_ARGS)
 
 dados: ## Gera o pacote completo na ordem etl → etl-listagens → merge-listagens, parando no 1º erro (SOFT=1 tolera entradas ausentes)
-	@$(MAKE) --no-print-directory etl \
+	@$(PYTHON) -m etl.scripts.cadeia_dados $(SOFT_ARGS); \
+	guard=$$?; \
+	if [ $$guard -eq 3 ]; then exit $(if $(SOFT),0,1); fi; \
+	if [ $$guard -ne 0 ]; then exit $$guard; fi; \
+	$(MAKE) --no-print-directory etl \
 	&& $(MAKE) --no-print-directory etl-listagens \
 	&& $(MAKE) --no-print-directory merge-listagens
 

@@ -23,7 +23,8 @@
       APIs específicas)
 - [x] All acceptance scenarios are defined (US1: 6; US2: 4; US3: 6)
 - [x] Edge cases are identified (soft sem saída; clone/CI mtime; zip stale;
-      soft com entradas presentes; relatório não regenerado)
+      soft com entradas presentes; relatório não regenerado; **cadeia sem
+      entrada para o merge**)
 - [x] Scope is clearly bounded (sem novos dados, sem nova dependência, sem
       mudança de contrato de saída, CI sem ETL)
 - [x] Dependencies and assumptions identified (continuação da 010; mtime como
@@ -52,5 +53,9 @@
   fatal") permanece o default; o soft é opt-in (`--soft` / `SOFT=1`).
 - **Frescor honesta**: `mtime` é heurística limitada (Git não preserva mtimes);
   em clone/CI o `check-dados` valida apenas o contrato (sem falso alarme).
+- **Pacote é saída de cadeia** (2026-09-29): a coerência do soft mode é
+  invariante de **cadeia**, não de etapa. Sem entrada para o merge, a cadeia
+  inteira não roda — preservando o invariante de não-toque que o soft promete
+  (FR-013; `etl-cli.md` §4.1/§5.6).
 
 **Resultado**: pronto para `/speckit-plan` → `/speckit.tasks`.
