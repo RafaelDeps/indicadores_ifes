@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
 from etl.adapters.sinks.zip_indicadores_sink import ZipIndicadoresSink
-from etl.adapters.sources.listagens_xlsx_source import ListagensXlsxSource
+from etl.adapters.sources.listagens_xlsx_source import (
+    PADRAO_ARQUIVO,
+    ListagensXlsxSource,
+)
 from etl.adapters.sources.zip_canonical_source import ZipCanonicalSource
 from etl.flows.listagens_flow import CAMPOS_DERIVAVEIS_LISTAGENS, ListagensFlow
 
@@ -55,7 +59,27 @@ def criar_argument_parser() -> argparse.ArgumentParser:
         default="data/reports/etl_listagens_run_report.md",
         help="Caminho do relatório de execução (padrão: data/reports/etl_listagens_run_report.md)",
     )
+    parser.add_argument(
+        "--soft",
+        action="store_true",
+        help=(
+            "Modo soft (opt-in): se nenhuma planilha for encontrada, pula a etapa "
+            "com AVISO:+0 sem gerar/sobrescrever o pacote de listagens (default: fail-fast)"
+        ),
+    )
     return parser
+
+
+def _modo_soft(args: argparse.Namespace) -> bool:
+    """Modo soft ativo por flag `--soft` OU variável de ambiente `SOFT=1`."""
+    if args.soft:
+        return True
+    return os.getenv("SOFT", "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _tem_planilhas(pasta: Path) -> bool:
+    """Há ao menos uma planilha no contrato `listagem_<AAAA>_<1|2>.xlsx`?"""
+    return any(n for n in pasta.glob("listagem_*.xlsx") if PADRAO_ARQUIVO.match(n.name))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -66,6 +90,15 @@ def main(argv: list[str] | None = None) -> int:
     if args.anos:
         anos = [int(a.strip()) for a in args.anos.split(",") if a.strip()]
 
+    pasta_entrada = Path(args.entrada)
+    if _modo_soft(args) and not _tem_planilhas(pasta_entrada):
+        sys.stderr.write(
+            f"AVISO: nenhuma planilha de listagem encontrada em '{args.entrada}' "
+            "(esperado listagem_<AAAA>_<1|2>.xlsx) — etapa pulada; pacote de "
+            "listagens não criado/sobrescrito.\n"
+        )
+        return 0
+
     fonte_canonica = None
     caminho_canonical = Path(args.canonical)
     if caminho_canonical.exists():
@@ -74,7 +107,8 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.write(
             f"AVISO: export canônico ausente ('{args.canonical}') — "
             "NTECPP_cotistas_em_pesquisa permanecerá null (sem universo NEP "
-            "para o cruzamento FR-012).\n"
+            "para o cruzamento FR-012); NTECPP não recalculável a partir do "
+            "zip (sem universo de nomes).\n"
         )
 
     source = ListagensXlsxSource(args.entrada)

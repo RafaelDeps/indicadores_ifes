@@ -22,7 +22,7 @@ constar na linha `INFO:` da §3.1.
   quantidade é **variável**, derivada do export: nº de campi + escopo `todos`
   × 3 pilares × 3 anos).
 - Valida via `validar_arquivos_pilar(registros,
-  campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)` — mesma chamada do
+campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)` — mesma chamada do
   `validate_zip.py` existente: **aceita** NTE/NTECPP preenchidos (`int ≥ 0`,
   pacote pós-merge) e **exige** `null` em qualquer outro campo não coletável.
 - Violação ⇒ `ERRO:` + **exit 1** (mensagem com a causa).
@@ -34,11 +34,11 @@ Comparação apenas com entradas **presentes**; entrada ausente é ignorada (sem
 falso alarme) e entra na linha `INFO:` da §3.1. Avisos em `AVISO:` (stderr),
 **exit 0** sempre.
 
-| # | Condição (mtime) | Texto do `AVISO:` (semântica) |
-| --- | --- | --- |
-| a | `mtime(exports_canonical.zip)` > `mtime(--pacote)` | "pacote possivelmente desatualizado — export canônico mais recente que o pacote" |
-| b | `mtime(--pacote)` > `mtime(indicadores_listagens.zip)` | "proveniência: NTE/NTECPP do pacote podem vir de execução anterior (zip de listagens mais antigo)" |
-| c | qualquer `data/raw/listagem_*.xlsx` com `mtime` > `mtime(--pacote)` | "planilha <nome> mais recente que o pacote — não incorporada ao último pacote" |
+| #   | Condição (mtime)                                                    | Texto do `AVISO:` (semântica)                                                                      |
+| --- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| a   | `mtime(exports_canonical.zip)` > `mtime(--pacote)`                  | "pacote possivelmente desatualizado — export canônico mais recente que o pacote"                   |
+| b   | `mtime(--pacote)` > `mtime(indicadores_listagens.zip)`              | "proveniência: NTE/NTECPP do pacote podem vir de execução anterior (zip de listagens mais antigo)" |
+| c   | qualquer `data/raw/listagem_*.xlsx` com `mtime` > `mtime(--pacote)` | "planilha <nome> mais recente que o pacote — não incorporada ao último pacote"                     |
 
 ## 3.1 Entradas de frescor ausentes — linha informativa (`INFO:`)
 
@@ -73,10 +73,10 @@ Regras da linha `INFO:`:
 
 ## 4. Códigos de saída
 
-| Exit | Significado |
-| --- | --- |
-| `1` | contrato violado ou pacote ausente (`ERRO:`) |
-| `0` | contrato íntegro — com ou sem `AVISO:` de frescor e com ou sem linha `INFO:` (informativos) |
+| Exit | Significado                                                                                 |
+| ---- | ------------------------------------------------------------------------------------------- |
+| `1`  | contrato violado ou pacote ausente (`ERRO:`)                                                |
+| `0`  | contrato íntegro — com ou sem `AVISO:` de frescor e com ou sem linha `INFO:` (informativos) |
 
 ## 5. Limitação de `mtime` (parte do contrato)
 

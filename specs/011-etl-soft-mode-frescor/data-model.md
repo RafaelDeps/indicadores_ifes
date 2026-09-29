@@ -13,13 +13,13 @@ heurística de frescor. Nenhum dado individual entra em qualquer artefato
 
 ## Artefatos e papéis
 
-| Artefato | Papel | No Git? | Observação |
-| --- | --- | --- | --- |
-| `data/canonical/exports_canonical.zip` | Entrada do fluxo canônico; única fonte do **universo de nomes** NEP (necessário ao cruzamento NTECPP) | ❌ gitignored | Tamanho **variável** (depende do export vigente); fora de clones/CI |
-| `data/raw/listagem_<AAAA>_<S>.xlsx` | Entrada do fluxo de listagens (NTE + cotistas) | ❌ gitignored | Quantidade **variável** (uma por `(campus, ano)` apurável) |
-| `data/dist/indicadores_listagens.zip` | Artefato intermediário: NTE/NTECPP calculados | ❌ gitignored | Pode ficar **stale** entre execuções — origem do aviso de proveniência |
-| `data/dist/indicadores.zip` | **Pacote público** (agregados; consumido pelo site no build) | ✅ commitado | Único snapshot coerente disponível em clone/CI |
-| `data/reports/etl_listagens_run_report.md` | Relatório de auditoria da feature 010 (contém avisos; histórico de execução) | ❌ gitignored | Não regenerado quando a etapa é pulada (nada a reportar) |
+| Artefato                                   | Papel                                                                                                 | No Git?       | Observação                                                             |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------- |
+| `data/canonical/exports_canonical.zip`     | Entrada do fluxo canônico; única fonte do **universo de nomes** NEP (necessário ao cruzamento NTECPP) | ❌ gitignored | Tamanho **variável** (depende do export vigente); fora de clones/CI    |
+| `data/raw/listagem_<AAAA>_<S>.xlsx`        | Entrada do fluxo de listagens (NTE + cotistas)                                                        | ❌ gitignored | Quantidade **variável** (uma por `(campus, ano)` apurável)             |
+| `data/dist/indicadores_listagens.zip`      | Artefato intermediário: NTE/NTECPP calculados                                                         | ❌ gitignored | Pode ficar **stale** entre execuções — origem do aviso de proveniência |
+| `data/dist/indicadores.zip`                | **Pacote público** (agregados; consumido pelo site no build)                                          | ✅ commitado  | Único snapshot coerente disponível em clone/CI                         |
+| `data/reports/etl_listagens_run_report.md` | Relatório de auditoria da feature 010 (contém avisos; histórico de execução)                          | ❌ gitignored | Não regenerado quando a etapa é pulada (nada a reportar)               |
 
 ## Invariantes de frescor (relações de mtime observadas pelo `check-dados`)
 
@@ -31,12 +31,12 @@ exports_canonical.zip  ──►  indicadores_listagens.zip  ──►  indicado
 data/raw/listagem_*.xlsx  ──►  indicadores.zip   (planilhas nunca mais novas que o pacote)
 ```
 
-| Invariante | Violação detectada por `check-dados` | Aviso (`AVISO:`) | Exit |
-| --- | --- | --- | --- |
-| `indicadores.zip` ≥ `exports_canonical.zip` | canônico **mais novo** que o pacote | pacote "possivelmente desatualizado" | 0 |
-| `indicadores.zip` ≥ `indicadores_listagens.zip` | zip de listagens **mais antigo** que o pacote | NTE/NTECPP podem ser de execução anterior (proveniência do merge) | 0 |
-| `indicadores.zip` ≥ qualquer `data/raw/listagem_*.xlsx` | planilha **mais nova** que o pacote | planilha não incorporada ao último pacote | 0 |
-| contrato de todos os arquivos `pilar{N}_{campus}_{year}.json` do pacote (número **variável**, derivado do export: nº de campi + escopo `todos` × 3 pilares × 3 anos) | violação de schema/shape | — (ERRO) | **1** |
+| Invariante                                                                                                                                                           | Violação detectada por `check-dados`          | Aviso (`AVISO:`)                                                  | Exit  |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------- | ----- |
+| `indicadores.zip` ≥ `exports_canonical.zip`                                                                                                                          | canônico **mais novo** que o pacote           | pacote "possivelmente desatualizado"                              | 0     |
+| `indicadores.zip` ≥ `indicadores_listagens.zip`                                                                                                                      | zip de listagens **mais antigo** que o pacote | NTE/NTECPP podem ser de execução anterior (proveniência do merge) | 0     |
+| `indicadores.zip` ≥ qualquer `data/raw/listagem_*.xlsx`                                                                                                              | planilha **mais nova** que o pacote           | planilha não incorporada ao último pacote                         | 0     |
+| contrato de todos os arquivos `pilar{N}_{campus}_{year}.json` do pacote (número **variável**, derivado do export: nº de campi + escopo `todos` × 3 pilares × 3 anos) | violação de schema/shape                      | — (ERRO)                                                          | **1** |
 
 - Entradas **ausentes** não participam da comparação (sem falso alarme) e são
   listadas em uma única linha `INFO:` no stderr ("apenas o contrato foi

@@ -24,7 +24,7 @@ contrato de saída (shape da 010 intocado).
 
 **Purpose**: fixtures/helpers para simular entradas ausentes e pacotes de saída.
 
-- [ ] T001 [P] Add helpers in `tests/etl/conftest.py` — fixture `dir_raw_vazio`
+- [x] T001 [P] Add helpers in `tests/etl/conftest.py` — fixture `dir_raw_vazio`
       (dir de entrada sem planilhas), fixture `zip_existente` (zip de saída
       pré-criado com conteúdo conhecido p/ comparação sha256), fixture
       `canonical_ausente` (monkeypatch/tmp sem `exports_canonical.zip`)
@@ -42,30 +42,22 @@ inalterado, `AVISO:` no stderr; sem `SOFT` ⇒ `ERRO:` + exit 1.
 
 ### Tests for User Story 1 (MANDATORY — escrever/rodar em red antes) ⚠️
 
-- [ ] T002 [P] [US1] Write `tests/etl/test_soft_mode.py` — 8 cenários:
-      1. `etl.main` soft + canônico ausente + saída existe → exit 0, AVISO no
-         stderr, zip byte-idêntico (sha256)
-      2. `etl.main` soft + canônico ausente + saída não existe → exit 1 (ERRO)
-      3. `etl.main` **sem soft** + canônico ausente → exit 1 (regressão contrato 006)
-      4. `etl.main_listagens` soft + `data/raw` sem planilhas → exit 0, AVISO,
-         zip de listagens não criado (nem sobrescrito se preexistente)
-      5. `etl.main_listagens` soft + canônico ausente → exit 0, NTECPP `null`
-         (never `0`), AVISO explícito "não recalculável a partir do zip"
-      6. `etl.main_listagens` **sem soft** + sem planilhas → exit 1 (ERRO)
-      7. `merge_listagens_indicadores` soft + zip de listagens ausente → exit 0,
-         AVISO, `indicadores.zip` byte-idêntico
-      8. `merge_listagens_indicadores` **sem soft** + zip ausente → exit 1 (ERRO)
+- [x] T002 [P] [US1] Write `tests/etl/test_soft_mode.py` — 8 cenários: 1. `etl.main` soft + canônico ausente + saída existe → exit 0, AVISO no
+      stderr, zip byte-idêntico (sha256) 2. `etl.main` soft + canônico ausente + saída não existe → exit 1 (ERRO) 3. `etl.main` **sem soft** + canônico ausente → exit 1 (regressão contrato 006) 4. `etl.main_listagens` soft + `data/raw` sem planilhas → exit 0, AVISO,
+      zip de listagens não criado (nem sobrescrito se preexistente) 5. `etl.main_listagens` soft + canônico ausente → exit 0, NTECPP `null`
+      (never `0`), AVISO explícito "não recalculável a partir do zip" 6. `etl.main_listagens` **sem soft** + sem planilhas → exit 1 (ERRO) 7. `merge_listagens_indicadores` soft + zip de listagens ausente → exit 0,
+      AVISO, `indicadores.zip` byte-idêntico 8. `merge_listagens_indicadores` **sem soft** + zip ausente → exit 1 (ERRO)
 
 ### Implementation for User Story 1
 
-- [ ] T003 [US1] Implement `--soft` + env `SOFT=1` em `etl/main.py` (parser +
+- [x] T003 [US1] Implement `--soft` + env `SOFT=1` em `etl/main.py` (parser +
       guarda antes do ERRO de entrada ausente: se soft e saída existe → AVISO +
       return 0; se soft e saída não existe → ERRO + return 1) — green p/ T002 (c1-c3)
-- [ ] T004 [US1] Implement `--soft` + env `SOFT=1` em `etl/main_listagens.py`
+- [x] T004 [US1] Implement `--soft` + env `SOFT=1` em `etl/main_listagens.py`
       (se soft e nenhuma planilha encontrada → AVISO + exit 0 sem gerar zip;
       manter degradação do `--canonical` ausente + AVISO "não recalculável") —
       green p/ T002 (c4-c6)
-- [ ] T005 [US1] Implement `--soft` + env `SOFT=1` em
+- [x] T005 [US1] Implement `--soft` + env `SOFT=1` em
       `etl/scripts/merge_listagens_indicadores.py` (se soft e zip de listagens
       ausente → AVISO + exit 0 sem tocar `indicadores.zip`) — green p/ T002 (c7-c8)
 
@@ -86,34 +78,25 @@ pacote ⇒ `AVISO:` + exit 0; pacote em dia ⇒ exit 0 sem avisos.
 
 ### Tests for User Story 3 (MANDATORY — red antes) ⚠️
 
-- [ ] T006 [P] [US3] Write `tests/etl/test_check_dados.py` — 9 cenários:
-      1. contrato violado (chave removida de um JSON do zip) → exit 1 (`ERRO:`)
-      2. pacote em dia (zip mais novo que todas as entradas presentes) → exit
-         0, sem aviso de frescor e **sem** linha `INFO:`
-      3. `exports_canonical.zip` mais novo que o pacote → exit 0 com `AVISO:`
-         "possivelmente desatualizado"
-      4. `indicadores_listagens.zip` mais antigo que o pacote → exit 0 com
-         `AVISO:` de proveniência NTE/NTECPP
-      5. `data/raw/listagem_*.xlsx` mais nova que o pacote → exit 0 com `AVISO:`
-      6. **todas** as entradas de frescor ausentes (só o zip) → exit 0, nenhuma
-         comparação, **uma única** linha `INFO:` listando os caminhos ausentes
-         ("apenas o contrato foi validado") — sem falso alarme e sem silêncio
-         ambíguo
-      7. **parcialmente** presentes (ex.: só `--canonical`) → comparação feita
-         apenas para as presentes; linha `INFO:` lista somente as ausentes;
-         exit 0
-      8. `--raw` sem planilhas conta como ausente (entra na linha `INFO:`);
-         `--raw` com planilhas presentes é comparado
-      9. `--canonical ""` suprime a comparação e faz a entrada constar na
-         linha `INFO:`
+- [x] T006 [P] [US3] Write `tests/etl/test_check_dados.py` — 9 cenários: 1. contrato violado (chave removida de um JSON do zip) → exit 1 (`ERRO:`) 2. pacote em dia (zip mais novo que todas as entradas presentes) → exit
+      0, sem aviso de frescor e **sem** linha `INFO:` 3. `exports_canonical.zip` mais novo que o pacote → exit 0 com `AVISO:`
+      "possivelmente desatualizado" 4. `indicadores_listagens.zip` mais antigo que o pacote → exit 0 com
+      `AVISO:` de proveniência NTE/NTECPP 5. `data/raw/listagem_*.xlsx` mais nova que o pacote → exit 0 com `AVISO:` 6. **todas** as entradas de frescor ausentes (só o zip) → exit 0, nenhuma
+      comparação, **uma única** linha `INFO:` listando os caminhos ausentes
+      ("apenas o contrato foi validado") — sem falso alarme e sem silêncio
+      ambíguo 7. **parcialmente** presentes (ex.: só `--canonical`) → comparação feita
+      apenas para as presentes; linha `INFO:` lista somente as ausentes;
+      exit 0 8. `--raw` sem planilhas conta como ausente (entra na linha `INFO:`);
+      `--raw` com planilhas presentes é comparado 9. `--canonical ""` suprime a comparação e faz a entrada constar na
+      linha `INFO:`
 
 ### Implementation for User Story 3
 
-- [ ] T007 [US3] Implement `etl/scripts/check_dados.py` (CLI `--pacote
-      --canonical --listagens --raw`; validação por `validar_arquivos_pilar` +
-      `CAMPOS_DERIVAVEIS_LISTAGENS` → ERRO+1; frescor por `stat().st_mtime`
-      conforme `contracts/check-dados.md` §3, entradas ausentes ignoradas) —
-      green p/ T006
+- [x] T007 [US3] Implement `etl/scripts/check_dados.py` — CLI com
+      `--pacote`, `--canonical`, `--listagens` e `--raw`; validação por
+      `validar_arquivos_pilar` + `CAMPOS_DERIVAVEIS_LISTAGENS` → ERRO+1;
+      frescor por `stat().st_mtime` conforme `contracts/check-dados.md` §3
+      (entradas ausentes ignoradas) — green p/ T006
 
 **Checkpoint**: US3 completa — um comando diz "posso confiar neste zip?".
 
@@ -136,9 +119,9 @@ etapa com exit 1.
 > via validação manual do quickstart + um teste de "contrato de orquestração" se
 > viável (ex.: `make -n dados` dry-run listando as 3 etapas em ordem).
 
-- [ ] T008 [US2] Add `Makefile` targets: `dados` e `check-dados`, variável
+- [x] T008 [US2] Add `Makefile` targets: `dados` e `check-dados`, variável
       `SOFT` (`SOFT_ARGS = $(if $(SOFT),--soft,)`), `.PHONY` e `help` (FR-006/FR-007)
-- [ ] T009 [P] [US2] Update `.github/workflows/deploy.yml` — job `quality`
+- [x] T009 [P] [US2] Update `.github/workflows/deploy.yml` — job `quality`
       adiciona `PYTHONPATH=. python -m etl.scripts.check_dados` após o `pytest`
       (portão de contrato do zip commitado; **sem** adicionar `make dados`/ETL
       ao CI) — Princípio VI
@@ -149,13 +132,13 @@ etapa com exit 1.
 
 **Purpose**: documentação e validação final.
 
-- [ ] T010 [P] Update `README.md` (tabela de comandos: `make dados`,
+- [x] T010 [P] Update `README.md` (tabela de comandos: `make dados`,
       `make check-dados`, variável `SOFT`; nota "ETL é manual/local; o pacote
       é commitado e o CI valida o contrato via check-dados")
-- [ ] T011 [P] Update `specs/010-listagens-xlsx-etl/quickstart.md` (se
+- [x] T011 [P] Update `specs/010-listagens-xlsx-etl/quickstart.md` (se
       necessário) apontando para o target único `make dados` como a forma
       recomendada de orquestração das etapas 010
-- [ ] T012 Run `quickstart.md` validações (modo soft preserva sha256; fail-fast
+- [x] T012 Run `quickstart.md` validações (modo soft preserva sha256; fail-fast
       default; check-dados nos 4 cenários; fluxo completo com entradas
       presentes ⇒ NTE 1857 / NTECPP 93) e `make format` + `make check` completos
       (flake8/black/isort; pytest legado + novos; vitest) — tudo verde, sem

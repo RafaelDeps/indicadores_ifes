@@ -39,7 +39,22 @@ def criar_argument_parser() -> argparse.ArgumentParser:
         default="2024,2025,2026",
         help="Anos de referência separados por vírgula (padrão: 2024,2025,2026)",
     )
+    parser.add_argument(
+        "--soft",
+        action="store_true",
+        help=(
+            "Modo soft (opt-in): se a entrada estiver ausente, pula a etapa com "
+            "AVISO:+0 preservando o último pacote existente (default: fail-fast)"
+        ),
+    )
     return parser
+
+
+def _modo_soft(args: argparse.Namespace) -> bool:
+    """Modo soft ativo por flag `--soft` OU variável de ambiente `SOFT=1`."""
+    if args.soft:
+        return True
+    return os.getenv("SOFT", "").strip().lower() in {"1", "true", "yes", "on"}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -66,6 +81,12 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if not caminho_entrada.exists():
+        if _modo_soft(args) and caminho_saida.exists():
+            sys.stderr.write(
+                f"AVISO: export canônico ausente ('{caminho_entrada}') — etapa pulada; "
+                f"pacote existente preservado ('{caminho_saida}').\n"
+            )
+            return 0
         sys.stderr.write(
             f"ERRO: Arquivo de entrada canônico não encontrado: '{caminho_entrada}'\n"
             f"Por favor, posicione o arquivo em 'data/canonical/exports_canonical.zip' ou forneça o caminho via --entrada / ENTRADA.\n"

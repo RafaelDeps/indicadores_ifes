@@ -35,17 +35,17 @@ desenho:
 
 Portanto, esta feature **não** implementa "fallback de dados": implementa um
 **modo soft** em que a etapa cuja entrada falta é **pulada com `AVISO:`**, o
-que resulta — por construção — em *não tocar* no último snapshot coerente.
+que resulta — por construção — em _não tocar_ no último snapshot coerente.
 Nada é fabricado, deletado ou misturado.
 
 ## Semântica exata do modo soft (por etapa)
 
-| Etapa | Entrada ausente | Default (hoje) | Com `SOFT=1` / `--soft` |
-| --- | --- | --- | --- |
-| `make etl` | `exports_canonical.zip` | `ERRO:` + exit 1 (contrato 006) | `AVISO:` + exit 0, pacote **intocado** — porém, se o pacote de saída **não existir**, `ERRO:` + exit 1 (não há o que preservar) |
-| `make etl-listagens` | `exports_canonical.zip` | já degrada: NTECPP `null` + `AVISO:`, exit 0 | igual, + `AVISO:` explícito de que o NTECPP **não** é recalculável a partir do zip (não há nomes) |
-| `make etl-listagens` | planilhas `.xlsx` | `ERRO:` + exit 1 | `AVISO:` + exit 0, **sem gerar/sobrescrever** `indicadores_listagens.zip` |
-| `make merge-listagens` | `indicadores_listagens.zip` | `ERRO:` + exit 1 | `AVISO:` + exit 0, `indicadores.zip` **intocado** |
+| Etapa                  | Entrada ausente             | Default (hoje)                               | Com `SOFT=1` / `--soft`                                                                                                         |
+| ---------------------- | --------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `make etl`             | `exports_canonical.zip`     | `ERRO:` + exit 1 (contrato 006)              | `AVISO:` + exit 0, pacote **intocado** — porém, se o pacote de saída **não existir**, `ERRO:` + exit 1 (não há o que preservar) |
+| `make etl-listagens`   | `exports_canonical.zip`     | já degrada: NTECPP `null` + `AVISO:`, exit 0 | igual, + `AVISO:` explícito de que o NTECPP **não** é recalculável a partir do zip (não há nomes)                               |
+| `make etl-listagens`   | planilhas `.xlsx`           | `ERRO:` + exit 1                             | `AVISO:` + exit 0, **sem gerar/sobrescrever** `indicadores_listagens.zip`                                                       |
+| `make merge-listagens` | `indicadores_listagens.zip` | `ERRO:` + exit 1                             | `AVISO:` + exit 0, `indicadores.zip` **intocado**                                                                               |
 
 **Regras transversais (invariantes)**:
 
@@ -109,10 +109,10 @@ o mesmo comando termina com `ERRO:` + exit 1.
    **Then** exit 1 com `ERRO:` (fail-fast do contrato 006 — regressão
    impedida por teste).
 4. **Given** `SOFT=1` e `data/raw/` sem planilhas, **When** `make
-   etl-listagens` roda, **Then** exit 0, `AVISO:` no stderr, e
+etl-listagens` roda, **Then** exit 0, `AVISO:` no stderr, e
    `indicadores_listagens.zip` não é criado (nem sobrescrito se já existir).
 5. **Given** `SOFT=1` e `indicadores_listagens.zip` ausente, **When** `make
-   merge-listagens` roda, **Then** exit 0, `AVISO:` no stderr, e
+merge-listagens` roda, **Then** exit 0, `AVISO:` no stderr, e
    `indicadores.zip` é byte a byte idêntico.
 6. **Given** `make etl-listagens` sem export canônico (com ou sem soft),
    **When** o fluxo roda, **Then** exit 0 e `NTECPP_cotistas_em_pesquisa`

@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import zipfile
@@ -43,6 +44,13 @@ CAMPOS_MERGE_AUTORIZADOS = frozenset(
         ("PICOT", "NTECPP_cotistas_em_pesquisa"),
     }
 )
+
+
+def _modo_soft(args: argparse.Namespace) -> bool:
+    """Modo soft ativo por flag `--soft` OU variável de ambiente `SOFT=1`."""
+    if args.soft:
+        return True
+    return os.getenv("SOFT", "").strip().lower() in {"1", "true", "yes", "on"}
 
 
 def _serializar(dados: dict) -> str:
@@ -156,6 +164,14 @@ def main(argv: list[str] | None = None) -> int:
         default="data/dist/indicadores.zip",
         help="Pacote de saída — padrão: sobrescreve data/dist/indicadores.zip",
     )
+    parser.add_argument(
+        "--soft",
+        action="store_true",
+        help=(
+            "Modo soft (opt-in): se o pacote de listagens estiver ausente, pula a "
+            "etapa com AVISO:+0 sem tocar indicadores.zip (default: fail-fast)"
+        ),
+    )
     args = parser.parse_args(argv)
 
     caminho_listagens = Path(args.listagens)
@@ -163,6 +179,12 @@ def main(argv: list[str] | None = None) -> int:
     caminho_saida = Path(args.saida)
 
     if not caminho_listagens.exists():
+        if _modo_soft(args):
+            sys.stderr.write(
+                f"AVISO: pacote de listagens ausente ('{args.listagens}') — "
+                f"etapa pulada; pacote existente preservado ('{args.saida}').\n"
+            )
+            return 0
         sys.stderr.write(
             f"ERRO: pacote de listagens não encontrado: '{args.listagens}'\n"
         )

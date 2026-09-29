@@ -27,6 +27,14 @@ make etl-listagens  # executa python -m etl.main_listagens → data/dist/indicad
 make merge-listagens  # sobrepõe NTE/NTECPP em data/dist/indicadores.zip
 ```
 
+> **Orquestração recomendada (spec 011 — `etl-soft-mode-frescor`):** use
+> `make dados` para executar as etapas na ordem correta (`etl` →
+> `etl-listagens` → `merge-listagens`) em um único comando, parando no primeiro
+> erro; `SOFT=1 make dados` tolera entradas ausentes (cada etapa faltante é
+> pulada com `AVISO:` no stderr, exit 0) preservando o último pacote coerente.
+> Depois, `make check-dados` responde "posso confiar neste `indicadores.zip`?"
+> (validação de contrato + avisos de frescor por `mtime`).
+
 ## Validação 1 — NTE, cotistas (análise interna) e NTECPP (cruzamento)
 
 ```bash

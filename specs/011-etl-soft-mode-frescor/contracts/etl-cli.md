@@ -7,9 +7,9 @@
 Em todas as três CLIs, o modo soft é **opt-in** e ativo se **qualquer um** dos
 mecanismos estiver definido (redundância sem conflito):
 
-| Mecanismo | Forma |
-| --- | --- |
-| Flag | `--soft` (flag `store_true`, sem valor) |
+| Mecanismo            | Forma                                                                                          |
+| -------------------- | ---------------------------------------------------------------------------------------------- |
+| Flag                 | `--soft` (flag `store_true`, sem valor)                                                        |
 | Variável de ambiente | `SOFT=1` (valor truthy; espelha o padrão `ENTRADA`/`SAIDA`/`CAMPUS` já usado em `etl/main.py`) |
 
 Sem flag e sem env (`SOFT` vazia), o comportamento **fail-fast atual** da
@@ -17,13 +17,13 @@ spec 006 é mantido integralmente (`ERRO:` + exit 1 quando a entrada falta).
 
 ## 2. Comportamento por etapa (matriz)
 
-| CLI | Entrada | Condição de saída | Estrito (default) | Soft (`--soft` / `SOFT=1`) |
-| --- | --- | --- | --- | --- |
-| `etl.main` | `exports_canonical.zip` | ausente + pacote de saída **existe** | `ERRO:` + exit 1 | `AVISO:` + exit 0, pacote intocado |
-| `etl.main` | `exports_canonical.zip` | ausente + pacote de saída **não existe** | `ERRO:` + exit 1 | `ERRO:` + exit 1 (nada a preservar) |
-| `etl.main_listagens` | planilhas `listagem_*.xlsx` | nenhuma encontrada | `ERRO:` + exit 1 | `AVISO:` + exit 0, zip de listagens **não criado/sobrescrito** |
-| `etl.main_listagens` | `--canonical` (export canônico) | ausente | NTECPP `null` + `AVISO:` + exit 0 (comportamento existente) | igual, com `AVISO:` adicional: NTECPP **não recalculável** a partir do zip (sem universo de nomes) |
-| `merge_listagens_indicadores` | `indicadores_listagens.zip` | ausente | `ERRO:` + exit 1 | `AVISO:` + exit 0, `indicadores.zip` intocado |
+| CLI                           | Entrada                         | Condição de saída                        | Estrito (default)                                           | Soft (`--soft` / `SOFT=1`)                                                                         |
+| ----------------------------- | ------------------------------- | ---------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `etl.main`                    | `exports_canonical.zip`         | ausente + pacote de saída **existe**     | `ERRO:` + exit 1                                            | `AVISO:` + exit 0, pacote intocado                                                                 |
+| `etl.main`                    | `exports_canonical.zip`         | ausente + pacote de saída **não existe** | `ERRO:` + exit 1                                            | `ERRO:` + exit 1 (nada a preservar)                                                                |
+| `etl.main_listagens`          | planilhas `listagem_*.xlsx`     | nenhuma encontrada                       | `ERRO:` + exit 1                                            | `AVISO:` + exit 0, zip de listagens **não criado/sobrescrito**                                     |
+| `etl.main_listagens`          | `--canonical` (export canônico) | ausente                                  | NTECPP `null` + `AVISO:` + exit 0 (comportamento existente) | igual, com `AVISO:` adicional: NTECPP **não recalculável** a partir do zip (sem universo de nomes) |
+| `merge_listagens_indicadores` | `indicadores_listagens.zip`     | ausente                                  | `ERRO:` + exit 1                                            | `AVISO:` + exit 0, `indicadores.zip` intocado                                                      |
 
 > **Nota**: o caso "planilhas ausentes + soft" no `etl.main_listagens` **não**
 > gera `indicadores_listagens.zip`. Se um zip stale existir no disco, ele

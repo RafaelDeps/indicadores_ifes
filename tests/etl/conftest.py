@@ -34,6 +34,28 @@ def pasta_listagens(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
+def dir_raw_vazio(tmp_path: Path) -> Path:
+    """Diretório de entrada sem nenhuma planilha de listagem (modo soft)."""
+    pasta = tmp_path / "raw_vazio"
+    pasta.mkdir(parents=True, exist_ok=True)
+    return pasta
+
+
+@pytest.fixture
+def zip_existente(tmp_path: Path) -> Path:
+    """Zip de saída pré-criado com conteúdo conhecido (comparação sha256)."""
+    caminho = tmp_path / "pacote_existente.zip"
+    caminho.write_bytes(b"conteudo-conhecido-011-do-teste")
+    return caminho
+
+
+@pytest.fixture
+def canonical_ausente(tmp_path: Path) -> Path:
+    """Caminho em tmp que NÃO contém exports_canonical.zip."""
+    return tmp_path / "nao_existe" / "exports_canonical.zip"
+
+
+@pytest.fixture
 def campus_vitoria() -> Campus:
     return Campus(id=2, name="Vitória")
 

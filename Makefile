@@ -8,8 +8,10 @@ PYTHON := PYTHONPATH=. $(PYTHON_BIN)
 
 CAMPUS ?=
 SAIDA ?=
+SOFT ?=
+SOFT_ARGS = $(if $(SOFT),--soft,)
 
-.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens test test-etl test-web test-watch lint format format-check check clean
+.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens dados check-dados test test-etl test-web test-watch lint format format-check check clean
 
 help: ## Exibe os comandos disponíveis
 	@echo "Indicadores IFES - Comandos disponíveis"
@@ -33,10 +35,11 @@ build: ## Executa o build de produção do Astro
 preview: ## Inicia o servidor de pré-visualização do Astro
 	npm run preview
 
-etl: ## Executa o pipeline Python de ETL gerando indicadores.zip (opcional: CAMPUS=Serra SAIDA=...)
+etl: ## Executa o pipeline Python de ETL gerando indicadores.zip (opcional: CAMPUS=Serra SAIDA=...; SOFT=1 tolera entrada ausente)
 	@args=""; \
 	if [ -n "$(CAMPUS)" ]; then args="$$args --campus $(CAMPUS)"; fi; \
 	if [ -n "$(SAIDA)" ]; then args="$$args --saida $(SAIDA)"; fi; \
+	if [ -n "$(SOFT_ARGS)" ]; then args="$$args $(SOFT_ARGS)"; fi; \
 	$(PYTHON) -m etl.main $$args
 
 etl-campus: ## Executa o ETL para apenas 1 campus em zip dedicado (padrão: CAMPUS=Serra)
@@ -44,13 +47,21 @@ etl-campus: ## Executa o ETL para apenas 1 campus em zip dedicado (padrão: CAMP
 	slug=$$(echo "$$campus" | tr '[:upper:]' '[:lower:]' | tr -d ' ' | sed 's/á/a/g;s/é/e/g;s/í/i/g;s/ó/o/g;s/ú/u/g;s/ã/a/g;s/õ/o/g;s/ç/c/g'); \
 	saida="$${SAIDA:-data/dist/indicadores_$$slug.zip}"; \
 	echo "Executando ETL em Python para o campus: $$campus (saída: $$saida)"; \
-	$(PYTHON) -m etl.main --campus "$$campus" --saida "$$saida"
+	$(PYTHON) -m etl.main --campus "$$campus" --saida "$$saida" $(SOFT_ARGS)
 
-etl-listagens: ## Executa o ETL das listagens de matrícula gerando data/dist/indicadores_listagens.zip (Pilar 1: NTE e cotistas)
-	$(PYTHON) -m etl.main_listagens
+etl-listagens: ## Executa o ETL das listagens de matrícula gerando data/dist/indicadores_listagens.zip (Pilar 1: NTE e cotistas; SOFT=1 tolera planilhas ausentes)
+	$(PYTHON) -m etl.main_listagens $(SOFT_ARGS)
 
-merge-listagens: ## Integra NTE/NTECPP das listagens em data/dist/indicadores.zip preservando todos os demais campos canônicos
-	$(PYTHON) -m etl.scripts.merge_listagens_indicadores --listagens data/dist/indicadores_listagens.zip --canonical data/dist/indicadores.zip --saida data/dist/indicadores.zip
+merge-listagens: ## Integra NTE/NTECPP das listagens em data/dist/indicadores.zip preservando todos os demais campos canônicos (SOFT=1 tolera listagens ausentes)
+	$(PYTHON) -m etl.scripts.merge_listagens_indicadores --listagens data/dist/indicadores_listagens.zip --canonical data/dist/indicadores.zip --saida data/dist/indicadores.zip $(SOFT_ARGS)
+
+dados: ## Gera o pacote completo na ordem etl → etl-listagens → merge-listagens, parando no 1º erro (SOFT=1 tolera entradas ausentes)
+	@$(MAKE) --no-print-directory etl \
+	&& $(MAKE) --no-print-directory etl-listagens \
+	&& $(MAKE) --no-print-directory merge-listagens
+
+check-dados: ## Valida o contrato e a frescor do pacote data/dist/indicadores.zip (AVISO:/INFO: informativos, exit 0; violação de contrato → ERRO + 1)
+	$(PYTHON) -m etl.scripts.check_dados
 
 test: test-etl test-web ## Executa a suíte completa de testes automatizados (pytest e vitest)
 

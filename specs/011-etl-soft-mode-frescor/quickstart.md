@@ -53,15 +53,15 @@ make check-dados                # AVISO: possivelmente desatualizado → 0
 
 Esperado:
 
-| Cenário | Resultado |
-| --- | --- |
-| Pacote íntegro + **todas** as entradas de frescor ausentes (só o zip) | exit `0`, sem `AVISO:`, com **uma** linha `INFO:` "apenas o contrato foi validado" |
-| Pacote íntegro e em dia (entradas presentes, nenhum mtime anterior ao pacote) | exit `0`, sem avisos e **sem** linha `INFO:` (silêncio) |
-| Apenas algumas entradas ausentes (ex.: sem zip de listagens) | comparação feita só para as presentes; linha `INFO:` lista as ausentes; exit `0` |
-| `exports_canonical.zip` com mtime > pacote | `AVISO:` "possivelmente desatualizado", exit `0` |
-| `indicadores_listagens.zip` mais antigo que o pacote | `AVISO:` de proveniência NTE/NTECPP, exit `0` |
-| Planilha `data/raw/listagem_*.xlsx` mais nova que o pacote | `AVISO:` "não incorporada", exit `0` |
-| Contrato violado (corromper uma chave de um JSON do zip) | `ERRO:` + exit `1` |
+| Cenário                                                                       | Resultado                                                                          |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Pacote íntegro + **todas** as entradas de frescor ausentes (só o zip)         | exit `0`, sem `AVISO:`, com **uma** linha `INFO:` "apenas o contrato foi validado" |
+| Pacote íntegro e em dia (entradas presentes, nenhum mtime anterior ao pacote) | exit `0`, sem avisos e **sem** linha `INFO:` (silêncio)                            |
+| Apenas algumas entradas ausentes (ex.: sem zip de listagens)                  | comparação feita só para as presentes; linha `INFO:` lista as ausentes; exit `0`   |
+| `exports_canonical.zip` com mtime > pacote                                    | `AVISO:` "possivelmente desatualizado", exit `0`                                   |
+| `indicadores_listagens.zip` mais antigo que o pacote                          | `AVISO:` de proveniência NTE/NTECPP, exit `0`                                      |
+| Planilha `data/raw/listagem_*.xlsx` mais nova que o pacote                    | `AVISO:` "não incorporada", exit `0`                                               |
+| Contrato violado (corromper uma chave de um JSON do zip)                      | `ERRO:` + exit `1`                                                                 |
 
 ## Validação 4 — Fluxo completo com entradas presentes
 

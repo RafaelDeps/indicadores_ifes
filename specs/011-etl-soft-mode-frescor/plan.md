@@ -72,14 +72,14 @@ teste; sem impacto no frontend e sem mudança de dados.
 
 _GATE: aprovado antes da Fase 0. Reavaliado após o design (Fase 1) — mantido._
 
-| Princípio              | Status | Justificativa                                                                                                                                                                              |
-| ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| I. Simplicidade        | ✅     | Zero dependências novas; só flags em parsers existentes, um script de verificação e dois alvos Makefile; reuso da validação já existente.                                                  |
-| II. Test-first         | ✅     | `test_soft_mode.py` e `test_check_dados.py` escritos e observados falhar (red) antes da implementação (pytest, convenção do ETL).                                                          |
-| III. Fidelidade        | ✅     | O soft nunca fabrica nem sobrepõe valores: campo não apurado ⇒ `null`; preservação do zip por não-toque (sha256 igual); fail-fast default do contrato 006 intacto.                          |
-| IV. Agregado apenas    | ✅     | Nenhum dado novo; o universo de nomes vive apenas no export gitignored; nada de PII em qualquer artefato ou teste.                                                                         |
-| V. Qualidade           | ✅     | flake8/black/isort nos módulos novos; mensagens pt-BR; sem mudança de frontend.                                                                                                            |
-| VI. Deploy com portões | ✅     | CI ganha validação de contrato do pacote commitado (`check_dados` no job `quality`); topologia inalterada (o CI continua sem rodar o ETL).                                                 |
+| Princípio              | Status | Justificativa                                                                                                                                                      |
+| ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| I. Simplicidade        | ✅     | Zero dependências novas; só flags em parsers existentes, um script de verificação e dois alvos Makefile; reuso da validação já existente.                          |
+| II. Test-first         | ✅     | `test_soft_mode.py` e `test_check_dados.py` escritos e observados falhar (red) antes da implementação (pytest, convenção do ETL).                                  |
+| III. Fidelidade        | ✅     | O soft nunca fabrica nem sobrepõe valores: campo não apurado ⇒ `null`; preservação do zip por não-toque (sha256 igual); fail-fast default do contrato 006 intacto. |
+| IV. Agregado apenas    | ✅     | Nenhum dado novo; o universo de nomes vive apenas no export gitignored; nada de PII em qualquer artefato ou teste.                                                 |
+| V. Qualidade           | ✅     | flake8/black/isort nos módulos novos; mensagens pt-BR; sem mudança de frontend.                                                                                    |
+| VI. Deploy com portões | ✅     | CI ganha validação de contrato do pacote commitado (`check_dados` no job `quality`); topologia inalterada (o CI continua sem rodar o ETL).                         |
 
 ## Project Structure
 
@@ -168,8 +168,8 @@ mudança de escopo; reuso máximo do código existente.
 > Violações de constituição justificadas (nenhuma viola Princípio I–VI; são
 > desvios de _convenções detalhadas_, já praticados no repositório).
 
-| Violação                                                             | Por que é necessária                                                                                                                                | Alternativa mais simples rejeitada                                                                                   |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| pytest (e não apenas Vitest) para os testes do ETL                   | Prática consolidada do repo desde o ETL Python (c0f118a); constituição ratificada antes da existência do ETL Python                                  | Rejeitada: portar a suíte ETL para Vitest reconstruiria o pipeline já aprovado (Princípio I)                        |
-| `check_dados` duplica a chamada de validação do `validate_zip.py`    | O script CLI existente imprime e retorna; importar `validar_arquivos_pilar` é a forma testável de reusar o contrato sem subprocess                                                  | Rejeitada: invocar `validate_zip` como subprocess tornaria o teste frágil e o contrato não importável                |
-| CI roda `check_dados` (Python) mesmo o deploy sendo Node-only        | O zip commitado é o dado publicado (Princípio VI); validar seu contrato em cada PR é um portão barato que o CI Node-only não cobriria                | Rejeitada: rodar o ETL no CI exigiria entradas gitignored que o CI não possui                                        |
+| Violação                                                          | Por que é necessária                                                                                                                  | Alternativa mais simples rejeitada                                                                    |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| pytest (e não apenas Vitest) para os testes do ETL                | Prática consolidada do repo desde o ETL Python (c0f118a); constituição ratificada antes da existência do ETL Python                   | Rejeitada: portar a suíte ETL para Vitest reconstruiria o pipeline já aprovado (Princípio I)          |
+| `check_dados` duplica a chamada de validação do `validate_zip.py` | O script CLI existente imprime e retorna; importar `validar_arquivos_pilar` é a forma testável de reusar o contrato sem subprocess    | Rejeitada: invocar `validate_zip` como subprocess tornaria o teste frágil e o contrato não importável |
+| CI roda `check_dados` (Python) mesmo o deploy sendo Node-only     | O zip commitado é o dado publicado (Princípio VI); validar seu contrato em cada PR é um portão barato que o CI Node-only não cobriria | Rejeitada: rodar o ETL no CI exigiria entradas gitignored que o CI não possui                         |
