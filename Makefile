@@ -8,8 +8,16 @@ PYTHON := PYTHONPATH=. $(PYTHON_BIN)
 
 CAMPUS ?=
 SAIDA ?=
+
+# Modo soft (spec 011 §1): o Make só liga o soft para os MESMOS valores que o
+# Python aceita em `_modo_soft()` — {1, true, yes, on}, sem diferenciar caixa.
+# Usar `$(if $(SOFT),--soft,)` seria um teste de não-vazio, e aí `SOFT=0`,
+# `SOFT=false` e `SOFT=no` ligariam o soft: silenciosamente, e no caminho de
+# segurança (`make dados SOFT=0` ainda mapearia o bloqueio da guarda para 0).
 SOFT ?=
-SOFT_ARGS = $(if $(SOFT),--soft,)
+SOFT_NORMALIZADO = $(shell echo '$(SOFT)' | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')
+SOFT_ATIVO = $(filter 1 true yes on,$(SOFT_NORMALIZADO))
+SOFT_ARGS = $(if $(SOFT_ATIVO),--soft,)
 
 .PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens dados check-dados test test-etl test-web test-watch lint format format-check check clean
 
@@ -58,7 +66,7 @@ merge-listagens: ## Integra NTE/NTECPP das listagens em data/dist/indicadores.zi
 dados: ## Gera o pacote completo na ordem etl → etl-listagens → merge-listagens, parando no 1º erro (SOFT=1 tolera entradas ausentes)
 	@$(PYTHON) -m etl.scripts.cadeia_dados $(SOFT_ARGS); \
 	guard=$$?; \
-	if [ $$guard -eq 3 ]; then exit $(if $(SOFT),0,1); fi; \
+	if [ $$guard -eq 3 ]; then exit $(if $(SOFT_ATIVO),0,1); fi; \
 	if [ $$guard -ne 0 ]; then exit $$guard; fi; \
 	$(MAKE) --no-print-directory etl \
 	&& $(MAKE) --no-print-directory etl-listagens \

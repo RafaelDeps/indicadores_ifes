@@ -6,19 +6,24 @@ Interface de linha de comando do pipeline ETL determinístico.
 
 > **Nota de vigência**: layout histórico (raiz do repositório, implementação
 > TypeScript `src/etl/main.ts`). A partir das specs 008/009 o pipeline é
-> Python (`python3 -m etl.main`) com saída em `data/dist/indicadores.zip`. O
-> comportamento fail-fast aqui especificado (exit 1 em entrada ausente) é o
-> mesmo que a spec 011 mantém como default.
+> Python com entrada em `data/canonical/exports_canonical.zip` e saída em
+> `data/dist/indicadores.zip`, executado por `make etl` (`make dados` para o
+> pacote público completo). O comportamento fail-fast aqui especificado
+> (exit 1 em entrada ausente) é o mesmo que a spec 011 mantém como default.
 
 ## Comando
 
 ```bash
-npm run etl
+make etl
 ```
 
-- Implementação do script: `tsx src/etl/main.ts` (dev-dependency `tsx`).
-- Sem argumentos obrigatórios; sem flags configuráveis nesta entrega (anos fixos 2024–2026).
-- Diretório de execução: raiz do repositório (caminhos resolvidos a partir de `process.cwd()`).
+- Implementação atual: alvo `etl` do `Makefile` → `PYTHONPATH=. python -m etl.main`.
+  A forma histórica era `npm run etl` → `tsx src/etl/main.ts`; o script `etl` do
+  `package.json` foi removido para não haver dois entrypoints com resoluções de
+  Python diferentes (T001 abaixo é registro histórico).
+- Sem argumentos obrigatórios; `--anos` é configurável (padrão 2024–2026) e
+  `--campus` filtra um campus. Ano vazio/inválido é `ERRO:` + exit 1.
+- Diretório de execução: raiz do repositório (caminhos resolvidos a partir dela).
 
 ## Entradas
 

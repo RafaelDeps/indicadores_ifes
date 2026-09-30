@@ -25,7 +25,7 @@
 
 **Purpose**: Habilitar execução de TS no CLI e compartilhar o algoritmo de slug entre site e ETL
 
-- [x] T001 [P] Adicionar dev-dependency `tsx` e script `"etl": "tsx src/etl/main.ts"` em `package.json` (ver plan.md Complexity Tracking)
+- [x] T001 [P] Adicionar dev-dependency `tsx` e script `"etl": "tsx src/etl/main.ts"` em `package.json` (ver plan.md Complexity Tracking) — **superado**: o script `etl` e a dev-dependency `tsx` foram removidos (entrypoint único é `make etl`; ver `contracts/etl-cli.md`)
 - [x] T002 [P] Extrair `slugificarCampus` de `src/lib/dataset.ts` para `src/lib/slugificar.ts` (export nomeado), atualizar o import em `src/lib/dataset.ts` e manter `tests/dataset.test.ts` verde sem alterar comportamento
 
 ---

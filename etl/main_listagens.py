@@ -11,6 +11,7 @@ from etl.adapters.sources.listagens_xlsx_source import (
     ListagensXlsxSource,
 )
 from etl.adapters.sources.zip_canonical_source import ZipCanonicalSource
+from etl.cli_comum import parsear_anos
 from etl.flows.listagens_flow import CAMPOS_DERIVAVEIS_LISTAGENS, ListagensFlow
 
 
@@ -87,8 +88,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     anos: list[int] | None = None
-    if args.anos:
-        anos = [int(a.strip()) for a in args.anos.split(",") if a.strip()]
+    if args.anos is not None:
+        try:
+            anos = parsear_anos(args.anos)
+        except ValueError:
+            sys.stderr.write(
+                f"ERRO: Valor inválido fornecido para --anos: '{args.anos}'\n"
+            )
+            return 1
 
     pasta_entrada = Path(args.entrada)
     if _modo_soft(args) and not _tem_planilhas(pasta_entrada):

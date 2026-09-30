@@ -110,7 +110,17 @@ def merge_arquivos(
                     f"canônico (diff de chaves) — merge recusado"
                 )
             for grupo, campo in CAMPOS_MERGE_AUTORIZADOS:
-                valor = dados_list["indicadores"][grupo][campo]
+                # O diff de `_chaves` compara listagens e canônico entre si: se o
+                # campo faltar nos DOIS, as formas continuam iguais e o acesso
+                # direto levantaria KeyError — que não é ValueError e escaparia
+                # do `except` do `main` como traceback.
+                indicador = dados_list.get("indicadores", {}).get(grupo)
+                if not isinstance(indicador, dict) or campo not in indicador:
+                    raise ValueError(
+                        f"{registro_list.nome}: campo derivado ausente "
+                        f"({grupo}.{campo}) — merge recusado"
+                    )
+                valor = indicador[campo]
                 if not _valor_derivado_valido(valor):
                     raise ValueError(
                         f"{registro_list.nome}: valor inválido para {grupo}.{campo} "
@@ -191,10 +201,25 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
-    registros_listagens = _ler_arquivos(caminho_listagens)
-    assert registros_listagens is not None
+    try:
+        registros_listagens = _ler_arquivos(caminho_listagens)
+        if registros_listagens is None:
+            # Inalcançável hoje (a existência foi conferida acima), mas
+            # `_ler_arquivos` é tipada como `... | None` e um `assert` some
+            # sob `python -O`.
+            sys.stderr.write(
+                f"ERRO: pacote de listagens não encontrado: '{args.listagens}'\n"
+            )
+            return 1
 
-    registros_canonico = _ler_arquivos(caminho_canonic)
+        registros_canonico = _ler_arquivos(caminho_canonic)
+    except zipfile.BadZipFile as exc:
+        # Contrato §3: entrada corrompida ⇒ `ERRO:` + exit 1, nunca traceback.
+        sys.stderr.write(
+            f"ERRO: pacote de entrada corrompido ou não é um ZIP válido: {exc}\n"
+        )
+        return 1
+
     if registros_canonico is None:
         sys.stderr.write(
             f"AVISO: pacote canônico ausente ('{args.canonical}') — "

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from etl.adapters.sinks.zip_indicadores_sink import ZipIndicadoresSink
 from etl.adapters.sources.zip_canonical_source import ZipCanonicalSource
+from etl.cli_comum import parsear_anos
 from etl.core.logic.resolvers.campus_resolver import normalizar_slug
 from etl.flows.indicadores_flow import IndicadoresFlow
 
@@ -75,7 +76,7 @@ def main(argv: list[str] | None = None) -> int:
         caminho_saida = pasta_dist / "indicadores.zip"
 
     try:
-        anos = [int(a.strip()) for a in args.anos.split(",") if a.strip()]
+        anos = parsear_anos(args.anos)
     except ValueError:
         sys.stderr.write(f"ERRO: Valor inválido fornecido para --anos: '{args.anos}'\n")
         return 1

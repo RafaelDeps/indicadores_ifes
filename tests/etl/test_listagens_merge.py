@@ -197,6 +197,82 @@ def test_merge_rejeita_valor_invalido_para_campo_derivado() -> None:
         merge_arquivos(invalido, canonico)
 
 
+def test_merge_rejeita_campo_derivado_ausente_em_ambos() -> None:
+    """Campo derivado ausente nos DOIS pacotes ⇒ recusa, não KeyError.
+
+    O diff de chaves (`_chaves`) compara a forma de listagens e canônico entre
+    si; ele não garante que o campo exista. Se `NTECPP_cotistas_em_pesquisa`
+    faltar dos dois lados, as formas são iguais, o merge passa pela verificação
+    de estrutura e a linha 113 levanta `KeyError` — que o `except ValueError` do
+    `main` não pega, então o CLI morre com traceback em vez de `ERRO:` + 1.
+    """
+    indicadores = _indicadores_pilar1(nte=1857, ntecpp=93)
+    del indicadores["PICOT"]["NTECPP_cotistas_em_pesquisa"]
+
+    dados = {
+        "campus": "Serra",
+        "ano_referencia": 2025,
+        "pilar": "Engajamento Academico e Inclusao",
+        "indicadores": indicadores,
+    }
+    sem_ntecpp = [
+        RegistroPilarJson(nome=PILAR1_SERRA_2025, conteudo=_serializar(dados))
+    ]
+
+    # As formas são idênticas (ambos sem o campo) — o diff de chaves NÃO barra.
+    canonico = sem_ntecpp
+    with pytest.raises(ValueError, match="ausente"):
+        merge_arquivos(sem_ntecpp, canonico)
+
+
+def test_merge_cli_rejeita_listagens_corrompido(tmp_path: Path, capsys) -> None:
+    """Entrada corrompida ⇒ `ERRO:` + exit 1 (contrato §3), não traceback."""
+    corrompido = tmp_path / "listagens.zip"
+    corrompido.write_bytes(b"PK\x03\x04nao-e-zip")
+    saida = tmp_path / "saida.zip"
+
+    rc = main(
+        [
+            "--listagens",
+            str(corrompido),
+            "--canonical",
+            str(corrompido),
+            "--saida",
+            str(saida),
+        ]
+    )
+
+    err = capsys.readouterr().err
+    assert rc == 1
+    assert err.startswith("ERRO:")
+    assert not saida.exists()
+
+
+def test_merge_cli_rejeita_canonico_corrompido(tmp_path: Path, capsys) -> None:
+    """Canônico corrompido também é falha fatal, não `AVISO:` + merge parcial."""
+    listagens_ok = tmp_path / "indicadores_listagens.zip"
+    _escrever_zip(listagens_ok, _listagens_serra_2025())
+    corrompido = tmp_path / "indicadores.zip"
+    corrompido.write_bytes(b"PK\x03\x04nao-e-zip")
+    saida = tmp_path / "saida.zip"
+
+    rc = main(
+        [
+            "--listagens",
+            str(listagens_ok),
+            "--canonical",
+            str(corrompido),
+            "--saida",
+            str(saida),
+        ]
+    )
+
+    err = capsys.readouterr().err
+    assert rc == 1
+    assert err.startswith("ERRO:")
+    assert not saida.exists()
+
+
 def test_merge_cli_escreve_zip_deterministico(tmp_path: Path) -> None:
     zip_can = tmp_path / "indicadores.zip"
     zip_list = tmp_path / "indicadores_listagens.zip"

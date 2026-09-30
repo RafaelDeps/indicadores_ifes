@@ -114,7 +114,13 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.write(f"ERRO: {exc}\n")
         return 1
     except Exception as exc:
-        sys.stderr.write(f"{exc}\n")
+        # Zip ilegível (BadZipFile), JSON truncado, etc. — a violação de
+        # contrato já chega prefixada pela `validar_arquivos_pilar`; o resto
+        # (mensagens da stdlib, em inglês) precisa do prefixo para o log do
+        # portão do CI não confundir falha do pacote com falha do verificador.
+        mensagem = str(exc)
+        prefixo = "" if mensagem.startswith("ERRO:") else "ERRO: "
+        sys.stderr.write(f"{prefixo}{mensagem}\n")
         return 1
 
     print(

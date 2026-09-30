@@ -98,7 +98,7 @@ Como mantenedor e operador da CLI, preciso que o comando `npm run etl` acione um
 - **FR-004**: A camada `src/etl/adapters/sources/` DEVE implementar o leitor canônico (`ZipCanonicalSource`) compatível com `ISource`, lendo `exports_canonical.zip` e entregando entidades canônicas tipadas em memória.
 - **FR-005**: A camada `src/etl/adapters/sinks/` DEVE conter os formatadores de contrato (`JsonPilarSink`) e o escritor do pacote compactado (`ZipIndicadoresSink`), implementando a validação contra o contrato 004 e a gravação atômica em `indicadores.zip`.
 - **FR-006**: A camada `src/etl/flows/` DEVE conter o orquestrador `IndicadoresFlow`, responsável por coordenar a sequência `source.extract() -> core.compute() -> sink.load()`.
-- **FR-007**: O arquivo `src/etl/main.ts` DEVE atuar exclusivamente como ponto de entrada da CLI (`npm run etl`), delegando a execução ao `IndicadoresFlow`.
+- **FR-007**: O arquivo `etl/main.py` DEVE atuar exclusivamente como ponto de entrada da CLI (`make etl`), delegando a execução ao `IndicadoresFlow`. _(Redação original de 2026-09-25 referia `src/etl/main.ts` / `npm run etl` — superada pelas specs 008/009.)_
 - **FR-008**: O pipeline DEVE preservar 100% dos resultados numéricos e a fidelidade aos dados de origem (Princípio III): métricas não coletadas DEVEM ser estritamente `null` e o numeral `0` DEVE ser restrito a contagens nulas comprovadas.
 - **FR-009**: A suíte de testes Vitest em `tests/etl/` DEVE ser reorganizada para espelhar as pastas da arquitetura (`core/`, `adapters/`, `flows/`), mantendo todos os 231 testes existentes com status verde.
 - **FR-010**: A refatoração NÃO DEVE introduzir nenhuma nova dependência de produção em `package.json`.
@@ -117,7 +117,7 @@ Como mantenedor e operador da CLI, preciso que o comando `npm run etl` acione um
 - **SC-001**: 100% dos testes existentes (231 testes unitários e de integração no Vitest) continuam passando com sucesso após a reestruturação.
 - **SC-002**: O pacote gerado `indicadores.zip` gerado pela nova arquitetura permanece 100% compatível com o leitor do site (`src/lib/dataset.ts`), sem nenhuma divergência funcional no build estático do Astro.
 - **SC-003**: 100% dos módulos em `src/etl/core/logic/` possuem zero dependências de bibliotecas de I/O de arquivos (`node:fs`, `node:zlib`) ou de serialização de strings.
-- **SC-004**: O tempo total de execução do comando `npm run etl` permanece inferior a 5 segundos para a base de dados canônica integral.
+- **SC-004**: O tempo total de execução do comando `make etl` permanece inferior a 5 segundos para a base de dados canônica integral. _(Redação original referia `npm run etl`.)_
 
 ## Assumptions
 
