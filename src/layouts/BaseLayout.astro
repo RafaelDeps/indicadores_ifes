@@ -1,5 +1,7 @@
 ---
 import HeaderMarca from '../components/HeaderMarca.astro';
+import SeletorTema from '../components/SeletorTema.astro';
+import BuscaRapida from '../components/BuscaRapida.astro';
 import { obterCampiParaSelect, obterAnosParaSelect, datasetPadrao } from '../lib/dataset';
 import { resolverContextoFiltro } from '../lib/ano';
 import '../styles/tokens.css';
@@ -53,21 +55,31 @@ const fontFaceCss = pesos
     <style is:global set:html={fontFaceCss}></style>
     <script id="dados-indicadores" type="application/json" set:html={datasetJson} />
     <script is:inline>
-      /* Modo escuro desativado por enquanto: manter sempre visual branco institucional com as cores do IFES.
-         Mantém menções para compatibilidade: data-theme="auto" e prefers-color-scheme */
       (function () {
-        // Forçar visual limpo e claro com as cores do IFES
-        // if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        //   document.documentElement.setAttribute('data-theme', 'escuro');
-        // }
+        try {
+          const temaSalvo = localStorage.getItem('indicadores_tema');
+          if (temaSalvo === 'claro' || temaSalvo === 'escuro' || temaSalvo === 'auto') {
+            document.documentElement.setAttribute('data-theme', temaSalvo);
+          } else if (
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          ) {
+            document.documentElement.setAttribute('data-theme', 'escuro');
+          } else {
+            document.documentElement.setAttribute('data-theme', 'auto');
+          }
+        } catch {
+          // fallback silencioso para navegação anônima
+        }
       })();
     </script>
 
-    <!-- Plugin de acessibilidade UserWay -->
-    <script is:inline src="https://cdn.userway.org/widget.js" data-account="Jmxwgqf2MY"></script>
+    <!-- Plugin de acessibilidade UserWay (diferido para performance) -->
+    <script is:inline defer src="https://cdn.userway.org/widget.js" data-account="Jmxwgqf2MY"
+    ></script>
 
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ETH675FGB0"></script>
+    <!-- Google tag (gtag.js) (diferido para proteger Core Web Vitals) -->
+    <script is:inline defer src="https://www.googletagmanager.com/gtag/js?id=G-ETH675FGB0"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(...args) {
@@ -78,23 +90,26 @@ const fontFaceCss = pesos
       gtag('config', 'G-ETH675FGB0');
     </script>
 
-    <!-- Microsoft Clarity -->
+    <!-- Microsoft Clarity (carregado após o carregamento da janela) -->
     <script is:inline type="text/javascript">
-      (function (c, l, a, r, i, t, y) {
-        c[a] =
-          c[a] ||
-          function (...args) {
-            (c[a].q = c[a].q || []).push(args);
-          };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = 'https://www.clarity.ms/tag/' + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
-      })(window, document, 'clarity', 'script', 'ymumc7n161');
+      window.addEventListener('load', function () {
+        (function (c, l, a, r, i, t, y) {
+          c[a] =
+            c[a] ||
+            function (...args) {
+              (c[a].q = c[a].q || []).push(args);
+            };
+          t = l.createElement(r);
+          t.async = 1;
+          t.src = 'https://www.clarity.ms/tag/' + i;
+          y = l.getElementsByTagName(r)[0];
+          y.parentNode.insertBefore(t, y);
+        })(window, document, 'clarity', 'script', 'ymumc7n161');
+      });
     </script>
   </head>
   <body>
+    <a href="#conteudo-principal" class="pular-conteudo"> Pular para o conteúdo principal </a>
     <header class="topo cabecalho-fixo" role="banner">
       <div class="topo-container">
         <div class="marca-bloco">
@@ -132,6 +147,10 @@ const fontFaceCss = pesos
             Pilar 3
           </a>
         </nav>
+
+        <div class="cabecalho-busca">
+          <BuscaRapida />
+        </div>
 
         <div class="cabecalho-filtros" role="group" aria-label="Filtros de indicadores">
           <div class="campo-filtro">
@@ -171,29 +190,32 @@ const fontFaceCss = pesos
           </div>
         </div>
 
-        <button
-          class="btn-menu-drawer"
-          aria-label="Abrir menu de navegação"
-          aria-expanded="false"
-          aria-controls="mobile-drawer"
-        >
-          <svg
-            class="icone-menu"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            stroke="currentColor"
-            stroke-width="2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
+        <div class="cabecalho-acoes">
+          <SeletorTema />
+          <button
+            class="btn-menu-drawer"
+            aria-label="Abrir menu de navegação"
+            aria-expanded="false"
+            aria-controls="mobile-drawer"
           >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
+            <svg
+              class="icone-menu"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Gaveta Móvel (Slide-Over Drawer) -->
@@ -209,6 +231,10 @@ const fontFaceCss = pesos
           <div class="drawer-cabecalho">
             <span class="drawer-titulo">Menu de Navegação</span>
             <button class="btn-fechar-drawer" aria-label="Fechar menu">✕</button>
+          </div>
+
+          <div class="drawer-busca">
+            <BuscaRapida />
           </div>
 
           <!-- Filtros de Seleção Móvel -->
@@ -283,7 +309,7 @@ const fontFaceCss = pesos
         </div>
       </div>
     </header>
-    <main>
+    <main id="conteudo-principal">
       <slot />
     </main>
     <footer class="rodape">
@@ -363,6 +389,28 @@ const fontFaceCss = pesos
 </style>
 
 <style>
+  .pular-conteudo {
+    position: absolute;
+    top: -100px;
+    left: 1.5rem;
+    z-index: 999;
+    padding: 0.65rem 1.25rem;
+    background: var(--color-primary-dark);
+    color: var(--color-surface);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: top 0.15s ease-in-out;
+  }
+
+  .pular-conteudo:focus {
+    top: 0;
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
   .topo {
     position: sticky;
     top: 0;
@@ -411,6 +459,21 @@ const fontFaceCss = pesos
     gap: 0.5rem;
   }
 
+  .cabecalho-busca {
+    display: none;
+  }
+
+  .cabecalho-acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .drawer-busca {
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+
   @media (min-width: 768px) {
     .nav-pilares {
       display: flex;
@@ -420,6 +483,13 @@ const fontFaceCss = pesos
     }
     .btn-menu-drawer {
       display: none;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .cabecalho-busca {
+      display: flex;
+      align-items: center;
     }
   }
 

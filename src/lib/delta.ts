@@ -17,6 +17,9 @@ export function calcularDelta(serie: ValorAnual[], anoAtual: number): VariavelDe
       tipo: 'sem_base',
       valorFormatado: 'Sem base anterior',
       positivo: null,
+      simbolo: '',
+      descricaoAcessivel: 'Sem base de comparação anterior',
+      anoAnterior: null,
     };
   }
 
@@ -28,6 +31,9 @@ export function calcularDelta(serie: ValorAnual[], anoAtual: number): VariavelDe
       tipo: 'sem_base',
       valorFormatado: 'Sem base anterior',
       positivo: null,
+      simbolo: '',
+      descricaoAcessivel: 'Sem base de comparação anterior',
+      anoAnterior: anterior.ano,
     };
   }
 
@@ -43,6 +49,9 @@ export function calcularDelta(serie: ValorAnual[], anoAtual: number): VariavelDe
         tipo: 'percentual',
         valorFormatado: '0,0%',
         positivo: null,
+        simbolo: '=',
+        descricaoAcessivel: `Sem alteração percentual em relação a ${anterior.ano}`,
+        anoAnterior: anterior.ano,
       };
     }
 
@@ -52,6 +61,12 @@ export function calcularDelta(serie: ValorAnual[], anoAtual: number): VariavelDe
       tipo: 'percentual',
       valorFormatado: diff > 0 ? `▲ +${formatted}%` : `▼ -${formatted}%`,
       positivo: diff > 0,
+      simbolo: diff > 0 ? '▲' : '▼',
+      descricaoAcessivel:
+        diff > 0
+          ? `Aumento de ${formatted}% em relação a ${anterior.ano}`
+          : `Redução de ${formatted}% em relação a ${anterior.ano}`,
+      anoAnterior: anterior.ano,
     };
   }
 
@@ -62,6 +77,9 @@ export function calcularDelta(serie: ValorAnual[], anoAtual: number): VariavelDe
       tipo: 'absoluto',
       valorFormatado: '0',
       positivo: null,
+      simbolo: '=',
+      descricaoAcessivel: `Sem alteração absoluta em relação a ${anterior.ano}`,
+      anoAnterior: anterior.ano,
     };
   }
 
@@ -69,5 +87,11 @@ export function calcularDelta(serie: ValorAnual[], anoAtual: number): VariavelDe
     tipo: 'absoluto',
     valorFormatado: diff > 0 ? `▲ +${diff}` : `▼ -${Math.abs(diff)}`,
     positivo: diff > 0,
+    simbolo: diff > 0 ? '▲' : '▼',
+    descricaoAcessivel:
+      diff > 0
+        ? `Aumento de ${diff} em relação a ${anterior.ano}`
+        : `Redução de ${Math.abs(diff)} em relação a ${anterior.ano}`,
+    anoAnterior: anterior.ano,
   };
 }

@@ -35,6 +35,9 @@ export interface VariavelDelta {
   tipo: TipoDelta;
   valorFormatado: string;
   positivo: boolean | null;
+  simbolo?: '▲' | '▼' | '=' | '';
+  descricaoAcessivel?: string;
+  anoAnterior?: number | null;
 }
 
 export type IconeIndicador = 'academic' | 'network' | 'patent' | 'project' | 'chart' | 'default';

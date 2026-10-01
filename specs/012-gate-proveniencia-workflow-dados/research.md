@@ -34,7 +34,7 @@ reintroduziria o falso positivo.
 o estado normal: as listagens cobrem os semestres enviados, o canônico cobre
 todos os anos. Perda em origem zero é zero.
 
-**Justificativa**: o defeito é de *perda de contribuição*, não de valor errado. O
+**Justificativa**: o defeito é de _perda de contribuição_, não de valor errado. O
 pacote é montado em três etapas e a integração das listagens é a terceira; se
 ela não roda ou não acha as planilhas, o pacote resultante é **idêntico em
 estrutura** ao canônico e passa na verificação atual.
@@ -42,20 +42,20 @@ estrutura** ao canônico e passa na verificação atual.
 **Por que por campo, e não por par**: a integração escreve os dois derivados na
 mesma passagem, então perda parcial não é estruturalmente possível hoje. A
 verificação ser por campo é gratuita e torna o relatório acionável — o mantenedor
-lê *qual* derivado sumiu, não só que algo sumiu. Se um dia um derivado for
+lê _qual_ derivado sumiu, não só que algo sumiu. Se um dia um derivado for
 legitimamente indisponível para um par, isso vira premissa revisada, com caso real
 observado.
 
 **Alternativas avaliadas e rejeitadas**:
 
-| alternativa | por que rejeitada |
-|---|---|
-| Exigir derivado não nulo | **Rejeitada com dado real.** Dos 6 arquivos `pilar1` do pacote, 3 (escopo agregado) têm NTE nulo legitimamente. "Não nulo" reprovaria o pacote correto — e o gate precisa passar contra o pacote commitado |
-| Isentar escopo agregado por lista de nomes | Resolve o caso real e cria o próximo: o nome do escopo (`todos`) vira constante da regra, e um campus novo volta a gerar falso positivo |
-| Validar o cruzamento NTECPP por nome de aluno | NTECPP depende de um universo de nomes que **não existe no zip** — é por isso que o próprio merge avisa que NTECPP não é recalculável a partir do canônico. Não há com o validar |
-| Gravar manifesto com hash do insumo dentro do pacote | Muda o contrato do dado publicado. A fonte da verdade já está em disco; um carimbo errado é pior do que carimbo nenhum |
-| Comparar contagem de arquivos entre origem e pacote | Não detecta o caso principal: par presente nos dois, com derivado nulo |
-| Comparar o pacote contra o export canônico | O canônico **não tem** os derivados por construção. A comparação seria vazia |
+| alternativa                                          | por que rejeitada                                                                                                                                                                                          |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Exigir derivado não nulo                             | **Rejeitada com dado real.** Dos 6 arquivos `pilar1` do pacote, 3 (escopo agregado) têm NTE nulo legitimamente. "Não nulo" reprovaria o pacote correto — e o gate precisa passar contra o pacote commitado |
+| Isentar escopo agregado por lista de nomes           | Resolve o caso real e cria o próximo: o nome do escopo (`todos`) vira constante da regra, e um campus novo volta a gerar falso positivo                                                                    |
+| Validar o cruzamento NTECPP por nome de aluno        | NTECPP depende de um universo de nomes que **não existe no zip** — é por isso que o próprio merge avisa que NTECPP não é recalculável a partir do canônico. Não há com o validar                           |
+| Gravar manifesto com hash do insumo dentro do pacote | Muda o contrato do dado publicado. A fonte da verdade já está em disco; um carimbo errado é pior do que carimbo nenhum                                                                                     |
+| Comparar contagem de arquivos entre origem e pacote  | Não detecta o caso principal: par presente nos dois, com derivado nulo                                                                                                                                     |
+| Comparar o pacote contra o export canônico           | O canônico **não tem** os derivados por construção. A comparação seria vazia                                                                                                                               |
 
 ---
 
@@ -73,10 +73,10 @@ importador não é uma camada nova; é o mesmo padrão com um consumidor a mais.
 
 **O que cada chamador faz, e por que não fazem a mesma pergunta**:
 
-| chamador | pergunta | momento |
-|---|---|---|
-| `check_dados`, Etapa 1.5 | a origem tem derivado e o pacote perdeu? | detecta **depois** |
-| `cadeia_dados.avaliar_cadeia` | a cadeia vai reduzir a cobertura que o pacote hoje tem? | detecta **antes** |
+| chamador                      | pergunta                                                | momento            |
+| ----------------------------- | ------------------------------------------------------- | ------------------ |
+| `check_dados`, Etapa 1.5      | a origem tem derivado e o pacote perdeu?                | detecta **depois** |
+| `cadeia_dados.avaliar_cadeia` | a cadeia vai reduzir a cobertura que o pacote hoje tem? | detecta **antes**  |
 
 Para a guarda, "o que a cadeia pode repor" é o conjunto de cobertura do zip de
 listagens disponível **unido** ao dos anos com planilha bruta em pasta. O nome
@@ -89,13 +89,13 @@ legítima sem causa.
 
 **Alternativas avaliadas e rejeitadas**:
 
-| alternativa | por que rejeitada |
-|---|---|
-| Duplicar a comparação nos dois scripts | Duas regras que podem divergir. A divergência silenciosa é exatamente o defeito que a feature corrige |
-| Nova classe de serviço, ou registry | Princípio I. Não há interface a abstrair: são 2 chamadores de funções puras |
-| Reaproveitar `PADRAO_PILAR1` do merge como base | Correto e **é** o que se faz — o padrão de nome `pilar1_<campus>_<ano>.json` é a mesma chave `(campus, ano)`. O merge permanece dono do padrão; o módulo de cobertura o **importa** em vez de redefinir |
-| A guarda exigir cobertura de todo par do export canônico | O canônico tem mais anos do que há planilha — 2023 não tem nenhuma. Exigir cobertura do canônico bloquearia toda execução a partir do primeiro semestre sem planilha |
-| A guarda continuar perguntando só "o merge terá entrada?" | É o defeito atual: um zip parcial (cobre 2026, perdeu 2025) satisfaz a pergunta e mesmo assim apaga a cobertura de 2025 do pacote |
+| alternativa                                               | por que rejeitada                                                                                                                                                                                       |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duplicar a comparação nos dois scripts                    | Duas regras que podem divergir. A divergência silenciosa é exatamente o defeito que a feature corrige                                                                                                   |
+| Nova classe de serviço, ou registry                       | Princípio I. Não há interface a abstrair: são 2 chamadores de funções puras                                                                                                                             |
+| Reaproveitar `PADRAO_PILAR1` do merge como base           | Correto e **é** o que se faz — o padrão de nome `pilar1_<campus>_<ano>.json` é a mesma chave `(campus, ano)`. O merge permanece dono do padrão; o módulo de cobertura o **importa** em vez de redefinir |
+| A guarda exigir cobertura de todo par do export canônico  | O canônico tem mais anos do que há planilha — 2023 não tem nenhuma. Exigir cobertura do canônico bloquearia toda execução a partir do primeiro semestre sem planilha                                    |
+| A guarda continuar perguntando só "o merge terá entrada?" | É o defeito atual: um zip parcial (cobre 2026, perdeu 2025) satisfaz a pergunta e mesmo assim apaga a cobertura de 2025 do pacote                                                                       |
 
 ---
 
@@ -126,7 +126,7 @@ do `dados-listagens`**, e é por isso que é um segredo só.
    duração: credencial que, uma vez copiada, concede acesso indefinido e exige
    lembrar que existe para revogar.
 3. **Identificadores versionados** — separando o que é segredo do que é
-   configuração, o workflow fica autodescritivo: qualquer um lê *qual* snapshot
+   configuração, o workflow fica autodescritivo: qualquer um lê _qual_ snapshot
    ele baixa, e o único segredo é o token.
 4. **PAT, e não GitHub App, apesar de haver duas contas** — o App resolve o
    cenário em que quem emite a credencial **não é quem vai usá-la**: conta de
@@ -136,14 +136,14 @@ do `dados-listagens`**, e é por isso que é um segredo só.
 
 **Alternativas avaliadas e rejeitadas**:
 
-| alternativa | por que rejeitada |
-|---|---|
-| Pasta pessoal na nuvem + chave de conta de serviço | Credencial de longa duração; sem escopo de repositório; e a pasta pessoal é a maior exposição, fora de qualquer controle |
-| Objeto em nuvem com federação de identidade do CI (sem segredo) | A opção **mais segura** da lista, e mais simples de auditar. Rejeitada porque exige Setup de IAM fora do repositório (~45 min, recorrente) e Residência que esta feature não decide |
-| URL pré-assinada como o único secret | Sem credencial durável, e expirada. Rejeitada porque a rotação é trabalho **mensal recorrente**, e falha ruidosamente na virada de semestre — o pior momento |
-| Token clássico com escopo `repo` | Concede leitura de **todos** os repositórios alcançáveis pela conta que o emitiu. Inaceitável para arquivo com nome e nascimento |
-| GitHub App (App de CI) | A resposta padrão para credencial que atravessa contas, e por isso precisa de comparação explícita. Rejeitada porque troca **um** segredo por **três** — `APP_ID`, `INSTALLATION_ID` e chave privada PEM — e a chave privada é exatamente a credencial durável e difícil de revogar que o PAT existe para evitar. O ganho real do App, token de instalação de 1 hora, não compra nada aqui: o PAT é revogável a qualquer momento e o risco é exposição indevida, não janela de uso. **Reavaliação obrigatória** se a conta dona do `dados-listagens` for de uma organização com política própria de PAT — ver a precondição abaixo |
-| Conceder acesso de leitura ao repositório deste projeto à outra conta, e buscar o export canônico pela rede pública | Economiza o segredo, e é pior: exige que o repositório **público** hospede o dado com nome e nascimento. Troca um segredo bem escopado por um dado público |
+| alternativa                                                                                                         | por que rejeitada                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pasta pessoal na nuvem + chave de conta de serviço                                                                  | Credencial de longa duração; sem escopo de repositório; e a pasta pessoal é a maior exposição, fora de qualquer controle                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Objeto em nuvem com federação de identidade do CI (sem segredo)                                                     | A opção **mais segura** da lista, e mais simples de auditar. Rejeitada porque exige Setup de IAM fora do repositório (~45 min, recorrente) e Residência que esta feature não decide                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| URL pré-assinada como o único secret                                                                                | Sem credencial durável, e expirada. Rejeitada porque a rotação é trabalho **mensal recorrente**, e falha ruidosamente na virada de semestre — o pior momento                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Token clássico com escopo `repo`                                                                                    | Concede leitura de **todos** os repositórios alcançáveis pela conta que o emitiu. Inaceitável para arquivo com nome e nascimento                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| GitHub App (App de CI)                                                                                              | A resposta padrão para credencial que atravessa contas, e por isso precisa de comparação explícita. Rejeitada porque troca **um** segredo por **três** — `APP_ID`, `INSTALLATION_ID` e chave privada PEM — e a chave privada é exatamente a credencial durável e difícil de revogar que o PAT existe para evitar. O ganho real do App, token de instalação de 1 hora, não compra nada aqui: o PAT é revogável a qualquer momento e o risco é exposição indevida, não janela de uso. **Reavaliação obrigatória** se a conta dona do `dados-listagens` for de uma organização com política própria de PAT — ver a precondição abaixo |
+| Conceder acesso de leitura ao repositório deste projeto à outra conta, e buscar o export canônico pela rede pública | Economiza o segredo, e é pior: exige que o repositório **público** hospede o dado com nome e nascimento. Troca um segredo bem escopado por um dado público                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 **Precondição registrada, não assumida**: se `dados-listagens` estiver em
 **organização** — e não em conta pessoal —, a emissão do PAT depende de ser
@@ -157,7 +157,7 @@ mínimo, sem histórico, retenção removível.
 
 **Consequência operacional que ninguém espera**: revogar o token **não** é mais
 uma ação nesta tela de secrets. É entrar na outra conta, em
-*Settings → Developer settings*, e revogar ali. Uma credencial cujo ponto de
+_Settings → Developer settings_, e revogar ali. Uma credencial cujo ponto de
 revogação fica a três cliques de distância numa conta que o mantenedor talvez não
 abra por meses é uma credencial que fica valendo. Isso está registrado como M-3
 e como tarefa com data em

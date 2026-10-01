@@ -1,5 +1,4 @@
 ---
-
 description: 'Task list for feature 012 — gate de proveniência e automação do make dados'
 ---
 
@@ -33,11 +32,11 @@ o código atual e está registrado com saída literal em
 [quickstart.md](./quickstart.md) §1, §1.1 e §4. Reexecutar é opcional; o que é
 obrigatório é que a implementação **confirme** os três vereditos depois.
 
-| cenário | hoje (verificado 2026-09-30) | depois |
-| --- | --- | --- |
-| pacote com 12 derivados nulados | `exit 0`, `Sucesso: 18 arquivo(s)` | exit ≠ 0, 6 linhas `ERRO:` |
-| guarda com zip parcial, `raw` vazia | `exit 0` | exit 3 |
-| guarda com zip parcial + planilha do ano | `exit 0` | exit 0 (não muda) |
+| cenário                                  | hoje (verificado 2026-09-30)       | depois                     |
+| ---------------------------------------- | ---------------------------------- | -------------------------- |
+| pacote com 12 derivados nulados          | `exit 0`, `Sucesso: 18 arquivo(s)` | exit ≠ 0, 6 linhas `ERRO:` |
+| guarda com zip parcial, `raw` vazia      | `exit 0`                           | exit 3                     |
+| guarda com zip parcial + planilha do ano | `exit 0`                           | exit 0 (não muda)          |
 
 **A Fase 1 não é setup de infraestrutura.** A feature não introduz dependência,
 framework nem configuração nova, e portanto não há andaime a montar. O que existe
@@ -242,8 +241,8 @@ partir das entradas oficiais.
       restrito é o que impede que ele alcance também esta conta
 - [ ] T023 Configurar `DADOS_LEITURA_TOKEN` como segredo **deste** repositório.
       **Único** segredo da feature. Guardar junto, em texto datado, o caminho da
-      revogação — *outra conta → Settings → Developer settings → Personal access
-      tokens*. Sem esse registro, quem procurar revogar acha o token na lista de
+      revogação — _outra conta → Settings → Developer settings → Personal access
+      tokens_. Sem esse registro, quem procurar revogar acha o token na lista de
       segredos daqui e não acha onde revogá-lo
 - [ ] T024 Obter os `asset_id` por
       `GET /repos/<dono>/dados-listagens/releases/tags/v1` e a revisão de 40
@@ -369,49 +368,49 @@ Nenhuma tarefa carrega etiqueta de FR. Uma matriz faz o mesmo trabalho sem
 transformar 46 tarefas em texto repetido, e deixa visível o caminho inverso:
 dada uma FR, qual tarefa a entrega.
 
-| FR | tarefa | FR | tarefa |
-|---|---|---|---|
-| FR-001 | T003, T004 | FR-016 | T026 |
-| FR-002 | T003, T009 | FR-017 | T024, T030 |
-| FR-003 | T003 | FR-018 | T027, T028, T031 |
-| FR-004 | T006, T008 | FR-019 | T032 |
-| FR-005 | T004 | FR-020 | T033, T041 |
-| FR-006 | T005, T009, T010 | FR-021 | T034 |
-| FR-007 | T017 | FR-022 | T035 |
-| FR-008 | T044, T045 | FR-023 | T037 |
-| FR-009 | T004, T046 | FR-024 | T026, T040 |
-| FR-010 | T013, T018 | FR-025 | T040 |
-| FR-011 | T016, T018 | FR-026 | T029, T037, T038 |
-| FR-012 | T020 | FR-027 | T038 |
-| FR-013 | T021 | FR-028 | T037, T038 |
-| FR-014 | T022, T023 | | |
-| FR-015 | T024, T028 | | |
+| FR     | tarefa           | FR     | tarefa           |
+| ------ | ---------------- | ------ | ---------------- |
+| FR-001 | T003, T004       | FR-016 | T026             |
+| FR-002 | T003, T009       | FR-017 | T024, T030       |
+| FR-003 | T003             | FR-018 | T027, T028, T031 |
+| FR-004 | T006, T008       | FR-019 | T032             |
+| FR-005 | T004             | FR-020 | T033, T041       |
+| FR-006 | T005, T009, T010 | FR-021 | T034             |
+| FR-007 | T017             | FR-022 | T035             |
+| FR-008 | T044, T045       | FR-023 | T037             |
+| FR-009 | T004, T046       | FR-024 | T026, T040       |
+| FR-010 | T013, T018       | FR-025 | T040             |
+| FR-011 | T016, T018       | FR-026 | T029, T037, T038 |
+| FR-012 | T020             | FR-027 | T038             |
+| FR-013 | T021             | FR-028 | T037, T038       |
+| FR-014 | T022, T023       |        |                  |
+| FR-015 | T024, T028       |        |                  |
 
 ### Três FRs verificadas por inspeção, e não por teste
 
-| FR | como se verifica | por que não há teste |
-|---|---|---|
-| FR-005 (ponto único de decisão) | `grep` dos chamadores: os dois importam a **mesma** função, e a comparação não está duplicada | é uma propriedade de estrutura do repositório; um teste passaria mesmo com a regra duplicada em outro lugar |
-| FR-009 (formato do pacote inalterado) | `git status` sem `data/dist/indicadores.zip` modificado (T046) | o pacote é artefato commitado; o teste seria ele próprio |
-| FR-020 (sem etapa nova no CI) | inspeção de `.github/workflows/deploy.yml` (T041) | o requisito é a **ausência** de uma edição; não há o que testar |
+| FR                                    | como se verifica                                                                              | por que não há teste                                                                                        |
+| ------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| FR-005 (ponto único de decisão)       | `grep` dos chamadores: os dois importam a **mesma** função, e a comparação não está duplicada | é uma propriedade de estrutura do repositório; um teste passaria mesmo com a regra duplicada em outro lugar |
+| FR-009 (formato do pacote inalterado) | `git status` sem `data/dist/indicadores.zip` modificado (T046)                                | o pacote é artefato commitado; o teste seria ele próprio                                                    |
+| FR-020 (sem etapa nova no CI)         | inspeção de `.github/workflows/deploy.yml` (T041)                                             | o requisito é a **ausência** de uma edição; não há o que testar                                             |
 
 As três estão listadas aqui como inspecionais justamente para que a matriz não
 declare cobertura onde só há conferência visual.
 
 ### SC → tarefa
 
-| SC | como se prova | tarefa |
-|---|---|---|
-| SC-001 | casos (b) e (c) de T003, mais T005 e a mensagem de T009 | T003, T005, T009 |
-| SC-002 | caso (d) de T003 — agregado nulo dos dois lados **não** viola — mais a suíte inteira em T044 | T003, T015, T044 |
-| SC-003 | `make check-dados` contra o pacote commitado, e `git status` sem o pacote modificado | T044, T046 |
-| SC-004 | inspeção de `.github/workflows/deploy.yml`: nenhum passo novo | T041 |
-| SC-005 | disparo manual do workflow até o PR aberto, sem comando na máquina | T026, T035 |
-| SC-006 | ausência de `upload-artifact`, nenhum passo ecoando dado, e a §6.1 preenchida | T029, T037, T038 |
-| SC-007 | comparação byte a byte antes de abrir o PR | T034 |
-| SC-008 | segredo ausente falha com mensagem própria; contagem de 6 planilhas falha com outra | T027, T031 |
-| SC-009 | **ordem**, não teste: o portão (T033) roda antes do PR (T035), e a tabela de não-paralelismo fixa essa ordem | T033 → T035 |
-| SC-010 | as 7 medidas têm responsável e condição na §6; a §6.1 registra o resultado por execução | T038 |
+| SC     | como se prova                                                                                                | tarefa           |
+| ------ | ------------------------------------------------------------------------------------------------------------ | ---------------- |
+| SC-001 | casos (b) e (c) de T003, mais T005 e a mensagem de T009                                                      | T003, T005, T009 |
+| SC-002 | caso (d) de T003 — agregado nulo dos dois lados **não** viola — mais a suíte inteira em T044                 | T003, T015, T044 |
+| SC-003 | `make check-dados` contra o pacote commitado, e `git status` sem o pacote modificado                         | T044, T046       |
+| SC-004 | inspeção de `.github/workflows/deploy.yml`: nenhum passo novo                                                | T041             |
+| SC-005 | disparo manual do workflow até o PR aberto, sem comando na máquina                                           | T026, T035       |
+| SC-006 | ausência de `upload-artifact`, nenhum passo ecoando dado, e a §6.1 preenchida                                | T029, T037, T038 |
+| SC-007 | comparação byte a byte antes de abrir o PR                                                                   | T034             |
+| SC-008 | segredo ausente falha com mensagem própria; contagem de 6 planilhas falha com outra                          | T027, T031       |
+| SC-009 | **ordem**, não teste: o portão (T033) roda antes do PR (T035), e a tabela de não-paralelismo fixa essa ordem | T033 → T035      |
+| SC-010 | as 7 medidas têm responsável e condição na §6; a §6.1 registra o resultado por execução                      | T038             |
 
 SC-009 é o único que não se prova por teste: é uma propriedade de ordem. Por isso
 ele aparece aqui como seta, e não como lista.
@@ -457,15 +456,15 @@ ele aparece aqui como seta, e não como lista.
 
 ### O que NÃO pode ser paralelo
 
-| par | por que |
-|---|---|
-| T003 → T004 | RED antes de GREEN, por construção |
-| T012 → T013 | o fixture tem de montar zip real antes de o teste exercitar cobertura |
-| T013 → T018 | idem, visto do lado da implementação |
-| T021 → T022 → T024 | o repositório e o token existem antes de os identificadores serem obtidos |
-| T024 → T028 | o manifesto precisa existir para o workflow validá-lo |
-| T032 → T033 → T034 | cadeia, verificação e comparação são ordem, não escolha |
-| qualquer coisa → T038 | o registro de controle vem depois do controle existir |
+| par                   | por que                                                                   |
+| --------------------- | ------------------------------------------------------------------------- |
+| T003 → T004           | RED antes de GREEN, por construção                                        |
+| T012 → T013           | o fixture tem de montar zip real antes de o teste exercitar cobertura     |
+| T013 → T018           | idem, visto do lado da implementação                                      |
+| T021 → T022 → T024    | o repositório e o token existem antes de os identificadores serem obtidos |
+| T024 → T028           | o manifesto precisa existir para o workflow validá-lo                     |
+| T032 → T033 → T034    | cadeia, verificação e comparação são ordem, não escolha                   |
+| qualquer coisa → T038 | o registro de controle vem depois do controle existir                     |
 
 ---
 

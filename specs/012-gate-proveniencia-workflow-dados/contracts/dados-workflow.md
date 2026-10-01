@@ -15,12 +15,12 @@ on:
 
 **Somente acionamento manual.** Consequências contratuais:
 
-| evento | permitido | por que |
-| --- | --- | --- |
-| `workflow_dispatch` | sim | a pessoa escolhe o momento, e o modo é estrito |
-| `schedule` | **não** nesta versão | automatizaria comportamento nunca observado; FR-024 exige histórico de execuções manuais bem-sucedidas |
-| `pull_request` | **não** | inacessível a segredos de escrita; e o repositório é público |
-| `pull_request_target` | **nunca** | dá acesso a segredo com código de terceiro. Regra dura, sem exceção |
+| evento                | permitido            | por que                                                                                                |
+| --------------------- | -------------------- | ------------------------------------------------------------------------------------------------------ |
+| `workflow_dispatch`   | sim                  | a pessoa escolhe o momento, e o modo é estrito                                                         |
+| `schedule`            | **não** nesta versão | automatizaria comportamento nunca observado; FR-024 exige histórico de execuções manuais bem-sucedidas |
+| `pull_request`        | **não**              | inacessível a segredos de escrita; e o repositório é público                                           |
+| `pull_request_target` | **nunca**            | dá acesso a segredo com código de terceiro. Regra dura, sem exceção                                    |
 
 A ausência de `schedule` **não** é omissão: é a condição de FR-024. Adicionar
 cron depois de N execuções manuais é trabalho de outra iteração, com decisão
@@ -30,8 +30,8 @@ própria.
 
 ```yaml
 permissions:
-  contents: write      # abrir o pull request
-  pull-requests: write  # criá-lo
+  contents: write # abrir o pull request
+  pull-requests: write # criá-lo
 ```
 
 Duas, e nenhuma mais. A lista completa é curta de propósito: cada permissão não
@@ -43,8 +43,8 @@ Leitura de repositório **privado** não vem de `permissions` — vem do PAT, qu
 
 ## 3. Segredos
 
-| nome | conteúdo | por que é segredo |
-| --- | --- | --- |
+| nome                  | conteúdo                                          | por que é segredo                                      |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------------ |
 | `DADOS_LEITURA_TOKEN` | token de escopo restrito, leitura, um repositório | concede acesso a arquivo com nome e data de nascimento |
 
 **Único** segredo da feature. Tudo o mais — repositório, dono do repositório,
@@ -54,7 +54,7 @@ versão, identificadores de asset, revisão do export canônico — está em
 O token é emitido pela **conta dona do `dados-listagens`**, que é outra conta do
 mantenedor. Duas consequências que são contrato, não observação:
 
-- a revogação acontece na tela de *Developer settings* **da outra conta**. Numa
+- a revogação acontece na tela de _Developer settings_ **da outra conta**. Numa
   tabela de segredos deste repositório, o token aparece e some sem que a tela de
   revogação esteja à vista — quem procurar revogar aqui não acha onde revogar.
 - o campo `dono` do manifesto é o que permite montar a URL da API. Erro de
@@ -67,16 +67,16 @@ variável de ambiente.
 
 ## 4. Passos, em ordem, com a falha que cada um pode produzir
 
-| # | passo | falha distingue-se de |
-| --- | --- | --- |
-| 1 | conferir presença e não-vazio do segredo | segredo ausente → mensagem explícita, não HTTP 401 genérico |
-| 2 | ler manifesto, validar dono, 6 planilhas e a revisão do canônico | manifesto incompleto ou dono errado → falha de nome, não de download |
-| 3 | obter planilhas na versão publicada | credencial inválida (401/403) |
-| 4 | conferir a **contagem** de arquivos baixados | entrada incompleta (5 de 6) |
-| 5 | obter o export canônico na revisão fixa | canônico ausente na revisão |
-| 6 | rodar a cadeia em modo estrito | cobertura perdida, contrato violado |
-| 7 | conferir o pacote contra o arquivo versionado | divergência com insumo inalterado |
-| 8 | abrir pull request | nada; é o último passo |
+| #   | passo                                                            | falha distingue-se de                                                |
+| --- | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1   | conferir presença e não-vazio do segredo                         | segredo ausente → mensagem explícita, não HTTP 401 genérico          |
+| 2   | ler manifesto, validar dono, 6 planilhas e a revisão do canônico | manifesto incompleto ou dono errado → falha de nome, não de download |
+| 3   | obter planilhas na versão publicada                              | credencial inválida (401/403)                                        |
+| 4   | conferir a **contagem** de arquivos baixados                     | entrada incompleta (5 de 6)                                          |
+| 5   | obter o export canônico na revisão fixa                          | canônico ausente na revisão                                          |
+| 6   | rodar a cadeia em modo estrito                                   | cobertura perdida, contrato violado                                  |
+| 7   | conferir o pacote contra o arquivo versionado                    | divergência com insumo inalterado                                    |
+| 8   | abrir pull request                                               | nada; é o último passo                                               |
 
 ### 4.1 Por que a ordem é esta
 
@@ -104,10 +104,10 @@ ser incompletas.
 curl -fsSL -H "Authorization: Bearer $TOKEN" -o destino.zip URL
 ```
 
-| flag | o que evita |
-| --- | --- |
+| flag | o que evita                                                                     |
+| ---- | ------------------------------------------------------------------------------- |
 | `-f` | gravar o corpo de erro HTTP dentro do `.xlsx` — arquivo que "existe" e não abre |
-| `-L` | seguir o redirecionamento que a API faz para a URL assinada do asset |
+| `-L` | seguir o redirecionamento que a API faz para a URL assinada do asset            |
 
 Sem `-L`, o arquivo baixado é o redirecionamento. Sem `-f`, é o corpo do erro.
 Os dois juntos produzem um `.xlsx` de tamanho plausível e conteúdo inválido — e
@@ -132,11 +132,11 @@ ligado a ele. O workflow **não** adiciona passo de CI: ele roda a cadeia e
 chama a verificação de cobertura explicitamente, porque o clone de CI não tem a
 origem e portanto não poderia afirmá-la.
 
-| ambiente | tem origem? | o que o portão faz |
-| --- | --- | --- |
-| workflow | sim — a etapa 2 a produziu | **verifica e reprova** |
-| CI do repositório | não — gitignored | `INFO:`, exit 0 |
-| máquina do mantenedor | depende do disco | verifica quando houver |
+| ambiente              | tem origem?                | o que o portão faz     |
+| --------------------- | -------------------------- | ---------------------- |
+| workflow              | sim — a etapa 2 a produziu | **verifica e reprova** |
+| CI do repositório     | não — gitignored           | `INFO:`, exit 0        |
+| máquina do mantenedor | depende do disco           | verifica quando houver |
 
 É o terceiro veredito do data-model aplicado aos três ambientes. A ETAPA 1.5 é
 exata onde pode ser, e declarada como não avaliada onde não pode.
@@ -168,14 +168,14 @@ dado.
 
 ## 9. O que este workflow não faz
 
-| não faz | por que |
-| --- | --- |
-| não agenda execução | FR-024; depende de histórico manual |
-| não anexa artefato de execução com `data/raw/` | o passo nunca envia nada; nenhum `upload-artifact` existe neste workflow |
-| não escreve em `data/raw/` fora da pasta da execução | entradas são efêmeras e somem com o runner |
-| não usa `SOFT` | §5 |
-| não abre PR se a verificação reprovar | §6, §7 |
-| não compartilha a credencial com nenhum passo que não precise dela | princípio do menor privilégio, dentro do próprio workflow |
+| não faz                                                            | por que                                                                  |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| não agenda execução                                                | FR-024; depende de histórico manual                                      |
+| não anexa artefato de execução com `data/raw/`                     | o passo nunca envia nada; nenhum `upload-artifact` existe neste workflow |
+| não escreve em `data/raw/` fora da pasta da execução               | entradas são efêmeras e somem com o runner                               |
+| não usa `SOFT`                                                     | §5                                                                       |
+| não abre PR se a verificação reprovar                              | §6, §7                                                                   |
+| não compartilha a credencial com nenhum passo que não precise dela | princípio do menor privilégio, dentro do próprio workflow                |
 
 O único `upload-artifact` do repositório é o do GitHub Pages, em `deploy.yml`.
 Este workflow **não** adiciona nenhum — e a ausência é verificada por inspeção,

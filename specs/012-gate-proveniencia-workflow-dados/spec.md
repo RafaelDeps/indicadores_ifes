@@ -11,7 +11,7 @@ pacote `indicadores.zip` e inicie um workflow para executar `make dados`
 automaticamente." Decisões tomadas em 2026-09-30: o gate de proveniência e a
 automação formam **uma** feature (a divisão anterior em duas foi desfeita); o
 acesso às planilhas `.xlsx` será por **PAT fine-grained + repositório privado**,
-com os arquivos anexados como *release assets*; e o repositório privado fica em
+com os arquivos anexados como _release assets_; e o repositório privado fica em
 outra conta do próprio mantenedor, o que obriga o token a ser emitido **na conta
 dona dele** e não na conta deste repositório.
 
@@ -100,8 +100,8 @@ insuficiente.
 
 **Why this priority**: hoje a guarda libera entrada antiga ("ainda que stale")
 quando há um arquivo de listagens presente e a pasta de trabalho bruta está
-vazia. Ela pergunta *"o merge terá alguma entrada?"*, não *"a entrada terá o que
-o pacote hoje tem?"*. Um zip de listagens parcial — que cobre 2026 mas perdeu
+vazia. Ela pergunta _"o merge terá alguma entrada?"_, não _"a entrada terá o que
+o pacote hoje tem?"_. Um zip de listagens parcial — que cobre 2026 mas perdeu
 2025 — satisfaz a pergunta atual e ainda assim apaga a cobertura de 2025 do
 pacote. É o mesmo defeito da User Story 1, detectado tarde demais. Independe da
 automação, e por isso pode ser entregue antes dela.

@@ -193,8 +193,15 @@ const icone = indicador.icone ?? 'default';
         `delta-${delta.tipo}`,
         { positivo: delta.positivo === true, negativo: delta.positivo === false },
       ]}
+      aria-label={delta.descricaoAcessivel}
     >
-      <span class="delta-rotulo" data-card-delta={indicador.sigla}>{delta.valorFormatado}</span>
+      <span class="delta-rotulo" data-card-delta={indicador.sigla}>
+        {
+          delta.simbolo === '=' && !delta.valorFormatado.startsWith('=')
+            ? `= ${delta.valorFormatado}`
+            : delta.valorFormatado
+        }
+      </span>
       {delta.tipo !== 'sem_base' && <span class="delta-subtexto">em relação a {ano! - 1}</span>}
     </div>
 

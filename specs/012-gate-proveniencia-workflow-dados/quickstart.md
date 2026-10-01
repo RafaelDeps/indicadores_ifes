@@ -15,12 +15,12 @@ make check-dados    # deve passar: exit 0, sem violação
 
 Estado atual do disco de trabalho, usado como base de todos os cenários:
 
-| entrada | presente | onde |
-| --- | --- | --- |
-| `data/dist/indicadores.zip` | sim, 18 arquivos | commitado |
-| `data/dist/indicadores_listagens.zip` | sim, 9 arquivos | gitignored |
-| `data/raw/listagem_*.xlsx` | sim, 6 arquivos | gitignored |
-| `data/canonical/exports_canonical.zip` | **não** nesta máquina | intocável |
+| entrada                                | presente              | onde       |
+| -------------------------------------- | --------------------- | ---------- |
+| `data/dist/indicadores.zip`            | sim, 18 arquivos      | commitado  |
+| `data/dist/indicadores_listagens.zip`  | sim, 9 arquivos       | gitignored |
+| `data/raw/listagem_*.xlsx`             | sim, 6 arquivos       | gitignored |
+| `data/canonical/exports_canonical.zip` | **não** nesta máquina | intocável  |
 
 O export canônico ausente é limitação do ambiente local, não da feature: as
 entradas gitignored **não** estão em clone limpo, e o pacote commitado é a
@@ -128,11 +128,11 @@ que a feature "funcione" rejeitando o pacote bom.
 O portão tem três desfechos, e é preciso ver os três. É o que separa
 "reprovar o ruim" de "reprovar tudo".
 
-| cenário | comando | hoje (verificado) | depois |
-| --- | --- | --- | --- |
-| cobertura preservada | `make check-dados` | exit 0 | exit 0, sem violação |
-| sem origem | `python -m etl.scripts.check_dados --listagens ""` | exit 0, `INFO:` | exit 0, `INFO:` de cobertura |
-| cobertura perdida | §2 | **exit 0** | exit ≠ 0, 6 linhas `ERRO:` |
+| cenário              | comando                                            | hoje (verificado) | depois                       |
+| -------------------- | -------------------------------------------------- | ----------------- | ---------------------------- |
+| cobertura preservada | `make check-dados`                                 | exit 0            | exit 0, sem violação         |
+| sem origem           | `python -m etl.scripts.check_dados --listagens ""` | exit 0, `INFO:`   | exit 0, `INFO:` de cobertura |
+| cobertura perdida    | §2                                                 | **exit 0**        | exit ≠ 0, 6 linhas `ERRO:`   |
 
 Só o terceiro muda. Os dois primeiros já estão corretos hoje e a feature **não
 pode** alterá-los — por isso estão na tabela: um portão que só funciona é um
@@ -245,14 +245,14 @@ basta e não é preciso qualquer permissão de escrita.
 
 Acionar manualmente e conferir, em ordem:
 
-| # | o que conferir | onde |
-| --- | --- | --- |
-| 1 | o log **não** contém o valor do token | log da execução |
-| 2 | o log **não** contém nome, matrícula ou nascimento | log da execução |
-| 3 | 6 planilhas baixadas, e o passo de contagem passa | log |
-| 4 | a cadeia roda e a verificação **não** tem `INFO:` de cobertura | log — no workflow a origem existe |
-| 5 | o pull request abre com o pacote e sem entrada | pull request |
-| 6 | o pacote é byte a byte igual ao versionado, ou o gate barra | log do passo 7 |
+| #   | o que conferir                                                 | onde                              |
+| --- | -------------------------------------------------------------- | --------------------------------- |
+| 1   | o log **não** contém o valor do token                          | log da execução                   |
+| 2   | o log **não** contém nome, matrícula ou nascimento             | log da execução                   |
+| 3   | 6 planilhas baixadas, e o passo de contagem passa              | log                               |
+| 4   | a cadeia roda e a verificação **não** tem `INFO:` de cobertura | log — no workflow a origem existe |
+| 5   | o pull request abre com o pacote e sem entrada                 | pull request                      |
+| 6   | o pacote é byte a byte igual ao versionado, ou o gate barra    | log do passo 7                    |
 
 ### 5.5 O que **não** fazer
 

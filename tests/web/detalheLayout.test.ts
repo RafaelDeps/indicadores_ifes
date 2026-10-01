@@ -6,11 +6,27 @@ const PAGINAS_DETALHE = [
   'src/pages/pilar-2/[sigla].astro',
   'src/pages/pilar-3/[sigla].astro',
 ];
+const COMPONENTE_DETALHE = 'src/components/IndicadorDetalhe.astro';
+
+function carregarConteudoDetalhe(caminho: string): string {
+  const conteudo = readFileSync(caminho, 'utf-8');
+  if (conteudo.includes('IndicadorDetalhe')) {
+    return `${conteudo}\n${readFileSync(COMPONENTE_DETALHE, 'utf-8')}`;
+  }
+  return conteudo;
+}
 
 describe('Layout da Página de Detalhe em 2 Colunas e Banner de Destaque (US4)', () => {
-  it('todas as páginas de detalhe possuem o banner superior com caixa de destaque', () => {
+  it('todas as páginas de detalhe utilizam o componente compartilhado IndicadorDetalhe', () => {
     for (const caminho of PAGINAS_DETALHE) {
       const conteudo = readFileSync(caminho, 'utf-8');
+      expect(conteudo, `IndicadorDetalhe ausente em ${caminho}`).toContain('IndicadorDetalhe');
+    }
+  });
+
+  it('todas as páginas de detalhe possuem o banner superior com caixa de destaque', () => {
+    for (const caminho of PAGINAS_DETALHE) {
+      const conteudo = carregarConteudoDetalhe(caminho);
       expect(conteudo, `banner ausente em ${caminho}`).toContain('detalhe-banner');
       expect(conteudo, `caixa de destaque ausente em ${caminho}`).toContain(
         'banner-destaque-caixa',
@@ -22,7 +38,7 @@ describe('Layout da Página de Detalhe em 2 Colunas e Banner de Destaque (US4)',
 
   it('todas as páginas de detalhe adotam estrutura de 2 colunas: coluna-principal e coluna-lateral', () => {
     for (const caminho of PAGINAS_DETALHE) {
-      const conteudo = readFileSync(caminho, 'utf-8');
+      const conteudo = carregarConteudoDetalhe(caminho);
       expect(conteudo, `grade 2col ausente em ${caminho}`).toContain('detalhe-grade-2col');
       expect(conteudo, `coluna-principal ausente em ${caminho}`).toContain('coluna-principal');
       expect(conteudo, `coluna-lateral ausente em ${caminho}`).toContain('coluna-lateral');
@@ -31,7 +47,7 @@ describe('Layout da Página de Detalhe em 2 Colunas e Banner de Destaque (US4)',
 
   it('a coluna principal inclui O que mede, Finalidade, Fórmula mono e Tabela de variáveis com 3 colunas', () => {
     for (const caminho of PAGINAS_DETALHE) {
-      const conteudo = readFileSync(caminho, 'utf-8');
+      const conteudo = carregarConteudoDetalhe(caminho);
       expect(conteudo, `O que mede ausente em ${caminho}`).toContain('O que mede');
       expect(conteudo, `Finalidade ausente em ${caminho}`).toContain('Finalidade');
       expect(conteudo, `Fórmula ausente em ${caminho}`).toContain('formula-mono');
@@ -44,7 +60,7 @@ describe('Layout da Página de Detalhe em 2 Colunas e Banner de Destaque (US4)',
 
   it('a coluna lateral inclui gráfico de evolução recente e cartão de ficha metodológica escuro', () => {
     for (const caminho of PAGINAS_DETALHE) {
-      const conteudo = readFileSync(caminho, 'utf-8');
+      const conteudo = carregarConteudoDetalhe(caminho);
       expect(conteudo, `SeriesChart ausente em ${caminho}`).toContain('SeriesChart');
       expect(conteudo, `card de metodologia escuro ausente em ${caminho}`).toContain(
         'card-metodologia-escuro',
@@ -57,7 +73,7 @@ describe('Layout da Página de Detalhe em 2 Colunas e Banner de Destaque (US4)',
 
   it('não possui campo descontinuado "Fonte dos dados" em nenhuma página de detalhe', () => {
     for (const caminho of PAGINAS_DETALHE) {
-      const conteudo = readFileSync(caminho, 'utf-8');
+      const conteudo = carregarConteudoDetalhe(caminho);
       expect(conteudo, `Fonte dos dados encontrada em ${caminho}`).not.toContain('Fonte dos dados');
     }
   });

@@ -51,8 +51,8 @@ em revisão — e por isso está registrada aqui.
   - modo tolerante permanece opt-in e fora de execução agendada;
   - carimbo de proveniência **fora** de escopo por mudar o contrato do dado;
   - valor da revisão fixa do export canônico é insumo de implementação.
-- **"Implementation details"** foi avaliado com distinção entre *nomear a
-  ferramenta* e *especificar a técnica*. A spec nomeia "repositório privado",
+- **"Implementation details"** foi avaliado com distinção entre _nomear a
+  ferramenta_ e _especificar a técnica_. A spec nomeia "repositório privado",
   "token de escopo restrito" e "versão publicada" porque são **entidades do
   domínio** deste domínio de conformidade — descrevê-los abstratamente
   ("armazenamento seguro") tornaria os requisitos não-verificáveis. Não aparece:

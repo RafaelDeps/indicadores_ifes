@@ -22,12 +22,12 @@ não redefine (research D2).
 
 ### Constantes medidas no repositório
 
-| entidade | valor observado | onde |
-|---|---|---|
-| escopo com derivado | `serra` | 3 arquivos de `pilar1` no pacote |
-| escopo agregado (sem derivado) | `todos` | 3 arquivos de `pilar1` no pacote |
-| anos com derivado | 2024, 2025, 2026 | igual nos dois pacotes |
-| chaves exigidas pela regra | **3** | `(serra, 2024)`, `(serra, 2025)`, `(serra, 2026)` |
+| entidade                       | valor observado  | onde                                              |
+| ------------------------------ | ---------------- | ------------------------------------------------- |
+| escopo com derivado            | `serra`          | 3 arquivos de `pilar1` no pacote                  |
+| escopo agregado (sem derivado) | `todos`          | 3 arquivos de `pilar1` no pacote                  |
+| anos com derivado              | 2024, 2025, 2026 | igual nos dois pacotes                            |
+| chaves exigidas pela regra     | **3**            | `(serra, 2024)`, `(serra, 2025)`, `(serra, 2026)` |
 
 Nenhum destes valores é escrito na regra. A tabela existe para que o **dado real**
 seja confrontável com o **comportamento esperado** — e para que um campus novo
@@ -60,11 +60,11 @@ def cobertura_perdida(*, origem: CoberturaDerivado,
 
 Simétrica por construção, sem direção especial a codificar. Perdas:
 
-| situação | resultado |
-|---|---|
-| origem tem, pacote não tem | violação — é a regra |
-| origem não tem, pacote tem | não verificado (estado normal: listagens cobrem menos que o canônico) |
-| ambos não têm | nada |
+| situação                      | resultado                                                             |
+| ----------------------------- | --------------------------------------------------------------------- |
+| origem tem, pacote não tem    | violação — é a regra                                                  |
+| origem não tem, pacote tem    | não verificado (estado normal: listagens cobrem menos que o canônico) |
+| ambos não têm                 | nada                                                                  |
 | ambos têm, valores diferentes | **não verificado** — o portão mede cobertura, não identidade do valor |
 
 A última linha é uma **limitação declarada**, não um esquecimento. O portão
@@ -97,11 +97,11 @@ O portão é uma função, não uma máquina de estados. Ainda assim, os três
 vereditos precisam ser distinguíveis porque chamadores distintos reagem de
 maneiras distintas:
 
-| veredito | condição | `check_dados` | guarda da cadeia |
-|---|---|---|---|
-| **cobrir** | perda vazia | passa | libera |
-| **reprovar** | perda não vazia | `ERRO:` + saída ≠ 0 | `ERRO:`/`AVISO:` + saída 3 |
-| **não afirma** | origem ausente | `INFO:`, saída 0 | **libera** (a Etapa 1.5 fecha o caso) |
+| veredito       | condição        | `check_dados`       | guarda da cadeia                      |
+| -------------- | --------------- | ------------------- | ------------------------------------- |
+| **cobrir**     | perda vazia     | passa               | libera                                |
+| **reprovar**   | perda não vazia | `ERRO:` + saída ≠ 0 | `ERRO:`/`AVISO:` + saída 3            |
+| **não afirma** | origem ausente  | `INFO:`, saída 0    | **libera** (a Etapa 1.5 fecha o caso) |
 
 O terceiro veredito é o que impede falso positivo em CI limpo: clone sem
 `data/raw/` não tem entrada bruta, e a ausência de insumo **não é** violação de
@@ -120,8 +120,8 @@ convenção vale só para as chaves.
 
 ```yaml
 # dados-insumo.yml
-versao: "v1"              # tag da versão publicada no repositório privado
-dono: <conta>             # conta dona do repositório privado, para montar a URL
+versao: 'v1' # tag da versão publicada no repositório privado
+dono: <conta> # conta dona do repositório privado, para montar a URL
 repositorio: dados-listagens
 arquivos:
   - nome: listagem_2024_1.xlsx
@@ -132,7 +132,7 @@ arquivos:
 export_canonico:
   repositorio: horizon_etl
   caminho: data/exports/exports_canonical.zip
-  revisao: "<sha de 40 caracteres>"    # obrigatória, nunca referencia movel
+  revisao: '<sha de 40 caracteres>' # obrigatória, nunca referencia movel
 ```
 
 ### Invariantes do manifesto
@@ -161,12 +161,12 @@ chamada e não expira.
 
 ## 7. O que NÃO é uma entidade desta feature
 
-| recusado | por que |
-|---|---|
-| manifesto de proveniência **dentro do pacote** | muda o contrato do dado publicado; mudanca de formato para resolver problema de verificacao |
-| hash do insumo gravado no pacote | o mesmo, com o custo adicional de um carimbo que pode divergir da entrada real |
-| tabela de cobertura no site | o site consome agregado publicado; a cobertura é invariante de **produção**, não de **apresentacao** |
-| registro de auditoria persistente | exigiria armazenamento novo, e o log da execução já é o registro |
+| recusado                                       | por que                                                                                              |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| manifesto de proveniência **dentro do pacote** | muda o contrato do dado publicado; mudanca de formato para resolver problema de verificacao          |
+| hash do insumo gravado no pacote               | o mesmo, com o custo adicional de um carimbo que pode divergir da entrada real                       |
+| tabela de cobertura no site                    | o site consome agregado publicado; a cobertura é invariante de **produção**, não de **apresentacao** |
+| registro de auditoria persistente              | exigiria armazenamento novo, e o log da execução já é o registro                                     |
 
 Nenhuma dessas ausências é um esquecimento. Cada uma foi pesada e rejeitada em
 research D1; esta seção existe para que a próxima pessoa não as reintroduza como

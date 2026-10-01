@@ -30,10 +30,10 @@ arquivo não pode ser o portão; a cobertura pode.
 
 A Etapa 1.5 lê **dois** conjuntos de registros JSON:
 
-| entrada | flag | caminho padrão |
-| --- | --- | --- |
-| pacote | `--pacote` | `data/dist/indicadores.zip` |
-| origem | `--listagens` | `data/dist/indicadores_listagens.zip` |
+| entrada | flag          | caminho padrão                        |
+| ------- | ------------- | ------------------------------------- |
+| pacote  | `--pacote`    | `data/dist/indicadores.zip`           |
+| origem  | `--listagens` | `data/dist/indicadores_listagens.zip` |
 
 `--listagens` **não ganha flag nova**: já existe no contrato 011 com essa
 finalidade de frescor. Reutilizar a mesma flag para as duas etapas é o que
@@ -73,11 +73,11 @@ saber o que consegue cobrir.
 
 ### 3.1 Os três vereditos
 
-| # | condição | saída | stream | texto |
-| --- | --- | --- | --- | --- |
-| 1 | `perda` vazia | 0 | — | silêncio, quando as duas entradas existem |
-| 2 | `perda` não vazia | **1** | stderr | `ERRO: proveniência: ...` |
-| 3 | origem ausente | 0 | stderr | `INFO: cobertura não avaliada: ...` |
+| #   | condição          | saída | stream | texto                                     |
+| --- | ----------------- | ----- | ------ | ----------------------------------------- |
+| 1   | `perda` vazia     | 0     | —      | silêncio, quando as duas entradas existem |
+| 2   | `perda` não vazia | **1** | stderr | `ERRO: proveniência: ...`                 |
+| 3   | origem ausente    | 0     | stderr | `INFO: cobertura não avaliada: ...`       |
 
 O veredito 3 é **obrigatório** e é o que impede falso positivo em CI limpo: em
 clone, `data/dist/indicadores_listagens.zip` não existe. Reportar violação ali
@@ -98,10 +98,10 @@ apenas à forma, não à proveniência).
 
 `<forma>` assume um de dois valores, porque a **ação corretiva** difere:
 
-| forma | mensagem | indício |
-| --- | --- | --- |
-| arquivo ausente no pacote | `sem <campo> — arquivo ausente no pacote` | integração não rodou |
-| arquivo presente, campo nulo | `tem <campo> nulo` | integração rodou e não escreveu |
+| forma                        | mensagem                                  | indício                         |
+| ---------------------------- | ----------------------------------------- | ------------------------------- |
+| arquivo ausente no pacote    | `sem <campo> — arquivo ausente no pacote` | integração não rodou            |
+| arquivo presente, campo nulo | `tem <campo> nulo`                        | integração rodou e não escreveu |
 
 Ordenação estável por `(campus, ano, campo)`. Um relatório que embaralha a ordem
 a cada execução não pode ser comparado entre logs.
@@ -131,10 +131,10 @@ isso é intencional.
 
 ## 5. Códigos de saída
 
-| Exit | Significado |
-| --- | --- |
-| `1` | contrato violado **ou** cobertura perdida **ou** pacote ausente (`ERRO:`) |
-| `0` | contrato íntegro e cobertura preservada — com ou sem `AVISO:` de frescor e com ou sem linha `INFO:` |
+| Exit | Significado                                                                                         |
+| ---- | --------------------------------------------------------------------------------------------------- |
+| `1`  | contrato violado **ou** cobertura perdida **ou** pacote ausente (`ERRO:`)                           |
+| `0`  | contrato íntegro e cobertura preservada — com ou sem `AVISO:` de frescor e com ou sem linha `INFO:` |
 
 **Nenhum código novo.** O `1` já existe e já é o que o job `quality` do CI
 trata como falha. Acrescentar um código exigiria mudar o job para conhecer um
@@ -143,8 +143,8 @@ contínua).
 
 ## 6. Não é verificação de valor
 
-A Etapa 1.5 responde *"a integração aconteceu?"*. Não responde *"a integração
-usou a planilha certa?"*.
+A Etapa 1.5 responde _"a integração aconteceu?"_. Não responde _"a integração
+usou a planilha certa?"_.
 
 Se a origem e o pacote cobrem as mesmas chaves mas com **números diferentes**, a
 Etapa 1.5 **aprova**. Detectar isso exigiria comparar identidade do insumo — um
@@ -157,10 +157,10 @@ portão como verificação de integridade numérica.
 O contrato 011 §5.1 nomeia o cenário sem cobertura e registra duas razões pelas
 quais ele não era detectável:
 
-| razão registrada na spec 011 | situação com esta feature |
-| --- | --- |
-| exigiria comparar o **conteúdo** de NTE/NTECPP entre pacote e zip de listagens | é exatamente o que a Etapa 1.5 faz |
-| `indicadores_listagens.zip` é gitignored, logo ausente em CI | segue ausente em CI, e por isso o veredito 3 reporta `INFO:` em vez de falhar; no workflow a etapa 2 o produz antes da verificação, e lá a verificação **é** feita |
+| razão registrada na spec 011                                                   | situação com esta feature                                                                                                                                          |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| exigiria comparar o **conteúdo** de NTE/NTECPP entre pacote e zip de listagens | é exatamente o que a Etapa 1.5 faz                                                                                                                                 |
+| `indicadores_listagens.zip` é gitignored, logo ausente em CI                   | segue ausente em CI, e por isso o veredito 3 reporta `INFO:` em vez de falhar; no workflow a etapa 2 o produz antes da verificação, e lá a verificação **é** feita |
 
 A segunda linha é a consequência de design mais importante deste contrato: a
 Etapa 1.5 **não** exige mudar o que é versionado. Ela é exata quando a origem

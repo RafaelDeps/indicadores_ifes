@@ -12,16 +12,16 @@ FR-027, e o motivo de ele existir em arquivo está no final desta página.
 Planilhas de matrícula de estudantes (`data/raw/listagem_*.xlsx`), 6 arquivos,
 ~2.565 linhas cada. Campos presentes:
 
-| campo | natureza |
-|---|---|
-| Matrícula | identificador individual |
-| Nome | dado pessoal |
-| Curso | dado pessoal |
-| Situação Matrícula | dado pessoal |
-| Sexo | dado pessoal |
-| **Nascimento** | dado pessoal — ano de nascimento |
-| Forma_Ingresso | dado pessoal |
-| Desc_Cota | dado pessoal — condição socioeconômica |
+| campo              | natureza                               |
+| ------------------ | -------------------------------------- |
+| Matrícula          | identificador individual               |
+| Nome               | dado pessoal                           |
+| Curso              | dado pessoal                           |
+| Situação Matrícula | dado pessoal                           |
+| Sexo               | dado pessoal                           |
+| **Nascimento**     | dado pessoal — ano de nascimento       |
+| Forma_Ingresso     | dado pessoal                           |
+| Desc_Cota          | dado pessoal — condição socioeconômica |
 
 Classificação: **dado pessoal não sensível** por enumeração da lei — nenhum
 dos campos é categoria de dado sensível. O risco real **não está no campo
@@ -31,15 +31,15 @@ as medidas abaixo tratam o conjunto, não o campo.
 
 ## 2. Medidas adotadas
 
-| # | medida | onde age | como se verifica |
-| --- | --- | --- | --- |
-| M-1 | Nunca versionado: `data/raw/` é ignorado pelo Git | repositório | `git check-ignore -v data/raw/listagem_2024_1.xlsx` |
-| M-2 | Nunca sai do ETL: nenhum passo publica, anexa ou copia as planilhas | workflow | inspeção — nenhum `upload-artifact` no workflow |
-| M-3 | Credencial de leitura, um repositório, revogável | GitHub | tela de secrets **da outra conta**, onde o token foi emitido |
-| M-4 | Arquivo anexado a versão publicada, não commitado | repositório privado | inspeção — release asset não entra no histórico |
-| M-5 | Entrada do workflow é efêmera: vive no runner e some | `ubuntu-latest` | — |
-| M-6 | Saída é agregada por construção | ETL | `tests/etl/test_privacy.py` |
-| M-7 | Segredo nunca referenciado por evento de pull request | gatilhos | só `workflow_dispatch` existe |
+| #   | medida                                                              | onde age            | como se verifica                                             |
+| --- | ------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------ |
+| M-1 | Nunca versionado: `data/raw/` é ignorado pelo Git                   | repositório         | `git check-ignore -v data/raw/listagem_2024_1.xlsx`          |
+| M-2 | Nunca sai do ETL: nenhum passo publica, anexa ou copia as planilhas | workflow            | inspeção — nenhum `upload-artifact` no workflow              |
+| M-3 | Credencial de leitura, um repositório, revogável                    | GitHub              | tela de secrets **da outra conta**, onde o token foi emitido |
+| M-4 | Arquivo anexado a versão publicada, não commitado                   | repositório privado | inspeção — release asset não entra no histórico              |
+| M-5 | Entrada do workflow é efêmera: vive no runner e some                | `ubuntu-latest`     | —                                                            |
+| M-6 | Saída é agregada por construção                                     | ETL                 | `tests/etl/test_privacy.py`                                  |
+| M-7 | Segredo nunca referenciado por evento de pull request               | gatilhos            | só `workflow_dispatch` existe                                |
 
 ### M-4 em detalhe, porque é a que substitui a prática anterior
 
@@ -112,14 +112,14 @@ provável e o menos visível.
 A lista é deliberadamente concreta. "Link no log não é credencial" é
 **incompleto**: a URL assinada de um asset **é**.
 
-| vetor | é risco? | por que / por que não |
-| --- | --- | --- |
-| link comum de asset no log | não | exige autenticação; o id não é segredo |
-| **URL assinada** de asset no log | **sim** | é credencial com validade própria |
-| configuração de workflow renderizada | **sim** | valor de secret renderizado em página de execução |
-| masking por substring exata | **sim** | o GitHub mascara o valor exato; variação de formato passa |
-| `data/raw/` em artifact de execução | **sim** | e o artifact vive ~90 dias, com soft-delete |
-| URL assinada em mensagem de commit | **sim** | vaza para quem ler o repositório depois |
+| vetor                                | é risco? | por que / por que não                                     |
+| ------------------------------------ | -------- | --------------------------------------------------------- |
+| link comum de asset no log           | não      | exige autenticação; o id não é segredo                    |
+| **URL assinada** de asset no log     | **sim**  | é credencial com validade própria                         |
+| configuração de workflow renderizada | **sim**  | valor de secret renderizado em página de execução         |
+| masking por substring exata          | **sim**  | o GitHub mascara o valor exato; variação de formato passa |
+| `data/raw/` em artifact de execução  | **sim**  | e o artifact vive ~90 dias, com soft-delete               |
+| URL assinada em mensagem de commit   | **sim**  | vaza para quem ler o repositório depois                   |
 
 Consequência prática: a checagem de conformidade é **por execução**, e precisa
 olhar a página de execução — não o YAML, que já está limpo por construção.
@@ -129,15 +129,15 @@ olhar a página de execução — não o YAML, que já está limpo por construç
 Cada medida da §2 tem dono e momento. As duas tabelas se juntam pelo número da
 medida: a §2 diz **como** se verifica, esta diz **quem** e **quando**.
 
-| # | responsável | quando se verifica |
-| --- | --- | --- |
-| M-1 | mantenedor | a cada alteração da regra de ignore, e a cada semestre |
-| M-2 | mantenedor | a cada alteração do workflow, e **a cada execução** |
-| M-3 | mantenedor | a cada semestre, e na saída da pessoa — na tela da **outra** conta, não nesta |
-| M-4 | mantenedor | a cada semestre |
-| M-5 | mantenedor | **a cada execução**, na página de execução |
-| M-6 | mantenedor | a cada alteração do ETL, por `make check` |
-| M-7 | mantenedor | a cada alteração do workflow |
+| #   | responsável | quando se verifica                                                            |
+| --- | ----------- | ----------------------------------------------------------------------------- |
+| M-1 | mantenedor  | a cada alteração da regra de ignore, e a cada semestre                        |
+| M-2 | mantenedor  | a cada alteração do workflow, e **a cada execução**                           |
+| M-3 | mantenedor  | a cada semestre, e na saída da pessoa — na tela da **outra** conta, não nesta |
+| M-4 | mantenedor  | a cada semestre                                                               |
+| M-5 | mantenedor  | **a cada execução**, na página de execução                                    |
+| M-6 | mantenedor  | a cada alteração do ETL, por `make check`                                     |
+| M-7 | mantenedor  | a cada alteração do workflow                                                  |
 
 Só **M-2** e **M-5** são por execução. São as duas que pegam vazamento de
 verdade: as outras cinco são estado, e valem enquanto ninguém mexe.
@@ -151,8 +151,8 @@ existe prova visual.
 ### 6.1 Registro de verificação por execução
 
 | data da execução | M-2 (sem artifact) | M-5 (log sem dado individual) | verificado por |
-| --- | --- | --- | --- |
-| — | — | — | — |
+| ---------------- | ------------------ | ----------------------------- | -------------- |
+| —                | —                  | —                             | —              |
 
 Esta tabela começa vazia e é preenchida **depois** de cada execução real, com o
 que a página da execução mostrou. As cinco medidas de estado não entram aqui: são

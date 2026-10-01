@@ -2,6 +2,8 @@ import type { DatasetCompleto } from './dataset-core';
 import { resolverContextoComAjuste } from './contexto';
 import { computarVisaoGeral, computarVisaoPilar, computarVisaoDetalhe } from './visao';
 import { aplicarVisaoGeral, aplicarVisaoPilar, aplicarVisaoDetalhe } from './aplicar-visao';
+import { obterTemaSalvo, aplicarTema } from './tema';
+import { criarIndiceBusca, pesquisarIndicadores } from './busca';
 
 let datasetCache: DatasetCompleto | null = null;
 
@@ -117,14 +119,6 @@ export function atualizarSeletores(doc: Document, campus: string, ano: number): 
     const el = doc.getElementById(id) as HTMLSelectElement | null;
     if (el && el.value !== String(ano)) el.value = String(ano);
   }
-
-  doc.querySelectorAll<HTMLSelectElement>('[data-seletor-campus]').forEach((el) => {
-    if (el.value !== campus) el.value = campus;
-  });
-
-  doc.querySelectorAll<HTMLSelectElement>('[data-seletor-ano]').forEach((el) => {
-    if (el.value !== String(ano)) el.value = String(ano);
-  });
 }
 
 export function propagarLinksInternos(doc: Document, campus: string, ano: number): void {
@@ -246,21 +240,23 @@ export function inicializarContextoCliente(): void {
   vincularSeletor(selCampusTopo, selAnoTopo);
   vincularSeletor(selCampusDrawer, selAnoDrawer);
 
-  // Conecta seletores locais na página de detalhe (YearLinks)
-  document.querySelectorAll<HTMLSelectElement>('[data-seletor-campus]').forEach((seletor) => {
-    seletor.addEventListener('change', () => {
-      const anoAtual = (document.querySelector('[data-seletor-ano]') as HTMLSelectElement)?.value;
-      sincronizarTela(seletor.value, anoAtual, true);
-    });
-  });
+  // Conecta botões de alternância de tema (Sol: Claro, Lua: Escuro)
+  const botoesTema = document.querySelectorAll<HTMLButtonElement>('[data-btn-tema]');
+  if (botoesTema.length > 0) {
+    const temaInicial =
+      (document.documentElement.getAttribute('data-theme') as 'claro' | 'escuro' | null) ||
+      obterTemaSalvo();
+    aplicarTema(document, temaInicial === 'escuro' ? 'escuro' : 'claro');
 
-  document.querySelectorAll<HTMLSelectElement>('[data-seletor-ano]').forEach((seletor) => {
-    seletor.addEventListener('change', () => {
-      const campusAtual = (document.querySelector('[data-seletor-campus]') as HTMLSelectElement)
-        ?.value;
-      sincronizarTela(campusAtual, seletor.value, true);
+    botoesTema.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const modo = btn.getAttribute('data-btn-tema');
+        if (modo === 'claro' || modo === 'escuro') {
+          aplicarTema(document, modo);
+        }
+      });
     });
-  });
+  }
 
   // Interceptor de cliques para manter integridade dos links relativos
   document.addEventListener(
@@ -291,6 +287,151 @@ export function inicializarContextoCliente(): void {
     true,
   );
 
+  // Inicializa a busca rápida
+  inicializarBuscaRapida(document);
+
   // Executa sincronização inicial da tela
   sincronizarTela(undefined, undefined, false);
+}
+
+export function inicializarBuscaRapida(doc: Document): void {
+  const inputsBusca = doc.querySelectorAll('[data-busca-input]');
+  if (inputsBusca.length === 0) return;
+
+  const dataset = obterDatasetDoDOM() ?? undefined;
+  const indice = criarIndiceBusca(dataset);
+
+  inputsBusca.forEach((inputEl) => {
+    const input = inputEl as HTMLInputElement;
+    const container = input.closest('.busca-container');
+    const ulResultados = container?.querySelector(
+      '[data-busca-resultados]',
+    ) as HTMLUListElement | null;
+    if (!ulResultados) return;
+
+    let indexSelecionado = -1;
+
+    const fecharResultados = () => {
+      ulResultados.innerHTML = '';
+      ulResultados.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      indexSelecionado = -1;
+    };
+
+    const atualizarSelecaoVisual = (itens: HTMLElement[]) => {
+      itens.forEach((el, idx) => {
+        const selecionado = idx === indexSelecionado;
+        el.setAttribute('aria-selected', selecionado ? 'true' : 'false');
+        if (selecionado && typeof el.scrollIntoView === 'function') {
+          el.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    };
+
+    const executarNavegacao = (href: string) => {
+      if (typeof window === 'undefined') return;
+      const params = extrairParametrosDeUrl(window.location.search);
+      const campus = params.campus ?? 'todos';
+      const ano = params.ano ? parseInt(params.ano, 10) : 2026;
+      const repoName = 'indicadores_ifes';
+      const basePath = window.location.pathname.startsWith('/' + repoName) ? '/' + repoName : '';
+      const normalizado = normalizarDestinoLink(href, campus, ano, basePath);
+      window.location.href = normalizado;
+    };
+
+    input.addEventListener('input', () => {
+      const termo = input.value.trim();
+      if (!termo) {
+        fecharResultados();
+        return;
+      }
+
+      const resultados = pesquisarIndicadores(indice, termo);
+      ulResultados.innerHTML = '';
+      indexSelecionado = -1;
+
+      if (resultados.length === 0) {
+        const liVazio = doc.createElement('li');
+        liVazio.className = 'busca-vazio';
+        liVazio.setAttribute('role', 'option');
+        liVazio.setAttribute('aria-disabled', 'true');
+        liVazio.textContent = 'Nenhum indicador encontrado para o termo pesquisado';
+        ulResultados.appendChild(liVazio);
+      } else {
+        resultados.slice(0, 6).forEach((r) => {
+          const li = doc.createElement('li');
+          li.className = 'busca-item';
+          li.setAttribute('data-busca-item', '');
+          li.setAttribute('role', 'option');
+          li.setAttribute('aria-selected', 'false');
+          li.setAttribute('data-href', `/pilar-${r.pilarNumero}/${r.slug}/`);
+
+          const topo = doc.createElement('div');
+          topo.className = 'busca-item-topo';
+
+          const siglaSpan = doc.createElement('span');
+          siglaSpan.className = 'busca-sigla';
+          siglaSpan.textContent = r.sigla;
+
+          const pilarSpan = doc.createElement('span');
+          pilarSpan.className = 'busca-pilar';
+          pilarSpan.textContent = `Pilar ${r.pilarNumero}`;
+
+          topo.appendChild(siglaSpan);
+          topo.appendChild(pilarSpan);
+
+          const nomeSpan = doc.createElement('span');
+          nomeSpan.className = 'busca-nome';
+          nomeSpan.textContent = r.nome;
+
+          li.appendChild(topo);
+          li.appendChild(nomeSpan);
+
+          li.addEventListener('click', () => {
+            executarNavegacao(li.getAttribute('data-href') || `/pilar-${r.pilarNumero}/${r.slug}/`);
+          });
+
+          ulResultados.appendChild(li);
+        });
+      }
+
+      ulResultados.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    });
+
+    input.addEventListener('keydown', (e) => {
+      const itens = Array.from(ulResultados.querySelectorAll('[data-busca-item]')) as HTMLElement[];
+      if (itens.length === 0) {
+        if (e.key === 'Escape') fecharResultados();
+        return;
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        indexSelecionado = (indexSelecionado + 1) % itens.length;
+        atualizarSelecaoVisual(itens);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        indexSelecionado = (indexSelecionado - 1 + itens.length) % itens.length;
+        atualizarSelecaoVisual(itens);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (indexSelecionado >= 0 && indexSelecionado < itens.length) {
+          const href = itens[indexSelecionado].getAttribute('data-href');
+          if (href) executarNavegacao(href);
+        } else if (itens.length > 0) {
+          const href = itens[0].getAttribute('data-href');
+          if (href) executarNavegacao(href);
+        }
+      } else if (e.key === 'Escape') {
+        fecharResultados();
+      }
+    });
+
+    doc.addEventListener('click', (e) => {
+      if (!container?.contains(e.target as Node)) {
+        fecharResultados();
+      }
+    });
+  });
 }

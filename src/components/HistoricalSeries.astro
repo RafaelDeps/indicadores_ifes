@@ -5,32 +5,36 @@ import { formatValor } from '../lib/formatters';
 
 interface Props {
   valores: ValorAnual[];
+  anoSelecionado?: number;
 }
 
-const { valores } = Astro.props;
+const { valores, anoSelecionado } = Astro.props;
 const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO);
 ---
 
-<table class="serie">
+<table class="serie" data-tabela-historico>
   <thead>
     <tr>
       <th scope="col">Ano</th>
       <th scope="col">Valor</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody data-historico-corpo>
     {
-      valores.map((valor) => (
-        <tr>
-          <th scope="row">{valor.ano}</th>
-          <td>
-            {formatValor(valor.valor)}
-            {valor.motivoIndisponivel && (
-              <span class="motivo-ano"> — {valor.motivoIndisponivel}</span>
-            )}
-          </td>
-        </tr>
-      ))
+      valores.map((valor) => {
+        const ativo = valor.ano === anoSelecionado;
+        return (
+          <tr data-historico-ano={valor.ano} class:list={[{ 'linha-ativa': ativo }]}>
+            <th scope="row">{valor.ano}</th>
+            <td>
+              {formatValor(valor.valor)}
+              {valor.motivoIndisponivel && (
+                <span class="motivo-ano"> — {valor.motivoIndisponivel}</span>
+              )}
+            </td>
+          </tr>
+        );
+      })
     }
   </tbody>
 </table>
@@ -55,6 +59,13 @@ const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO
   .serie tbody tr:last-child th,
   .serie tbody tr:last-child td {
     border-bottom: none;
+  }
+
+  .serie tbody tr.linha-ativa th,
+  .serie tbody tr.linha-ativa td {
+    background: var(--color-emerald-50);
+    font-weight: 700;
+    color: var(--color-primary-dark);
   }
 
   .serie td {
