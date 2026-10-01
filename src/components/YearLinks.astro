@@ -56,22 +56,6 @@ const campi = obterCampiDisponiveis(datasetPadrao);
         el.value = anoAtual;
       });
     }
-
-    document.querySelectorAll('[data-seletor-campus]').forEach(function (seletor) {
-      seletor.addEventListener('change', function () {
-        const destino = new URL(location.href);
-        destino.searchParams.set('campus', seletor.value);
-        location.href = destino.href;
-      });
-    });
-
-    document.querySelectorAll('[data-seletor-ano]').forEach(function (seletor) {
-      seletor.addEventListener('change', function () {
-        const destino = new URL(location.href);
-        destino.searchParams.set('ano', seletor.value);
-        location.href = destino.href;
-      });
-    });
   })();
 </script>
 

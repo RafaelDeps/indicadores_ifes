@@ -138,12 +138,14 @@ const valorDestaquePipro = pipro?.valores[0]?.valor ?? null;
         <div class="kpi-corpo">
           <span class="kpi-rotulo">Projetos de pesquisa (NTPP)</span>
           <div class="kpi-valor-linha">
-            <span class="kpi-numero"
+            <span class="kpi-numero" data-kpi-valor="NTPP"
               >{
                 valorDestaqueNtpp !== null ? formatValor(valorDestaqueNtpp) : TEXTO_INDISPONIVEL
               }</span
             >
-            {valorDestaqueNtpp !== null && <span class="kpi-unidade">projetos</span>}
+            <span class="kpi-unidade" data-kpi-unidade="NTPP"
+              >{valorDestaqueNtpp !== null ? 'projetos' : ''}</span
+            >
           </div>
         </div>
       </div>
@@ -168,12 +170,14 @@ const valorDestaquePipro = pipro?.valores[0]?.valor ?? null;
         <div class="kpi-corpo">
           <span class="kpi-rotulo">Servidores em pesquisa (QSPP)</span>
           <div class="kpi-valor-linha">
-            <span class="kpi-numero"
+            <span class="kpi-numero" data-kpi-valor="QSPP"
               >{
                 valorDestaqueQspp !== null ? formatValor(valorDestaqueQspp) : TEXTO_INDISPONIVEL
               }</span
             >
-            {valorDestaqueQspp !== null && <span class="kpi-unidade">servidores</span>}
+            <span class="kpi-unidade" data-kpi-unidade="QSPP"
+              >{valorDestaqueQspp !== null ? 'servidores' : ''}</span
+            >
           </div>
         </div>
       </div>
@@ -197,12 +201,14 @@ const valorDestaquePipro = pipro?.valores[0]?.valor ?? null;
         <div class="kpi-corpo">
           <span class="kpi-rotulo">Estudantes em pesquisa (NEP)</span>
           <div class="kpi-valor-linha">
-            <span class="kpi-numero"
+            <span class="kpi-numero" data-kpi-valor="NEP"
               >{
                 valorDestaqueNep !== null ? formatValor(valorDestaqueNep) : TEXTO_INDISPONIVEL
               }</span
             >
-            {valorDestaqueNep !== null && <span class="kpi-unidade">estudantes</span>}
+            <span class="kpi-unidade" data-kpi-unidade="NEP"
+              >{valorDestaqueNep !== null ? 'estudantes' : ''}</span
+            >
           </div>
         </div>
       </div>
@@ -226,12 +232,14 @@ const valorDestaquePipro = pipro?.valores[0]?.valor ?? null;
         <div class="kpi-corpo">
           <span class="kpi-rotulo">Produção intelectual (PIPRO)</span>
           <div class="kpi-valor-linha">
-            <span class="kpi-numero"
+            <span class="kpi-numero" data-kpi-valor="PIPRO"
               >{
                 valorDestaquePipro !== null ? formatValor(valorDestaquePipro) : TEXTO_INDISPONIVEL
               }</span
             >
-            {valorDestaquePipro !== null && <span class="kpi-unidade">produções</span>}
+            <span class="kpi-unidade" data-kpi-unidade="PIPRO"
+              >{valorDestaquePipro !== null ? 'produções' : ''}</span
+            >
           </div>
         </div>
       </div>

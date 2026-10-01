@@ -20,7 +20,13 @@ const { componente, mostrarAvisoPercentual = false } = Astro.props;
       componente.valores.map((valor) => (
         <li class="contagem-item">
           <span class="contagem-ano">{valor.ano}</span>
-          <span class="contagem-quantidade">{formatValor(valor.quantidade)}</span>
+          <span
+            class="contagem-quantidade"
+            data-componente-qtd={componente.sigla}
+            data-componente-ano={valor.ano}
+          >
+            {formatValor(valor.quantidade)}
+          </span>
           {valor.motivoIndisponivel && <span class="motivo"> — {valor.motivoIndisponivel}</span>}
         </li>
       ))

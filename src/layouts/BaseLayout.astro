@@ -1,6 +1,6 @@
 ---
 import HeaderMarca from '../components/HeaderMarca.astro';
-import { obterCampiParaSelect, obterAnosParaSelect } from '../lib/dataset';
+import { obterCampiParaSelect, obterAnosParaSelect, datasetPadrao } from '../lib/dataset';
 import { resolverContextoFiltro } from '../lib/ano';
 import '../styles/tokens.css';
 
@@ -23,6 +23,7 @@ const anosOpcoes = obterAnosParaSelect();
 const urlCampus = Astro.url.searchParams.get('campus');
 const urlAno = Astro.url.searchParams.get('ano');
 const contextoInicial = resolverContextoFiltro(urlCampus, urlAno, campiOpcoes, anosOpcoes);
+const datasetJson = JSON.stringify(datasetPadrao);
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -50,6 +51,7 @@ const fontFaceCss = pesos
     <meta name="description" content={description} />
     <title>{title}</title>
     <style is:global set:html={fontFaceCss}></style>
+    <script id="dados-indicadores" type="application/json" set:html={datasetJson} />
     <script is:inline>
       /* Modo escuro desativado por enquanto: manter sempre visual branco institucional com as cores do IFES.
          Mantém menções para compatibilidade: data-theme="auto" e prefers-color-scheme */
@@ -327,190 +329,15 @@ const fontFaceCss = pesos
           }
         });
       })();
+    </script>
 
-      /* Normalização universal de links internos para GitHub Pages e
-         propagação contínua de parâmetros (?campus=...&ano=...).
-         Garante que nenhum link gere erro 404 em subpastas de repositório. */
-      (function () {
-        const path = window.location.pathname;
-        const repoName = 'indicadores_ifes';
-        const basePath =
-          path.startsWith('/' + repoName) || path.includes('/' + repoName + '/')
-            ? '/' + repoName
-            : '';
-
-        function normalizarHref(href) {
-          if (
-            !href ||
-            href.startsWith('//') ||
-            href.startsWith('#') ||
-            href.startsWith('http:') ||
-            href.startsWith('https:') ||
-            href.startsWith('mailto:')
-          ) {
-            return href;
-          }
-          let destino = href;
-          if (
-            basePath &&
-            destino.startsWith('/') &&
-            !destino.startsWith(basePath + '/') &&
-            destino !== basePath
-          ) {
-            destino = destino === '/' ? basePath + '/' : basePath + destino;
-          }
-          return destino;
-        }
-
-        function propagarContexto() {
-          const params = new URLSearchParams(window.location.search);
-          const campus = params.get('campus');
-          const ano = params.get('ano');
-
-          document.querySelectorAll('a[href]').forEach(function (link) {
-            const raw = link.getAttribute('href');
-            if (
-              !raw ||
-              raw.startsWith('//') ||
-              raw.startsWith('#') ||
-              raw.startsWith('http:') ||
-              raw.startsWith('https:')
-            )
-              return;
-
-            let resolvido = normalizarHref(raw);
-
-            if (campus || ano) {
-              try {
-                const url = new URL(resolvido, window.location.origin);
-                if (campus && !url.searchParams.has('campus')) {
-                  url.searchParams.set('campus', campus);
-                }
-                if (ano && !url.searchParams.has('ano')) {
-                  url.searchParams.set('ano', ano);
-                }
-                resolvido = url.pathname + url.search + url.hash;
-              } catch {
-                /* ignora erros de url inválida */
-              }
-            }
-
-            if (resolvido !== raw) {
-              link.setAttribute('href', resolvido);
-            }
-          });
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', propagarContexto);
-        } else {
-          propagarContexto();
-        }
-        window.addEventListener('popstate', propagarContexto);
-
-        /* Interceptor de cliques: assegura que qualquer clique em link relativo
-           seja redirecionado para a rota correta do repositório antes de disparar 404 */
-        document.addEventListener(
-          'click',
-          function (e) {
-            const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
-            if (!a) return;
-            const raw = a.getAttribute('href');
-            if (
-              !raw ||
-              raw.startsWith('//') ||
-              raw.startsWith('#') ||
-              raw.startsWith('http:') ||
-              raw.startsWith('https:')
-            )
-              return;
-
-            const normalizado = normalizarHref(raw);
-            if (normalizado !== raw) {
-              a.setAttribute('href', normalizado);
-            }
-          },
-          true,
-        );
-      })();
-
-      /* Sincronização e interação dos seletores de Campus e Ano (Desktop e Mobile Drawer) */
-      (function () {
-        const selectCampusTopo = document.getElementById('filtro-campus-topo');
-        const selectAnoTopo = document.getElementById('filtro-ano-topo');
-        const selectCampusDrawer = document.getElementById('filtro-campus-drawer');
-        const selectAnoDrawer = document.getElementById('filtro-ano-drawer');
-
-        function sincronizarValoresDaUrl() {
-          const params = new URLSearchParams(window.location.search);
-          const campus = params.get('campus');
-          const ano = params.get('ano');
-
-          if (campus) {
-            if (selectCampusTopo) selectCampusTopo.value = campus;
-            if (selectCampusDrawer) selectCampusDrawer.value = campus;
-          }
-          if (ano) {
-            if (selectAnoTopo) selectAnoTopo.value = ano;
-            if (selectAnoDrawer) selectAnoDrawer.value = ano;
-          }
-        }
-
-        function aplicarFiltro(novoCampus, novoAno) {
-          const url = new URL(window.location.href);
-          if (novoCampus && novoCampus !== 'todos') {
-            url.searchParams.set('campus', novoCampus);
-          } else {
-            url.searchParams.delete('campus');
-          }
-          if (novoAno) {
-            url.searchParams.set('ano', String(novoAno));
-          } else {
-            url.searchParams.delete('ano');
-          }
-          window.location.href = url.pathname + url.search + url.hash;
-        }
-
-        function sincronizarPar(topo, drawer, onChange) {
-          if (topo) {
-            topo.addEventListener('change', function () {
-              if (drawer) drawer.value = topo.value;
-              onChange(topo.value);
-            });
-          }
-          if (drawer) {
-            drawer.addEventListener('change', function () {
-              if (topo) topo.value = drawer.value;
-              onChange(drawer.value);
-            });
-          }
-        }
-
-        sincronizarPar(selectCampusTopo, selectCampusDrawer, function (campusVal) {
-          const anoAtual = selectAnoTopo
-            ? selectAnoTopo.value
-            : selectAnoDrawer
-              ? selectAnoDrawer.value
-              : undefined;
-          aplicarFiltro(campusVal, anoAtual);
-        });
-
-        sincronizarPar(selectAnoTopo, selectAnoDrawer, function (anoVal) {
-          const campusAtual = selectCampusTopo
-            ? selectCampusTopo.value
-            : selectCampusDrawer
-              ? selectCampusDrawer.value
-              : undefined;
-          aplicarFiltro(campusAtual, anoVal);
-        });
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', sincronizarValoresDaUrl);
-        } else {
-          sincronizarValoresDaUrl();
-        }
-        window.addEventListener('popstate', sincronizarValoresDaUrl);
-      })();
+    <script>
+      import { inicializarContextoCliente } from '../lib/contexto-cliente';
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => inicializarContextoCliente());
+      } else {
+        inicializarContextoCliente();
+      }
     </script>
   </body>
 </html>

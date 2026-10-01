@@ -50,18 +50,21 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
       </nav>
       <h1>{indicador.nome} ({indicador.sigla})</h1>
     </div>
-    <div class="banner-destaque-caixa">
-      <span class="destaque-rotulo">Resultado apurado ({anoEfetivo ?? '—'})</span>
-      {
-        valorPrincipal !== null ? (
-          <span class="destaque-valor">
-            {formatValor(valorPrincipal)}
-            {indicador.unidade && <span class="destaque-unidade">{indicador.unidade}</span>}
-          </span>
-        ) : (
-          <span class="destaque-valor badge-indisponivel">Dado indisponível</span>
-        )
-      }
+    <div class="banner-destaque-caixa" data-detalhe-sigla={indicador.sigla}>
+      <span class="destaque-rotulo" data-detalhe-ano-rotulo
+        >Resultado apurado ({anoEfetivo ?? '—'})</span
+      >
+      <span class:list={['destaque-valor', { 'badge-indisponivel': valorPrincipal === null }]}>
+        <span data-detalhe-valor
+          >{valorPrincipal !== null ? formatValor(valorPrincipal) : 'Dado indisponível'}</span
+        >
+        <span
+          class="destaque-unidade"
+          data-detalhe-unidade
+          style={valorPrincipal !== null && indicador.unidade ? '' : 'display: none;'}
+          >{indicador.unidade ?? ''}</span
+        >
+      </span>
     </div>
   </div>
 
