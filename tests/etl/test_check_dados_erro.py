@@ -17,6 +17,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from etl.scripts.check_dados import main
+from tests.etl.factories.pacotes import escrever_zip, registro_pilar1
 
 ZIP_CORROMPIDO = b"PK\x03\x04conteudo-que-nao-e-zip"
 
@@ -63,10 +64,8 @@ def test_check_dados_zip_vazio_erro_com_prefixo(tmp_path: Path, capsys) -> None:
 
 def test_check_dados_erro_nao_duplica_prefixo(tmp_path: Path, capsys) -> None:
     """`ERRO:` não pode virar `ERRO: ERRO:` quando a exceção já vem prefixada."""
-    from tests.etl.test_check_dados import _escrever_zip, _registro_pilar1
-
     pacote = tmp_path / "indicadores.zip"
-    _escrever_zip(pacote, [_registro_pilar1(chave_removida="pilar")])
+    escrever_zip(pacote, [registro_pilar1(chave_removida="pilar")])
 
     rc = main(["--pacote", str(pacote)])
 

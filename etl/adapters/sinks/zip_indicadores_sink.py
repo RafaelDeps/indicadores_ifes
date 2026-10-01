@@ -13,6 +13,7 @@ from etl.core.ports.sink import ISink
 
 PADRAO_NOME = re.compile(r"^pilar([123])_([a-z0-9]+)_(\d{4})\.json$")
 
+
 NOMES_PILARES = {
     1: "Engajamento Academico e Inclusao",
     2: "Fomento e Conexao com o Ecossistema",
@@ -37,6 +38,31 @@ CAMPOS_QUE_DEVEM_SER_NULOS = {
     "total_acumulado_PIPDI",
     "total_transferidos_PIPROTR",
 }
+
+
+def ler_registros_zip(caminho: Path) -> list[RegistroPilarJson]:
+    """Lê todos os registros `pilar{N}_{campus}_{ano}.json` de um pacote ZIP.
+
+    Ponto **único** de leitura do formato de pacote (spec 012, FR-005): as duas
+    guardas — `check_dados` (Etapa 1 e Etapa 1.5) e `cadeia_dados` — precisam
+    ler o pacote e o zip de listagens para medir cobertura, e duas cópias
+    divergentes dessa leitura voltariam a ser a divergência silenciosa que a
+    feature existe para fechar.
+
+    Zip ilegível não é tratado aqui: sobe `zipfile.BadZipFile`, e quem chama
+    decide — para o `check-dados` é `ERRO:` + exit 1 (contrato §3.0), e para a
+    guarda da cadeia é bloqueio (exit 3). A decisão é de veredito, e o veredito é
+    de quem conhece o fluxo.
+    """
+    if not caminho.exists():
+        raise FileNotFoundError(f"arquivo não encontrado: '{caminho}'")
+    registros: list[RegistroPilarJson] = []
+    with zipfile.ZipFile(caminho, "r") as zf:
+        for nome in zf.namelist():
+            registros.append(
+                RegistroPilarJson(nome=nome, conteudo=zf.read(nome).decode("utf-8"))
+            )
+    return registros
 
 
 def _valor_valido(valor: Any) -> bool:

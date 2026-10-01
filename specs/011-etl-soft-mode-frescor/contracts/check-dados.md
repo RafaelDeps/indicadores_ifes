@@ -28,6 +28,15 @@ campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)` — mesma chamada do
 - Violação ⇒ `ERRO:` + **exit 1** (mensagem com a causa).
 - Pacote ausente ⇒ `ERRO:` + exit 1.
 
+> **Etapa 1.5 — cobertura de derivados (posterior a este contrato).** Entre esta
+> §2 e a §3 roda uma etapa a mais, definida em
+> [contrato da spec 012](../../012-gate-proveniencia-workflow-dados/contracts/check-dados.md)
+> §3: ela pergunta se a origem tem derivado e o pacote perdeu. A §1, a §2, a §3 e
+> a §3.1 **permanecem como estão escritas aqui** — a 1.5 **não** muda a
+> assinatura, **não** acrescenta flag (reusa `--listagens`) e **não** tem
+> variante sob modo tolerante. O que a §3.1 ganhou foi mais **uma** linha `INFO:`
+> quando a origem está ausente, por camada: ver a nota da §5.1.
+
 ## 3. Etapa 2 — Avisos de frescor por `mtime` (nunca fatais)
 
 Comparação apenas com entradas **presentes**; entrada ausente é ignorada (sem
@@ -126,6 +135,31 @@ o fluxo suportado é `make dados` (ou os três passos na ordem). Detectar o
 cenário exigiria comparar o **conteúdo** de NTE/NTECPP entre o pacote e o zip
 de listagens — capacidade não coberta por este contrato, e limitada pelo fato
 de `indicadores_listagens.zip` ser gitignored (ausente em CI).
+
+### 5.1.1 Lacuna fechada pela spec 012 (nota de 2026-10-01)
+
+O texto acima **permanece como registro do que se sabia**, e não é corrigido:
+a mitigação vigente continua valendo, e o que a Etapa 1.5 acrescenta é
+**detecção**, não autorização.
+
+A afirmação "nenhuma ferramenta do repositório pega essa regressão" e a razão
+"exigiria comparar o **conteúdo** de NTE/NTECPP entre o pacote e o zip de
+listagens" descrevem o limite deste contrato. A spec 012 implementa exatamente
+essa comparação, como perda de cobertura por campo derivado: a subtração
+`origem - pacote`. Ver
+[contrato da spec 012](../../012-gate-proveniencia-workflow-dados/contracts/check-dados.md)
+§3, §7 e [research.md](../../012-gate-proveniencia-workflow-dados/research.md)
+D1.
+
+Duas consequências que este contrato passa a ter:
+
+| o que era verdade aqui                                            | o que passa a valer                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `indicadores_listagens.zip` gitignored limita a verificação em CI | segue ausente em clone limpo, e por isso a ausência é **declarada** (`INFO: cobertura de derivados não avaliada: <caminho> ausente`), nunca tratada como veredito. No workflow, a origem é produzida antes da verificação, e lá a verificação **é** feita |
+| a Etapa 2 avisa proveniência só quando o `mtime` denuncia         | a Etapa 1.5 não depende de `mtime` algum: compara **conteúdo**, e por isso pega o caso `make etl` isolado, em que o pacote é o arquivo mais novo e nenhuma regra de frescor dispara                                                                       |
+
+O portão é o mesmo binário e o mesmo código de saída `1` — nenhuma etapa nova no
+fluxo de integração contínua (FR-020 da spec 012).
 
 ## 6. Uso no CI (Princípio VI)
 
