@@ -45,7 +45,10 @@ em revisão — e por isso está registrada aqui.
 - Nenhum marcador `[NEEDS CLARIFICATION]`. As decisões que poderiam tê-lo gerado
   foram resolvidas em conversa e estão fixadas como premissa:
   - plataforma de acesso (PAT fine-grained + repositório privado, release asset),
-    emitido na conta dona do repositório privado, que é outra conta;
+    emitido na conta dona do repositório privado, que é outra conta — a de quem é
+    membro com direitos plenos da organização que hospedará este repositório.
+    A premissa de que as duas contas fossem do mesmo mantenedor não se
+    confirmou e foi corrigida em 2026-10-01;
   - direção da cobertura exigida (origem → pacote, medindo **perda**);
   - nulos de escopo agregado como estado legítimo e permanente;
   - modo tolerante permanece opt-in e fora de execução agendada;

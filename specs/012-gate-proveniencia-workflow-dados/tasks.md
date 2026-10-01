@@ -236,10 +236,16 @@ partir das entradas oficiais.
       objeto no histórico e apagar não apaga (medidas-de-protecao M-4)
 - [ ] T022 Emitir, **na conta dona do `dados-listagens`**, um PAT fine-grained
       com `contents: read` sobre **um** repositório e `expires_in: none`.
-      **Não** é token clássico: escopo `repo` daria leitura de todos os
-      repositórios alcançáveis pela conta. **É** fine-grained justamente porque
-      o repositório fica em outra conta: o token precisa nascer lá, e escopo
-      restrito é o que impede que ele alcance também esta conta
+      **Antes de emitir**, conferir na política de PAT da organização dona deste
+      repositório: (a) se ela exige aprovação para token fine-grained que
+      alcance recurso seu — o padrão documentado é que exige —, e (b) se impõe
+      teto de validade que bloqueie `expires_in: none`. Se (b) for sim, parar e
+      reavaliar D3; se (a) for sim, a aprovação é de uma pessoa com direito e
+      ocorre uma vez. **Não** é token clássico: escopo `repo` daria leitura de
+      todos os repositórios alcançáveis pela conta. **É** fine-grained porque o
+      escopo restrito é o que impede o alcance de qualquer outro repositório —
+      inclusive, se `dados-listagens` entrar na organização, é o escopo restrito
+      que torna o token aprovável, e o clássico não seria
 - [ ] T023 Configurar `DADOS_LEITURA_TOKEN` como segredo **deste** repositório.
       **Único** segredo da feature. Guardar junto, em texto datado, o caminho da
       revogação — *outra conta → Settings → Developer settings → Personal access
@@ -251,13 +257,15 @@ partir das entradas oficiais.
       `(nome, asset_id)` e `revisao` em `dados-insumo.yml` na raiz, conforme
       [data-model.md](./data-model.md) §6
 
-> **Condição de T022, não bloqueio**: o `dados-listagens` é de outra conta do
-> mantenedor — resposta dada em 2026-09-30, e por isso o PAT **não** vira GitHub
-> App (ver research D3: App troca um segredo por três e só se justifica quando
-> quem emite não é quem usa). Resta **uma** verificação: se essa conta for
-> **organização** em vez de pessoal, é preciso ser proprietário e a política
-> dela precisa admitir token de escopo restrito. Se negar, D3 é reavaliada antes
-> de emitir — não depois.
+> **Condição de T022, não bloqueio**: o `dados-listagens` ser de outra conta do
+> mantenedor — resposta dada em 2026-09-30 — **não se confirmou**. Em 2026-10-01
+> corrigiu-se: o repositório privado passa a ter dono distinto, membro com
+> direitos plenos da organização que hospedará este repositório. D3 foi
+> reavaliada com a premissa certa e o PAT foi **mantido** — a vantagem do GitHub
+> App é uma só, documentada: continuar funcionando quando quem instalou sai da
+> organização, evento sem data, e a recuperação custa uma tela. Resta **uma**
+> verificação, agora obrigatória: a política de PAT da organização, em T022. Se
+> ela negar validade infinita, D3 é reavaliada antes de emitir — não depois.
 
 ### Fase 5b: O workflow
 
@@ -536,8 +544,10 @@ toca, e forçar paralelo ali seria só demonstração.
 - Parar em qualquer checkpoint para validar a story isoladamente
 - **Tarefas T021–T024 são externas ao repositório** e não aparecem em
   `git status`. São pré-condição do grupo B, não artefato dele
-- T022 está condicionada a uma resposta que ainda não foi dada (dono do
-  repositório privado). Está escrito como bloqueio, não como suposição
+- T022 está condicionada à **política de PAT da organização** dona deste
+  repositório, em duas perguntas verificáveis. A questão de *quem* é o dono do
+  repositório privado foi respondida, e corrigida em 2026-10-01; está escrito
+  como verificação, não como suposição
 - **Fora do escopo**: agendamento (FR-024 exige histórico de execuções manuais),
   carimbo de proveniência no pacote, teste de fixação de dependências, e a
   robustez de campus inexistente no site — o motivo de cada exclusão está na

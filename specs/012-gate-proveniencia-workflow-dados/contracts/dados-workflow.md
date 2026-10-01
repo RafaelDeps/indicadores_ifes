@@ -51,8 +51,8 @@ Leitura de repositório **privado** não vem de `permissions` — vem do PAT, qu
 versão, identificadores de asset, revisão do export canônico — está em
 `dados-insumo.yml`, versionado, e é legível por qualquer pessoa que clones.
 
-O token é emitido pela **conta dona do `dados-listagens`**, que é outra conta do
-mantenedor. Duas consequências que são contrato, não observação:
+O token é emitido pela **conta dona do `dados-listagens`**, que é outra conta.
+Duas consequências que são contrato, não observação:
 
 - a revogação acontece na tela de *Developer settings* **da outra conta**. Numa
   tabela de segredos deste repositório, o token aparece e some sem que a tela de

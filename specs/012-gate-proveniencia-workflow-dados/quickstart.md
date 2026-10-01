@@ -210,10 +210,11 @@ Actions.
 
 ### 5.1 Pré-condições, fora do repositório
 
-1. Repositório privado `dados-listagens` existe em **outra conta** do
-   mantenedor, e o PAT foi emitido **na conta dona dele** com `contents: read`
-   sobre um repositório só. Confirmar que o token é revogável de onde foi
-   emitido, e não de onde está guardado.
+1. Repositório privado `dados-listagens` existe em **outra conta** — a de quem é
+   membro com direitos plenos da organização dona deste repositório —, e o PAT foi
+   emitido **na conta dona dele** com `contents: read` sobre um repositório só.
+   Confirmar que o token é revogável de onde foi emitido, e não de onde está
+   guardado.
 2. Release `v1` publicada com os 6 assets anexados.
 3. `DADOS_LEITURA_TOKEN` configurado como segredo, com permissão de leitura sobre
    **um** repositório.

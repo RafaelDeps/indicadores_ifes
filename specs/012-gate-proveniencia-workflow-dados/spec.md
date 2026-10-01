@@ -12,8 +12,16 @@ automaticamente." Decisões tomadas em 2026-09-30: o gate de proveniência e a
 automação formam **uma** feature (a divisão anterior em duas foi desfeita); o
 acesso às planilhas `.xlsx` será por **PAT fine-grained + repositório privado**,
 com os arquivos anexados como *release assets*; e o repositório privado fica em
-outra conta do próprio mantenedor, o que obriga o token a ser emitido **na conta
-dona dele** e não na conta deste repositório.
+outra conta, o que obriga o token a ser emitido **na conta dona dele** e não na
+conta deste repositório.
+
+**Correção de 2026-10-01**: a premissa "outra conta **do próprio mantenedor**"
+não se confirmou. A conta dona do `dados-listagens` pertence a quem é membro com
+direitos plenos da organização que passa a hospedar este repositório — não é a
+mesma pessoa que o mantém hoje. As duas decisões **não** mudam: o token continua
+nascendo na conta dona do repositório privado, e a revogação continua não
+acontecendo na tela de secrets deste repositório. O que muda é o **quem**, e por
+isso D3 foi reavaliada — ver [research.md](./research.md) D3.
 
 ## Contexto: o que hoje não é detectável
 

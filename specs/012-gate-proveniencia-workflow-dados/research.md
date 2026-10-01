@@ -108,11 +108,18 @@ assets vão em arquivo versionado no repositório público, porque **não são
 segredo**.
 
 **Fato que decide o resto desta seção**: o repositório `dados-listagens` fica em
-**outra conta do próprio mantenedor**, não na conta deste repositório. Isso não
-impede o PAT — impede é que ele seja emitido daqui. Um PAT pertence à conta que
-o emitiu: o token criado na conta deste repositório não alcança um repositório
-de outra conta, por maior que a autorização. O token é emitido **na conta dona
-do `dados-listagens`**, e é por isso que é um segredo só.
+outra conta, não na conta deste repositório. Isso não impede o PAT — impede é
+que ele seja emitido daqui. Um PAT pertence à conta que o emitiu: o token criado
+na conta deste repositório não alcança um repositório de outra conta, por maior
+que a autorização. O token é emitido **na conta dona do `dados-listagens`**, e é
+por isso que é um segredo só.
+
+**Correção de 2026-10-01**: quem é o dono mudou, e a afirmação original era
+premissa. A conta dona do `dados-listagens` é de quem é membro com direitos
+plenos da organização que passa a hospedar este repositório — não é a mesma
+pessoa. O parágrafo acima continua válido porque não depende de *quem*: depende
+de o token ser emitido na conta dona do recurso. A justificativa 4 também foi
+reescrita, e a nova razão não depende de quem é o dono.
 
 **Justificativa**:
 
@@ -128,11 +135,15 @@ do `dados-listagens`**, e é por isso que é um segredo só.
 3. **Identificadores versionados** — separando o que é segredo do que é
    configuração, o workflow fica autodescritivo: qualquer um lê *qual* snapshot
    ele baixa, e o único segredo é o token.
-4. **PAT, e não GitHub App, apesar de haver duas contas** — o App resolve o
-   cenário em que quem emite a credencial **não é quem vai usá-la**: conta de
-   serviço de máquina, terceiro, bot de outra organização. Aqui as duas contas
-   são do mesmo mantenedor, não há identidade de terceiro a representar, e o
-   App só agregaria custo.
+4. **PAT, e não GitHub App** — a vantagem documentada do App é uma, e a
+   documentação do GitHub enuncia exatamente uma: um App "não está amarrado a
+   uma pessoa, então o workflow continua funcionando mesmo se quem instalou o
+   App sair da organização". É evento futuro, sem data, e a recuperação sem o
+   App custa uma tela — quem tem direito emite outro PAT e regrava o segredo. O
+   App cobra isso hoje: seis formas de falha em vez de duas, um vetor de
+   vazamento que o PAT não tem (a chave privada precisa ir para um arquivo no
+   runner para assinar o JWT) e um mecanismo mais difícil de revisar. Por um
+   workflow disparado à mão, duas vezes por semestre, a troca não se paga.
 
 **Alternativas avaliadas e rejeitadas**:
 
@@ -142,13 +153,25 @@ do `dados-listagens`**, e é por isso que é um segredo só.
 | Objeto em nuvem com federação de identidade do CI (sem segredo) | A opção **mais segura** da lista, e mais simples de auditar. Rejeitada porque exige Setup de IAM fora do repositório (~45 min, recorrente) e Residência que esta feature não decide |
 | URL pré-assinada como o único secret | Sem credencial durável, e expirada. Rejeitada porque a rotação é trabalho **mensal recorrente**, e falha ruidosamente na virada de semestre — o pior momento |
 | Token clássico com escopo `repo` | Concede leitura de **todos** os repositórios alcançáveis pela conta que o emitiu. Inaceitável para arquivo com nome e nascimento |
-| GitHub App (App de CI) | A resposta padrão para credencial que atravessa contas, e por isso precisa de comparação explícita. Rejeitada porque troca **um** segredo por **três** — `APP_ID`, `INSTALLATION_ID` e chave privada PEM — e a chave privada é exatamente a credencial durável e difícil de revogar que o PAT existe para evitar. O ganho real do App, token de instalação de 1 hora, não compra nada aqui: o PAT é revogável a qualquer momento e o risco é exposição indevida, não janela de uso. **Reavaliação obrigatória** se a conta dona do `dados-listagens` for de uma organização com política própria de PAT — ver a precondição abaixo |
+| GitHub App (App de CI) | A resposta padrão para credencial que atravessa contas, e por isso precisa de comparação explícita. Rejeitada porque troca **um** segredo por **três** — `APP_ID`, `INSTALLATION_ID` e chave privada PEM — e a superfície de falha sobe de duas para seis, incluindo uma traiçoeira: repositório fora do escopo da instalação devolve a mesma mensagem de "repositório não existe". A objeção de que a chave privada seria credencial difícil de revogar **não se confirmou**: apagá-la nas configurações do App a invalida na hora, por quem registrou o App. Reavaliada em 2026-10-01, quando a premissa de dono mudou, e a rejeição mantida — ver a justificativa 4 |
 | Conceder acesso de leitura ao repositório deste projeto à outra conta, e buscar o export canônico pela rede pública | Economiza o segredo, e é pior: exige que o repositório **público** hospede o dado com nome e nascimento. Troca um segredo bem escopado por um dado público |
 
-**Precondição registrada, não assumida**: se `dados-listagens` estiver em
-**organização** — e não em conta pessoal —, a emissão do PAT depende de ser
-proprietário da organização e de a política dela permitir token de escopo
-restrito. Isso é verificação, não suposição, e é a tarefa T022.
+**Precondição verificada, não assumida** — a condição deixou de ser condicional.
+Este repositório passa a pertencer a uma organização, e a política de PAT dela é
+o que decide, não a boa vontade de ninguém. São duas perguntas, ambas com
+resposta verificável:
+
+1. a organização **exige aprovação** para PAT fine-grained que alcance recurso
+   seu? A documentação registra que o padrão é exigir. Se exigir, a aprovação é
+   de uma pessoa com direito, ocorre **uma vez**, e o token segue valendo.
+2. a organização impõe **teto de validade** que bloqueie `expires_in: none`? Se
+   impuser, o plano de rotação passa a ser outro e D3 é reavaliada antes de
+   emitir — não depois.
+
+Uma terceira condição volta a ser condicional, e depende de uma decisão que
+ainda não foi tomada: se `dados-listagens` **também** entrar na organização, o
+recurso deixa de ser de uma pessoa e passa a ser dela, o que o coloca na
+pergunta 1. É a tarefa T022.
 
 **Risco que esta decisão não remove** (registrado no spec como premissa):
 residência do dado e transferência internacional. A escolha de plataforma não é
@@ -158,8 +181,8 @@ mínimo, sem histórico, retenção removível.
 **Consequência operacional que ninguém espera**: revogar o token **não** é mais
 uma ação nesta tela de secrets. É entrar na outra conta, em
 *Settings → Developer settings*, e revogar ali. Uma credencial cujo ponto de
-revogação fica a três cliques de distância numa conta que o mantenedor talvez não
-abra por meses é uma credencial que fica valendo. Isso está registrado como M-3
+revogação fica a três cliques de distância numa conta que pode não ser aberta por
+meses é uma credencial que fica valendo. Isso está registrado como M-3
 e como tarefa com data em
 [medidas-de-protecao.md](./medidas-de-protecao.md).
 
