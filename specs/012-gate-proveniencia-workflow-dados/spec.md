@@ -11,17 +11,20 @@ pacote `indicadores.zip` e inicie um workflow para executar `make dados`
 automaticamente." Decisões tomadas em 2026-09-30: o gate de proveniência e a
 automação formam **uma** feature (a divisão anterior em duas foi desfeita); o
 acesso às planilhas `.xlsx` será por **PAT fine-grained + repositório privado**,
-com os arquivos anexados como *release assets*; e o repositório privado fica em
+com os arquivos anexados como _release assets_; e o repositório privado fica em
 outra conta, o que obriga o token a ser emitido **na conta dona dele** e não na
 conta deste repositório.
 
 **Correção de 2026-10-01**: a premissa "outra conta **do próprio mantenedor**"
-não se confirmou. A conta dona do `dados-listagens` pertence a quem é membro com
-direitos plenos da organização que passa a hospedar este repositório — não é a
-mesma pessoa que o mantém hoje. As duas decisões **não** mudam: o token continua
-nascendo na conta dona do repositório privado, e a revogação continua não
-acontecendo na tela de secrets deste repositório. O que muda é o **quem**, e por
-isso D3 foi reavaliada — ver [research.md](./research.md) D3.
+não se confirmou, e a hipótese que a substituía — um membro com direitos plenos
+de uma organização que hospedaria este repositório — **também não**. Não há
+organização dona: o repositório privado `indicadores-dados-listagem` é de
+`henriqk0`, este é de `RafaelDeps`, `henriqk0` tem `write` aqui e `RafaelDeps`
+tem `none` no privado. As duas decisões **não** mudam: o token continua nascendo
+na conta dona do repositório privado, e a revogação continua não acontecendo na
+tela de secrets deste repositório. O que muda é o **quem** — e o que muda é que
+a separação passa a ser de contas, não de pessoas. D3 foi reavaliada — ver
+[research.md](./research.md) D3.
 
 ## Contexto: o que hoje não é detectável
 
@@ -108,8 +111,8 @@ insuficiente.
 
 **Why this priority**: hoje a guarda libera entrada antiga ("ainda que stale")
 quando há um arquivo de listagens presente e a pasta de trabalho bruta está
-vazia. Ela pergunta *"o merge terá alguma entrada?"*, não *"a entrada terá o que
-o pacote hoje tem?"*. Um zip de listagens parcial — que cobre 2026 mas perdeu
+vazia. Ela pergunta _"o merge terá alguma entrada?"_, não _"a entrada terá o que
+o pacote hoje tem?"_. Um zip de listagens parcial — que cobre 2026 mas perdeu
 2025 — satisfaz a pergunta atual e ainda assim apaga a cobertura de 2025 do
 pacote. É o mesmo defeito da User Story 1, detectado tarde demais. Independe da
 automação, e por isso pode ser entregue antes dela.

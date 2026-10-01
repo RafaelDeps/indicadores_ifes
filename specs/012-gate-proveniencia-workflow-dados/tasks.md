@@ -1,5 +1,4 @@
 ---
-
 description: 'Task list for feature 012 — gate de proveniência e automação do make dados'
 ---
 
@@ -33,11 +32,11 @@ o código atual e está registrado com saída literal em
 [quickstart.md](./quickstart.md) §1, §1.1 e §4. Reexecutar é opcional; o que é
 obrigatório é que a implementação **confirme** os três vereditos depois.
 
-| cenário | hoje (verificado 2026-09-30) | depois |
-| --- | --- | --- |
-| pacote com 12 derivados nulados | `exit 0`, `Sucesso: 18 arquivo(s)` | exit ≠ 0, 6 linhas `ERRO:` |
-| guarda com zip parcial, `raw` vazia | `exit 0` | exit 3 |
-| guarda com zip parcial + planilha do ano | `exit 0` | exit 0 (não muda) |
+| cenário                                  | hoje (verificado 2026-09-30)       | depois                                                         |
+| ---------------------------------------- | ---------------------------------- | -------------------------------------------------------------- |
+| pacote com 12 derivados nulados          | `exit 0`, `Sucesso: 18 arquivo(s)` | exit ≠ 0, 6 linhas `ERRO:` de perda + 1 de resumo (7 no total) |
+| guarda com zip parcial, `raw` vazia      | `exit 0`                           | exit 3                                                         |
+| guarda com zip parcial + planilha do ano | `exit 0`                           | exit 0 (não muda)                                              |
 
 **A Fase 1 não é setup de infraestrutura.** A feature não introduz dependência,
 framework nem configuração nova, e portanto não há andaime a montar. O que existe
@@ -60,12 +59,12 @@ passar a ler o zip de listagens, vai encontrar bytes falsos. **T012** trata
 disso, e a falha inicial é **informativa**, não um acidente — ela mostra que o
 teste nunca exercitou o caminho que a nova regra usa.
 
-- [ ] T001 Criar `tests/etl/factories/pacotes.py` com `registro_pilar1()`,
+- [x] T001 Criar `tests/etl/factories/pacotes.py` com `registro_pilar1()`,
       `escrever_zip()` e `serializar()`, **movendo** a lógica de
       `tests/etl/test_check_dados.py` sem alterá-la. `date_time=(1980,1,1,0,0,0)`
       e `external_attr` são obrigatórios: sem eles os zips não são byte-idênticos
       e a comparação do grupo B perde sentido
-- [ ] T002 Fazer `tests/etl/test_check_dados.py` importar de
+- [x] T002 Fazer `tests/etl/test_check_dados.py` importar de
       `tests/etl/factories/pacotes.py` e remover as cópias locais. `make check`
       deve continuar com **193 testes verdes** — a extração é rearranjo, não
       mudança
@@ -83,7 +82,7 @@ falhar.
 
 **⚠️ CRITICAL**: T003 e T004 são o par RED→GREEN do núcleo.
 
-- [ ] T003 RED: criar `tests/etl/test_cobertura_listagens.py` com os casos de
+- [x] T003 RED: criar `tests/etl/test_cobertura_listagens.py` com os casos de
       `tests/etl/factories/pacotes.py`. Casos **obrigatórios**, todos com par e
       campo nomeados: (a) perda vazia; (b) par ausente no pacote; (c) par
       presente com campo nulo — **mesmo veredito de (b)**; (d) escopo agregado
@@ -92,7 +91,7 @@ falhar.
       ausente — violação **só** no ausente; (g) ordem do relatório estável entre
       duas execuções; (h) nenhum nome de escopo, campus ou ano em código —
       verificar por inspeção, não por teste
-- [ ] T004 GREEN: criar `etl/core/logic/cobertura_listagens.py` com a cobertura
+- [x] T004 GREEN: criar `etl/core/logic/cobertura_listagens.py` com a cobertura
       de um conjunto de registros e a subtração de perda. Importar `PADRAO_PILAR1`
       de `etl/scripts/merge_listagens_indicadores.py` e
       `CAMPOS_DERIVAVEIS_LISTAGENS` de `etl/flows/listagens_flow.py` — **não**
@@ -109,35 +108,36 @@ pacote não tem.
 
 **Independent Test**: entregar a `check-dados` o pacote de
 [quickstart.md](./quickstart.md) §1 com `--listagens` presente, e ver 6 linhas
-`ERRO:` e saída ≠ 0 — **sem que nada mais no repositório tenha mudado**.
+`ERRO:` de perda mais a de resumo, e saída ≠ 0 — **sem que nada mais no
+repositório tenha mudado**.
 
 ### Testes para User Story 1 (MANDATÓRIO — Princípio II) ⚠️
 
-- [ ] T005 RED: em `tests/etl/test_check_dados.py`, caso de perda — pacote com
+- [x] T005 RED: em `tests/etl/test_check_dados.py`, caso de perda — pacote com
       um par a menos que a origem ⇒ stderr contém `ERRO:` e `main()` ≠ 0.
       Usar `--canonical ""` e `--raw ""` para isolar a Etapa 1.5 da Etapa 2
-- [ ] T006 [P] RED: em `tests/etl/test_check_dados.py`, os três vereditos —
+- [x] T006 [P] RED: em `tests/etl/test_check_dados.py`, os três vereditos —
       perda vazia **silencia**; origem ausente (`--listagens ""`) emite `INFO:`
       e sai 0; origem presente e íntegra não emite `ERRO:`
-- [ ] T007 [P] RED: em `tests/etl/test_check_dados.py`, origem presente mas
+- [x] T007 [P] RED: em `tests/etl/test_check_dados.py`, origem presente mas
       **ilegível** (bytes que não são zip) ⇒ `ERRO:` e saída ≠ 0. Não pode cair
       no veredito `INFO:`
 
 ### Implementação para User Story 1
 
-- [ ] T008 GREEN: Etapa 1.5 em `etl/scripts/check_dados.py`, entre a Etapa 1
+- [x] T008 GREEN: Etapa 1.5 em `etl/scripts/check_dados.py`, entre a Etapa 1
       (linha 126) e a Etapa 2 (linha 131). Reaproveitar `_caminho_ou_padrao` e a
       lista `ausentes` — **sem flag nova, sem script novo**. O nome da flag
       `--listagens` **não muda**: já existe com outra finalidade no contrato 011
-- [ ] T009 GREEN: mensagens em português de
+- [x] T009 GREEN: mensagens em português de
       [contracts/check-dados.md](./contracts/check-dados.md) §3.2 — uma linha por
       perda, par e campo, ordenação estável por `(campus, ano, campo)`, e a
       distinção entre "arquivo ausente" e "campo nulo"
-- [ ] T010 GREEN: a Etapa 1.5 **não** tem variante sob modo tolerante e o
+- [x] T010 GREEN: a Etapa 1.5 **não** tem variante sob modo tolerante e o
       `check_dados` não define `SOFT`. Não há nada a implementar aqui — a tarefa
       é **verificar por inspeção** que nenhum caminho de código diferente da
       Etapa 1.5 lê `SOFT` ou `os.getenv("SOFT")`
-- [ ] T011 GREEN: ponteiro para a Etapa 1.5 em
+- [x] T011 GREEN: ponteiro para a Etapa 1.5 em
       `specs/011-etl-soft-mode-frescor/contracts/check-dados.md`, e nota na §5.1
       desse mesmo arquivo registrando que a lacuna que ele nomeia **está fechada**
       e por qual documento. Sem reescrever o texto histórico — a §5.1 é o
@@ -164,7 +164,7 @@ Esta tarefa vem **primeira** de propósito. `_cenario()` grava bytes que não s�
 zip, e os testes de cobertura precisam de zip de verdade para exercitar a regra
 nova. Sem T012, os testes de T013 a T017 seriam verde sobre o caminho errado.
 
-- [ ] T012 Em `tests/etl/test_cadeia_dados.py`, `_cenario()` passa a escrever
+- [x] T012 Em `tests/etl/test_cadeia_dados.py`, `_cenario()` passa a escrever
       **zips reais** via `tests/etl/factories/pacotes.py`, e cada teste existente
       passa a montar o pacote e o zip com a cobertura que o nome do teste já
       promete. Etiqueta **FIXTURE**, e não RED/GREEN: não é teste nem
@@ -173,33 +173,33 @@ nova. Sem T012, os testes de T013 a T017 seriam verde sobre o caminho errado.
 
 ### Testes para User Story 2 (MANDATÓRIO — Princípio II) ⚠️
 
-- [ ] T013 RED: em `tests/etl/test_cadeia_dados.py`, zip de listagens presente
+- [x] T013 RED: em `tests/etl/test_cadeia_dados.py`, zip de listagens presente
       mas cobrindo menos que o pacote, `raw` vazia ⇒ `main()` == 3 e stderr tem
       `ERRO:` nomeando os pares. **Este é o único cenário do quickstart que muda
       de veredito (0 → 3)**. Cobre a FR-010
-- [ ] T014 [P] RED: em `tests/etl/test_cadeia_dados.py`, zip de listagens
+- [x] T014 [P] RED: em `tests/etl/test_cadeia_dados.py`, zip de listagens
       ilegível e `raw` sem planilha ⇒ bloqueia. Zip ilegível é erro, não ausência
-- [ ] T015 [P] RED: em `tests/etl/test_cadeia_dados.py`, pacote **sem cobertura
+- [x] T015 [P] RED: em `tests/etl/test_cadeia_dados.py`, pacote **sem cobertura
       de derivados** ⇒ libera (não há cobertura a perder). Este caso impede que a
       guarda vire bloqueio permanente depois da primeira execução
-- [ ] T016 [P] RED: em `tests/etl/test_cadeia_dados.py`, com o par perdido
+- [x] T016 [P] RED: em `tests/etl/test_cadeia_dados.py`, com o par perdido
       reposto por planilha bruta cujo nome tem o ano correspondente ⇒ libera.
       Guarda de regressão: impede a guarda de ficar restritiva demais
-- [ ] T017 RED: em `tests/etl/test_cadeia_dados.py`, modo tolerante com a mesma
+- [x] T017 RED: em `tests/etl/test_cadeia_dados.py`, modo tolerante com a mesma
       entrada degradada ⇒ `AVISO:` e saída 3, e o arquivo do pacote **inalterado**
       em conteúdo e data de modificação
 
 ### Implementação para User Story 2
 
-- [ ] T018 GREEN: `etl/scripts/cadeia_dados.py` — `avaliar_cadeia` passa a chamar
+- [x] T018 GREEN: `etl/scripts/cadeia_dados.py` — `avaliar_cadeia` passa a chamar
       a cobertura de `etl/core/logic/cobertura_listagens.py` em vez de
       `listagens.exists()` (linha 110). A "entrada capaz de repor" é o conjunto de
       cobertura do zip **unido** ao dos anos com planilha bruta, lidos do nome
       pelo `PADRAO_ARQUIVO` de `etl/adapters/sources/listagens_xlsx_source.py`
-- [ ] T019 GREEN: atualizar o docstring de `etl/scripts/cadeia_dados.py`, que hoje
+- [x] T019 GREEN: atualizar o docstring de `etl/scripts/cadeia_dados.py`, que hoje
       diz que o zip presente serve "ainda que stale" (linha 111). A frase é a
       descrição do defeito, e deixá-la seria documentar errado
-- [ ] T020 GREEN: `CODIGO_BLOQUEADO = 3` **inalterado**, e nenhum código de saída
+- [x] T020 GREEN: `CODIGO_BLOQUEADO = 3` **inalterado**, e nenhum código de saída
       novo (FR-012). `tests/etl/test_cadeia_dados.py` já fixa 3; a tarefa é não
       quebrar
 
@@ -231,84 +231,166 @@ partir das entradas oficiais.
 > trabalho legítimo e pode ser feito; publicar o workflow não. O grupo A não é
 > bloqueado — não toca dado pessoal.
 
-- [ ] T021 Criar o repositório privado `dados-listagens`, publicar a release `v1`
-      com os 6 assets anexados. **Arquivo commitado não serve** — commit vira
-      objeto no histórico e apagar não apaga (medidas-de-protecao M-4)
-- [ ] T022 Emitir, **na conta dona do `dados-listagens`**, um PAT fine-grained
-      com `contents: read` sobre **um** repositório e `expires_in: none`.
-      **Antes de emitir**, conferir na política de PAT da organização dona deste
-      repositório: (a) se ela exige aprovação para token fine-grained que
-      alcance recurso seu — o padrão documentado é que exige —, e (b) se impõe
-      teto de validade que bloqueie `expires_in: none`. Se (b) for sim, parar e
-      reavaliar D3; se (a) for sim, a aprovação é de uma pessoa com direito e
-      ocorre uma vez. **Não** é token clássico: escopo `repo` daria leitura de
-      todos os repositórios alcançáveis pela conta. **É** fine-grained porque o
-      escopo restrito é o que impede o alcance de qualquer outro repositório —
-      inclusive, se `dados-listagens` entrar na organização, é o escopo restrito
-      que torna o token aprovável, e o clássico não seria
+- [x] T021 Criar o repositório privado `indicadores-dados-listagem`, publicar a
+      release `v1` com os 6 assets anexados. **Arquivo commitado não serve** —
+      commit vira objeto no histórico e apagar não apaga (medidas-de-protecao
+      M-4). Feito em 2026-10-01, e o caminho foi mais longo do que o previsto: as
+      6 planilhas chegaram commitadas no `main`, e a reescrita de histórico
+      (force-push) **não** cumpriu a M-4 — os blobs continuaram alcançáveis por
+      SHA, provado com `GET /git/blobs/<sha>` a devolver 200 e `git fetch <sha>`
+      a devolver `not our ref`. Só a eliminação do repositório os removeu. Estado
+      final verificado: blobs antigos 404, `not our ref` no `git fetch`, clone
+      novo com 1 commit e 2 ficheiros, release com 6 assets byte a byte iguais
+      aos originais (sha256 conferido nos dois sentidos)
+- [ ] T022 Emitir, **na conta dona do `indicadores-dados-listagem`**, um PAT
+      fine-grained com `contents: read` sobre **um** repositório e
+      `expires_in: none`. **Antes de emitir**, conferir na política de PAT da
+      organização dona deste repositório: (a) se ela exige aprovação para token
+      fine-grained que alcance recurso seu — o padrão documentado é que exige —, e
+      (b) se impõe teto de validade que bloqueie `expires_in: none`. Se (b) for
+      sim, parar e reavaliar D3; se (a) for sim, a aprovação é de uma pessoa com
+      direito e ocorre uma vez. **Não** é token clássico: escopo `repo` daria
+      leitura de todos os repositórios alcançáveis pela conta. **É** fine-grained
+      porque o escopo restrito é o que impede o alcance de qualquer outro
+      repositório. **Apreciação de 2026-10-01**: o repositório privado é de
+      `henriqk0` e este é de `RafaelDeps`, com `henriqk0` em `write` aqui e
+      `RafaelDeps` em `none` no privado — verificado por API. A separação de
+      contas é real para o token, e **nula para as pessoas**: quem emite o token
+      e controla o dado é quem escreve o manifesto e faz o _merge_ aqui. O item
+      (b) perdeu o objeto que o tornava decisivo — não há organização dona deste
+      repositório, logo não há teto de validade a chocar — mas fica escrito porque
+      o repositório pode ser transferido
 - [ ] T023 Configurar `DADOS_LEITURA_TOKEN` como segredo **deste** repositório.
       **Único** segredo da feature. Guardar junto, em texto datado, o caminho da
-      revogação — *outra conta → Settings → Developer settings → Personal access
-      tokens*. Sem esse registro, quem procurar revogar acha o token na lista de
+      revogação — _outra conta → Settings → Developer settings → Personal access
+      tokens_. Sem esse registro, quem procurar revogar acha o token na lista de
       segredos daqui e não acha onde revogá-lo
-- [ ] T024 Obter os `asset_id` por
-      `GET /repos/<dono>/dados-listagens/releases/tags/v1` e a revisão de 40
-      caracteres do export canônico. Registrar `dono`, `versao`, os 6 pares
+- [x] T024 Obter os `asset_id` por
+      `GET /repos/henriqk0/indicadores-dados-listagem/releases/tags/v1` e a revisão
+      de 40 caracteres do export canônico. Registrar `dono`, `versao`, os 6 pares
       `(nome, asset_id)` e `revisao` em `dados-insumo.yml` na raiz, conforme
-      [data-model.md](./data-model.md) §6
+      [data-model.md](./data-model.md) §6. Feito em 2026-10-01. Corrigir os **dois**
+      defeitos que só apareceram ao rodar o passo real contra o repositório real:
+      (1) o `caminho` servia de caminho remoto **e** de destino local, o que dava
+      404 — a origem tem `data/exports/`, aqui é `data/canonical/`; o destino
+      passou a ser constante do workflow e o download a ir para temporário antes
+      do `mv`. (2) o `exports_canonical.zip` publicado é um **invólucro** — uma
+      única entrada, `exports_canonical.zip`, com 715 ficheiros — e a fonte
+      canônica do ETL exige-os na raiz; a falha só apareceu na primeira execução
+      real, dois passos mais tarde, como `'campuses_canonical.json' ausente no
+pacote ZIP`, mensagem que não distingue formato de revisão. O passo 5
+      desembrulha e confere os sete obrigatórios antes de mover o ficheiro
 
-> **Condição de T022, não bloqueio**: o `dados-listagens` ser de outra conta do
-> mantenedor — resposta dada em 2026-09-30 — **não se confirmou**. Em 2026-10-01
-> corrigiu-se: o repositório privado passa a ter dono distinto, membro com
-> direitos plenos da organização que hospedará este repositório. D3 foi
-> reavaliada com a premissa certa e o PAT foi **mantido** — a vantagem do GitHub
-> App é uma só, documentada: continuar funcionando quando quem instalou sai da
-> organização, evento sem data, e a recuperação custa uma tela. Resta **uma**
-> verificação, agora obrigatória: a política de PAT da organização, em T022. Se
-> ela negar validade infinita, D3 é reavaliada antes de emitir — não depois.
+> **Sobre a premissa de "outra conta"**: a resposta de 2026-09-30 ("o
+> `dados-listagens` é de outra conta do mantenedor") estava errada quanto à
+> instituição, e certa quanto ao efeito. Não há organização dona deste
+> repositório: o privado é de `henriqk0`, este é de `RafaelDeps`, e a mesma
+> pessoa controla os dois lados. D3 foi reavaliada com a premissa certa e o PAT
+> fine-grained foi **mantido** — a vantagem do GitHub App é uma só, documentada:
+> continuar funcionando quando quem instalou sai da organização, evento sem data,
+> e a recuperação custa uma tela. Essa razão, porém, **não se aplica**: não há
+> organização de onde sair. O que sustenta a escolha passa a ser o âmbito
+> (`contents: read` num único repositório), e é um âmbito de token, não de
+> contas.
 
 ### Fase 5b: O workflow
 
-- [ ] T025 RED: verificação manual de que `dados.yml` falha **alto** quando o
+> **Escopo desta fase**: o arquivo `.github/workflows/dados.yml` e nada mais. Nenhuma
+> configuração de repositório privado, nenhum segredo emitido, nenhum
+> `dados-insumo.yml` com identificadores fictícios — criar um manifesto com
+> `asset_id` inventados faria o workflow falhar no download em vez de no manifesto,
+> trocando uma mensagem clara por um 404. T021–T024 são externas e ficam abertas.
+
+- [x] T025 RED: verificação manual de que `dados.yml` falha **alto** quando o
       segredo está ausente, com mensagem explícita e sem chegar à cadeia.
-      Registrar a saída em [quickstart.md](./quickstart.md) §5.4
-- [ ] T026 GREEN: `.github/workflows/dados.yml` com `on:` contendo
+      Saída registrada em [quickstart.md](./quickstart.md) §5.4. Executado
+      extraindo o passo do YAML e correndo-o fora do GitHub: ausente → `exit 1`,
+      **vazio** → `exit 1`, presente → `exit 0` sem imprimir o valor. O segundo
+      estado é o que costuma ser esquecido: segredo configurado e vazio falha
+      igual a inexistente, e sem a conferência de não-vazio o `curl` iria à rede e
+      o erro seria 401
+- [x] T026 GREEN: `.github/workflows/dados.yml` com `on:` contendo
       **apenas** `workflow_dispatch`, e `permissions:` explícitos
       (`contents: write`, `pull-requests: write`) — nunca herdados. **Nem**
       `pull_request`, **nem** `pull_request_target`
-- [ ] T027 GREEN: passo que confere presença e não-vazio do segredo antes de
+- [x] T027 GREEN: passo que confere presença e não-vazio do segredo antes de
       qualquer chamada de rede, falhando com mensagem própria em vez de deixar o
       `curl` devolver 401 genérico
-- [ ] T028 GREEN: passo de leitura e validação de `dados-insumo.yml` — `dono`
+- [x] T028 GREEN: passo de leitura e validação de `dados-insumo.yml` — `dono`
       não vazio, 6 entradas obrigatórias e `revisao` de 40 caracteres. Manifesto
       incompleto é falha de nome, não de download, e `dono` ausente é falha de
       nome **antes** do download, porque o 404 de dono e o 404 de repositório têm
       a mesma mensagem
-- [ ] T029 GREEN: download dos assets com `curl -fsSL`, cabeçalho de
+- [x] T029 GREEN: download dos assets com `curl -fsSL`, cabeçalho de
       autorização e barra de progresso silenciada. **Sem** `set -x` no passo: a
       configuração renderizada na página de execução não é mascarada. Nenhum
       passo ecoa nome, matrícula ou nascimento (FR-026, FR-028)
-- [ ] T030 GREEN: download do export canônico por `raw.githubusercontent.com` na
+- [x] T030 GREEN: download do export canônico por `raw.githubusercontent.com` na
       `revisao` do manifesto. **Nunca** `main`
-- [ ] T031 GREEN: **conferência de contagem** após o download — 6 planilhas
+- [x] T031 GREEN: **conferência de contagem** após o download — 6 planilhas
       esperadas, divergência é falha. `-f` no `curl` impede gravar corpo de erro
       dentro do `.xlsx`; a contagem é a rede de proteção contra o download parcial
-- [ ] T032 GREEN: `make dados` em modo **estrito**. O workflow **não** define
+- [x] T032 GREEN: `make dados` em modo **estrito**. O workflow **não** define
       `SOFT`
-- [ ] T033 GREEN: `make check-dados` e **conferir que não há `INFO:` de cobertura**
+- [x] T033 GREEN: `make check-dados` e **conferir que não há `INFO:` de cobertura**
       — no workflow a origem existe, então a ausência do `INFO:` é a prova de que
       a Etapa 1.5 realmente rodou
-- [ ] T034 GREEN: comparação byte a byte do pacote regenerado com
-      `data/dist/indicadores.zip` versionado; divergir com insumo inalterado
-      interrompe. Divergir é quebra de determinismo (spec 006 FR-011), e a falha é
-      do gate
-- [ ] T035 GREEN: abertura de pull request com o pacote. **Nunca** envio direto —
-      o merge passa pelo job `quality`, que é o caminho de publicação de sempre
-- [ ] T036 [P] GREEN: `concurrency` para serializar execuções concorrentes, com o
-      pacote como chave
-- [ ] T037 GREEN: nenhum `upload-artifact` no workflow (FR-028). **Verificar por
-      inspeção**, não por configuração: um artifact esquecido é o vetor de
-      exposição mais óbvio e mais difícil de perceber depois
+- [x] T034 RED: verificação de que a leitura literal desta tarefa e de T035
+      produz um workflow que **nunca termina com sucesso**: "divergir com insumo
+      inalterado interrompe" e "abrir pull request com o pacote" não podem valer
+      ao mesmo tempo. Insumo igual dá pacote igual, e pacote igual não tem o que
+      ser commitado; insumo diferente dá pacote diferente, e aí a interrupção come
+      o pull request. Registrado em
+      [contracts/dados-workflow.md](./contracts/dados-workflow.md) §8.2
+- [x] T034 GREEN: separação em duas perguntas, na ordem que faz o diagnóstico
+      correto. **Primeiro** determinismo: a cadeia roda **duas vezes** com o mesmo
+      insumo e as duas saídas são comparadas — é a única forma de distinguir "o
+      resultado mudou" de "o resultado é instável", e insumo igual aqui é o estado
+      do diretório, não uma suposição. **Depois** mudança: o resultado difere do
+      arquivo versionado? Divergir é o caminho normal e a resposta é abrir pull
+      request. Medido: 2,5 s por corrida, 1 hash para as duas
+- [x] T035 GREEN: abertura de pull request com o pacote, condicionada a
+      `mudanca == 'true'`, e um passo separado para o outro desfecho — insumo
+      inalterado é **sucesso** e dizê-lo é melhor do que uma execução vermelha
+      por não ter havido nada a publicar. **Nunca** envio direto: o merge passa
+      pelo job `quality`, que é o caminho de publicação de sempre
+- [x] T035b GREEN: `set -euo pipefail` explícito em todo bloco `run: |`. O runner
+      executa `shell: bash` como `bash -eo pipefail`, então a dependência existia
+      — mas era **invisível**: sem ela, um `curl` que falha e um `check-dados` que
+      reprova saíam ambos com 0, e ler o YAML não revelava isso
+- [x] T035c GREEN: redação do log da cadeia. A etapa 2 emite
+      `AVISO: estudante duplicado ignorado (id: N, nome: <nome completo>)` — medido
+      numa corrida real: 5.704 linhas, 2.756 nomes distintos. Isto é nome em log de
+      workflow, que FR-026 proíbe nominalmente. A redação acontece **antes** de
+      qualquer byte do log chegar à saída, e a conferência de nome residual vem
+      **antes** do `cat` — conferir depois de imprimir é conferir o que já vazou.
+      A mensagem de erro da conferência imprime a contagem, nunca a linha
+- [x] T035d GREEN: o leitor do manifesto emite `nomes` e `asset_ids` separados por
+      **espaço**. Emitia com aspas de Python, e um `split(',')` em bash sobrevive
+      às aspas e aos espaços: os arquivos sairiam com o nome
+      `['listagem_2024_1.xlsx'`
+- [x] T035e GREEN: a contagem de planilhas exige `-size +0c`. O `>` do download
+      cria o arquivo **antes** do `curl` rodar, então um asset que devolveu 404
+      deixa um `.xlsx` de zero byte — que contaria como planilha
+- [x] T035f GREEN: um bloco `env:` só no passo de download. Dois blocos no mesmo
+      passo é chave duplicada: o parser fica com o último e o token desaparece sem
+      aviso, com 401 no lugar do sintoma que o passo do segredo existe para tornar
+      distinguível
+- [x] T036 [P] GREEN: `concurrency` com `group: regenerar-pacote-indicadores` e
+      `cancel-in-progress: false`. Cancelar a execução em curso para começar outra
+      deixaria o repositório em estado intermediário sem ninguém ter pedido isso
+- [x] T037 GREEN: nenhum `upload-artifact` no workflow (FR-028). **Verificado por
+      inspeção**, não por configuração — `grep` de `upload-artifact` e de `set -x`
+      fora de linha de comentário: ambos ausentes em código, ambos presentes só em
+      comentário. Um artifact esquecido é o vetor de exposição mais óbvio e mais
+      difícil de perceber depois
+
+**Checkpoint do grupo B**: os 15 passos do `.github/workflows/dados.yml`
+verificados por execução fora do GitHub, com dublês de `curl` e `make` e com o log
+real de uma corrida da cadeia — inventário em
+[quickstart.md](./quickstart.md) §5. `make check` verde. O que **não** foi
+verificado: a execução real no GitHub Actions, que depende de T021–T024
+externas ao repositório.
 
 ### Fase 5c: Registro
 
@@ -377,49 +459,49 @@ Nenhuma tarefa carrega etiqueta de FR. Uma matriz faz o mesmo trabalho sem
 transformar 46 tarefas em texto repetido, e deixa visível o caminho inverso:
 dada uma FR, qual tarefa a entrega.
 
-| FR | tarefa | FR | tarefa |
-|---|---|---|---|
-| FR-001 | T003, T004 | FR-016 | T026 |
-| FR-002 | T003, T009 | FR-017 | T024, T030 |
-| FR-003 | T003 | FR-018 | T027, T028, T031 |
-| FR-004 | T006, T008 | FR-019 | T032 |
-| FR-005 | T004 | FR-020 | T033, T041 |
-| FR-006 | T005, T009, T010 | FR-021 | T034 |
-| FR-007 | T017 | FR-022 | T035 |
-| FR-008 | T044, T045 | FR-023 | T037 |
-| FR-009 | T004, T046 | FR-024 | T026, T040 |
-| FR-010 | T013, T018 | FR-025 | T040 |
-| FR-011 | T016, T018 | FR-026 | T029, T037, T038 |
-| FR-012 | T020 | FR-027 | T038 |
-| FR-013 | T021 | FR-028 | T037, T038 |
-| FR-014 | T022, T023 | | |
-| FR-015 | T024, T028 | | |
+| FR     | tarefa           | FR     | tarefa           |
+| ------ | ---------------- | ------ | ---------------- |
+| FR-001 | T003, T004       | FR-016 | T026             |
+| FR-002 | T003, T009       | FR-017 | T024, T030       |
+| FR-003 | T003             | FR-018 | T027, T028, T031 |
+| FR-004 | T006, T008       | FR-019 | T032             |
+| FR-005 | T004             | FR-020 | T033, T041       |
+| FR-006 | T005, T009, T010 | FR-021 | T034             |
+| FR-007 | T017             | FR-022 | T035             |
+| FR-008 | T044, T045       | FR-023 | T037             |
+| FR-009 | T004, T046       | FR-024 | T026, T040       |
+| FR-010 | T013, T018       | FR-025 | T040             |
+| FR-011 | T016, T018       | FR-026 | T029, T037, T038 |
+| FR-012 | T020             | FR-027 | T038             |
+| FR-013 | T021             | FR-028 | T037, T038       |
+| FR-014 | T022, T023       |        |                  |
+| FR-015 | T024, T028       |        |                  |
 
 ### Três FRs verificadas por inspeção, e não por teste
 
-| FR | como se verifica | por que não há teste |
-|---|---|---|
-| FR-005 (ponto único de decisão) | `grep` dos chamadores: os dois importam a **mesma** função, e a comparação não está duplicada | é uma propriedade de estrutura do repositório; um teste passaria mesmo com a regra duplicada em outro lugar |
-| FR-009 (formato do pacote inalterado) | `git status` sem `data/dist/indicadores.zip` modificado (T046) | o pacote é artefato commitado; o teste seria ele próprio |
-| FR-020 (sem etapa nova no CI) | inspeção de `.github/workflows/deploy.yml` (T041) | o requisito é a **ausência** de uma edição; não há o que testar |
+| FR                                    | como se verifica                                                                              | por que não há teste                                                                                        |
+| ------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| FR-005 (ponto único de decisão)       | `grep` dos chamadores: os dois importam a **mesma** função, e a comparação não está duplicada | é uma propriedade de estrutura do repositório; um teste passaria mesmo com a regra duplicada em outro lugar |
+| FR-009 (formato do pacote inalterado) | `git status` sem `data/dist/indicadores.zip` modificado (T046)                                | o pacote é artefato commitado; o teste seria ele próprio                                                    |
+| FR-020 (sem etapa nova no CI)         | inspeção de `.github/workflows/deploy.yml` (T041)                                             | o requisito é a **ausência** de uma edição; não há o que testar                                             |
 
 As três estão listadas aqui como inspecionais justamente para que a matriz não
 declare cobertura onde só há conferência visual.
 
 ### SC → tarefa
 
-| SC | como se prova | tarefa |
-|---|---|---|
-| SC-001 | casos (b) e (c) de T003, mais T005 e a mensagem de T009 | T003, T005, T009 |
-| SC-002 | caso (d) de T003 — agregado nulo dos dois lados **não** viola — mais a suíte inteira em T044 | T003, T015, T044 |
-| SC-003 | `make check-dados` contra o pacote commitado, e `git status` sem o pacote modificado | T044, T046 |
-| SC-004 | inspeção de `.github/workflows/deploy.yml`: nenhum passo novo | T041 |
-| SC-005 | disparo manual do workflow até o PR aberto, sem comando na máquina | T026, T035 |
-| SC-006 | ausência de `upload-artifact`, nenhum passo ecoando dado, e a §6.1 preenchida | T029, T037, T038 |
-| SC-007 | comparação byte a byte antes de abrir o PR | T034 |
-| SC-008 | segredo ausente falha com mensagem própria; contagem de 6 planilhas falha com outra | T027, T031 |
-| SC-009 | **ordem**, não teste: o portão (T033) roda antes do PR (T035), e a tabela de não-paralelismo fixa essa ordem | T033 → T035 |
-| SC-010 | as 7 medidas têm responsável e condição na §6; a §6.1 registra o resultado por execução | T038 |
+| SC     | como se prova                                                                                                | tarefa           |
+| ------ | ------------------------------------------------------------------------------------------------------------ | ---------------- |
+| SC-001 | casos (b) e (c) de T003, mais T005 e a mensagem de T009                                                      | T003, T005, T009 |
+| SC-002 | caso (d) de T003 — agregado nulo dos dois lados **não** viola — mais a suíte inteira em T044                 | T003, T015, T044 |
+| SC-003 | `make check-dados` contra o pacote commitado, e `git status` sem o pacote modificado                         | T044, T046       |
+| SC-004 | inspeção de `.github/workflows/deploy.yml`: nenhum passo novo                                                | T041             |
+| SC-005 | disparo manual do workflow até o PR aberto, sem comando na máquina                                           | T026, T035       |
+| SC-006 | ausência de `upload-artifact`, nenhum passo ecoando dado, e a §6.1 preenchida                                | T029, T037, T038 |
+| SC-007 | comparação byte a byte antes de abrir o PR                                                                   | T034             |
+| SC-008 | segredo ausente falha com mensagem própria; contagem de 6 planilhas falha com outra                          | T027, T031       |
+| SC-009 | **ordem**, não teste: o portão (T033) roda antes do PR (T035), e a tabela de não-paralelismo fixa essa ordem | T033 → T035      |
+| SC-010 | as 7 medidas têm responsável e condição na §6; a §6.1 registra o resultado por execução                      | T038             |
 
 SC-009 é o único que não se prova por teste: é uma propriedade de ordem. Por isso
 ele aparece aqui como seta, e não como lista.
@@ -465,15 +547,15 @@ ele aparece aqui como seta, e não como lista.
 
 ### O que NÃO pode ser paralelo
 
-| par | por que |
-|---|---|
-| T003 → T004 | RED antes de GREEN, por construção |
-| T012 → T013 | o fixture tem de montar zip real antes de o teste exercitar cobertura |
-| T013 → T018 | idem, visto do lado da implementação |
-| T021 → T022 → T024 | o repositório e o token existem antes de os identificadores serem obtidos |
-| T024 → T028 | o manifesto precisa existir para o workflow validá-lo |
-| T032 → T033 → T034 | cadeia, verificação e comparação são ordem, não escolha |
-| qualquer coisa → T038 | o registro de controle vem depois do controle existir |
+| par                   | por que                                                                   |
+| --------------------- | ------------------------------------------------------------------------- |
+| T003 → T004           | RED antes de GREEN, por construção                                        |
+| T012 → T013           | o fixture tem de montar zip real antes de o teste exercitar cobertura     |
+| T013 → T018           | idem, visto do lado da implementação                                      |
+| T021 → T022 → T024    | o repositório e o token existem antes de os identificadores serem obtidos |
+| T024 → T028           | o manifesto precisa existir para o workflow validá-lo                     |
+| T032 → T033 → T034    | cadeia, verificação e comparação são ordem, não escolha                   |
+| qualquer coisa → T038 | o registro de controle vem depois do controle existir                     |
 
 ---
 
@@ -545,7 +627,7 @@ toca, e forçar paralelo ali seria só demonstração.
 - **Tarefas T021–T024 são externas ao repositório** e não aparecem em
   `git status`. São pré-condição do grupo B, não artefato dele
 - T022 está condicionada à **política de PAT da organização** dona deste
-  repositório, em duas perguntas verificáveis. A questão de *quem* é o dono do
+  repositório, em duas perguntas verificáveis. A questão de _quem_ é o dono do
   repositório privado foi respondida, e corrigida em 2026-10-01; está escrito
   como verificação, não como suposição
 - **Fora do escopo**: agendamento (FR-024 exige histórico de execuções manuais),

@@ -12,16 +12,16 @@ FR-027, e o motivo de ele existir em arquivo está no final desta página.
 Planilhas de matrícula de estudantes (`data/raw/listagem_*.xlsx`), 6 arquivos,
 ~2.565 linhas cada. Campos presentes:
 
-| campo | natureza |
-|---|---|
-| Matrícula | identificador individual |
-| Nome | dado pessoal |
-| Curso | dado pessoal |
-| Situação Matrícula | dado pessoal |
-| Sexo | dado pessoal |
-| **Nascimento** | dado pessoal — ano de nascimento |
-| Forma_Ingresso | dado pessoal |
-| Desc_Cota | dado pessoal — condição socioeconômica |
+| campo              | natureza                               |
+| ------------------ | -------------------------------------- |
+| Matrícula          | identificador individual               |
+| Nome               | dado pessoal                           |
+| Curso              | dado pessoal                           |
+| Situação Matrícula | dado pessoal                           |
+| Sexo               | dado pessoal                           |
+| **Nascimento**     | dado pessoal — ano de nascimento       |
+| Forma_Ingresso     | dado pessoal                           |
+| Desc_Cota          | dado pessoal — condição socioeconômica |
 
 Classificação: **dado pessoal não sensível** por enumeração da lei — nenhum
 dos campos é categoria de dado sensível. O risco real **não está no campo
@@ -31,15 +31,15 @@ as medidas abaixo tratam o conjunto, não o campo.
 
 ## 2. Medidas adotadas
 
-| # | medida | onde age | como se verifica |
-| --- | --- | --- | --- |
-| M-1 | Nunca versionado: `data/raw/` é ignorado pelo Git | repositório | `git check-ignore -v data/raw/listagem_2024_1.xlsx` |
-| M-2 | Nunca sai do ETL: nenhum passo publica, anexa ou copia as planilhas | workflow | inspeção — nenhum `upload-artifact` no workflow |
-| M-3 | Credencial de leitura, um repositório, revogável | GitHub | tela de secrets **da outra conta**, onde o token foi emitido |
-| M-4 | Arquivo anexado a versão publicada, não commitado | repositório privado | inspeção — release asset não entra no histórico |
-| M-5 | Entrada do workflow é efêmera: vive no runner e some | `ubuntu-latest` | — |
-| M-6 | Saída é agregada por construção | ETL | `tests/etl/test_privacy.py` |
-| M-7 | Segredo nunca referenciado por evento de pull request | gatilhos | só `workflow_dispatch` existe |
+| #   | medida                                                              | onde age            | como se verifica                                              |
+| --- | ------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------- |
+| M-1 | Nunca versionado: `data/raw/` é ignorado pelo Git                   | repositório         | `git check-ignore -v data/raw/listagem_2024_1.xlsx`           |
+| M-2 | Nunca sai do ETL: nenhum passo publica, anexa ou copia as planilhas | workflow            | inspeção — nenhum `upload-artifact` no workflow               |
+| M-3 | Credencial de leitura, um repositório, revogável                    | GitHub              | tela de secrets **da outra conta**, onde o token foi emitido  |
+| M-4 | Arquivo anexado a versão publicada, não commitado                   | repositório privado | `GET /git/blobs/<sha>` em 404 e `git fetch <sha>` sem sucesso |
+| M-5 | Entrada do workflow é efêmera: vive no runner e some                | `ubuntu-latest`     | —                                                             |
+| M-6 | Saída é agregada por construção                                     | ETL                 | `tests/etl/test_privacy.py`                                   |
+| M-7 | Segredo nunca referenciado por evento de pull request               | gatilhos            | só `workflow_dispatch` existe                                 |
 
 ### M-4 em detalhe, porque é a que substitui a prática anterior
 
@@ -48,6 +48,30 @@ apagar a versão atual não apaga nada, quem já clonou leva todas as versões, 
 removê-las exige reescrita de histórico que não alcança clones já feitos. Um
 arquivo **anexado a versão publicada** não tem histórico — a remoção é real. É a
 diferença entre "pedi para apagar" e "apagou".
+
+**Isto foi confirmado na prática, e não do jeito que se previa.** Em 2026-10-01 as
+seis planilhas chegaram commitadas no `main` de
+`henriqk0/indicadores-dados-listagem`. A resposta óbvia é reescrever o histórico
+e publicar as planilhas como assets. Fizemo-lo, e **não basta**:
+
+| verificação                        | depois do force-push       | depois de apagar e recriar |
+| ---------------------------------- | -------------------------- | -------------------------- |
+| clone novo                         | limpo, 1 commit            | limpo, 1 commit            |
+| `GET /git/blobs/<sha do plano>`    | **200**, bytes intactos    | **404**                    |
+| `git fetch <sha do commit antigo>` | **exit 0**, seis planilhas | **`not our ref`**          |
+
+A reescrita trocou os ponteiros dos ramos; os blobs ficaram no servidor, e um
+`curl` com token trouxia as planilhas de volta byte a byte. A M-4 continua por
+cumprir enquanto o repositório existir. Só a **eliminação do repositório** remove
+o objeto — o que também leva a release, e obriga a publicá-la de novo, com
+`asset_id` novos. Estado final verificado em 2026-10-01: repositório novo, um
+commit com README e `.gitignore`, release `v1` com os seis assets, blobs antigos
+em 404, e os assets descarregados com sha256 igual ao dos originais.
+
+A lição que fica registada: **force-push não é apagamento.** Qualquer plano de
+proteção de dados que conte com reescrita de histórico para satisfazer um
+requisito de apagamento está errado, e o teste que o prova é `GET /git/blobs/
+<sha>`, não `git log`.
 
 ## 3. Base legal declarada
 
@@ -89,6 +113,29 @@ Enquanto esses três pontos estiverem abertos, este repositório **tem uma
 pergunta de conformidade em aberto**, e declará-la é mais honesto que marcá-la
 como resolvida.
 
+### 4.1.1 Separação de contas, que não é separação de pessoas
+
+Verificado por API em 2026-10-01, e é um facto que o resto do documento supunha
+ao contrário:
+
+- `indicadores-dados-listagem` (o privado) é de `henriqk0`;
+- este repositório é de `RafaelDeps`;
+- `henriqk0` tem permissão `write` aqui;
+- `RafaelDeps` tem permissão `none` no privado.
+
+A primeira e a quarta linhas são favoráveis: o token **não** é emitido na conta
+dona do repositório que o consome, e quem controla o consumidor não consegue ler o
+dado. A terceira é que incomoda: **a mesma pessoa** emite o token, controla o
+repositório privado, escreve o `dados-insumo.yml` e faz o _merge_ deste
+repositório.
+
+O que limita o dano de um token vazado é o **âmbito** — `contents: read`, um
+reposititório, revogável na hora — e não a separação de titulares. Isto não é um
+defeito do plano de PAT: é uma consequência de o repositório privado e o
+consumidor serem mantidos pela mesma pessoa, e só deixa de ser verdade quando o
+privado passar a ter dono distinto. Fica declarado aqui porque um documento de
+proteção que o omite dá a impressão de um controlo que não existe.
+
 ### 4.2 Prazo de retenção e apagamento
 
 O art. 18 dá ao titular o direito de apagar dados sem necessidade de
@@ -112,14 +159,14 @@ provável e o menos visível.
 A lista é deliberadamente concreta. "Link no log não é credencial" é
 **incompleto**: a URL assinada de um asset **é**.
 
-| vetor | é risco? | por que / por que não |
-| --- | --- | --- |
-| link comum de asset no log | não | exige autenticação; o id não é segredo |
-| **URL assinada** de asset no log | **sim** | é credencial com validade própria |
-| configuração de workflow renderizada | **sim** | valor de secret renderizado em página de execução |
-| masking por substring exata | **sim** | o GitHub mascara o valor exato; variação de formato passa |
-| `data/raw/` em artifact de execução | **sim** | e o artifact vive ~90 dias, com soft-delete |
-| URL assinada em mensagem de commit | **sim** | vaza para quem ler o repositório depois |
+| vetor                                | é risco? | por que / por que não                                     |
+| ------------------------------------ | -------- | --------------------------------------------------------- |
+| link comum de asset no log           | não      | exige autenticação; o id não é segredo                    |
+| **URL assinada** de asset no log     | **sim**  | é credencial com validade própria                         |
+| configuração de workflow renderizada | **sim**  | valor de secret renderizado em página de execução         |
+| masking por substring exata          | **sim**  | o GitHub mascara o valor exato; variação de formato passa |
+| `data/raw/` em artifact de execução  | **sim**  | e o artifact vive ~90 dias, com soft-delete               |
+| URL assinada em mensagem de commit   | **sim**  | vaza para quem ler o repositório depois                   |
 
 Consequência prática: a checagem de conformidade é **por execução**, e precisa
 olhar a página de execução — não o YAML, que já está limpo por construção.
@@ -129,15 +176,15 @@ olhar a página de execução — não o YAML, que já está limpo por construç
 Cada medida da §2 tem dono e momento. As duas tabelas se juntam pelo número da
 medida: a §2 diz **como** se verifica, esta diz **quem** e **quando**.
 
-| # | responsável | quando se verifica |
-| --- | --- | --- |
-| M-1 | mantenedor | a cada alteração da regra de ignore, e a cada semestre |
-| M-2 | mantenedor | a cada alteração do workflow, e **a cada execução** |
-| M-3 | mantenedor | a cada semestre, e na saída da pessoa — na tela da **outra** conta, não nesta |
-| M-4 | mantenedor | a cada semestre |
-| M-5 | mantenedor | **a cada execução**, na página de execução |
-| M-6 | mantenedor | a cada alteração do ETL, por `make check` |
-| M-7 | mantenedor | a cada alteração do workflow |
+| #   | responsável | quando se verifica                                                            |
+| --- | ----------- | ----------------------------------------------------------------------------- |
+| M-1 | mantenedor  | a cada alteração da regra de ignore, e a cada semestre                        |
+| M-2 | mantenedor  | a cada alteração do workflow, e **a cada execução**                           |
+| M-3 | mantenedor  | a cada semestre, e na saída da pessoa — na tela da **outra** conta, não nesta |
+| M-4 | mantenedor  | a cada semestre                                                               |
+| M-5 | mantenedor  | **a cada execução**, na página de execução                                    |
+| M-6 | mantenedor  | a cada alteração do ETL, por `make check`                                     |
+| M-7 | mantenedor  | a cada alteração do workflow                                                  |
 
 Só **M-2** e **M-5** são por execução. São as duas que pegam vazamento de
 verdade: as outras cinco são estado, e valem enquanto ninguém mexe.
@@ -148,11 +195,19 @@ página da execução não contém dado individual e de que o runner é efêmero
 construção. Escrever um comando ali seria fabricar prova automática onde só
 existe prova visual.
 
+**M-4 verificada em 2026-10-01**, na altura em que o repositório privado foi
+recriado — o que deu a esta medida um comando que ela não tinha, e que é o que a
+coluna "como se verifica" da §2 passou a citar. Repetir a verificação significa
+repetir o `GET /git/blobs/<sha>` e o `git fetch <sha>`, e ambos têm de falhar.
+Reverificar no próximo semestre é barato e é a única forma de apanhar um
+`git add` distraído, que o `.gitignore` do repositório privado impede mas não
+proíbe.
+
 ### 6.1 Registro de verificação por execução
 
 | data da execução | M-2 (sem artifact) | M-5 (log sem dado individual) | verificado por |
-| --- | --- | --- | --- |
-| — | — | — | — |
+| ---------------- | ------------------ | ----------------------------- | -------------- |
+| —                | —                  | —                             | —              |
 
 Esta tabela começa vazia e é preenchida **depois** de cada execução real, com o
 que a página da execução mostrou. As cinco medidas de estado não entram aqui: são

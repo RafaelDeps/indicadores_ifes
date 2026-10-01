@@ -79,28 +79,28 @@ _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 ### Gate 1 — Princípio II (test-first)
 
-| Requisito | Avaliação |
-|---|---|
+| Requisito                                  | Avaliação                                                   |
+| ------------------------------------------ | ----------------------------------------------------------- |
 | Todo código de gate precede teste falhando | tasks.md T001–T003, T007 são RED explícitos, antes do GREEN |
 
 **PASS**. Nenhum item da feature escreve código sem teste anterior.
 
 ### Gate 2 — Princípio III (fidelidade ao relatório)
 
-| Requisito | Avaliação |
-|---|---|
+| Requisito                                       | Avaliação                                                                            |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------ |
 | Nenhum valor inventado, estimado ou interpolado | o gate não escreve valor; apenas compara presença. Derivado ausente permanece `null` |
 
-**PASS**. A feature aumenta a capacidade de *detectar* perda de fidelidade; não
+**PASS**. A feature aumenta a capacidade de _detectar_ perda de fidelidade; não
 altera nenhum cálculo.
 
 ### Gate 3 — Princípio IV (apenas agregado)
 
-| Requisito | Avaliação |
-|---|---|
-| Nenhum dado individual no repositório, log, PR ou artifact | FR-026 e FR-028 viram requisito explícito; T037 proíbe `upload-artifact`; `--raw` nunca é anexado |
+| Requisito                                                       | Avaliação                                                                                          |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Nenhum dado individual no repositório, log, PR ou artifact      | FR-026 e FR-028 viram requisito explícito; T037 proíbe `upload-artifact`; `--raw` nunca é anexado  |
 | Nada de individual em PR, log de execução ou mensagem de commit | FR-026; portão de verificação é M-2 e M-5 de [medidas-de-protecao.md](./medidas-de-protecao.md) §6 |
-| Credencial ausente do clone público | o PAT existe só como segredo de Actions; um clone não o expõe |
+| Credencial ausente do clone público                             | o PAT existe só como segredo de Actions; um clone não o expõe                                      |
 
 **PASS na análise de engenharia. Revisão de privacidade PENDENTE.**
 
@@ -124,16 +124,16 @@ Isso não é scrupilo: o grupo B é exatamente o que retira o dado do Brasil, e 
 
 ### Gate 4 — Princípio VI (automação com portões)
 
-| Requisito | Avaliação |
-|---|---|
+| Requisito                                  | Avaliação                                                                        |
+| ------------------------------------------ | -------------------------------------------------------------------------------- |
 | Publicação só após testes e build passarem | o grupo B **abre PR** e não envia direto; o merge passa pelo `quality` existente |
 
 **PASS**. A publicação no GitHub Pages continua dependente do job de qualidade.
 
 ### Gate 5 — Princípio I (simplicidade)
 
-| Requisito | Avaliação |
-|---|---|
+| Requisito                                  | Avaliação                                                                  |
+| ------------------------------------------ | -------------------------------------------------------------------------- |
 | Sem camada ou abstração além da necessária | 1 função de cobertura em 1 módulo; sem classe, sem registry, sem framework |
 
 **PASS**. Justificativa em Complexity Tracking: 2 chamadores de 1 regra
@@ -141,8 +141,8 @@ justificam 1 função compartilhada, sem camada de abstração.
 
 ### Gate 6 — Stack declarado
 
-| Requisito | Avaliação |
-|---|---|
+| Requisito           | Avaliação                |
+| ------------------- | ------------------------ |
 | Sem desvio da stack | nenhuma dependência nova |
 
 **PASS**.
@@ -231,13 +231,13 @@ pessoa está lendo é um registro ausente.
 Ver [research.md](./research.md). Cinco decisões, cada uma com alternativas
 avaliadas e rejeitadas:
 
-| # | decisão | pergunta respondida |
-| --- | --- | --- |
-| D1 | o que a cobertura compara | perda de cobertura por campo derivado, e não "derivado não nulo" |
-| D2 | onde a função mora, e o que cada chamador pergunta | duas funções puras em `etl/core/logic/`, dois chamadores em lugares distintos |
-| D3 | plataforma de acesso às planilhas | repositório privado + release asset + PAT fine-grained emitido na outra conta; por que nem App do GitHub nem pasta de conta de serviço |
-| D4 | como o export canônico é obtido | revisão fixa, e por que referência móvel é invisível ao portão |
-| D5 | por que não há agendamento | automatizar comportamento nunca observado |
+| #   | decisão                                            | pergunta respondida                                                                                                                    |
+| --- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| D1  | o que a cobertura compara                          | perda de cobertura por campo derivado, e não "derivado não nulo"                                                                       |
+| D2  | onde a função mora, e o que cada chamador pergunta | duas funções puras em `etl/core/logic/`, dois chamadores em lugares distintos                                                          |
+| D3  | plataforma de acesso às planilhas                  | repositório privado + release asset + PAT fine-grained emitido na outra conta; por que nem App do GitHub nem pasta de conta de serviço |
+| D4  | como o export canônico é obtido                    | revisão fixa, e por que referência móvel é invisível ao portão                                                                         |
+| D5  | por que não há agendamento                         | automatizar comportamento nunca observado                                                                                              |
 
 Sem `NEEDS CLARIFICATION` pendente na fase 0 — todas as decisões de arquitetura
 foram fechadas em conversa e o plano as formaliza.
@@ -288,15 +288,15 @@ problema é um pull request que não abre.
 
 ## Reavaliação do Constitution Check (pós-design)
 
-| Gate | Mudança no design | Resultado |
-|---|---|---|
-| I — Simplicidade | Nenhuma camada nova; o manifesto é dado, não abstração | PASS |
-| II — Test-first | Idem ao inicial | PASS |
-| III — Fidelidade | Gate não escreve valor | PASS |
-| IV — Agregado | Risco de residência declarado, **não decidido**; controles reduzem exposição sem eliminá-la | PASS na engenharia; **revisão de privacidade pendente**, e ela barra o merge do grupo B |
-| VI — Portões | Grupo B abre PR; Pages segue dependendo do `quality` | PASS |
-| Stack | Nenhuma dependência nova; `curl` do runner | PASS |
-| Spec 011 `Draft` | Alteração de contrato é feature própria | PASS |
+| Gate             | Mudança no design                                                                           | Resultado                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| I — Simplicidade | Nenhuma camada nova; o manifesto é dado, não abstração                                      | PASS                                                                                    |
+| II — Test-first  | Idem ao inicial                                                                             | PASS                                                                                    |
+| III — Fidelidade | Gate não escreve valor                                                                      | PASS                                                                                    |
+| IV — Agregado    | Risco de residência declarado, **não decidido**; controles reduzem exposição sem eliminá-la | PASS na engenharia; **revisão de privacidade pendente**, e ela barra o merge do grupo B |
+| VI — Portões     | Grupo B abre PR; Pages segue dependendo do `quality`                                        | PASS                                                                                    |
+| Stack            | Nenhuma dependência nova; `curl` do runner                                                  | PASS                                                                                    |
+| Spec 011 `Draft` | Alteração de contrato é feature própria                                                     | PASS                                                                                    |
 
 **Nenhuma violação de constitution que exija justificativa em Complexity
 Tracking.** A seção abaixo registra apenas a decisão que mais se aproxima do
@@ -308,11 +308,11 @@ limite.
 
 Nenhuma violação a justificar. Registrado para revisão futura:
 
-| Decisão | Alternativa mais simples rejeitada | Por quê |
-|---|---|---|
+| Decisão                                                                    | Alternativa mais simples rejeitada                         | Por quê                                                                                                                                                                                |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Funções de cobertura compartilhadas por 2 chamadores, em `etl/core/logic/` | Duplicar a comparação em `check_dados` e em `cadeia_dados` | A duplicação é equivalente em linhas, mas cria duas regras que podem divergir — e divergência silenciosa é exatamente o defeito que a feature corrige. FR-005 existe para impedir isso |
-| Perda de cobertura por campo derivado | Exigir derivado não nulo | Rejeitado **com dado medido**: 3 dos 6 arquivos `pilar1` do pacote têm NTE nulo legítimo. "Não nulo" reprovaria o pacote correto |
-| Nenhum nome de escopo na regra | Isentar `todos` por constante | Resolve o caso real e cria o próximo: um campus novo volta a gerar falso positivo, e a constante envelhece sem ninguém perceber |
-| Guarda mede cobertura do pacote atual | Guarda exigir cobertura de todo par do canônico | O canônico tem anos sem planilha. Exigir cobertura do canônico bloquearia toda execução a partir do primeiro semestre sem planilha |
-| Release asset em repo privado | Pasta no Drive + chave de conta de serviço | Rejeitado: credencial de longa duração em secret, e pasta pessoal sem escopo de repositório. Ver research §3 |
-| Revisão fixa do export canônico | Referência móvel (`main`) | Rejeitado: tornaria a entrada não-reprodutível, e o gate de cobertura **não** detectaria troca de insumo — ele compara cobertura, não identidade |
+| Perda de cobertura por campo derivado                                      | Exigir derivado não nulo                                   | Rejeitado **com dado medido**: 3 dos 6 arquivos `pilar1` do pacote têm NTE nulo legítimo. "Não nulo" reprovaria o pacote correto                                                       |
+| Nenhum nome de escopo na regra                                             | Isentar `todos` por constante                              | Resolve o caso real e cria o próximo: um campus novo volta a gerar falso positivo, e a constante envelhece sem ninguém perceber                                                        |
+| Guarda mede cobertura do pacote atual                                      | Guarda exigir cobertura de todo par do canônico            | O canônico tem anos sem planilha. Exigir cobertura do canônico bloquearia toda execução a partir do primeiro semestre sem planilha                                                     |
+| Release asset em repo privado                                              | Pasta no Drive + chave de conta de serviço                 | Rejeitado: credencial de longa duração em secret, e pasta pessoal sem escopo de repositório. Ver research §3                                                                           |
+| Revisão fixa do export canônico                                            | Referência móvel (`main`)                                  | Rejeitado: tornaria a entrada não-reprodutível, e o gate de cobertura **não** detectaria troca de insumo — ele compara cobertura, não identidade                                       |

@@ -1,0 +1,679 @@
+# Regeneração do pacote de dados a partir das planilhas oficiais.
+#
+# Contrato: specs/012-gate-proveniencia-workflow-dados/contracts/dados-workflow.md
+#
+# Quatro decisões que este arquivo existe para tornar verificáveis:
+#
+# 1. Só `workflow_dispatch`. Sem `schedule` — automatizar comportamento nunca
+#    observado (FR-024). Sem `pull_request` e **nunca** `pull_request_target`:
+#    este workflow tem um segredo de leitura, e dar acesso a segredo a código de
+#    pull request é a combinação que não se desfaz.
+# 2. A ordem dos passos torna impossível prosseguir com entrada parcial. Os
+#    quatro primeiros são a mesma pergunta — "tenho o insumo completo?" — e cada
+#    um fecha uma forma diferente de "pareço ter mas não tenho".
+# 3. A cadeia roda **duas vezes**, e as duas saídas são comparadas. É a única
+#    forma de verificar determinismo sem confundir "o resultado mudou" com "o
+#    resultado é instável". Custa 2,5 s medidos.
+# 4. Publicação por pull request, nunca envio direto. O merge passa pelo job
+#    `quality` de `deploy.yml`, que é o caminho de publicação de sempre.
+#
+# Nenhum passo ecoa nome, matrícula, data de nascimento ou tipo de cota: as
+# planilhas entram como arquivo, nunca são lidas nem impressas (FR-026). O
+# único lugar onde o conteúdo é aberto é a cadeia ETL, que produz agregado — e a
+# cadeia emite nome em `AVISO:`, o que os passos 7 e 8 redigem **antes** de
+# imprimir qualquer byte.
+#
+# `set -euo pipefail` aparece no início de cada bloco `run: |`, e a razão está
+# aqui uma vez só. O runner executa `shell: bash` como `bash -eo pipefail`, então
+# `-e` e `pipefail` já chegam **implícitos** — e essa dependência é invisível: quem
+# lê o passo não descobre que um `curl` que falha passaria reto, nem que um
+# `check-dados` que reprova sairia com 0. Foi assim que um `curl` reprovado chegou
+# a exit 0 numa versão anterior deste arquivo. Declarar explicitamente é o mesmo
+# que declarar a versão do Python: não muda o que roda, muda o que o arquivo diz.
+
+name: Regenerar pacote de dados
+
+on:
+  workflow_dispatch:
+
+# Sem `schedule` por decisão (FR-024), não por esquecimento.
+permissions:
+  contents: write
+  pull-requests: write
+
+# Serializa execuções concorrentes pelo mesmo pacote. `cancel-in-progress: false`
+# porque duas execuções sobre o mesmo pacote não são a mesma tarefa: cancelar a
+# que está em curso para começar outra deixaria o repositório em estado
+# intermediário sem que ninguém tenha pedido isso.
+concurrency:
+  group: regenerar-pacote-indicadores
+  cancel-in-progress: false
+
+jobs:
+  regenerar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r requirements-etl.txt
+
+      # Passo 1 — o segredo existe?
+      #
+      # Sem esta checagem, um segredo ausente viraria `401` no passo 3, e um 401
+      # não distingue "token revogado" de "token nunca existiu" de "workflow
+      # copiado para um repositório onde ele não está".
+      - name: Conferir o segredo de leitura
+        shell: bash
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          if [ -z "${DADOS_LEITURA_TOKEN:-}" ]; then
+            echo "::error::DADOS_LEITURA_TOKEN está ausente ou vazio neste repositório. Configure-o em Settings → Secrets and variables → Actions. Sem ele o download das planilhas não é possível."
+            exit 1
+          fi
+          echo "Segredo presente. O valor não é impresso em nenhum passo."
+
+      # Passo 2 — o manifesto é completo?
+      #
+      # Antes de qualquer chamada de rede. Um `dono` digitado errado e um
+      # repositório inexistente devolvem o mesmo 404, e a mensagem padrão do
+      # GitHub não diz qual dos dois faltou: validação de nome é o que separa
+      # "falta de entrada" de "falha de download".
+      #
+      # O manifesto é YAML, e este repositório não declara PyYAML — uma
+      # dependência a mais numa etapa que segura credencial é superfície de
+      # ataque que não se paga por conveniência de parsing. O leitor abaixo é
+      # deliberadamente **estrito**: aceita a gramática do manifesto e recusa
+      # qualquer linha que não reconheça. Recusar o desconhecido é o
+      # comportamento certo num validador de configuração.
+      - name: Ler e validar o manifesto de insumo
+        id: manifesto
+        shell: bash
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import pathlib
+          import re
+          import sys
+
+          ESPERADOS = 6
+          BRUTO = pathlib.Path("dados-insumo.yml")
+          if not BRUTO.is_file():
+              sys.exit(
+                  "dados-insumo.yml ausente na raiz do repositório. Ele é "
+                  "versionado de propósito: os identificadores dos assets não "
+                  "são segredo, e um workflow sem manifesto não sabe o que baixar."
+              )
+
+          RE_CHAVE = re.compile(r"^([a-z_]+):\s*(.*)$")
+          RE_ITEM = re.compile(r"^-\s+nome:\s*(\S+)\s*$")
+          RE_ATRIBUTO = re.compile(r"^([a-z_]+):\s*(\S*)\s*$")
+          RE_NOME = re.compile(r"^listagem_\d{4}_[12]\.xlsx$")
+          RE_REVISAO = re.compile(r"^[0-9a-f]{40}$")
+
+          def limpar(valor: str) -> str:
+              return valor.strip().strip("'\"") if valor.strip() else ""
+
+          topo: dict[str, str] = {}
+          arquivos: list[dict[str, str]] = []
+          export: dict[str, str] = {}
+          secao = ""
+
+          for numero, bruta in enumerate(BRUTO.read_text(encoding="utf-8").splitlines(), 1):
+              linha = bruta.split("#", 1)[0].strip()
+              if not linha:
+                  continue
+              if secao == "arquivos":
+                  achado = RE_ITEM.match(linha)
+                  if achado:
+                      arquivos.append({"nome": achado.group(1), "asset_id": ""})
+                      continue
+                  achado = RE_ATRIBUTO.match(linha)
+                  if achado and arquivos and achado.group(1) == "asset_id":
+                      arquivos[-1]["asset_id"] = limpar(achado.group(2))
+                      continue
+              if secao == "export_canonico":
+                  achado = RE_ATRIBUTO.match(linha)
+                  if achado:
+                      export[achado.group(1)] = limpar(achado.group(2))
+                      continue
+              achado = RE_CHAVE.match(linha)
+              if not achado:
+                  sys.exit(f"dados-insumo.yml:{numero}: linha não reconhecida: {bruta!r}")
+              chave, valor = achado.group(1), limpar(achado.group(2))
+              if chave in ("arquivos", "export_canonico"):
+                  secao = chave
+                  continue
+              topo[chave] = valor
+
+          problemas = []
+          for chave in ("versao", "dono", "repositorio"):
+              if not topo.get(chave):
+                  problemas.append(f"'{chave}' ausente ou vazio")
+          if len(arquivos) != ESPERADOS:
+              problemas.append(
+                  f"'arquivos' tem {len(arquivos)} entrada(s); são {ESPERADOS}"
+              )
+          for indice, arquivo in enumerate(arquivos, 1):
+              if not RE_NOME.match(arquivo.get("nome", "")):
+                  problemas.append(f"'arquivos'[{indice}]: nome inválido")
+              if not arquivo.get("asset_id", "").isdigit():
+                  problemas.append(f"'arquivos'[{indice}]: asset_id ausente ou não numérico")
+          for chave in ("repositorio", "caminho", "revisao"):
+              if not export.get(chave):
+                  problemas.append(f"'export_canonico.{chave}' ausente ou vazio")
+          if not RE_REVISAO.match(export.get("revisao", "")):
+              problemas.append(
+                  "'export_canonico.revisao' não tem 40 caracteres hexadecimais. "
+                  "Referência móvel não é reprodutível e o portão não a enxerga"
+              )
+
+          if problemas:
+              for problema in problemas:
+                  print(f"dados-insumo.yml: {problema}")
+              sys.exit(
+                  "Manifesto incompleto. A entrada parcial é o estado que "
+                  "produz o pacote degradado, então isto falha por nome, antes "
+                  "de qualquer download."
+              )
+
+          # Separados por **espaço**, não por vírgula com aspas de Python: o
+          # passo seguinte é bash, e `['a', 'b']` sobrevive a um `split(',')`
+          # com as aspas e os espaços grudados — os arquivos sairiam com o nome
+          # `['listagem_2024_1.xlsx'`. Nenhum nome de planilha contém espaço (o
+          # `RE_NOME` acima recusa), então o espaço é separador sem ambiguidade.
+          import os
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as saida:
+              saida.write(f"versao={topo['versao']}\n")
+              saida.write(f"dono={topo['dono']}\n")
+              saida.write(f"repositorio={topo['repositorio']}\n")
+              saida.write(f"asset_ids={' '.join(a['asset_id'] for a in arquivos)}\n")
+              saida.write(f"nomes={' '.join(a['nome'] for a in arquivos)}\n")
+              saida.write(f"canonico_repositorio={export['repositorio']}\n")
+              saida.write(f"canonico_caminho={export['caminho']}\n")
+              saida.write(f"canonico_revisao={export['revisao']}\n")
+          print("Manifesto válido: 6 planilhas e revisão fixa do export canônico.")
+          PY
+
+      # Passo 3 — obter as planilhas publicadas na versão versionada.
+      #
+      # `-f` impede gravar o corpo de erro HTTP dentro do `.xlsx` — um arquivo
+      # que "existe" e não abre. `-L` segue o redirecionamento para a URL
+      # assinada. Sem os dois, o resultado é um `.xlsx` de tamanho plausível e
+      # conteúdo inválido. `-s` silencia a barra de progresso; o valor do token
+      # nunca é impresso e nenhum passo liga `set -x`.
+      #
+      # O token fica no ambiente **deste passo apenas**: nenhum passo seguinte
+      # precisa dele, e o menor privilégio vale também dentro do próprio workflow.
+      - name: Obter as planilhas
+        shell: bash
+        # Um bloco `env:` só. Dois blocos no mesmo passo é chave duplicada: o
+        # parser do GitHub fica com o último, o token desaparece sem aviso e o
+        # download falha com 401 — que é exatamente o sintoma que o passo 1
+        # existe para tornar distinguível.
+        env:
+          DADOS_LEITURA_TOKEN: ${{ secrets.DADOS_LEITURA_TOKEN }}
+          DONO: ${{ steps.manifesto.outputs.dono }}
+          REPOSITORIO: ${{ steps.manifesto.outputs.repositorio }}
+          NOMES: ${{ steps.manifesto.outputs.nomes }}
+          ASSET_IDS: ${{ steps.manifesto.outputs.asset_ids }}
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          mkdir -p data/raw
+          api="https://api.github.com/repos/${DONO}/${REPOSITORIO}/releases/assets"
+          url_de_assets() {
+            curl -fsSL \
+              -H "Authorization: Bearer ${DADOS_LEITURA_TOKEN}" \
+              -H "Accept: application/octet-stream" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$1"
+          }
+          relatorio="$(mktemp)"
+          read -ra leitura <<< "$NOMES"
+          read -ra chaves <<< "$ASSET_IDS"
+          if [ "${#leitura[@]}" -ne "${#chaves[@]}" ]; then
+            echo "::error::Manifesto inconsistente: ${#leitura[@]} nome(s) e ${#chaves[@]} asset_id(s)."
+            exit 1
+          fi
+          for indice in "${!leitura[@]}"; do
+            nome="${leitura[$indice]}"
+            destino="data/raw/${nome}"
+            if url_de_assets "${api}/${chaves[$indice]}" > "${destino}"; then
+              echo "Baixado: ${nome} ($(wc -c < "${destino}") bytes)"
+            else
+              echo "Falhou: ${nome} (asset_id ${chaves[$indice]})"
+              echo "${nome}" >> "${relatorio}"
+            fi
+          done
+          if [ -s "${relatorio}" ]; then
+            echo "::error::Download parcial: $(wc -l < "${relatorio}") de ${#leitura[@]} planilhas não vieram. A pasta com entrada parcial é o estado que produz o pacote degradado."
+            exit 1
+          fi
+          rm -f "${relatorio}"
+
+      # Passo 4 — a contagem, que é o mais barato e o mais importante.
+      #
+      # Fecha a forma de falha que **não** se manifesta por erro: download
+      # parcial. Sem esta conferência a cadeia roda com 5 das 6 planilhas, e o
+      # pacote sai sem a cobertura do semestre faltante. A verificação de
+      # cobertura não pega esse caso, porque a perda está na origem e não no
+      # pacote: as duas pontas concordam em ser incompletas.
+      #
+      # `-size +0c` é o que fecha a outra metade: o `>` do download cria o
+      # arquivo **antes** do `curl` rodar, então um asset que devolveu 404 deixa
+      # um `.xlsx` de zero byte — que contaria como planilha. Contar arquivos
+      # vazios como planilhas seria trocar uma falha barulhenta por uma silenciosa.
+      - name: Conferir a contagem de planilhas
+        shell: bash
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          obtidas=$(find data/raw -maxdepth 1 -name 'listagem_*.xlsx' -size +0c | wc -l)
+          vazias=$(find data/raw -maxdepth 1 -name 'listagem_*.xlsx' -size 0c | wc -l)
+          if [ "${obtidas}" -ne 6 ] || [ "${vazias}" -ne 0 ]; then
+            echo "::error::Contagem de planilhas divergente: 6 esperadas e não vazias, ${obtidas} obtidas (${vazias} vazia(s))."
+            exit 1
+          fi
+          echo "6 planilhas presentes e não vazias."
+
+      # Passo 5 — o export canônico, por revisão fixa e pela rede pública.
+      #
+      # `raw.githubusercontent.com` na `revisao` do manifesto, **nunca** em
+      # `main`: a referência móvel é o que a spec 012 research D4 reprova.
+      # Nenhum token é usado aqui — o export canônico é público.
+      #
+      # `caminho_remoto` e o destino local são **coisas diferentes**, e
+      # sobrepô-las seria um defeito silencioso: no repositório de origem o
+      # ficheiro está em `data/exports/exports_canonical.zip`, e aqui tem de cair
+      # em `data/canonical/exports_canonical.zip`, que é a fronteira de
+      # isolamento declarada no README e o valor por omissão em `main.py`,
+      # `main_listagens.py`, `check_dados.py` e `cadeia_dados.py`. Reusar o
+      # caminho remoto como destino dava 404, porque a pasta `data/canonical/`
+      # não existe lá.
+      #
+      # O destino vem de `$DESTINO_CANONICO`, a constante do repositório, e não do
+      # manifesto: o manifesto descreve a origem, e o layout deste repositório
+      # não é propriedade do repositório de origem. O download vai para um
+      # ficheiro temporário e só depois é movido, para que um `curl` falhado não
+      # deixe um zip truncado no sítio onde a cadeia o vai ler.
+      #
+      # E o artefacto de origem é um **zip que contém um zip**. O
+      # `exports_canonical.zip` publicado em `horizon_etl` tem uma única entrada,
+      # `exports_canonical.zip`, que é o pacote canônico propriamente dito; a
+      # fonte canônica do ETL exige os ficheiros desenrolados na raiz. Isto não
+      # apareceu por leitura: foi a primeira execução real, e a falha apareceu
+      # dois passos mais tarde, como `'campuses_canonical.json' ausente no
+      # pacote ZIP` — que não diz nada sobre a causa.
+      #
+      # Desembrulhar aqui, e não no adaptador, é deliberado. O adaptador
+      # (`etl/adapters/sources/zip_canonical_source.py`) valida que os ficheiros
+      # obrigatórios estão na raiz; essa valiação é uma propriedade útil e
+      # escorregá-la para dentro do adaptador seria trocá-la por "desembrulha e
+      # depois vê". O workflow é a camada que fala com artefactos externos, e é
+      # lá que o formato de distribuição é entendido.
+      #
+      # A conferência dos ficheiros obrigatórios também é feita aqui, e é o que
+      # dá nome à falha: sem ela, um canônico do formato errado só se denuncia
+      # dentro da cadeia, onde a mensagem não distingue "não tem o ficheiro" de
+      # "veio de outra revisão".
+      - name: Obter o export canônico na revisão fixa
+        shell: bash
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          bruto="$(mktemp)"
+          desembrulhado="$(mktemp)"
+          trap 'rm -f "${bruto}" "${desembrulhado}"' EXIT
+
+          curl -fsSL -o "${bruto}" \
+            "https://raw.githubusercontent.com/${REPOSITORIO_CANONICO}/${REVISAO_CANONICO}/${CAMINHO_CANONICO}"
+          if [ ! -s "${bruto}" ]; then
+            echo "::error::Export canônico veio vazio do repositório ${REPOSITORIO_CANONICO} na revisão ${REVISAO_CANONICO}. A pasta canônica local não pode ficar com um arquivo truncado: a cadeia leria um pacote incompleto e o portão compararia cobertura contra o vazio."
+            exit 1
+          fi
+
+          echo "Bruto: ${CAMINHO_CANONICO} na revisão ${REVISAO_CANONICO} ($(wc -c < "${bruto}") bytes)."
+
+          BRUTO="${bruto}" DESTINO_TMP="${desembrulhado}" python3 - <<'PY'
+          import os
+          import shutil
+          import zipfile
+
+          bruto = os.environ["BRUTO"]
+          destino = os.environ["DESTINO_TMP"]
+          caminho = os.environ["CAMINHO_CANONICO"]
+
+          OBRIGATORIOS = (
+              "campuses_canonical.json",
+              "initiatives_canonical.json",
+              "researchers_canonical.json",
+              "students_canonical.json",
+              "articles_canonical.json",
+              "production_authors_canonical.json",
+              "production_types_canonical.json",
+          )
+          ANINHADO = "exports_canonical.zip"
+
+          def faltantes(nomes):
+              return [n for n in OBRIGATORIOS if n not in nomes]
+
+          with zipfile.ZipFile(bruto, "r") as externo:
+              nomes = set(externo.namelist())
+
+              if ANINHADO in nomes:
+                  # O artefacto de distribuição é um zip com o pacote canônico
+                  # dentro. Escreve-se só o interno; o externo vai para o lixo.
+                  with open(destino, "wb") as saida:
+                      saida.write(externo.read(ANINHADO))
+                  with zipfile.ZipFile(destino, "r") as interno:
+                      faltam = faltantes(set(interno.namelist()))
+                  print(
+                      f"Desembrulhado: '{ANINHADO}' trazia "
+                      f"{len(OBRIGATORIOS) - len(faltam)} dos "
+                      f"{len(OBRIGATORIOS)} ficheiros obrigatórios."
+                  )
+              elif not faltantes(nomes):
+                  # Já vinha no formato que a fonte canônica consome.
+                  with open(bruto, "rb") as entrada, open(destino, "wb") as saida:
+                      shutil.copyfileobj(entrada, saida)
+                  print("O pacote já vinha desenrolado; nenhum desembrulho foi preciso.")
+              else:
+                  faltam = faltantes(nomes)
+                  raise SystemExit(
+                      "::error::O export canônico em "
+                      f"'{caminho}' não tem os ficheiros obrigatórios na raiz, "
+                      f"e não é um arquivo de distribuição com '{ANINHADO}' "
+                      f"dentro. Faltam: {', '.join(faltam)}. Isto aponta para "
+                      "formato de insumo, não para revisão errada — reveja o "
+                      "`caminho` do manifesto."
+                  )
+
+          if faltam:
+              raise SystemExit(
+                  "::error::O pacote canônico desembrulhado está sem ficheiros "
+                  f"obrigatórios: {', '.join(faltam)}. A cadeia leria um pacote "
+                  "incompleto e o portão compararia cobertura contra o vazio."
+              )
+          PY
+
+          mkdir -p "$(dirname "${DESTINO_CANONICO}")"
+          # `mktemp` cria com modo 0600 e o `mv` preserva-o; o `curl -o` deixava
+          # 0644. A diferença é inofensiva num corredor com um só utilizador, mas
+          # um ficheiro que o resto da cadeia vai ler não deve herdar o modo
+          # restrito de um temporário por accidento.
+          chmod 0644 "${desembrulhado}"
+          mv "${desembrulhado}" "${DESTINO_CANONICO}"
+          echo "Export canônico pronto em ${DESTINO_CANONICO} ($(wc -c < "${DESTINO_CANONICO}") bytes)."
+        env:
+          REPOSITORIO_CANONICO: ${{ steps.manifesto.outputs.canonico_repositorio }}
+          CAMINHO_CANONICO: ${{ steps.manifesto.outputs.canonico_caminho }}
+          REVISAO_CANONICO: ${{ steps.manifesto.outputs.canonico_revisao }}
+          DESTINO_CANONICO: data/canonical/exports_canonical.zip
+
+      # Passo 6 — guardar o pacote versionado, antes de a cadeia tocar nele.
+      #
+      # `etl.main` escreve em `data/dist/indicadores.zip`, ou seja, **por cima** do
+      # arquivo versionado. Sem este retrato antes da corrida, a comparação do
+      # passo 9 seria o arquivo se comparando com ele mesmo.
+      - name: Guardar o pacote versionado
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cp data/dist/indicadores.zip /tmp/pacote-versionado.zip
+
+      # Passo 7 — a cadeia, em modo estrito, com o log higienizado.
+      #
+      # O workflow **não** define `SOFT`. Não é omissão: sob modo tolerante uma
+      # etapa pulada produz "não fez nada, sem erro", e isso é indistinguível de
+      # saúde. O modo continua opt-in e continua sendo ferramenta de máquina
+      # local.
+      #
+      # A segunda parte deste passo é a que FR-026 exige e que ninguém escreveu.
+      # A etapa 2 emite `AVISO: estudante duplicado ignorado (id: N, nome: <nome
+      # completo>)` — verificado numa corrida real: 5.704 linhas de log, milhares
+      # delas com nome de pessoa. Isso é nome em log de workflow, que FR-026
+      # proíbe nominalmente. A redação acontece **antes** de qualquer byte do log
+      # chegar à saída do passo, e não depois: redigir o que já foi impresso é
+      # não redigir.
+      #
+      # O `sed` só troca o parêntese do nome. O `id` fica: é chave interna e
+      # pseudônima, não é nome, matrícula, nascimento nem tipo de cota — as quatro
+      # coisas que FR-026 nomeia. O arquivo bruto fica em `/tmp` do runner, que é
+      # descartado com a máquina; nenhum `upload-artifact` (T037).
+      #
+      # A conferência final é a rede de proteção: se alguma rota nova do ETL
+      # imprimisse nome com outra forma, o padrão abaixo não a pegaria — e a
+      # conferê-la é o que transforma "redigi o que conheço" em "não vazou nome".
+      - name: Rodar a cadeia em modo estrito
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          set +e
+          make dados > /tmp/cadeia-bruta.log 2>&1
+          codigo=$?
+          set -e
+
+          sed -E 's/\(id: [0-9]+, nome: [^)]*\)/(id: RETIDO, nome: RETIDO)/g' \
+            /tmp/cadeia-bruta.log > /tmp/cadeia.log
+
+          # A conferência vem **antes** do `cat`, e isso é a parte que importa.
+          # Conferir depois de imprimir é conferir o que já vazou: a execução
+          # aborta, o nome já está no log do runner, e abortar não o desfaz. A
+          # ordem é redigir, conferir, imprimir — a única em que "não vazou" e
+          # "nada foi impresso" são a mesma afirmação.
+          #
+          # Só a contagem é impressa. Repetir a linha seria vazar o nome que o
+          # passo inteiro existe para não vazar.
+          sobrou=$(grep -cE 'nome: +[A-ZÁÂÃÀÉÊÍÓÔÕÚÇ][a-záâãàéêíóôõúç]+ ' /tmp/cadeia.log || true)
+          if [ "${sobrou}" -ne 0 ]; then
+            echo "::error::${sobrou} linha(s) do log ainda contém nome de pessoa após a redação. O log desta execução não foi impresso e não deve ser tratado como publicável."
+            exit 1
+          fi
+
+          cat /tmp/cadeia.log
+          echo "Log higienizado: nenhum nome de pessoa no log do passo."
+
+          if [ "${codigo}" -ne 0 ]; then
+            echo "::error::A cadeia falhou (exit ${codigo}); a saída acima é a do passo que parou."
+            exit "${codigo}"
+          fi
+
+          # O retrato da primeira corrida. É o que o passo 9 compara com a segunda.
+          cp data/dist/indicadores.zip /tmp/pacote-primeira.zip
+
+      # Passo 8 — determinismo, por segunda corrida.
+      #
+      # A spec 006 promete que insumo igual produz pacote byte a byte igual
+      # (FR-011). A única forma de verificar isso **em CI** é rodar a cadeia duas
+      # vezes com o mesmo insumo e comparar as duas saídas: uma única corrida não
+      # distingue "o resultado mudou" de "o resultado é instável", e essa
+      # distinção é justamente o que a promessa cobre.
+      #
+      # Custa uma corrida a mais — 2,5 s medidas nesta base, o que torna o preço
+      # irrelevante para um workflow de disparo manual.
+      #
+      # A entrada da segunda corrida é a **mesma** por construção: `etl.main` lê
+      # sempre de `data/canonical/exports_canonical.zip` e `etl-listagens` sempre de
+      # `data/raw/`. Nada entre as duas corridas muda nenhum dos dois, então
+      # "insumo inalterado" aqui não é uma suposição — é o estado do diretório.
+      #
+      # O log da segunda corrida é conferido pelo mesmo motivo e com o mesmo
+      # método da primeira: ela também emite nome em `AVISO:`.
+      - name: Conferir o determinismo com uma segunda corrida
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          set +e
+          make dados > /tmp/segunda-bruta.log 2>&1
+          codigo=$?
+          set -e
+
+          sed -E 's/\(id: [0-9]+, nome: [^)]*\)/(id: RETIDO, nome: RETIDO)/g' \
+            /tmp/segunda-bruta.log > /tmp/segunda.log
+          sobrou=$(grep -cE 'nome: +[A-ZÁÂÃÀÉÊÍÓÔÕÚÇ][a-záâãàéêíóôõúç]+ ' /tmp/segunda.log || true)
+          if [ "${sobrou}" -ne 0 ]; then
+            echo "::error::${sobrou} linha(s) da segunda corrida ainda contém nome de pessoa após a redação."
+            exit 1
+          fi
+          grep -cE '^(Merge concluído|Pacote gerado)' /tmp/segunda.log \
+            | sed 's/^/Linhas de confirmação da segunda corrida: /'
+          if [ "${codigo}" -ne 0 ]; then
+            echo "::error::A segunda corrida falhou (exit ${codigo}). Duas execuções da mesma entrada não podem discordar sobre sucesso."
+            exit "${codigo}"
+          fi
+
+          if ! cmp -s /tmp/pacote-primeira.zip data/dist/indicadores.zip; then
+            echo "::error::As duas corridas com o mesmo insumo produziram pacotes diferentes. É quebra de determinismo (spec 006 FR-011), e a falha é do portão, não do dado."
+            diff <(unzip -l /tmp/pacote-primeira.zip) <(unzip -l data/dist/indicadores.zip) || true
+            exit 1
+          fi
+          echo "Determinismo confirmado: as duas corridas com o mesmo insumo saíram byte a byte iguais."
+
+      # Passo 9 — o portão, e a prova de que ele rodou.
+      #
+      # `make check-dados` não é etapa nova no CI: o job `quality` de
+      # `deploy.yml` já o chama. Aqui ele é chamado porque o clone de CI não tem
+      # a origem — o `indicadores_listagens.zip` é gitignored — e portanto não
+      # poderia afirmá-la.
+      #
+      # A ausência da linha `INFO: cobertura de derivados não avaliada` não é
+      # decoração: no workflow a origem **existe** (a etapa 2 a produziu), então
+      # a ausência do `INFO:` é a evidência de que a Etapa 1.5 realmente rodou em
+      # vez de ter se declarado não avaliada.
+      - name: Conferir o contrato e a cobertura de derivados
+        shell: bash
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          make check-dados 2>&1 | tee /tmp/check-dados.log
+          if grep -q 'cobertura de derivados não avaliada' /tmp/check-dados.log; then
+            echo "::error::O portão declarou a cobertura não avaliada, mas neste workflow a origem existe. A Etapa 1.5 não rodou."
+            exit 1
+          fi
+          echo "Cobertura verificada: a Etapa 1.5 rodou e reprovaria se houvesse perda."
+
+      # Passo 10 — o pacote mudou contra o arquivo versionado?
+      #
+      # Esta é a pergunta que o passo 8 **não** faz, e a distinção é o ponto.
+      # "O resultado difere do versionado" tem duas leituras possíveis, e elas
+      # pedem ações opostas:
+      #
+      # - difere porque o insumo mudou → é o caminho normal, e a resposta é
+      #   abrir pull request;
+      # - difere porque a saída é instável → é quebra de determinismo, e a
+      #   resposta é interromper.
+      #
+      # A leitura literal do plano tratava as duas como a mesma e dizia "divergir
+      # interrompe", o que com a abertura de pull request do passo seguinte produz
+      # um workflow que **nunca pode terminar com sucesso**: insumo igual dá
+      # pacote igual, e pacote igual não tem o que ser commitado; insumo diferente
+      # dá pacote diferente, e aí a interrupção come o pull request. Separar as
+      # duas perguntas é o que torna os dois passos coerentes.
+      #
+      # O passo 8 já provou que a saída é estável, então daqui em diante divergir
+      # significa insumo novo.
+      - name: Conferir se o pacote mudou contra o versionado
+        id: mudanca
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if cmp -s data/dist/indicadores.zip /tmp/pacote-versionado.zip; then
+            echo "mudanca=false" >> "$GITHUB_OUTPUT"
+            echo "Pacote idêntico ao versionado: o insumo oficial não mudou desde o último merge."
+          else
+            echo "mudanca=true" >> "$GITHUB_OUTPUT"
+            echo "Pacote difere do versionado. O determinismo já foi confirmado no passo 8, então a diferença vem do insumo."
+            diff <(unzip -l /tmp/pacote-versionado.zip) <(unzip -l data/dist/indicadores.zip) || true
+          fi
+
+      # Passo 11 — pull request, nunca envio direto.
+      #
+      # O corpo carrega o resultado da verificação e **não** lista arquivos de
+      # entrada nem nome, matrícula ou nascimento.
+      #
+      # O `if` não é decoração: sem ele, insumo inalterado produziria um commit
+      # vazio e o `git commit` abortaria com "nothing to commit" — a execução
+      # ficaria vermelha por não ter havido nada a publicar, que é o resultado
+      # correto e o mais comum.
+      - name: Abrir pull request com o pacote
+        if: steps.mudanca.outputs.mudanca == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch="dados/$(date -u +%Y%m%d-%H%M%S)"
+          git switch -c "${branch}"
+          # Caminho explícito: nenhum outro arquivo pode entrar no pull request.
+          git add data/dist/indicadores.zip
+          git diff --cached --name-only
+          git commit -m 'regenera o pacote de indicadores a partir das planilhas oficiais'
+          git push origin "${branch}"
+          {
+            echo '## Pacote regenerado'
+            echo
+            echo "Plano de entrada: versão \`${VERSAO}\` do repositório privado, 6 planilhas."
+            echo "Export canônico: revisão \`${REVISAO_CANONICO}\` (fixa)."
+            echo
+            echo '### Verificação'
+            echo
+            echo '- contrato do pacote: **atende**'
+            echo '- cobertura de derivados: **verificada e preservada**'
+            echo '- determinismo: **confirmado byte a byte** por duas corridas com o mesmo insumo'
+            echo
+            echo 'O merge passa pelo job `quality`. Nenhum passo deste workflow'
+            echo 'consulta ou anexa arquivo de entrada.'
+          } > /tmp/corpo-pr.md
+          gh pr create \
+            --base main \
+            --head "${branch}" \
+            --title 'regenera o pacote de indicadores a partir das planilhas oficiais' \
+            --body-file /tmp/corpo-pr.md
+        env:
+          VERSAO: ${{ steps.manifesto.outputs.versao }}
+          REVISAO_CANONICO: ${{ steps.manifesto.outputs.canonico_revisao }}
+          # `gh` não herda nada de `.git/config`: ao contrário de `git push`, que o
+          # `actions/checkout` deixa autenticado por omissão, o `gh` exige
+          # `GH_TOKEN` ou `GITHUB_TOKEN` no ambiente e não conhece outro mecanismo
+          # de autenticação. Sem esta linha o passo falha aqui, no fim — depois de o
+          # insumo pessoal ter sido descarregado e de a cadeia ter corrido duas
+          # vezes.
+          #
+          # Este é o token do **workflow**, com o âmbito que `permissions:` dá a este
+          # job (`contents: write`, `pull-requests: write`). Não é
+          # `DADOS_LEITURA_TOKEN`, cujo âmbito é o repositório privado de insumo e que
+          # não escreve em lado nenhum.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # O outro fim: insumo inalterado é sucesso, e dizê-lo é melhor do que
+      # deixar quem lê a execução ver que nada foi aberto sem explicação.
+      - name: Registrar que não há o que publicar
+        if: steps.mudanca.outputs.mudanca != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Nenhum pull request aberto: o pacote regenerado é byte a byte igual ao versionado."
+          echo "O insumo oficial não mudou desde o último merge. Nada a fazer."
+
+# Nenhum `upload-artifact` neste workflow: os arquivos de entrada somem com o
+# runner, e um artifact esquecido seria o vetor de exposição mais óbvio e mais
+# difícil de perceber depois. A ausência se verifica por inspecção — T037.
