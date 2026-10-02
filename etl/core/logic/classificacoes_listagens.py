@@ -10,9 +10,26 @@ Regra geral: classificação por LISTA NEGATIVA explícita (igualdade exata apó
 coluna é considerado "de cota" (modalidade de reserva de vagas / ação
 afirmativa). As listas devem ser revisadas (e os testes atualizados) sempre que
 o conjunto de valores da fonte mudar.
+
+Exceção — `Situação Matrícula` é lista POSITIVA (fail-closed): só entra no NTE
+o que está em `SITUACOES_NTE`, e um valor novo na fonte é descartado até ser
+revisado, em vez de passar a contar. As colunas de cota são lista negativa
+(fail-open): lá, um valor novo conta como cota. A diferença importa porque um
+erro de lista positiva derruba um indicador, enquanto um erro de lista negativa
+infla um indicador.
+
+`SITUACOES_NTE` é a única lista que decide duas coisas ao mesmo tempo: quem entra
+no NTE (denominador do PIES) e quem tem o nome retido para o cruzamento NTECPP
+(numerador do PICOT). É deliberado: um concluinte que ingressou por cota e ainda
+consta da listagem é cotista tanto quanto um matriculado. Manter as duas decisões
+numa lista só impede que NTE e NTECPP divirjam sobre quem é o estudante.
+
+Os valores são comparados por igualdade exata, nunca por substring. `Não
+Concluído` e `Concludente` existem de verdade na fonte (87 e 66 ocorrências nos
+6 arquivos de 2024–2026) e NÃO podem ser contados como `Concluído`.
 """
 
-SITUACOES_NTE = frozenset({"Matriculado", "Formado"})
+SITUACOES_NTE = frozenset({"Matriculado", "Formado", "Concluído"})
 
 # Forma de matrícula (Desc_Cota) — NÃO de cota (contrato §2.1).
 NAO_COTA_FORMA_DE_MATRICULA = frozenset(

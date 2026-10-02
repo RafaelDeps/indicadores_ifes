@@ -245,6 +245,40 @@ def test_source_colhe_apenas_nomes_de_cotistas_para_o_match(
     )
 
 
+def test_source_reten_nome_de_cotista_concluido_para_o_ntecpp(
+    pasta_listagens: Path,
+) -> None:
+    """Um nome é retido para o cruzamento NTECPP se, e somente se, a mesma
+    condição do NTE for verdadeira — situação válida **e** as duas colunas de
+    cota. `Concluído` passa pela situação; `Não Concluído` não passa, mesmo
+    tendo as duas colunas de cota preenchidas."""
+    criar_listagem_xlsx(
+        pasta_listagens / "listagem_2025_1.xlsx",
+        ano=2025,
+        semestre=1,
+        campus="Serra",
+        linhas=[
+            linha(
+                "A1",
+                nome="Ana Concluida",
+                situacao="Concluído",
+                forma_ingresso="PS - Ação Afirmativa 1 - PPI",
+                cota="Aluno de Escola Pública com renda <= 1,5 SM por pessoa",
+            ),
+            linha(
+                "B2",
+                nome="Bruno Nao Concluido",
+                situacao="Não Concluído",
+                forma_ingresso="PS - Ação Afirmativa 1 - PPI",
+                cota="Aluno de Escola Pública com renda <= 1,5 SM por pessoa",
+            ),
+        ],
+    )
+    extraidas = ListagensXlsxSource(pasta_listagens).extract()
+
+    assert extraidas.nomes_cotistas == {("serra", 2025): {"ana concluida"}}
+
+
 def test_source_avisa_campus_divergente_entre_semestres(pasta_listagens: Path) -> None:
     criar_listagem_xlsx(
         pasta_listagens / "listagem_2025_1.xlsx",

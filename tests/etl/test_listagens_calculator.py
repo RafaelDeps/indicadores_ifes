@@ -49,7 +49,7 @@ def test_nte_matriculado_nos_dois_semestres_conta_uma_vez() -> None:
     assert calcular_nte_por_campus_ano(extraidas)[("serra", 2025)] == 1
 
 
-def test_nte_conta_somente_matriculado_e_formado() -> None:
+def test_nte_conta_matriculado_formado_e_concluido() -> None:
     extraidas = _extraidas(
         semestre1=[
             _estudante("m1", situacao="Matriculado"),
@@ -59,7 +59,60 @@ def test_nte_conta_somente_matriculado_e_formado() -> None:
             _estudante("t1", situacao="Trancado"),
         ]
     )
-    assert calcular_nte_por_campus_ano(extraidas)[("serra", 2025)] == 2
+    assert calcular_nte_por_campus_ano(extraidas)[("serra", 2025)] == 3
+
+
+def test_nte_deduplica_entre_semestres_some_e_nao_multiplica() -> None:
+    """Regra do denominador do PIES: +1 por matrícula, não +1 por linha.
+
+    A planilha traz a mesma matrícula em `listagem_<ano>_1` e `_2`. Somar as
+    linhas daria 2 para um estudante; o NTE tem de contar a matrícula única.
+    Este teste usa o par repetido e dois Exclusive, para que a contagem só feche
+    por deduplicação (não por omissão).
+    """
+    extraidas = _extraidas(
+        semestre1=[
+            _estudante("repetida"),  # aparece também no semestre 2
+            _estudante("so_s1"),
+        ],
+        semestre2=[
+            _estudante("repetida"),
+            _estudante("so_s2"),
+        ],
+    )
+    # 4 linhas com situação válida ⇒ 3 matrículas únicas. Se contasse por linha,
+    # daria 4; se perdesse um dos exclusivos, daria 2.
+    assert calcular_nte_por_campus_ano(extraidas)[("serra", 2025)] == 3
+
+
+def test_nte_deduplica_entre_semestres_com_concluido() -> None:
+    """A deduplicação vale para `Concluído` tanto quanto para `Matriculado`."""
+    extraidas = _extraidas(
+        semestre1=[_estudante("c1", situacao="Concluído")],
+        semestre2=[_estudante("c1", situacao="Concluído")],
+    )
+    assert calcular_nte_por_campus_ano(extraidas)[("serra", 2025)] == 1
+
+
+def test_nte_nao_conta_quase_concluidos() -> None:
+    """`Situação Matrícula` é lista positiva com igualdade exata.
+
+    Os três valores abaixo existem de verdade nas planilhas (66, 87 e 0
+    ocorrências, respectivamente) e NÃO são `Concluído`: o mais perigoso é
+    `Não Concluído`, que contém a string procurada como sufixo.
+    """
+    extraidas = _extraidas(
+        semestre1=[
+            _estudante("c1", situacao="Concluído"),
+            _estudante("c2", situacao="Concludente"),
+            _estudante("c3", situacao="Não Concluído"),
+            _estudante("c4", situacao="Concluido"),
+            _estudante("c5", situacao="Estagiario (Concludente)"),
+            _estudante("c6", situacao="Aguardando Colação de Grau"),
+            _estudante("c7", situacao="Aguard. Solicitar Certificação"),
+        ]
+    )
+    assert calcular_nte_por_campus_ano(extraidas)[("serra", 2025)] == 1
 
 
 def test_nte_conta_uma_vez_quando_janela_divergente() -> None:
@@ -153,6 +206,69 @@ def test_strip_na_classificacao() -> None:
         cota="  Aluno de Escola Pública com renda <= 1,5 SM por pessoa  ",
     )
     extraidas = _extraidas(semestre1=[cotista])
+    assert calcular_cotistas_por_campus_ano(extraidas)[("serra", 2025)] == 1
+
+
+def test_cotista_concluido_atravessa_o_portao_de_cota() -> None:
+    """`Concluído` também vale para o portão de cota/NTECPP.
+
+    A mesma constante decide quem entra no NTE e quem é retido como nome de
+    cotista para o cruzamento NTECPP. Um concluinte que entrou por cota e ainda
+    consta da listagem é cotista tanto quanto um matriculado — foi a decisão
+    registrada: uma constante só, sem segunda lista.
+    """
+    extraidas = _extraidas(
+        semestre1=[
+            _estudante(
+                "c1",
+                situacao="Concluído",
+                forma_ingresso="PS - Ação Afirmativa 1 - PPI",
+                cota=COTA_RESERVA_PPI,
+            )
+        ]
+    )
+    assert calcular_cotistas_por_campus_ano(extraidas)[("serra", 2025)] == 1
+
+
+def test_cotista_nao_concluido_nao_atravessa_o_portao_de_cota() -> None:
+    """O portão de cota tem de ser tão estrito quanto o NTE.
+
+    `Não Concluído` contém a string `Concluído` como sufixo e `Concludente` é
+    quase homônima. Se a comparação deixasse de ser exata, os dois entrariam
+    como cotistas e inflariam o NTECPP (e, portanto, o PICOT).
+    """
+    nao_cotistas = [
+        "Não Concluído",
+        "Concludente",
+        "Estagiario (Concludente)",
+        "Cancelado",
+        "Trancado",
+        "Aguard. Solicitar Certificação",
+        "Cancelamento Compulsório",
+    ]
+    extraidas = _extraidas(
+        semestre1=[
+            _estudante(
+                f"x{i}",
+                situacao=v,
+                forma_ingresso="PS - Ação Afirmativa 1 - PPI",
+                cota=COTA_RESERVA_PPI,
+            )
+            for i, v in enumerate(nao_cotistas)
+        ]
+    )
+    assert calcular_cotistas_por_campus_ano(extraidas)[("serra", 2025)] == 0
+
+
+def test_cotista_deduplicado_entre_semestres_com_concluido() -> None:
+    """Um concluinte presente nos dois semestres é +1, não +2, no portão de cota."""
+    c = _estudante(
+        "c1",
+        situacao="Concluído",
+        forma_ingresso="PS - Ação Afirmativa 1 - PPI",
+        cota=COTA_RESERVA_PPI,
+    )
+    extraidas = _extraidas(semestre1=[c], semestre2=[c])
     assert calcular_cotistas_por_campus_ano(extraidas)[("serra", 2025)] == 1
 
 
