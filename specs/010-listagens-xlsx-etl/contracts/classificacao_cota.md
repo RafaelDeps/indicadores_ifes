@@ -10,7 +10,7 @@ afirmativa). A contagem de cotistas exige que **ambas** as colunas sejam "de
 cota" (conjunção):
 
 ```
-cotista = situação ∈ {"Matriculado","Formado"}            (está no NTE)
+cotista = situação ∈ SITUACOES_NTE                    (está no NTE)
         ∧ forma_ingresso ∈ DE_COTA_INGRESSO
         ∧ forma_matricula_cota ∈ DE_COTA_MATRICULA
 ```
@@ -22,6 +22,13 @@ após `strip()` de espaços). Todo valor **não listado** como negativo em uma
 coluna é considerado "de cota" naquela coluna. A lista é um **contrato de
 dados versionado**: se o conjunto de valores da fonte mudar, a lista deve ser
 revisada (e os testes atualizados) antes de reexecutar.
+
+`Situação Matrícula` é a **exceção**: é lista **positiva** (§2.3), não negativa.
+A distinção é deliberada — nas colunas de cota a lista negativa é _fail-open_
+(um valor novo passa a contar como cota, inflando um indicador); em
+`Situação Matrícula` a lista positiva é _fail-closed_ (um valor novo é
+descartado até ser revisado, derrubando um indicador). Erro de lista positiva é
+visível e conservador; erro de lista negativa é silencioso e otimista.
 
 ### 2.1 `Desc_Cota` (forma de matrícula) — NÃO de cota
 
@@ -56,6 +63,36 @@ Todos os demais valores observados são de cota: modalidades Enem/SISU
 (`M1`–`M9`, `SISU - …`), Processo Seletivo de Ação Afirmativa (`PS - Ação
 Afirmativa 1/2 …`), e Pós-Graduação com reserva (`Pós-Graduação - PPI`,
 `Pós-Graduação - CD`).
+
+### 2.3 `Situação Matrícula` — valores que contam (lista positiva)
+
+1. `Matriculado`
+2. `Formado`
+3. `Concluído`
+
+Iguaisdades exatas, sempre. `Concluído` entrou na lista por decisão de dado
+(request de 2026-10-02) e vale, por essa mesma lista, para **as duas portas**:
+o NTE (denominador do PIES) e a retenção de nomes de cotistas para o cruzamento
+NTECPP (numerador do PICOT). Uma lista só, de propósito: manter as duas
+decisões separadas permitiria que NTE e NTECPP divergissem sobre quem é o
+estudante. Um concluinte que ingressou por cota e ainda consta da listagem é
+cotista tanto quanto um matriculado.
+
+Não contam, e o motivo importa porque os rótulos são quase homônimos:
+
+| Valor                            | Ocorrências | Por que está fora              |
+| -------------------------------- | ----------- | ------------------------------ |
+| `Cancelamento Compulsório`       | 2313        | desligamento administrativo    |
+| `Trancado`                       | 340         | trancamento de período         |
+| `Aguard. Solicitar Certificação` | 308         | aguardando certificação        |
+| `Cancelado`                      | 291         | desligamento voluntário        |
+| `Concludente`                    | 66          | quase idêntico a `Concluído`   |
+| `Não Concluído`                  | 87          | contém `Concluído` como sufixo |
+| `Estagiario (Concludente)`       | 16          | contém `Concludente`           |
+
+Nenhum casamento por substring é permitido em nenhum dos dois lados: `Não
+Concluído` contém a string procurada, e é justamente o caso que um `in` ou um
+`contains` deixaria entrar.
 
 ## 3. Casuística observada (validada nas 6 planilhas, câmpus Serra)
 
@@ -95,15 +132,36 @@ cota: `M1`–`M8` Enem (≈2400), `SISU - …` (≈370), `PS - Ação Afirmativa
 
 ## 4. Invariantes
 
-- `cotistas ⊆ NTE` (a conjunção exige situação matriculado/formado).
-- Lista negativa por coluna é uma constante versionada em
-  `etl/core/logic/classificacoes_listagens.py` (frozenset) — única fonte da
-  verdade; testes comparam contra casos tabulados do §3.
+- `cotistas ⊆ NTE` — a conjunção exige situação em `SITUACOES_NTE`. O NTE conta
+  quem tem situação válida; os cotistas são um subconjunto (os que também têm as
+  duas colunas de cota).
+- `NTE` conta **matrículas únicas**, não linhas. A mesma matrícula aparece em
+  `listagem_<ano>_1.xlsx` e `listagem_<ano>_2.xlsx`; somar as linhas daria +2 para
+  um estudante. Nos dados reais de 2026 são 4135 linhas com situação válida e
+  2425 matrículas únicas — a razão é 1,7, e por isso a soma ingênua inflaria o
+  denominador do PIES em ~70%.
+- Lista negativa por coluna e lista positiva de situação são constantes
+  versionadas em `etl/core/logic/classificacoes_listagens.py` (frozenset) —
+  única fonte da verdade; testes comparam contra casos tabulados do §3.
 
 ## 5. Números medidos (câmpus Serra, regra acima)
 
-| Ano  | NTE  | Cotistas (análise interna — base do cruzamento NTECPP) |
-| ---- | ---- | ------------------------------------------------------ |
-| 2024 | 1282 | 438                                                    |
-| 2025 | 1857 | 616                                                    |
-| 2026 | 2121 | 775                                                    |
+Medidos por `make dados` em 2026-10-02, depois da entrada de `Concluído`.
+"Antes" é a mesma medição com a constante anterior
+(`{"Matriculado","Formado"}`), para deixar o efeito explícito.
+
+| Ano  | NTE antes → depois | Cotistas antes → depois (análise interna — base do cruzamento NTECPP) | NTECPP | PIES | PICOT |
+| ---- | ------------------ | --------------------------------------------------------------------- | ------ | ---- | ----- |
+| 2024 | 1282 → **1989**    | 438 → 628                                                             | 97     | 18%  | 28%   |
+| 2025 | 1857 → **2338**    | 616 → 718                                                             | 107    | 18%  | 25%   |
+| 2026 | 2121 → **2425**    | 775 → 827                                                             | 102    | 16%  | 26%   |
+
+O PIES cai (+38% a +14% de denominador) porque `Concluído` representa 2331 das
+15086 linhas das planilhas e esses estudantes não estavam no denominador. O PICOT
+sobe (+7 p.p., +3 p.p., +1 p.p.) porque concluinte que ingressou por cota ainda
+consta da listagem e passa a ser cruzável com o universo de pesquisa.
+
+Os dois movimentos vão em sentidos opostos e nenhum dos dois é erro: é a
+consequência de aplicar a mesma definição de "quem é o estudante" nas duas
+portas. Se apenas o NTE mudasse, PIES e PICOT mediriam populações diferentes e a
+soma `PIES + PICOT` deixaria de ter sentido.

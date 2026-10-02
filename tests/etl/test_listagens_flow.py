@@ -14,8 +14,12 @@ from tests.etl.factories.listagens_factories import criar_listagem_xlsx, linha
 
 
 def _criar_2025_com_6_matriculados(pasta: Path) -> None:
-    """Serra/2025: NTE=5 (A1,B2,C3,E5,F6 únicos), cotistas=2 (A1,B2 com nomes
-    "Ana Costa" e "Bruno Lima"), para conferência exata do match NTECPP."""
+    """Serra/2025: NTE=6 (A1,B2,C3,D4,E5,F6 únicos), cotistas=2 (A1,B2 com nomes
+    "Ana Costa" e "Bruno Lima"), para conferência exata do match NTECPP.
+
+    D4 (`Concluído`) conta no NTE mas não é cotista (ingresso Ampla, cota
+    "Não possui"), então o NTECPP continua sendo 2. É o par que separa as duas
+    portas: estar no denominador não implica estar no universo de cotistas."""
     criar_listagem_xlsx(
         pasta / "listagem_2025_1.xlsx",
         ano=2025,
@@ -154,7 +158,7 @@ def test_flow_gera_pacote_fim_a_fim(tmp_path: Path) -> None:
         dados = json.loads(zf.read("pilar1_serra_2025.json"))
     pies = dados["indicadores"]["PIES"]
     picot = dados["indicadores"]["PICOT"]
-    assert pies["NTE_total_estudantes_matriculados"] == 5
+    assert pies["NTE_total_estudantes_matriculados"] == 6
     # NTECPP = match NEP × cotistas: Ana Costa e Bruno Lima coincidem (2);
     # Carol Dias não é cotista/não consta das listagens.
     assert picot["NTECPP_cotistas_em_pesquisa"] == 2
@@ -178,7 +182,7 @@ def test_flow_sem_fonte_canonica_ntecpp_null(tmp_path: Path) -> None:
     with zipfile.ZipFile(saida) as zf:
         dados = json.loads(zf.read("pilar1_serra_2025.json"))
     assert dados["indicadores"]["PICOT"]["NTECPP_cotistas_em_pesquisa"] is None
-    assert dados["indicadores"]["PIES"]["NTE_total_estudantes_matriculados"] == 5
+    assert dados["indicadores"]["PIES"]["NTE_total_estudantes_matriculados"] == 6
 
 
 def test_flow_e_deterministico(tmp_path: Path) -> None:

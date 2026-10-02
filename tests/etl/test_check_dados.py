@@ -33,6 +33,8 @@ def _registro_pilar1(
     *,
     nte: int | None = None,
     ntecpp: int | None = None,
+    percentual_pies: int | None = None,
+    percentual_picot: int | None = None,
     chave_removida: str | None = None,
 ) -> RegistroPilarJson:
     indicadores = {
@@ -50,13 +52,13 @@ def _registro_pilar1(
             "descricao": "Percentual de Estudantes Envolvidos em Pesquisa",
             "NEP_estudantes_em_pesquisa": None,
             "NTE_total_estudantes_matriculados": nte,
-            "percentual_calculado_PIES": None,
+            "percentual_calculado_PIES": percentual_pies,
         },
         "PICOT": {
             "descricao": "Percentual de Estudantes Cotistas Envolvidos em Pesquisa",
             "NTECPP_cotistas_em_pesquisa": ntecpp,
             "NEP_total_estudantes_em_pesquisa": None,
-            "percentual_calculado_PICOT": None,
+            "percentual_calculado_PICOT": percentual_picot,
         },
     }
     dados: dict = {
@@ -104,6 +106,31 @@ def test_check_dados_contrato_violado_erro(tmp_path: Path, capsys) -> None:
 
     assert rc == 1
     assert "ERRO:" in capsys.readouterr().err
+
+
+def test_check_dados_aceita_percentuais_derivados_pelo_merge(
+    tmp_path: Path, capsys
+) -> None:
+    """O pacote pós-merge carrega PIES%/PICOT% — a validação não pode barrá-los.
+
+    `CAMPOS_DERIVAVEIS_MERGE` é o mesmo conjunto que o merge autoriza; se
+    divergirem, `make check-dados` reprovaria um pacote que o próprio pipeline
+    gerou — o portão do CI viraria um bloqueador falso.
+    """
+    pacote = tmp_path / "indicadores.zip"
+    _escrever_zip(
+        pacote,
+        [
+            _registro_pilar1(
+                nte=1857, ntecpp=93, percentual_pies=23, percentual_picot=22
+            )
+        ],
+    )
+
+    rc = main(["--pacote", str(pacote), "--canonical", "", "--raw", ""])
+
+    assert rc == 0, capsys.readouterr().err
+    assert "ERRO:" not in capsys.readouterr().err
 
 
 # --- 2. Pacote em dia → 0, sem AVISO: e sem INFO: -----------------------------

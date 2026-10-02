@@ -70,16 +70,22 @@ describe('Orquestrador de Dataset Multi-Campus (src/lib/dataset.ts)', () => {
     expect(qspp).toBeDefined();
     expect(qspp?.valores[0].valor).toBe(bruto1.indicadores.QSPP.total_servidores_QSPP);
 
-    // PIES: percentual é null ("Dado indisponível" — contrato 004); NEP espelha o pacote
+    // PIES: o percentual vem do merge (NEP/NTE — spec 010 §5.1); NEP espelha o pacote
     const pies = indicadoresP1.find((i) => i.sigla === 'PIES');
     expect(pies).toBeDefined();
-    expect(pies?.valores[0].valor).toBeNull();
+    expect(pies?.valores[0].valor).toBe(bruto1.indicadores.PIES.percentual_calculado_PIES);
+    expect(pies?.valores[0].valor).not.toBeNull();
     const nepComp = pies?.componentes.find((c) => c.sigla === 'NEP');
     expect(nepComp?.valores[0].quantidade).toBe(bruto1.indicadores.PIES.NEP_estudantes_em_pesquisa);
+    const nteComp = pies?.componentes.find((c) => c.sigla === 'NTE');
+    expect(nteComp?.valores[0].quantidade).toBe(
+      bruto1.indicadores.PIES.NTE_total_estudantes_matriculados,
+    );
 
     const picot = indicadoresP1.find((i) => i.sigla === 'PICOT');
     expect(picot).toBeDefined();
-    expect(picot?.valores[0].valor).toBeNull();
+    expect(picot?.valores[0].valor).toBe(bruto1.indicadores.PICOT.percentual_calculado_PICOT);
+    expect(picot?.valores[0].valor).not.toBeNull();
   });
 
   it('deve carregar os 2 indicadores do Pilar 2 para Serra em 2026', () => {
