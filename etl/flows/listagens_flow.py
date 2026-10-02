@@ -32,7 +32,10 @@ NTECPP_MATCH_NOTA = (
     "chave disponível (não há matrícula no export canônico). Como o nome não "
     "identifica de forma inequívoca e a cobertura do cruzamento é parcial, o "
     "valor publicado é um piso do indicador real; interseção vazia é publicada "
-    "como null (Princípio III). Os percentuais PIES/PICOT permanecem null."
+    "como null (Princípio III). Os percentuais PIES/PICOT permanecem null "
+    "NESTE pacote porque o NEP não vem das listagens — o merge os calcula em "
+    "data/dist/indicadores.zip, onde NEP e NTE coexistem "
+    "(specs/010/contracts/saida_pacote.md §5.1)."
 )
 
 

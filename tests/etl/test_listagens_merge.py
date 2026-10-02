@@ -106,10 +106,13 @@ def test_merge_sobrepoe_apenas_nte_e_ntecpp() -> None:
     assert ind["NTPP"]["total_projetos_NTPP"] == 3
     assert ind["QSPP"]["total_servidores_QSPP"] == 2
     assert ind["PIES"]["NEP_estudantes_em_pesquisa"] == 10
-    assert ind["PIES"]["percentual_calculado_PIES"] is None
     # Campos derivados preenchidos a partir das listagens
     assert ind["PIES"]["NTE_total_estudantes_matriculados"] == 1857
     assert ind["PICOT"]["NTECPP_cotistas_em_pesquisa"] == 93
+    # Percentuais recalculados pelo merge a partir de NEP × NTE / NTECPP × NEP.
+    # NEP=10 e NTE=1857 ⇒ 0,54% ⇒ 1; NTECPP=93 sobre NEP=10 ⇒ 930%.
+    assert ind["PIES"]["percentual_calculado_PIES"] == 1
+    assert ind["PICOT"]["percentual_calculado_PICOT"] == 930
     # Demais arquivos do pacote presentes
     for nome in ["pilar2_serra_2025.json", "pilar3_serra_2025.json"]:
         assert nome in por_nome
@@ -337,3 +340,161 @@ def test_merge_cli_erro_quando_listagens_ausente(tmp_path: Path) -> None:
     )
     assert rc == 1
     assert not saida.exists()
+
+
+# ---------------------------------------------------------------------------
+# Recalculo dos percentuais PIES/PICOT pelo merge (PRINCIPIO II: testes antes
+# da implementacao).
+#
+# O fluxo canonico NAO tem NTE (vem das listagens) e por isso emite
+# `percentual_calculado_PIES`/`_PICOT` como null. Apos o merge os dois
+# ingredientes estao no mesmo arquivo, logo o percentual passa a ser
+# publicavel. Referencia de formula: `src/data/indicadores.ts`
+# (`PIES = (NEP / NTE) x 100`, `PICOT = (NTECPP / NEP) x 100`).
+# ---------------------------------------------------------------------------
+
+
+def _pilar1_do_merge(
+    *, nep: int | None, nte: int | None, ntecpp: int | None
+) -> tuple[RegistroPilarJson, RegistroPilarJson]:
+    """Par (canonico, listagens) de um pilar1 com NEP/NTE/NTECPP controlados."""
+    return (
+        _registro_pilar1("serra", 2025, nep=nep),
+        _registro_pilar1("serra", 2025, nte=nte, ntecpp=ntecpp),
+    )
+
+
+def _merge_percentuais(*, nep: int | None, nte: int | None, ntecpp: int | None) -> dict:
+    canonico, listagens = _pilar1_do_merge(nep=nep, nte=nte, ntecpp=ntecpp)
+    merged = merge_arquivos([listagens], [canonico])
+    dados = json.loads(next(r for r in merged if r.nome == PILAR1_SERRA_2025).conteudo)
+    return dados["indicadores"]
+
+
+def test_merge_recalcula_percentuais_com_numerador_e_denominador() -> None:
+    # Valores reais de Serra/2025: 422/1857 = 22,72% e 93/422 = 22,04%.
+    ind = _merge_percentuais(nep=422, nte=1857, ntecpp=93)
+
+    assert ind["PIES"]["percentual_calculado_PIES"] == 23
+    assert ind["PICOT"]["percentual_calculado_PICOT"] == 22
+
+
+def test_merge_percentual_e_inteiro() -> None:
+    """O contrato de saida aceita `int >= 0`; float seria violacao de fidelidade."""
+    ind = _merge_percentuais(nep=422, nte=1857, ntecpp=93)
+
+    for grupo, campo in (
+        ("PIES", "percentual_calculado_PIES"),
+        ("PICOT", "percentual_calculado_PICOT"),
+    ):
+        valor = ind[grupo][campo]
+        assert isinstance(valor, int)
+        assert not isinstance(valor, bool)
+
+
+def test_merge_percentual_arredonda_meia_para_cima() -> None:
+    """1/8 = 12,5% — arredondamento bancário (12) publicaria o valor errado."""
+    ind = _merge_percentuais(nep=1, nte=8, ntecpp=None)
+
+    assert ind["PIES"]["percentual_calculado_PIES"] == 13
+
+
+def test_merge_percentual_pies_null_sem_denominador_nte() -> None:
+    """NTE ausente (campus/ano sem listagens) deixa o percentual não publicável."""
+    ind = _merge_percentuais(nep=422, nte=None, ntecpp=93)
+
+    assert ind["PIES"]["NTE_total_estudantes_matriculados"] is None
+    assert ind["PIES"]["percentual_calculado_PIES"] is None
+
+
+def test_merge_percentual_picot_null_quando_ntecpp_e_null() -> None:
+    """NTECPP null = interseção vazia (Princípio III): não se publica 0%."""
+    ind = _merge_percentuais(nep=422, nte=1857, ntecpp=None)
+
+    assert ind["PIES"]["percentual_calculado_PIES"] == 23
+    assert ind["PICOT"]["NTECPP_cotistas_em_pesquisa"] is None
+    assert ind["PICOT"]["percentual_calculado_PICOT"] is None
+
+
+def test_merge_percentual_null_quando_denominador_e_zero() -> None:
+    """Divisão por zero não é publicável como 0% — seria um número inventado."""
+    ind = _merge_percentuais(nep=0, nte=0, ntecpp=0)
+
+    assert ind["PIES"]["percentual_calculado_PIES"] is None
+    assert ind["PICOT"]["percentual_calculado_PICOT"] is None
+
+
+def test_merge_percentual_picot_null_quando_nep_e_zero() -> None:
+    ind = _merge_percentuais(nep=0, nte=1857, ntecpp=5)
+
+    assert ind["PIES"]["percentual_calculado_PIES"] == 0
+    assert ind["PICOT"]["percentual_calculado_PICOT"] is None
+
+
+def test_merge_percentual_zerado_quando_numerador_e_zero() -> None:
+    """0 é um valor real aqui (NEP=0 => 0% de participação), não um placeholder."""
+    ind = _merge_percentuais(nep=0, nte=1857, ntecpp=None)
+
+    assert ind["PIES"]["percentual_calculado_PIES"] == 0
+
+
+def test_merge_nao_recalcula_percentual_de_pilar1_so_de_listagens() -> None:
+    """Sem par canônico não há NEP; o arquivo entra verbatim, com percentual null."""
+    lista_2025 = [_registro_pilar1("serra", 2025, nte=1857, ntecpp=93)]
+
+    merged = merge_arquivos(lista_2025, [_registro_pilar1("serra", 2024)])
+    entrada = next(r for r in merged if r.nome == PILAR1_SERRA_2025)
+
+    assert entrada.conteudo == lista_2025[0].conteudo
+
+
+def test_merge_cli_publica_percentuais_no_pacote(tmp_path: Path) -> None:
+    """Prova de ponta a ponta: o sink aceita os percentuais e o pacote os contém."""
+    zip_list = tmp_path / "listagens.zip"
+    zip_can = tmp_path / "canonico.zip"
+    saida = tmp_path / "saida.zip"
+    _escrever_zip(zip_list, [_registro_pilar1("serra", 2025, nte=1857, ntecpp=93)])
+    _escrever_zip(zip_can, [_registro_pilar1("serra", 2025, nep=422)])
+
+    rc = main(
+        [
+            "--listagens",
+            str(zip_list),
+            "--canonical",
+            str(zip_can),
+            "--saida",
+            str(saida),
+        ]
+    )
+
+    assert rc == 0
+    with zipfile.ZipFile(saida) as zf:
+        dados = json.loads(zf.read(PILAR1_SERRA_2025))
+    ind = dados["indicadores"]
+    assert ind["PIES"]["percentual_calculado_PIES"] == 23
+    assert ind["PICOT"]["percentual_calculado_PICOT"] == 22
+
+
+def test_merge_cli_aceita_percentual_zero(tmp_path: Path) -> None:
+    """0% é publicável (NEP=0 com NTE>0) e não pode ser barrado pela validação."""
+    zip_list = tmp_path / "listagens.zip"
+    zip_can = tmp_path / "canonico.zip"
+    saida = tmp_path / "saida.zip"
+    _escrever_zip(zip_list, [_registro_pilar1("serra", 2025, nte=1857, ntecpp=None)])
+    _escrever_zip(zip_can, [_registro_pilar1("serra", 2025, nep=0)])
+
+    rc = main(
+        [
+            "--listagens",
+            str(zip_list),
+            "--canonical",
+            str(zip_can),
+            "--saida",
+            str(saida),
+        ]
+    )
+
+    assert rc == 0
+    with zipfile.ZipFile(saida) as zf:
+        dados = json.loads(zf.read(PILAR1_SERRA_2025))
+    assert dados["indicadores"]["PIES"]["percentual_calculado_PIES"] == 0

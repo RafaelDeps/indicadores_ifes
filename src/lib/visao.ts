@@ -16,6 +16,13 @@ export interface VisaoMetrica {
   rotulo?: string;
   valorFormatado: string;
   unidade?: string;
+  /**
+   * `true` quando `valorFormatado` JÁ carrega a unidade como sufixo (o caso dos
+   * indicadores de percentual, que recebem `%` no próprio texto). Os cards e o
+   * banner de detalhe têm um `<span>` de unidade irmão; quando isto é `true` o
+   * span precisa ficar vazio, senão a tela mostra "23%%".
+   */
+  unidadeJaNoValor?: boolean;
   disponivel: boolean;
   deltaFormatado?: string;
   deltaPositivo?: boolean | null;
@@ -121,13 +128,14 @@ export function computarMetricaIndicador(
           positivo: null,
         };
 
-  const sufixoTipo = indCompleto?.tipoValor === 'percentual' ? '%' : undefined;
+  const ehPercentual = indCompleto?.tipoValor === 'percentual';
+  const sufixoTipo = ehPercentual ? '%' : undefined;
   const unidade =
     unidadePadrao ?? (indCompleto?.unidade ? indCompleto.unidade.toLowerCase() : sufixoTipo);
 
   let valorFormatado = TEXTO_INDISPONIVEL;
   if (disponivel) {
-    valorFormatado = formatValor(valor) + (indCompleto?.tipoValor === 'percentual' ? '%' : '');
+    valorFormatado = formatValor(valor) + (ehPercentual ? '%' : '');
   }
 
   const pilarNum = indCompleto?.pilarNumero ?? 1;
@@ -138,6 +146,7 @@ export function computarMetricaIndicador(
     rotulo: rotuloPadrao ?? indCompleto?.nome ?? sigla,
     valorFormatado,
     unidade: disponivel ? unidade : undefined,
+    unidadeJaNoValor: disponivel && ehPercentual,
     disponivel,
     deltaFormatado: delta.valorFormatado,
     deltaPositivo: delta.positivo,

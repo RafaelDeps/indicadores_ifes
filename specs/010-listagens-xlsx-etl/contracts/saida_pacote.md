@@ -28,10 +28,10 @@ Chaves de topo: `campus` (nome), `ano_referencia`, `pilar` (= `NOMES_PILARES[1]`
 | `QSPP`    | `total_servidores_QSPP`                  | `null` (não derivável)                                          |
 | `PIES`    | `NEP_estudantes_em_pesquisa`             | `null` (não derivável)                                          |
 | `PIES`    | **`NTE_total_estudantes_matriculados`**  | **`int` — NTE calculado**                                       |
-| `PIES`    | `percentual_calculado_PIES`              | `null` (percentual precisa de NEP)                              |
+| `PIES`    | `percentual_calculado_PIES`              | `null` (NEP não é derivável das listagens — ver §5.1)           |
 | `PICOT`   | **`NTECPP_cotistas_em_pesquisa`**        | **`int \| null` — cruzamento NEP × cotistas por nome (FR-012)** |
 | `PICOT`   | `NEP_total_estudantes_em_pesquisa`       | `null` (não derivável)                                          |
-| `PICOT`   | `percentual_calculado_PICOT`             | `null` (percentual precisa de NEP)                              |
+| `PICOT`   | `percentual_calculado_PICOT`             | `null` (NEP não é derivável das listagens — ver §5.1)           |
 
 > **Nota (FR-012)**: `NTECPP_cotistas_em_pesquisa` é o cruzamento por **nome
 > normalizado** entre os estudantes em pesquisa do export canônico (NEP) e os
@@ -111,14 +111,52 @@ Reuso integral de `formatar_arquivos_pilar` (`_montar_pilar2`/`_montar_pilar3`):
   `--canonical`); o merge apenas propaga o valor.
 - Para cada `pilar1_{campus}_{year}.json` do pacote listagens:
   - se existe no canônico → sobrepõe `PIES.NTE_total_estudantes_matriculados`
-    e `PICOT.NTECPP_cotistas_em_pesquisa`;
-  - se não existe → acrescenta o arquivo inteiro do pacote listagens.
-- Valida: **nenhum outro campo** do canônico é alterado (diff de chaves).
+    e `PICOT.NTECPP_cotistas_em_pesquisa`, e **recalcula** os dois
+    percentuais (abaixo);
+  - se não existe → acrescenta o arquivo inteiro do pacote listagens, verbatim.
+- Valida: **nenhum outro campo** do canônico é alterado (diff de chaves). As
+  exceções são exatamente os dois campos autorizados acima mais os dois
+  percentuais que o merge deriva deles.
 - Escreve `data/dist/indicadores.zip` deterministicamente (mesmas regras de
   ordenação/timestamps). Idempotente.
 - CLI: `python -m etl.scripts.merge_listagens_indicadores
 --listagens data/dist/indicadores_listagens.zip
 --canonical data/dist/indicadores.zip [--saida data/dist/indicadores.zip]`.
+
+### §5.1 Recálculo dos percentuais PIES/PICOT
+
+O merge é a **única** etapa do pipeline em que os dois ingredientes de cada
+quociente coexistem no mesmo arquivo: o NEP vem do canônico e o NTE/NTECPP das
+listagens. Por isso o merge também calcula:
+
+| Campo                        | Fórmula                | Numerador                                       | Denominador                                          |
+| ---------------------------- | ---------------------- | ----------------------------------------------- | ---------------------------------------------------- |
+| `percentual_calculado_PIES`  | `(NEP / NTE) × 100`    | `PIES.NEP_estudantes_em_pesquisa` (canônico)    | `PIES.NTE_total_estudantes_matriculados` (listagens) |
+| `percentual_calculado_PICOT` | `(NTECPP / NEP) × 100` | `PICOT.NTECPP_cotistas_em_pesquisa` (listagens) | `PICOT.NEP_total_estudantes_em_pesquisa` (canônico)  |
+
+As fórmulas espelham `src/data/indicadores.ts` (`PIES`/`PICOT`), que é o que o
+frontend exibe como métrica principal dos cards.
+
+- **Tipo**: `int >= 0` — o contrato de saída (§4) só admite `int` ou `null`, e
+  `float` seria violação de fidelidade.
+- **Arredondamento**: meia-para-cima (`Decimal`/`ROUND_HALF_UP`), nunca o
+  arredondamento bancário do `round()` — em artefato que exige determinismo
+  byte a byte (SC-003), e `1/8 = 12,5%` não pode virar `12`.
+- **`null`, nunca `0`**, quando o quociente não é publicável (Princípio III):
+  numerador `null` (ex.: NTECPP de interseção vazia), denominador `null` ou `0`.
+  Denominador `0` não vira `0%` porque isso afirmaria uma medição inexistente.
+  Já numerador `0` com denominador `> 0` **é** `0` (participação medida como
+  nula), não um placeholder.
+- **Pilar1 só de listagens** (sem par no canônico): o arquivo entra verbatim.
+  Não há NEP canônico, logo nenhum dos dois quocientes tem denominador e os
+  percentuais permanecem `null` — como na §2.
+- `CAMPOS_DERIVAVEIS_MERGE` (definido no merge) é o conjunto informado ao
+  `ZipIndicadoresSink` e ao `check-dados`: sem ele a validação recusaria um
+  pacote que o próprio pipeline gerou.
+
+> **Nota de provenance**: se o ETL canônico for reexecutado **depois** do merge,
+> os percentuais (e NTE/NTECPP) voltam a `null` no pacote — o merge precisa ser
+> repetido. É a mesma classe de cobertura perdida que a spec 012 documenta.
 
 ## 6. Códigos de saída e mensagens
 

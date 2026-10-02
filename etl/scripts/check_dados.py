@@ -4,7 +4,8 @@
 Contrato: `specs/011-etl-soft-mode-frescor/contracts/check-dados.md`.
 
 Etapa 1 — validação de contrato (reuso de `validar_arquivos_pilar` +
-`CAMPOS_DERIVAVEIS_LISTAGENS`): violação ⇒ `ERRO:` + exit 1.
+`CAMPOS_DERIVAVEIS_MERGE`, o mesmo conjunto que o merge autoriza): violação ⇒
+`ERRO:` + exit 1.
 Etapa 2 — avisos de frescor por `mtime` (nunca fatais, exit 0), comparando
 apenas entradas presentes; entradas ausentes viram **uma** linha `INFO:`
 informativa ("apenas o contrato foi validado") — sem falso alarme.
@@ -24,7 +25,9 @@ if raiz_repo not in sys.path:
 
 from etl.adapters.sinks.zip_indicadores_sink import validar_arquivos_pilar  # noqa: E402
 from etl.core.logic.models import RegistroPilarJson  # noqa: E402
-from etl.flows.listagens_flow import CAMPOS_DERIVAVEIS_LISTAGENS  # noqa: E402
+from etl.scripts.merge_listagens_indicadores import (  # noqa: E402
+    CAMPOS_DERIVAVEIS_MERGE,
+)
 
 PADRAO_PACOTE = "data/dist/indicadores.zip"
 PADRAO_CANONICAL = "data/canonical/exports_canonical.zip"
@@ -109,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
     # Etapa 1 — validação de contrato (reuso do validate_zip).
     try:
         registros = _ler_registros(caminho_pacote)
-        validar_arquivos_pilar(registros, campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)
+        validar_arquivos_pilar(registros, campos_derivaveis=CAMPOS_DERIVAVEIS_MERGE)
     except FileNotFoundError as exc:
         sys.stderr.write(f"ERRO: {exc}\n")
         return 1

@@ -10,7 +10,11 @@ from etl.adapters.sinks.zip_indicadores_sink import (
     NOMES_PILARES,
     SIGLAS_POR_PILAR,
 )
-from etl.flows.listagens_flow import CAMPOS_DERIVAVEIS_LISTAGENS
+from etl.scripts.merge_listagens_indicadores import (
+    CAMPOS_DERIVAVEIS_MERGE,
+    PERCENTUAIS_A_CALCULAR,
+    calcular_percentual,
+)
 
 # Total esperado = (Qtd. de campi + escopo "todos") × 3 pilares × 3 anos.
 # Os 3 anos de referência são o padrão do pipeline (`etl.main --anos`).
@@ -55,9 +59,10 @@ def test_indicadores_zip_fidelidade_e_schema() -> None:
 
                 for campo, valor in ind.items():
                     if campo in CAMPOS_QUE_DEVEM_SER_NULOS:
-                        if campo in CAMPOS_DERIVAVEIS_LISTAGENS:
-                            # Após o merge (merge-listagens), NTE/NTECPP podem estar
-                            # preenchidos com int >= 0 para campi cobertos pelas listagens.
+                        if campo in CAMPOS_DERIVAVEIS_MERGE:
+                            # Após o merge, NTE/NTECPP e os percentuais que ele
+                            # deriva podem estar preenchidos com int >= 0 para os
+                            # campi/anos cobertos pelas listagens.
                             derivavel_valido = valor is None or (
                                 isinstance(valor, int)
                                 and not isinstance(valor, bool)
@@ -70,6 +75,31 @@ def test_indicadores_zip_fidelidade_e_schema() -> None:
                             assert (
                                 valor is None
                             ), f"{nome}: {sigla}.{campo} deve ser null"
+
+            if pilar_num == 1:
+                _confere_percentuais_consistentes(nome, indicadores)
+
+
+def _confere_percentuais_consistentes(nome: str, indicadores: dict) -> None:
+    """`percentual_calculado_*` tem de bater com os próprios ingredients.
+
+    Este é o invariante que faltava quando o bug existia: o pacote trazia NEP e
+    NTE lado a lado, o frontend lia `percentual_calculado_PIES` como métrica
+    principal, e nada no reposito checava que o percentual publicável estivesse
+    preenchido — muito menos que, se preenchido, estivesse certo.
+
+    A verificação é nos dois sentidos: se o percentual não é `null`, tem de
+    igualar o quociente; se é `null`, tem de ser porque o quociente não é
+    publicável (e não por esquecimento).
+    """
+    for grupo, campo_pct, campo_num, campo_den in PERCENTUAIS_A_CALCULAR:
+        ind = indicadores[grupo]
+        esperado = calcular_percentual(ind[campo_num], ind[campo_den])
+        assert ind[campo_pct] == esperado, (
+            f"{nome}: {grupo}.{campo_pct} = {ind[campo_pct]!r} não bate com "
+            f"{campo_num}={ind[campo_num]!r} / {campo_den}={ind[campo_den]!r} "
+            f"(esperado {esperado!r})"
+        )
 
 
 def _campi_do_export_canonico() -> list[str]:

@@ -66,7 +66,9 @@ export function aplicarVisaoPilar(doc: Document, metricas: VisaoMetrica[]): void
 
     const elUnidade = doc.querySelector(`[data-card-unidade="${m.sigla}"]`);
     if (elUnidade) {
-      elUnidade.textContent = m.disponivel && m.unidade ? m.unidade : '';
+      // Se o valor já veio sufixado com a unidade ("23%"), o span fica vazio:
+      // preenchê-lo renderia "23%%".
+      elUnidade.textContent = m.disponivel && m.unidade && !m.unidadeJaNoValor ? m.unidade : '';
     }
 
     const elDelta = doc.querySelector(`[data-card-delta="${m.sigla}"]`);
@@ -211,7 +213,13 @@ export function aplicarVisaoDetalhe(doc: Document, visao: VisaoPaginaDetalhe): v
 
   const elUnidade = doc.querySelector('[data-detalhe-unidade]') as HTMLElement | null;
   if (elUnidade) {
-    if (visao.metricaPrincipal.disponivel && visao.metricaPrincipal.unidade) {
+    // `unidadeJaNoValor` evita repetir o sufixo que já está em `valorFormatado`
+    // (percentuais): o span some e o "%" do valor faz papel de unidade.
+    const mostrarUnidade =
+      visao.metricaPrincipal.disponivel &&
+      !!visao.metricaPrincipal.unidade &&
+      !visao.metricaPrincipal.unidadeJaNoValor;
+    if (mostrarUnidade) {
       elUnidade.textContent = visao.metricaPrincipal.unidade;
       if (elUnidade.style) elUnidade.style.display = '';
     } else {

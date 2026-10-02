@@ -5,12 +5,29 @@ Regra (contracts/saida_pacote.md §5):
 - Para cada `pilar1_{campus}_{year}.json` do pacote listagens:
   - se já existe no canônico → sobrepõe apenas
     `PIES.NTE_total_estudantes_matriculados` e
-    `PICOT.NTECPP_cotistas_em_pesquisa`;
-  - se não existe → acrescenta o arquivo inteiro do pacote listagens.
+    `PICOT.NTECPP_cotistas_em_pesquisa`, e **recalcula** os percentuais
+    `percentual_calculado_PIES`/`percentual_calculado_PICOT` (ver abaixo);
+  - se não existe → acrescenta o arquivo inteiro do pacote listagens, verbatim.
 - Nenhum outro campo do canônico é alterado (por construção: o merge só escreve
-  os 2 campos autorizados; a estrutura é conferida por diff de chaves).
+  os 2 campos autorizados mais os 2 percentuais que deriva deles; a estrutura é
+  conferida por diff de chaves).
 - Pilar 2/3: o canônico vence; só são acrescentados quando ausentes.
 - Escrita atômica e determinística (mesmas regras do ZipIndicadoresSink).
+
+Recalculo dos percentuais (única etapa do pipeline em que os dois ingredientes
+do quociente coexistem no mesmo arquivo):
+
+- `PIES  = (NEP / NTE) × 100`  — NEP vem do canônico, NTE das listagens;
+- `PICOT = (NTECPP / NEP) × 100` — NTECPP vem das listagens, NEP do canônico.
+
+Publica-se `int` (o contrato de saída só admite `int >= 0` ou `null`), arredondado
+meia-para-cima com `Decimal` — sem `float`, para não introduzir ruído binário
+num artefato que exige determinismo byte a byte (SC-003).
+
+O percentual é `null` — nunca `0` — quando o quociente não é publicável
+(Princípio III): numerador `null` (ex.: NTECPP de interseção vazia), denominador
+`null` ou `0`. Denominador `0` não vira `0%` porque isso seria afirmar uma
+medição que não existe.
 """
 
 from __future__ import annotations
@@ -21,6 +38,7 @@ import os
 import re
 import sys
 import zipfile
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 # Garante que a raiz do repositório esteja no sys.path para execução direta
@@ -37,12 +55,39 @@ from etl.flows.listagens_flow import CAMPOS_DERIVAVEIS_LISTAGENS  # noqa: E402
 
 PADRAO_PILAR1 = re.compile(r"^pilar1_([a-z0-9]+)_(\d{4})\.json$")
 
-# Únicos campos que o merge pode alterar em um pilar1 do canônico.
+# Únicos campos que o merge pode sobrescrever com valor vindo das listagens.
 CAMPOS_MERGE_AUTORIZADOS = frozenset(
     {
         ("PIES", "NTE_total_estudantes_matriculados"),
         ("PICOT", "NTECPP_cotistas_em_pesquisa"),
     }
+)
+
+# Campos que o merge abre exceção para no sink: além dos derivados das
+# listagens, os dois percentuais que o próprio merge calcula a partir deles.
+CAMPOS_DERIVAVEIS_MERGE = CAMPOS_DERIVAVEIS_LISTAGENS | frozenset(
+    {
+        "percentual_calculado_PIES",
+        "percentual_calculado_PICOT",
+    }
+)
+
+# (grupo, campo do percentual, campo do numerador, campo do denominador).
+# Cada percentual lê os dois ingredientes do próprio grupo — é justamente isso
+# que o fluxo canônico não conseguia fazer (NTE só chega depois do merge).
+PERCENTUAIS_A_CALCULAR = (
+    (
+        "PIES",
+        "percentual_calculado_PIES",
+        "NEP_estudantes_em_pesquisa",
+        "NTE_total_estudantes_matriculados",
+    ),
+    (
+        "PICOT",
+        "percentual_calculado_PICOT",
+        "NTECPP_cotistas_em_pesquisa",
+        "NEP_total_estudantes_em_pesquisa",
+    ),
 )
 
 
@@ -77,6 +122,43 @@ def _valor_derivado_valido(valor: object) -> bool:
     return isinstance(valor, int) and valor >= 0
 
 
+def calcular_percentual(numerador: object, denominador: object) -> int | None:
+    """`(numerador / denominador) × 100` arredondado, ou `None` se não publicável.
+
+    `None` (e nunca `0`) quando qualquer ingrediente falta ou o denominador é
+    `0`: nos três casos o quociente é uma afirmação sem lastro, que o Princípio III
+    proíbe. `bool` é rejeitado porque `isinstance(True, int)` é verdadeiro em
+    Python — um booleano que escapasse aqui viraria `100`.
+    """
+    for valor in (numerador, denominador):
+        if not isinstance(valor, int) or isinstance(valor, bool):
+            return None
+    if denominador <= 0:
+        return None
+    return int(
+        (Decimal(numerador) * 100 / Decimal(denominador)).quantize(
+            Decimal(1), rounding=ROUND_HALF_UP
+        )
+    )
+
+
+def _aplicar_percentuais(dados: dict) -> None:
+    """Recalcula `percentual_calculado_PIES`/`_PICOT` no `indicadores` in place.
+
+    Chamado só quando existe par canônico — é o canônico quem traz o NEP, e sem
+    NEP nenhum dos dois quocientes tem denominador.
+    """
+    indicadores = dados.get("indicadores", {})
+    for grupo, campo_pct, campo_num, campo_den in PERCENTUAIS_A_CALCULAR:
+        alvo = indicadores.get(grupo)
+        if not isinstance(alvo, dict) or campo_pct not in alvo:
+            raise ValueError(
+                f"campo de percentual ausente ({grupo}.{campo_pct}) — "
+                f"divergência de estrutura com o contrato"
+            )
+        alvo[campo_pct] = calcular_percentual(alvo.get(campo_num), alvo.get(campo_den))
+
+
 def merge_arquivos(
     listagens: list[RegistroPilarJson],
     canonico: list[RegistroPilarJson],
@@ -86,8 +168,8 @@ def merge_arquivos(
     Garantias por construção:
     - O merge parte de uma cópia de cada arquivo do canônico e só escreve os
       dois campos autorizados (PIES.NTE_total_estudantes_matriculados e
-      PICOT.NTECPP_cotistas_em_pesquisa), portanto nenhum outro campo do
-      canônico é alterado.
+      PICOT.NTECPP_cotistas_em_pesquisa) mais os dois percentuais derivados
+      deles, portanto nenhum outro campo do canônico é alterado.
     - Estrutura (diff de chaves) do pilar1 é conferida: listagens e canônico
       precisam ter o mesmo shape de indicadores.
     - Pilar 2/3: o canônico vence; só são acrescentados quando ausentes.
@@ -100,6 +182,8 @@ def merge_arquivos(
             dados_list = json.loads(registro_list.conteudo)
             registro_can = por_nome_can.get(registro_list.nome)
             if registro_can is None:
+                # Sem par canônico não há NEP: o arquivo entra verbatim, e o
+                # percentual segue `null` porque não tem denominador.
                 resultado[registro_list.nome] = registro_list
                 continue
 
@@ -128,6 +212,7 @@ def merge_arquivos(
                     )
                 if valor is not None:
                     dados_can["indicadores"][grupo][campo] = valor
+            _aplicar_percentuais(dados_can)
             resultado[registro_list.nome] = RegistroPilarJson(
                 registro_list.nome, _serializar(dados_can)
             )
@@ -156,7 +241,9 @@ def main(argv: list[str] | None = None) -> int:
         description=(
             "Integra NTE_total_estudantes_matriculados e "
             "NTECPP_cotistas_em_pesquisa (das listagens) no pacote canônico "
-            "indicadores.zip sem alterar nenhum outro campo."
+            "indicadores.zip, recalcula percentual_calculado_PIES e "
+            "percentual_calculado_PICOT a partir de NEP/NTE e NTECPP/NEP, e não "
+            "altera nenhum outro campo."
         )
     )
     parser.add_argument(
@@ -229,9 +316,9 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         registros = merge_arquivos(registros_listagens, registros_canonico)
-        validar_arquivos_pilar(registros, campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS)
+        validar_arquivos_pilar(registros, campos_derivaveis=CAMPOS_DERIVAVEIS_MERGE)
         sink = ZipIndicadoresSink(
-            caminho_saida, campos_derivaveis=CAMPOS_DERIVAVEIS_LISTAGENS
+            caminho_saida, campos_derivaveis=CAMPOS_DERIVAVEIS_MERGE
         )
         sink.load(registros)
     except ValueError as exc:

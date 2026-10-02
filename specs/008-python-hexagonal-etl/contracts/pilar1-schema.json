@@ -53,8 +53,8 @@
           "properties": {
             "descricao": { "type": "string" },
             "NEP_estudantes_em_pesquisa": { "type": "integer", "minimum": 0 },
-            "NTE_total_estudantes_matriculados": { "type": "null" },
-            "percentual_calculado_PIES": { "type": "null" }
+            "NTE_total_estudantes_matriculados": { "$ref": "#/$defs/derivavelInteiro" },
+            "percentual_calculado_PIES": { "$ref": "#/$defs/derivavelInteiro" }
           }
         },
         "PICOT": {
@@ -68,12 +68,19 @@
           "additionalProperties": false,
           "properties": {
             "descricao": { "type": "string" },
-            "NTECPP_cotistas_em_pesquisa": { "type": "null" },
+            "NTECPP_cotistas_em_pesquisa": { "$ref": "#/$defs/derivavelInteiro" },
             "NEP_total_estudantes_em_pesquisa": { "type": "integer", "minimum": 0 },
-            "percentual_calculado_PICOT": { "type": "null" }
+            "percentual_calculado_PICOT": { "$ref": "#/$defs/derivavelInteiro" }
           }
         }
       }
+    }
+  },
+  "$defs": {
+    "derivavelInteiro": {
+      "description": "Campo não coletável no export canônico: null na saída do ETL canônico, mas preenchido pelas listagens e/ou pelo merge (specs/010 §5 e §5.1). Inteiro >= 0 quando preenchido — float violaria o contrato de fidelidade.",
+      "type": ["integer", "null"],
+      "minimum": 0
     }
   }
 }
