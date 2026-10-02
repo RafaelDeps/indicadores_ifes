@@ -31,11 +31,15 @@ const Tag = status === 'ativo' && href ? 'a' : 'div';
     metricas.length > 0 && (
       <div class="grade-metricas">
         {metricas.map((m) => (
-          <div class="item-metrica">
+          <div class="item-metrica" data-metrica-item={m.sigla}>
             <span class="metrica-sigla">{m.sigla}</span>
             <div class="metrica-linha">
-              <span class="metrica-valor">{m.valor}</span>
-              {m.unidade && <span class="metrica-unidade">{m.unidade}</span>}
+              <span class="metrica-valor" data-metrica-valor={m.sigla}>
+                {m.valor}
+              </span>
+              <span class="metrica-unidade" data-metrica-unidade={m.sigla}>
+                {m.unidade ?? ''}
+              </span>
             </div>
             {m.rotulo && <span class="metrica-rotulo">{m.rotulo}</span>}
           </div>

@@ -1,0 +1,154 @@
+#!/bin/sh
+# Portão local de governança de dados — Indicadores IFES (Padrão Horizon).
+#
+# UMA REGRA SÓ: nenhum caminho que o .gitignore declara ignorado entra no
+# commit. A lista de caminhos NÃO é reescrita aqui — o .gitignore é a única fonte
+# da verdade. Foi duplicar a lista neste script que o deixou conferindo
+# diretórios que já não existem (`db/`, `data/exports/`), enquanto a regra real
+# passou a ser `data/canonical/`, `data/raw/`, `data/dist/indicadores_*.zip` e
+# os relatórios de execução. Se a regra mudar, este hook muda junto.
+#
+# O que CONTINUA versionado (e portanto passa):
+#   - data/dist/indicadores.zip — pacote de produção consumido pelo build do
+#     Astro no CI (FR-012 da spec 009; sem ele o deploy quebra);
+#   - os .gitkeep que preservam data/canonical/ e data/raw/;
+#   - qualquer relatório em data/reports/ que não esteja na lista de ignorados.
+#
+# Ativação (uma vez, por clone):
+#   git config core.hooksPath .githooks
+#
+# Verificação pontual de um caminho, sem precisar commitar nada:
+#   .githooks/pre-commit --check data/raw/listagem_2024_1.xlsx
+#
+# Referências: README.md §"Governança de Dados, Fidelidade e LGPD";
+# specs/009-reorganize-horizon-architecture/contracts/data-layout-contract.md §2;
+# specs/012-gate-proveniencia-workflow-dados/medidas-de-protecao.md §2 (M-1).
+
+set -eu
+
+# Pacote que DEVE continuar versionável. Se um `.gitignore` novo cobrir este
+# caminho, o portão falha aqui — antes do primeiro commit, não no deploy.
+pacote_producao='data/dist/indicadores.zip'
+
+# Teto por arquivo de dado versionado. O pacote publicado tem ~212 KB; 50 MB é
+# folga para o export completo de 23 campi. Acima disso o problema é upstream e
+# a resposta é `make check-dados`, não um commit enorme.
+max_data_bytes=50000000
+
+erro() {
+  printf '%s\n' "$@" >&2
+}
+
+# Formata a saída de `git check-ignore -v` (um registro por caminho, no formato
+# "<arquivo>:<linha>:<regra><TAB><caminho>") como "<caminho>  <-  <regra>".
+# Descarta os registros cujo padrão decisor começa com "!" (re-inclusão
+# explícita em .gitignore) — o check-ignore imprime a regra que decidiu, e uma
+# negação é justamente a decisão de permitir.
+violacoes_formatadas() {
+  awk -F '\t' '
+    $1 ~ /:[0-9]+:!/ { next }
+    $2 != "" { printf "%s  <-  %s\n", $2, $1 }
+  '
+}
+
+# ---------------------------------------------------------------- guarda 0
+# Invariante do pacote de produção: precisa continuar versionável.
+# check-ignore devolve 0 = ignorado, 1 = não ignorado (negações respeitadas),
+# >1 = falha real — e falha de consulta é fail-closed, não fail-open.
+codigo=0
+git check-ignore --no-index -q -- "$pacote_producao" || codigo=$?
+if [ "$codigo" -gt 1 ]; then
+  erro "Commit bloqueado: git check-ignore falhou ao ler as regras de ignore (exit $codigo)."
+  exit 1
+fi
+if [ "$codigo" -eq 0 ]; then
+  erro "Commit bloqueado: $pacote_producao passou a ser coberto por uma regra do .gitignore."
+  erro "Esse pacote é o artefato de produção consumido pelo build do Astro no CI"
+  erro "(FR-012 da spec 009); sem ele o deploy quebra. Ajuste a regra do .gitignore"
+  erro "e confira com:  git check-ignore -v $pacote_producao"
+  exit 1
+fi
+
+# ---------------------------------------------------------------- modo --check
+if [ "${1:-}" = '--check' ]; then
+  if [ "$#" -le 1 ]; then
+    erro "uso: $0 --check <caminho> [outro caminho ...]"
+    exit 2
+  fi
+  shift # sem isto, "--check" entraria na consulta como se fosse caminho
+  codigo=0
+  # um caminho por linha: check-ignore lê o que vier como caminho, e junção com
+  # espaço faria "a.xlsx b.xlsx" casar com um único padrão
+  casados=$(printf '%s\n' "$@" | git check-ignore --no-index -v --stdin) || codigo=$?
+  if [ "$codigo" -gt 1 ]; then
+    erro "Falha ao consultar as regras de ignore (git check-ignore, exit $codigo)."
+    exit 1
+  fi
+  violacoes=$(printf '%s\n' "$casados" | violacoes_formatadas)
+  if [ -n "$violacoes" ]; then
+    printf '%s\n' "Ignorado pelo .gitignore (não versionar):" >&2
+    printf '%s\n' "$violacoes" >&2
+    exit 1
+  fi
+  printf '%s\n' "OK: nenhum dos caminhos é ignorado pelo .gitignore."
+  exit 0
+fi
+
+# ---------------------------------------------------------------- staged
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -n "$staged" ] || exit 0
+
+# ---------------------------------------------------------------- guarda 1
+# Dado bruto, individual e artefatos parciais não entram no histórico.
+#
+# --no-index de propósito: sem ele, um arquivo já no índice (por `git add -f`)
+# pararia de ser considerado ignorado e passaria limpo pelo portão.
+codigo=0
+casados=$(printf '%s\n' "$staged" | git check-ignore --no-index -v --stdin) || codigo=$?
+if [ "$codigo" -gt 1 ]; then
+  erro "Commit bloqueado: git check-ignore falhou ao ler as regras de ignore (exit $codigo)."
+  exit 1
+fi
+violacoes=$(printf '%s\n' "$casados" | violacoes_formatadas)
+
+if [ -n "$violacoes" ]; then
+  erro "Commit bloqueado: caminhos que o .gitignore declara ignorados não entram no histórico:"
+  printf '%s\n' "$violacoes" >&2
+  erro ""
+  erro "Motivo: dado bruto/individual (LGPD, Princípio IV) e artefatos parciais"
+  erro "pertencem só à máquina — data/canonical/, data/raw/, data/dist/indicadores_*.zip"
+  erro "e os relatórios de execução são regerados a cada ETL."
+  erro ""
+  erro "Para desfazer o staging:  git restore --staged <caminho>"
+  erro "'git add -f' é barrado de propósito. O pacote de produção segue versionável:"
+  erro "$pacote_producao"
+  exit 1
+fi
+
+# ---------------------------------------------------------------- guarda 2
+# Teto de tamanho para o dado que é versionado.
+grandes=""
+while IFS= read -r path; do
+  case "$path" in
+    data/*)
+      if [ -f "$path" ]; then
+        size=$(wc -c <"$path" | tr -d ' ')
+        if [ "$size" -gt "$max_data_bytes" ]; then
+          grandes="$grandes  $path ($size bytes)\n"
+        fi
+      fi
+      ;;
+  esac
+done <<EOF
+$staged
+EOF
+
+if [ -n "$grandes" ]; then
+  erro "Commit bloqueado: arquivo de dado acima do teto de $max_data_bytes bytes:"
+  printf '%b' "$grandes" >&2
+  erro ""
+  erro "O pacote publicado costuma ter ~212 KB. Um pacote grande demais indica"
+  erro "entrada errada ou campus indevido: rode  make check-dados  e refaça com"
+  erro "make dados (nunca make etl isolado para o pacote público)."
+  exit 1
+fi

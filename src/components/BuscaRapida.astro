@@ -1,0 +1,167 @@
+---
+/* Componente de Busca Rápida de Indicadores no Cabeçalho */
+---
+
+<div class="busca-container">
+  <div class="busca-input-wrapper">
+    <svg
+      class="icone-lupa"
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input
+      type="search"
+      class="busca-input"
+      data-busca-input
+      role="combobox"
+      aria-expanded="false"
+      aria-autocomplete="list"
+      aria-controls="busca-resultados-lista"
+      placeholder="Buscar indicador..."
+      aria-label="Buscar indicador por sigla, nome ou palavra-chave"
+      autocomplete="off"
+    />
+  </div>
+
+  <ul
+    id="busca-resultados-lista"
+    class="busca-resultados"
+    data-busca-resultados
+    role="listbox"
+    hidden
+  >
+  </ul>
+</div>
+
+<style>
+  .busca-container {
+    position: relative;
+    width: 100%;
+    max-width: 220px;
+  }
+
+  @media (min-width: 1024px) {
+    .busca-container {
+      max-width: 260px;
+    }
+  }
+
+  .busca-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .icone-lupa {
+    position: absolute;
+    left: 0.65rem;
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+
+  .busca-input {
+    width: 100%;
+    padding: 0.35rem 0.65rem 0.35rem 2rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .busca-input:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-emerald-50);
+  }
+
+  .busca-resultados {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    margin: 0;
+    padding: 0.35rem 0;
+    list-style: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  .busca-resultados:empty,
+  .busca-resultados[hidden] {
+    display: none;
+  }
+
+  :global(.busca-item) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.15s ease;
+  }
+
+  :global(.busca-item:last-child) {
+    border-bottom: none;
+  }
+
+  :global(.busca-item:hover),
+  :global(.busca-item[aria-selected='true']) {
+    background-color: var(--color-emerald-50);
+  }
+
+  :global(.busca-item-topo) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  :global(.busca-sigla) {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--color-primary-dark);
+  }
+
+  :global(.busca-pilar) {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  :global(.busca-nome) {
+    font-size: 0.8rem;
+    color: var(--color-ink);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.busca-vazio) {
+    padding: 0.75rem;
+    font-size: 0.825rem;
+    color: var(--color-muted);
+    text-align: center;
+  }
+</style>

@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-21
 
-**Status**: Draft
+**Status**: Superseded (identidade Horizon não prevaleceu no frontend atual — substituída pelas specs 003 e 005)
 
 **Input**: User description: "Redesign the visual identity of the dashboard to follow the Horizon brand system, the design language already used by the sibling project ifesserra-lab/horizon_dashboard (documented in that repo's BRANDING.md; ignore its DESIGN.md, which is an unrelated Apple design analysis left in that repo by mistake). This is a visual redesign only — no changes to data, routes, or the data contract. [...] Institutional color palette (light/dark variants), thin institutional stripe of four vertical color bars (yellow, green, red, blue) at the very top of every page, Ubuntu/Ubuntu Mono typography self-hosted with weights 400/500/700 only, sober institutional pt-BR voice, indicator cards with 1px border and no decorative shadows, accessibility controls (theme light/dark/auto, contrast normal/high/maximum, font size) meeting WCAG AA in every combination. Out of scope: indicator values, JSON data contract, set of pages/routes."
 

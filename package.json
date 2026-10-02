@@ -8,8 +8,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run tests/web",
+    "test:web": "vitest run tests/web",
+    "test:watch": "vitest tests/web",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

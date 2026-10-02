@@ -1,5 +1,23 @@
 <!--
-=== SYNC IMPACT REPORT ===
+=== SYNC IMPACT REPORT — AMENDMENT 1.1.0 (2026-09-29) ===
+Version change: 1.0.0 → 1.1.0 (Minor: expanded guidance — no principle removed)
+Modified principles: II (test runner rule no longer "Vitest only")
+Added sections: none
+Removed sections: none
+Summary: ETL pipeline (etl/, tests/etl/) uses pytest; frontend uses Vitest.
+  Principle II, Technology stack constraint, and Workflow step 1 updated to
+  reflect the layer-specific runner. This codifies the documented deviation
+  recorded in specs/010 plan.md (Complexity Tracking).
+Templates requiring updates:
+  ✅ .specify/templates/plan-template.md — Constitution Check gate is generic
+     and derives gates from this file; no change needed
+  ✅ .specify/templates/spec-template.md — compatible; no change needed
+  ✅ .specify/templates/tasks-template.md — tests remain MANDATORY per
+     Principle II (unchanged in that respect); no change needed
+  ✅ .specify/templates/commands/ — directory absent; no command files to review
+  ✅ README.md / docs/ — no runtime guidance to update
+Follow-up TODOs: none
+=== ORIGINAL RATIFICATION REPORT (1.0.0, 2026-09-21) ===
 Version change: (none, unfilled template) → 1.0.0
 Modified principles: N/A (initial ratification)
 Added sections:
@@ -39,12 +57,13 @@ complexity is the main maintenance risk for a project of this size.
 
 ### II. Test-First Development (NON-NEGOTIABLE)
 
-Tests MUST be written before the code they cover, using Vitest as the only
-test runner. This discipline is mandatory for indicator calculations and data
-formatting: a calculation or formatter MUST NOT be implemented before a
-failing test exists for it (red → green → refactor). **Rationale**: indicator
-values are the product; numeric regressions are the most damaging and least
-visible defects this project can ship.
+Tests MUST be written before the code they cover. The test runner is
+layer-specific: **Vitest** for the frontend (TypeScript/Astro) and **pytest**
+for the ETL pipeline (Python). This discipline is mandatory for indicator
+calculations and data formatting: a calculation or formatter MUST NOT be
+implemented before a failing test exists for it (red → green → refactor).
+**Rationale**: indicator values are the product; numeric regressions are the
+most damaging and least visible defects this project can ship.
 
 ### III. Fidelity to Report Data
 
@@ -81,9 +100,10 @@ broken content; gates are cheaper than rollbacks.
 
 ## Additional Constraints
 
-- **Technology stack**: Astro (static output) + TypeScript + Vitest.
-  Deviations MUST be justified in the implementation plan's Complexity
-  Tracking section.
+- **Technology stack**: Astro (static output) + TypeScript + Vitest for the
+  frontend; Python 3 + pytest for the ETL pipeline (`etl/`, tests in
+  `tests/etl/`). Deviations MUST be justified in the implementation plan's
+  Complexity Tracking section.
 - **Static only**: no server-side runtime, no backend, no database; data
   ships as static assets produced at build time.
 - **Language policy**: user-facing text and UI labels in pt-BR; code
@@ -94,7 +114,8 @@ broken content; gates are cheaper than rollbacks.
 
 ## Quality and Deployment Workflow
 
-1. Red: write a failing Vitest test for the calculation or formatting change.
+1. Red: write a failing test (pytest for ETL; Vitest for frontend) for the
+   calculation or formatting change.
 2. Green: implement the minimum code needed to pass.
 3. Refactor: clean up while ESLint and Prettier remain error-free.
 4. Verify displayed values against the report before opening a PR.
@@ -115,4 +136,4 @@ broken content; gates are cheaper than rollbacks.
   MUST be either justified in the plan's Complexity Tracking section or
   rejected.
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-21 | **Last Amended**: 2026-09-21
+**Version**: 1.1.0 | **Ratified**: 2026-09-21 | **Last Amended**: 2026-09-29

@@ -1,0 +1,125 @@
+---
+/* Seletor acessível de Tema com 2 botões: Claro (Sol) e Escuro (Lua) */
+---
+
+<div class="seletor-tema-grupo" role="group" aria-label="Alternar tema visual">
+  <button
+    type="button"
+    class="btn-tema"
+    data-btn-tema="claro"
+    aria-label="Ativar tema claro"
+    title="Tema claro"
+  >
+    <!-- Ícone Modo Claro (Sol) -->
+    <svg
+      class="icone-tema"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="btn-tema"
+    data-btn-tema="escuro"
+    aria-label="Ativar tema escuro"
+    title="Tema escuro"
+  >
+    <!-- Ícone Modo Escuro (Lua) -->
+    <svg
+      class="icone-tema"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .seletor-tema-grupo {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+
+  .btn-tema {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .btn-tema:hover {
+    background: var(--color-emerald-50);
+    color: var(--color-ink);
+  }
+
+  .btn-tema:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Destaque visual do botão conforme o tema ativo */
+  :global([data-theme='claro']) [data-btn-tema='claro'],
+  :global(:not([data-theme='escuro'])) [data-btn-tema='claro'] {
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+
+  :global([data-theme='escuro']) [data-btn-tema='escuro'] {
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+
+  :global([data-theme='escuro']) [data-btn-tema='claro'] {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-muted);
+  }
+
+  .icone-tema {
+    display: block;
+  }
+</style>

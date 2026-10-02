@@ -52,7 +52,7 @@ const hrefDestino = `/pilar-${pilarNum}/${indicador.slug}/${queryString}`;
 const icone = indicador.icone ?? 'default';
 ---
 
-<a class="cartao cartao-indicador" href={hrefDestino}>
+<a class="cartao cartao-indicador" href={hrefDestino} data-card-link={indicador.sigla}>
   <div class="cartao-cabecalho">
     <div class="icone-container" aria-hidden="true">
       {
@@ -172,11 +172,17 @@ const icone = indicador.icone ?? 'default';
       {
         valor !== null && ano !== null ? (
           <div class="valor-grupo">
-            <span class="valor-numero">{formatValor(valor)}</span>
-            {indicador.unidade && <span class="unidade">{indicador.unidade}</span>}
+            <span class="valor-numero" data-card-valor={indicador.sigla}>
+              {formatValor(valor)}
+            </span>
+            <span class="unidade" data-card-unidade={indicador.sigla}>
+              {indicador.unidade ?? ''}
+            </span>
           </div>
         ) : (
-          <span class="badge-indisponivel">Dado indisponível</span>
+          <span class="badge-indisponivel" data-card-valor={indicador.sigla}>
+            Dado indisponível
+          </span>
         )
       }
     </div>
@@ -187,12 +193,21 @@ const icone = indicador.icone ?? 'default';
         `delta-${delta.tipo}`,
         { positivo: delta.positivo === true, negativo: delta.positivo === false },
       ]}
+      aria-label={delta.descricaoAcessivel}
     >
-      <span class="delta-rotulo">{delta.valorFormatado}</span>
+      <span class="delta-rotulo" data-card-delta={indicador.sigla}>
+        {
+          delta.simbolo === '=' && !delta.valorFormatado.startsWith('=')
+            ? `= ${delta.valorFormatado}`
+            : delta.valorFormatado
+        }
+      </span>
       {delta.tipo !== 'sem_base' && <span class="delta-subtexto">em relação a {ano! - 1}</span>}
     </div>
 
-    {aviso && <p class="aviso-ano">{aviso}</p>}
+    <p class="aviso-ano" data-card-aviso={indicador.sigla} style={aviso ? '' : 'display: none;'}>
+      {aviso ?? ''}
+    </p>
   </div>
 
   <div class="cartao-rodape">

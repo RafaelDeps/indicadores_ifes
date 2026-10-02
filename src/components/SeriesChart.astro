@@ -5,9 +5,10 @@ import { construirLinha, mapearPontos, calcularEscala } from '../lib/chart';
 
 interface Props {
   valores: ValorAnual[];
+  anoSelecionado?: number;
 }
 
-const { valores } = Astro.props;
+const { valores, anoSelecionado } = Astro.props;
 const LARGURA = 560;
 const ALTURA = 240;
 const MARGEM = 36;
@@ -22,17 +23,19 @@ function rotuloDoPonto(ano: number): string {
 }
 ---
 
-{
-  pontos.length > 0 ? (
-    <div class="grafico-wrapper">
-      <svg
-        class="grafico"
-        viewBox={`0 0 ${LARGURA} ${ALTURA}`}
-        role="img"
-        aria-label="Série histórica do indicador com rótulos numéricos e eixos de escala"
-      >
-        {/* Linhas de grade e referências da escala vertical */}
-        {escala &&
+<div class="grafico-wrapper">
+  <svg
+    class="grafico"
+    data-grafico-svg
+    viewBox={`0 0 ${LARGURA} ${ALTURA}`}
+    role="img"
+    aria-label="Série histórica do indicador com rótulos numéricos e eixos de escala"
+    style={pontos.length > 0 ? '' : 'display: none;'}
+  >
+    {/* Linhas de grade e referências da escala vertical */}
+    <g class="escala-grupo" data-grafico-escala>
+      {
+        escala &&
           escala.linhas.map((l) => (
             <g class="grade-linha">
               <line class="linha-guia" x1={MARGEM} y1={l.y} x2={LARGURA - MARGEM} y2={l.y} />
@@ -40,60 +43,69 @@ function rotuloDoPonto(ano: number): string {
                 {l.rotulo}
               </text>
             </g>
-          ))}
+          ))
+      }
+    </g>
 
-        {/* Eixo horizontal (tempo) */}
-        <line
-          class="eixo"
-          x1={MARGEM}
-          y1={ALTURA - MARGEM}
-          x2={LARGURA - MARGEM}
-          y2={ALTURA - MARGEM}
-        />
+    {/* Eixo horizontal (tempo) */}
+    <line class="eixo" x1={MARGEM} y1={ALTURA - MARGEM} x2={LARGURA - MARGEM} y2={ALTURA - MARGEM}
+    ></line>
 
-        {/* Linha da série de dados */}
-        {linha !== '' && <path class="linha" d={linha} fill="none" />}
+    {/* Linha da série de dados */}
+    <path class="linha" data-grafico-linha d={linha} fill="none"></path>
 
-        {/* Pontos de dados com rótulos visíveis e tooltips */}
-        {pontos.map((ponto) => (
-          <g class="grupo-ponto" tabindex="0">
-            {/* Rótulo numérico visível sobre o ponto */}
-            <text class="rotulo-dado" x={ponto.rotuloX} y={ponto.rotuloY} text-anchor="middle">
-              {ponto.textoRotulo}
-            </text>
-
-            {/* Rótulo do ano no eixo horizontal */}
-            <text class="rotulo-ano" x={ponto.x} y={ALTURA - MARGEM + 18} text-anchor="middle">
-              {ponto.ano}
-            </text>
-
-            {/* Círculo do ponto */}
-            <circle class="ponto" cx={ponto.x} cy={ponto.y} r="6">
-              <title>{rotuloDoPonto(ponto.ano)}</title>
-            </circle>
-
-            {/* Tooltip contextual no hover/foco */}
-            <g class="tooltip-svg" pointer-events="none">
-              <rect
-                class="tooltip-bg"
-                x={ponto.x - 45}
-                y={ponto.y - 38}
-                width="90"
-                height="26"
-                rx="4"
-              />
-              <text class="tooltip-texto" x={ponto.x} y={ponto.y - 21} text-anchor="middle">
-                {ponto.ano}: {ponto.textoRotulo}
+    {/* Pontos de dados com rótulos visíveis e tooltips */}
+    <g class="pontos-grupo" data-grafico-pontos>
+      {
+        pontos.map((ponto) => {
+          const ativo = ponto.ano === anoSelecionado;
+          return (
+            <g class="grupo-ponto" tabindex="0" data-ponto-ano={ponto.ano}>
+              {/* Rótulo numérico visível sobre o ponto */}
+              <text class="rotulo-dado" x={ponto.rotuloX} y={ponto.rotuloY} text-anchor="middle">
+                {ponto.textoRotulo}
               </text>
+
+              {/* Rótulo do ano no eixo horizontal */}
+              <text class="rotulo-ano" x={ponto.x} y={ALTURA - MARGEM + 18} text-anchor="middle">
+                {ponto.ano}
+              </text>
+
+              {/* Círculo do ponto */}
+              <circle
+                class:list={['ponto', { 'ponto-ativo': ativo }]}
+                cx={ponto.x}
+                cy={ponto.y}
+                r={ativo ? 8 : 6}
+              >
+                <title>{rotuloDoPonto(ponto.ano)}</title>
+              </circle>
+
+              {/* Tooltip contextual no hover/foco */}
+              <g class="tooltip-svg" pointer-events="none">
+                <rect
+                  class="tooltip-bg"
+                  x={ponto.x - 45}
+                  y={ponto.y - 38}
+                  width="90"
+                  height="26"
+                  rx="4"
+                />
+                <text class="tooltip-texto" x={ponto.x} y={ponto.y - 21} text-anchor="middle">
+                  {ponto.ano}: {ponto.textoRotulo}
+                </text>
+              </g>
             </g>
-          </g>
-        ))}
-      </svg>
-    </div>
-  ) : (
-    <p class="sem-grafico">Não há valores suficientes para desenhar o gráfico.</p>
-  )
-}
+          );
+        })
+      }
+    </g>
+  </svg>
+
+  <p class="sem-grafico" data-grafico-vazio style={pontos.length > 0 ? 'display: none;' : ''}>
+    Não há valores suficientes para desenhar o gráfico.
+  </p>
+</div>
 
 <style>
   .grafico-wrapper {
@@ -154,6 +166,13 @@ function rotuloDoPonto(ano: number): string {
     transition:
       r 0.15s ease,
       fill 0.15s ease;
+  }
+
+  .ponto.ponto-ativo {
+    fill: var(--color-primary-dark);
+    stroke: var(--color-emerald-50);
+    stroke-width: 3px;
+    filter: drop-shadow(0 0 4px rgba(23, 132, 71, 0.4));
   }
 
   .grupo-ponto:hover .ponto,

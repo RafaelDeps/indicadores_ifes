@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-21
 
-**Status**: Draft
+**Status**: Finalizado (implementado; sucedido no frontend atual pelas specs 003–005)
 
 **Input**: User description: "A public dashboard for IFES managers and the community to follow the 4 indicators of Pillar 1 of the CONIF model: NTPP, QSPP, PIES and PICOT. An overview page with one card per indicator and a detail page for each one. Each indicator shows its value per calendar year (with a year selector and historical series), what it measures, the formula, the variables, the polarity (higher is better), the data source, and the data update date. Indicators without enough data (currently PIES and PICOT, because the total number of enrolled students and the admission modality are missing) show 'Dado indisponível' explaining what is missing, with no estimated value. Existing components (such as NEP) may appear as plain counts, clearly labeled as not being the percentage. All user-facing text is in Brazilian Portuguese (pt-BR). Out of scope: Pillars 2 and 3, login, individual-level data, and editing data through the interface."
 

@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pilar 1 - Engajamento Acadêmico e Inclusão",
+  "type": "object",
+  "required": ["campus", "ano_referencia", "pilar", "indicadores"],
+  "additionalProperties": false,
+  "properties": {
+    "campus": { "type": "string" },
+    "ano_referencia": { "type": "integer" },
+    "pilar": { "type": "string", "const": "Engajamento Academico e Inclusao" },
+    "indicadores": {
+      "type": "object",
+      "required": ["NTPP", "QSPP", "PIES", "PICOT"],
+      "additionalProperties": false,
+      "properties": {
+        "NTPP": {
+          "type": "object",
+          "required": [
+            "descricao",
+            "projetos_pesquisa_registrados_execucao",
+            "total_projetos_NTPP"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "projetos_pesquisa_registrados_execucao": { "type": "integer", "minimum": 0 },
+            "total_projetos_NTPP": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "QSPP": {
+          "type": "object",
+          "required": [
+            "descricao",
+            "SUPP_servidores_unicos_participantes",
+            "total_servidores_QSPP"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "SUPP_servidores_unicos_participantes": { "type": "integer", "minimum": 0 },
+            "total_servidores_QSPP": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "PIES": {
+          "type": "object",
+          "required": [
+            "descricao",
+            "NEP_estudantes_em_pesquisa",
+            "NTE_total_estudantes_matriculados",
+            "percentual_calculado_PIES"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "NEP_estudantes_em_pesquisa": { "type": "integer", "minimum": 0 },
+            "NTE_total_estudantes_matriculados": { "type": "null" },
+            "percentual_calculado_PIES": { "type": "null" }
+          }
+        },
+        "PICOT": {
+          "type": "object",
+          "required": [
+            "descricao",
+            "NTECPP_cotistas_em_pesquisa",
+            "NEP_total_estudantes_em_pesquisa",
+            "percentual_calculado_PICOT"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "descricao": { "type": "string" },
+            "NTECPP_cotistas_em_pesquisa": { "type": "null" },
+            "NEP_total_estudantes_em_pesquisa": { "type": "integer", "minimum": 0 },
+            "percentual_calculado_PICOT": { "type": "null" }
+          }
+        }
+      }
+    }
+  }
+}

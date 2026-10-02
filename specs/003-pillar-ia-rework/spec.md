@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-21
 
-**Status**: Draft
+**Status**: Finalizado (IA/URL implementado; identidade visual e download CSV/JSON sucedidos pelas specs 004/005)
 
 **Input**: User description: "Rework the dashboard's information architecture and visual identity. Screens: / (overview of all pillars; Pillar 1 active, Pillars 2 and 3 'em breve'), /pilar-1/ (overview of the 4 Pillar 1 indicators), /pilar-1/<sigla>/ (detail per indicator, URL pattern reusable by future pillars). Year selection: no page shows an indicator value without a year selected; never sum or blend years into one number; selected year reflected in the URL (?ano=2025) for shareable links and back/forward navigation; default year 2025 (latest closed year); 2026 selectable but labeled partial; historical chart with all years side by side is fine; PIES/PICOT show 'Dado indisponível' regardless of year. Accessibility panel: remove the in-app theme/contrast/font-size toggles entirely (plugin will come later); keep semantic HTML, labels and WCAG AA base contrast. Data export: each indicator detail page offers download of that indicator's data as CSV and/or JSON. Visual identity: own identity, not a copy of horizon_dashboard — no Horizon stripe/'H' mark/Ubuntu typography; distinct palette (own primary hue, WCAG AA light and dark), distinct typeface, simple text or monogram mark of this project's own name; same sober institutional pt-BR register; cards with thin border and surface color, no decorative shadows. Out of scope: Pillars 2 and 3 content (placeholder only) and indicator values/data contract."
 
@@ -214,6 +214,12 @@ toggles absent) and by running the contrast and register audits.
   unavailable years — followed by one section per existing component (e.g.,
   NEP) with columns ano;quantidade;motivo. The JSON download MUST be the
   indicator's repository data file itself.
+
+  > **Nota de supersessão (consistent audit A2)**: este requisito de
+  > download CSV/JSON foi **removido** pela spec 004 (FR-009/FR-010, "botões
+  > de download CSV/JSON descontinuados") e reafirmado pela 005. A regra
+  > vigente no frontend atual é a ausência desses botões.
+
 - **FR-011**: The in-app accessibility control panel MUST be removed
   entirely; semantic HTML, labels, landmarks and WCAG AA color contrast in
   the base styles MUST be preserved. The site keeps light and dark

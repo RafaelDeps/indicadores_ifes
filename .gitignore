@@ -1,5 +1,5 @@
 node_modules/
-dist/
+/dist/
 .astro/
 coverage/
 .env
@@ -7,3 +7,33 @@ coverage/
 *.log
 .DS_Store
 Thumbs.db
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.tmp-*
+
+# Governança de Dados (Padrão Horizon)
+data/canonical/*
+!data/canonical/.gitkeep
+
+
+# Dados (do campus Serra)
+data/raw/*
+!data/raw/.gitkeep
+
+
+# Pacotes parciais e de desenvolvimento de campus
+data/dist/indicadores_*.zip
+indicadores_*.zip
+
+# Relatórios de execução do ETL (regerados a cada execução)
+data/reports/etl_run_report.md
+data/reports/etl_listagens_run_report.md
+
+# Zips soltos na raiz (rejeição total)
+/*.zip
