@@ -83,6 +83,7 @@ def agregar_indicadores(
     # --- 1. Processamento de Iniciativas (Pilar 1) ---
     avisados_nulo_inicio: set[int] = set()
     avisados_sem_campus: set[int] = set()
+    avisados_pesquisador_sem_campus: set[int] = set()
 
     for ini in exportacao.iniciativas:
         # Apenas projetos de pesquisa pontuam no NTPP (filtra Advisorship, etc.)
@@ -136,7 +137,24 @@ def agregar_indicadores(
                     eh_estudante = eh_estudante_em_pesquisa(pessoa, papeis_str)
 
                     if eh_pesquisador:
-                        staff_unicos[esc][ano].add(membro.person_id)
+                        if esc == ESCOPO_TODOS_SLUG:
+                            staff_unicos[esc][ano].add(membro.person_id)
+                            if pessoa and pessoa.campus is None:
+                                if pessoa.id not in avisados_pesquisador_sem_campus:
+                                    avisados_pesquisador_sem_campus.add(pessoa.id)
+                                    avisos.append(
+                                        f"AVISO: pesquisador {pessoa.id} sem campus de lotação — "
+                                        'contabilizado apenas no escopo "todos"'
+                                    )
+                        else:
+                            # No campus local: apenas servidores com lotação no próprio campus pontuam
+                            if (
+                                pessoa
+                                and pessoa.campus
+                                and normalizar_slug(pessoa.campus.name) == esc
+                            ):
+                                staff_unicos[esc][ano].add(membro.person_id)
+
                     if eh_estudante:
                         students_unicos[esc][ano].add(membro.person_id)
 
