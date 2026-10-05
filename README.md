@@ -11,8 +11,9 @@ O projeto segue a separação estrita de responsabilidades entre a gestão de da
 ```text
 indicadores_ifes/
 ├── data/                       # Governança física e isolamento de dados
-│   ├── canonical/              # Arquivos upstream brutos (gitignored, exceto .gitkeep)
+│   ├── canonical/              # Arquivos upstream brutos (versionados — decisão 2026-10-05)
 │   │   └── exports_canonical.zip
+│   ├── raw/                    # Planilhas de matrícula (versionadas — decisão 2026-10-05)
 │   ├── dist/                   # Artefatos processados para consumo
 │   │   ├── indicadores.zip     # Pacote oficial consolidado (versionado no Git)
 │   │   └── indicadores_*.zip   # Pacotes parciais de desenvolvimento/campus (gitignored)
@@ -90,9 +91,9 @@ A automação do projeto é centralizada no `Makefile`:
 > entradas ausentes: a etapa faltante é pulada com `AVISO:` no stderr (exit 0),
 > **preservando por não-toque** o último pacote coerente. Sem `SOFT`, o
 > comportamento fail-fast permanece (`ERRO:` + exit 1 — contrato da spec 006).
-> O ETL é **manual/local** (as entradas são gitignored e o CI não o executa); o
-> pacote `data/dist/indicadores.zip` é commitado e o CI valida seu contrato via
-> `make check-dados` em cada PR.
+> O ETL é **manual/local** (as entradas são versionadas por decisão de
+> 2026-10-05 e o CI não o executa); o pacote `data/dist/indicadores.zip` é
+> commitado e o CI valida seu contrato via `make check-dados` em cada PR.
 >
 > ⚠️ **`make dados` exige entrada para o merge.** O pacote público é saída de uma
 > cadeia: `etl` regenera o pacote **sem** NTE/NTECPP (esses campos só existem no

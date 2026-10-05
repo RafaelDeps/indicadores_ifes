@@ -261,6 +261,64 @@ jobs:
           fi
           rm -f "${relatorio}"
 
+      # Passo 3.5 — o insumo baixado é o mesmo que está versionado?
+      #
+      # Este passo não existia antes de `data/raw/` sair do `.gitignore`
+      # (2026-10-05) e ele é a consequência direta disso. Versionado e baixado ao
+      # mesmo tempo são duas fontes de verdade para o mesmo arquivo, e duas
+      # fontes de verdade divergem em silêncio: se a release privada republicar as
+      # planilhas com correção, a cadeia roda com a versão nova, o passo 11
+      # commita **só** o pacote, e a cópia versionada passa a divergir do
+      # insumo oficial sem nenhum aviso. O repositório affirmaria estar
+      # reprodutível a partir do que tem versionado, e não estaria.
+      #
+      # A divergência não é um erro deste workflow: é o sinal de que o insumo
+      # oficial mudou e a cópia versionada precisa de um pull request próprio.
+      # Por isso este passo **não** falha — ele informa, e quem tem autoridade
+      # sobre a publicação decide. Falhar aqui transformaria "o insumo mudou" (o
+      # caso normal, e o motivo de este workflow existir) em erro vermelho.
+      #
+      # Os três estados são distintos e todos são reais: `git status --porcelain`
+      # é o que separa "igual" de "não versionada" de "divergente". Usar
+      # `git diff --quiet` seria errado — devolve 0 (isto é, "igual") para um
+      # arquivo **não versionado**, porque um arquivo não rastreado não é uma
+      # diferença para o Git. Era exatamente o estado da primeira execução depois
+      # da mudança, e o relatório mentiria sobre os 6 arquivos.
+      #
+      # O commit das planilhas fica por conta de quem publica, deliberadamente
+      # fora deste workflow: o passo 11 tem `git add` de caminho explícito, e
+      # nenhum passo deste arquivo escreve em `data/raw/` de forma versionada.
+      - name: Conferir se o insumo baixado diverge do versionado
+        shell: bash
+        run: |
+          # Ver a nota sobre `set -euo pipefail` no cabeçalho deste arquivo.
+          set -euo pipefail
+
+          divergentes=0
+          naover=0
+          for ficheiro in $(find data/raw -maxdepth 1 -name 'listagem_*.xlsx' | sort); do
+            nome="$(basename "${ficheiro}")"
+            estado="$(git status --porcelain -- "data/raw/${nome}")"
+            if [ -z "${estado}" ]; then
+              echo "Igual à versionada: ${nome}"
+            elif [ "${estado:0:2}" = "??" ]; then
+              echo "::notice::${nome} ainda não está versionado. É o estado da primeira execução depois de 2026-10-05; commit-a para tornar o clone reprodutível."
+              naover=$((naover + 1))
+            else
+              echo "::notice::${nome} diverge da cópia versionada: ${estado}. A release privada foi republicada, ou a cópia versionada está desatualizada. O pacote regenerado reflete a versão baixada."
+              divergentes=$((divergentes + 1))
+            fi
+          done
+
+          if [ "${divergentes}" -ne 0 ]; then
+            echo "${divergentes} de 6 planilhas divergem da cópia versionada."
+            echo "O pacote deste pull request está correto; a cópia versionada é que pede atualização, em pull request próprio."
+          elif [ "${naover}" -ne 0 ]; then
+            echo "${naover} de 6 planilhas ainda não versionadas."
+          else
+            echo "As 6 planilhas baixadas são idênticas às versionadas."
+          fi
+
       # Passo 4 — a contagem, que é o mais barato e o mais importante.
       #
       # Fecha a forma de falha que **não** se manifesta por erro: download

@@ -30,9 +30,42 @@ jobs:
           PYTHONPATH=. python -m isort --check-only etl tests/etl
           PYTHONPATH=. python -m black --check etl tests/etl
           PYTHONPATH=. python -m pytest -q tests/etl
+      # Normalizar o mtime antes do portão, e o motivo é uma consequência direta de
+      # `data/raw/` e `data/canonical/` terem saído do `.gitignore` em 2026-10-05.
+      #
+      # A Etapa 2 de `check_dados` mede frescor por `st_mtime`, e num clone
+      # limpo o mtime **não carrega informação**: o `actions/checkout` escreve
+      # cada arquivo com a hora da escrita, e a ordem de escrita é a ordem de
+      # percurso do checkout, que não é nem alfabética nem estável. Medido: com o
+      # pacote escrito antes dos insumos, `check_dados` emite sete `AVISO:` de
+      # "mais recente que o pacote" — sete falsos alarmes, cuja quantidade muda
+      # conforme o runner. Nenhum indica pacote velho; todos indicam ordem de
+      # escrita.
+      #
+      # Isso não é ruído tolerável. Um aviso de frescor que dispara aleatoriamente
+      # treina quem lê a ignorar todos eles, inclusive os verdadeiros — e o aviso
+      # verdadeiro existe: é o passo 10 de `dados.yml`, que regenera e compara
+      # byte a byte contra o versionado.
+      #
+      # `touch` no pacote o torna o mais recente de forma **determinística**, e é
+      # a afirmação correta: o pacote é derivado das planilhas e do canônico, então
+      # num commit onde todos viajam juntos ele é o mais novo por construção. O que
+      # se desiste aqui é a medição por mtime em `quality`, e ela é substituída
+      # pelo passo 10 de `dados.yml` — que responde à pergunta que o mtime não
+      # conseguia responder.
+      - name: Normalizar o mtime do pacote para o portão
+        run: |
+          set -euo pipefail
+          touch data/dist/indicadores.zip
       # Portão de contrato do pacote commitado (spec 011 — sem rodar o ETL: as
-      # entradas do ETL são gitignored e não existem no CI; em clone o check-dados
-      # valida o contrato e emite apenas a linha INFO: de entradas ausentes, exit 0)
+      # entradas do ETL são versionadas mas o CI não as executa; em clone o
+      # check-dados valida o contrato e emite a linha INFO: de cobertura de
+      # derivados não avaliada, exit 0).
+      #
+      # Desde 2026-10-05 as entradas **existem** no clone, então a Etapa 2 passa a
+      # comparar mtimes de verdade contra o passo acima — e a Etapa 1.5 continua
+      # não avaliada, porque ela depende de `data/dist/indicadores_listagens.zip`,
+      # que segue gitignored (é saída intermediária, não insumo).
       - run: PYTHONPATH=. python -m etl.scripts.check_dados
       - run: npm run lint
       - run: npm run format:check

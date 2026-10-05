@@ -432,9 +432,12 @@ individual nem credencial no log, no PR ou em artifact.
       `~/Documents/` e 6 em `data/raw/`, conteúdo idêntico, 6 hashes distintos.
       Escolher uma localização canônica e apagar a outra. Ver
       medidas-de-protecao §4.2
-- [ ] T043 [P] Reexecutar `git check-ignore -v data/raw/listagem_*.xlsx` e anexar
-      a saída a `medidas-de-protecao.md` §2, linha M-1. **Evidência versionada**,
-      não afirmação
+- [ ] T043 [P] **Obsoleto em 2026-10-05:** a evidência de `git check-ignore`
+      era o próprio M-1. Como M-1 foi revogado, T043 passa a verificar o novo
+      estado: documentar a presença dos arquivos em `data/raw/` e
+      `data/canonical/` no repositório (não-ignorados), e apontar para §2.1 de
+      `medidas-de-protecao.md`. **Não** reexcutar o `check-ignore` para comprovar
+      que são ignorados.
 
 ### Validação
 
@@ -443,6 +446,12 @@ individual nem credencial no log, no PR ou em artifact.
       pacote commitado, sem alteração do arquivo** (FR-008). São duas verificações
       distintas: `make check` prova que o código está são, `make check-dados`
       prova que a regra nova não reprova o pacote bom
+- [ ] T044.1 **Conseqência da revogação de M-1 (2026-10-05):** garantir que o
+      passo de normalização de `mtime` em `deploy.yml` está ativo (para remover os
+      7 falsos avisos de frescor quando `data/raw/` e `data/canonical/` são
+      versionados), e que o passo 3.5 de `dados.yml` existe para informar a
+      divergência entre a cópia versionada e a baixada. Ambos são medidas de
+      harmonia, não de privacidade.
 - [ ] T045 Executar a §1, §1.1, §3 e §4 do [quickstart.md](./quickstart.md) e
       **corrigir o documento** onde o resultado observado divergir do esperado.
       O quickstart tem resultados de "antes" verificados; os de "depois" ainda não

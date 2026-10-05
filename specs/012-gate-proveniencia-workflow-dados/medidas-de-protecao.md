@@ -33,13 +33,67 @@ as medidas abaixo tratam o conjunto, não o campo.
 
 | #   | medida                                                              | onde age            | como se verifica                                              |
 | --- | ------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------- |
-| M-1 | Nunca versionado: `data/raw/` é ignorado pelo Git                   | repositório         | `git check-ignore -v data/raw/listagem_2024_1.xlsx`           |
-| M-2 | Nunca sai do ETL: nenhum passo publica, anexa ou copia as planilhas | workflow            | inspeção — nenhum `upload-artifact` no workflow               |
+| M-1 | **Revogado em 2026-10-05** — ver §2.1                                | —                   | —                                                             |
+| M-2 | Nunca sai do ETL: nenhum passo publica ou anexa as planilhas        | workflow            | inspeção — nenhum `upload-artifact` no workflow               |
 | M-3 | Credencial de leitura, um repositório, revogável                    | GitHub              | tela de secrets **da outra conta**, onde o token foi emitido  |
 | M-4 | Arquivo anexado a versão publicada, não commitado                   | repositório privado | `GET /git/blobs/<sha>` em 404 e `git fetch <sha>` sem sucesso |
 | M-5 | Entrada do workflow é efêmera: vive no runner e some                | `ubuntu-latest`     | —                                                             |
 | M-6 | Saída é agregada por construção                                     | ETL                 | `tests/etl/test_privacy.py`                                   |
 | M-7 | Segredo nunca referenciado por evento de pull request               | gatilhos            | só `workflow_dispatch` existe                                 |
+| M-8 | **Reposição de M-1**: insumo versionado e conferido contra a origem  | repositório + workflow | §2.1 e o passo 3.5 de `dados.yml`                          |
+
+### 2.1 M-1 revogado, e o que o substitui
+
+**Decisão institucional de 2026-10-05**: o IFES deixou de classificar estas
+planilhas como dado sensível. A classificação da §1 — *dado pessoal não sensível*
+por enumeração da lei — foi **confirmada e mantida**, e a regra de ignore de
+`data/raw/` **removida**: as seis planilhas passam a ser versionadas neste
+repositório, junto com `data/canonical/exports_canonical.zip`.
+
+O que muda com a decisão, e o que não muda:
+
+| | antes | depois |
+| --- | --- | --- |
+| classificação | não sensível | **não sensível** — inalterada |
+| `data/raw/` | ignorado | **versionado** |
+| `data/canonical/` | ignorado | **versionado** |
+| M-1 (nunca versionado) | vigia | **revogado** |
+| caminho de apagamento real | M-4 (asset de release) | **perdido** — ver abaixo |
+| agregação da saída (M-6) | vigia | **vigia** |
+| log do workflow sem nome (M-2) | vigia | **vigia** |
+
+**O custo é o caminho de apagamento.** M-4 existia para tornar o apagamento real:
+um asset de versão publicada não tem histórico, e removê-lo apaga. Um arquivo
+versionado tem histórico, e a §4.2 deste documento — M-4 em detalhe, ver abaixo —
+demonstra **medido** que reescrever histórico não apaga: `GET /git/blobs/<sha>`
+continua devolvendo 200 depois do force-push. As planilhas neste repositório
+**não têm mais** caminho de apagamento real que não seja eliminar o repositório.
+Isto é uma consequência aceita da decisão, e não um defeito dela: o IFES é o
+titular e a classificação é sua.
+
+**O que a decisão não toca**, porque decorre da natureza do dado e não da sua
+classificação:
+
+- **A saída continua agregada** (M-6, FR-028). O pacote `indicadores.zip` não
+  ganha nenhuma linha individual por versionar a origem.
+- **O log do workflow continua sem nome** (M-2, FR-026). A redação dos passos
+  7 e 8 de `dados.yml` não afrouxa: o `curl` ainda baixa para o runner, e o
+  `sed` ainda apaga nome de pessoa antes de qualquer byte chegar à saída.
+- **A transferência internacional continua sem resposta** (§4.1). Repositório
+  hospedado fora do Brasil é art. 33 da LGPD, e a classificação de "sensível"
+  não é o que dispara a pergunta. Os três pontos daquele §4.1 seguem abertos —
+  versionar a origem **aumenta** o que está em trânsito, não o resolve.
+- **Retenção e duplicatas em disco** (§4.2, T042) seguem sem decisão.
+
+**O que a decisão exige em troca.** Versionado e baixado são duas fontes de
+verdade para o mesmo arquivo, e duas fontes de verdade divergem em silêncio: se
+a release privada republicar as planilhas corrigidas, a cadeia roda com a versão
+nova, o passo 11 commita só o pacote, e a cópia versionada passa a divergir do
+insumo oficial sem aviso. É por isso que M-8 existe — o passo 3.5 de `dados.yml`
+compara cada planilha baixada com a versionada e **informa** a divergência.
+Informa e não falha, deliberadamente: "o insumo mudou" é o caso normal e o motivo
+de o workflow existir, e tratá-lo como erro transformaria o caminho normal em
+vermelho. O commit da planilha alterada é pull request próprio, de quem publica.
 
 ### M-4 em detalhe, porque é a que substitui a prática anterior
 
@@ -73,6 +127,14 @@ proteção de dados que conte com reescrita de histórico para satisfazer um
 requisito de apagamento está errado, e o teste que o prova é `GET /git/blobs/
 <sha>`, não `git log`.
 
+**Esta lição é o que M-1 protegeva, e é o que a revogação de M-1 custa.** A
+seção existe para explicar por que a escolha de 2026-10-05 tem este preço e
+não outro: as planilhas agora são objetos permanentes deste repositório público,
+e a única forma de os retirar de verdade é eliminá-lo — o mesmo caminho que
+`henriqk0/indicadores-dados-listagem` exigiu em 2026-10-01. Ninguém deve ler
+"revogado" como "o problema resolvido": o que mudou é quem aceitou o risco, não
+se o risco existe.
+
 ## 3. Base legal declarada
 
 TRATAMENTO de dados pessoais para o cumprimento de **obrigação legal**.
@@ -91,14 +153,23 @@ Esta seção é a mais importante do documento, e é a que não pode ser resumid
 
 ### 4.1 Residência e transferência internacional
 
-O repositório privado está hospedado fora do Brasil. O tratamento de dado
-pessoal em país estrangeiro é objeto do **art. 33 da LGPD**, que permite por
-cláusulas contratuais específicas, norma de proteção equivalente, ou consentimento
+O repositório está hospedado fora do Brasil. O tratamento de dado pessoal em
+país estrangeiro é objeto do **art. 33 da LGPD**, que permite por cláusulas
+contratuais específicas, norma de proteção equivalente, ou consentimento
 específico e destacado para a transferência.
 
-**Estado**: decisão **institucional pendente**. As medidas deste documento
-reduzem exposição; elas **não** substituem a análise de transferência
-internacional.
+**Estado**: decisão **institucional pendente**, e a mudança de 2026-10-05
+**aumentou** o que está em trânsito, sem abrir caminho para a resposta.
+
+O que mudou em 2026-10-05, e importa mais do que parece: a pergunta do art. 33
+é sobre **dado pessoal**, não sobre dado sensível. A classificação da §1 já era
+"não sensível" e continua sendo — a decisão do IFES não alterou a natureza do
+dado, apenas a política de versionamento. O que a decisão fez foi **transferir
+15.086 linhas com nome, matrícula, data de nascimento e condição de cota** para
+dentro do repositório hospedado fora do Brasil, onde antes elas entravam e eram
+descartadas com o runner. Nenhuma das três verificações abaixo foi respondida por
+essa mudança, e a primeira delas — provider certificado — passa a concerner um
+repositório **público**.
 
 O que é preciso verificar antes de tratar isso como resolvido:
 
@@ -167,6 +238,12 @@ A lista é deliberadamente concreta. "Link no log não é credencial" é
 | masking por substring exata          | **sim**  | o GitHub mascara o valor exato; variação de formato passa |
 | `data/raw/` em artifact de execução  | **sim**  | e o artifact vive ~90 dias, com soft-delete               |
 | URL assinada em mensagem de commit   | **sim**  | vaza para quem ler o repositório depois                   |
+| `data/raw/` no histórico do repositório | **aceito** | decisão institucional de 2026-10-05 (§2.1); o repositório é **público** e o versionado é permanente |
+
+A última linha não é "não": é um risco que a decisão de 2026-10-05 assumiu
+explicitamente. Ela entra na tabela porque a tabela é a lista do que pode
+vazar, e omitir o vetor que foi deliberadamente aberto é a forma de falsificar o
+registro. Ver §2.1.
 
 Consequência prática: a checagem de conformidade é **por execução**, e precisa
 olhar a página de execução — não o YAML, que já está limpo por construção.
@@ -178,16 +255,20 @@ medida: a §2 diz **como** se verifica, esta diz **quem** e **quando**.
 
 | #   | responsável | quando se verifica                                                            |
 | --- | ----------- | ----------------------------------------------------------------------------- |
-| M-1 | mantenedor  | a cada alteração da regra de ignore, e a cada semestre                        |
+| M-1 | —            | **revogado em 2026-10-05** (§2.1)                                             |
 | M-2 | mantenedor  | a cada alteração do workflow, e **a cada execução**                           |
 | M-3 | mantenedor  | a cada semestre, e na saída da pessoa — na tela da **outra** conta, não nesta |
 | M-4 | mantenedor  | a cada semestre                                                               |
 | M-5 | mantenedor  | **a cada execução**, na página de execução                                    |
 | M-6 | mantenedor  | a cada alteração do ETL, por `make check`                                     |
 | M-7 | mantenedor  | a cada alteração do workflow                                                  |
+| M-8 | mantenedor  | **a cada execução**, pelo passo 3.5 de `dados.yml`                            |
 
-Só **M-2** e **M-5** são por execução. São as duas que pegam vazamento de
-verdade: as outras cinco são estado, e valem enquanto ninguém mexe.
+Só **M-2**, **M-5** e **M-8** são por execução. M-2 e M-5 são as duas que pegam
+vazamento de verdade: as outras são estado, e valem enquanto ninguém mexe. M-8
+entrou no grupo por execução porque a divergência entre o insumo baixado e a
+cópia versionada só existe durante uma execução — em repouso não há como
+detectá-la, já que os arquivos estão quietos e iguais por definição.
 
 M-5 tem "—" na coluna "como se verifica" da §2 porque **não existe comando que
 prove que o runner apagou o arquivo**. A verificação é a constatação de que a
@@ -233,3 +314,8 @@ torna a conformidade visível para quem vai precisar dela.
 - **Não** substitui parecer jurídico.
 - **Não** é evidência de nada: é registro de intenção e de controle. A evidência
   é o log de execução, conferido conforme a §6.
+- **Não** afirma que a decisão de 2026-10-05 (§2.1) eliminou risco algum. Ela
+  **retirou a medida M-1** e **abriu** um vetor novo — dados versionados em
+  repositório público, sem caminho de apagamento real. As duas coisas são
+  verdade ao mesmo tempo, e este documento existe para que nenhum dos dois lados
+  seja lido sozinho.

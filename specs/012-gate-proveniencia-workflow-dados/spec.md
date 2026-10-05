@@ -304,13 +304,39 @@ confere o resultado e abre um pull request — sem alterar nada fora do escopo.
 ### Privacidade
 
 - **FR-026**: Nenhuma linha de nome, matrícula, data de nascimento ou tipo de
-  cota das planilhas de matrícula MAY aparecer no repositório público, no log do
-  workflow, no pull request ou em artefato de execução.
+  cota das planilhas de matrícula DEVE aparecer no log do workflow, no pull
+  request ou em artefato de execução.
+  - **Emenda de 2026-10-05, por decisão institucional do IFES**: o limb "no
+    repositório público" foi **removido** deste requisito. As planilhas de
+    matrícula passam a ser versionadas neste repositório, que é público, e
+    `data/canonical/exports_canonical.zip` também. O IFES deixou de classificar
+    estes arquivos como dado sensível.
+  - A emenda **não** afrouxa os outros três limbs — log do workflow, pull request
+    e artefato de execução continuam proibidos, e a redação dos passos 7 e 8 de
+    `dados.yml` que os faz valer não mudou.
+  - A emenda **não** toca FR-028: o pacote publicado continua agregado.
+  - O que a emenda **custa** é o caminho de apagamento real, que M-4 fornecia.
+    Ver [medidas-de-protecao.md](./medidas-de-protecao.md) §2.1.
+  - **Bug de redação corrigido aqui**: o texto original dizia `MAY aparecer`,
+    em inglês e com o sentido invertido — MAY é permissão, e a intenção era
+    proibição. A redação anterior ao requisito ("Nenhuma linha ... MAY
+    aparecer") é, ao pé da letra, uma frase que autoriza a publicação de nome e
+    nascimento no repositório público. Ninguém deve inferir do histórico do
+    repositório que a postura foi sempre permissiva: ela **não** era, e a
+   publificação de 2026-10-05 é a primeira vez que o insumo é versionado.
 - **FR-027**: As medidas de proteção adotadas DEVEM ser registradas em documento
   versionado, de modo que a conformidade seja auditável e não dependa de
   conhecimento tácito.
 - **FR-028**: Nenhum dado individual DEVE ser incorporado ao pacote publicado,
   que permanece agregado.
+- **FR-029**: A política de versionamento do insumo DEVE constar do
+  `.gitignore` versionado, e a emenda de FR-026 DEVE estar registrada em
+  [medidas-de-protecao.md](./medidas-de-protecao.md) com o que ela substitui e o
+  que deixa de resolver.
+  - *Adicionado em 2026-10-05 junto com a emenda de FR-026. Sem ele, a próxima
+    pessoa a ler o `.gitignore` não teria como saber que a regra foi removida por
+    decisão e não por engano — que é o estado em que uma regra de privacidade
+    deve nunca estar.*
 
 ### Key Entities
 

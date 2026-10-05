@@ -161,6 +161,7 @@ quais ele não era detectável:
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | exigiria comparar o **conteúdo** de NTE/NTECPP entre pacote e zip de listagens | é exatamente o que a Etapa 1.5 faz                                                                                                                                 |
 | `indicadores_listagens.zip` é gitignored, logo ausente em CI                   | segue ausente em CI, e por isso o veredito 3 reporta `INFO:` em vez de falhar; no workflow a etapa 2 o produz antes da verificação, e lá a verificação **é** feita |
+| `data/raw/` e `data/canonical/` **não** são gitignored (decisão 2026-10-05)    | existem no clone do CI após `actions/checkout`, podendo gerar falsos `AVISO:` de frescor — esse ruído é removido pela normalização de `mtime` em `deploy.yml` e pelo passo 3.5 de `dados.yml` |
 
 A segunda linha é a consequência de design mais importante deste contrato: a
 Etapa 1.5 **não** exige mudar o que é versionado. Ela é exata quando a origem

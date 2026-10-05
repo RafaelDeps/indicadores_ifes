@@ -17,15 +17,17 @@ htmlcov/
 venv/
 .tmp-*
 
-# Governança de Dados (Padrão Horizon)
-data/canonical/*
-!data/canonical/.gitkeep
-
-
-# Dados (do campus Serra)
-data/raw/*
-!data/raw/.gitkeep
-
+# `data/canonical/` e `data/raw/` são versionados por decisão institucional de
+# 2026-10-05 (spec 012 §2.1). Antes, ambos eram ignorados e só o `.gitkeep`
+# preservava o diretório. A mudança **reverte** o FR-012 da spec 009 e o FR-026
+# da spec 012; ver `specs/012-.../medidas-de-protecao.md` §2 para as medidas que
+# substituem "nunca versionado" e para o que a mudança não resolve.
+#
+# Consequência que o comentário precisa carregar: versionado é **permanente**.
+# Uma vez no histórico, apagar o arquivo da `main` não apaga o objeto — os
+# apontadores mudam, os blobs ficam. Isso é a lição de M-4, já paga uma vez em
+# 2026-10-01. O `data/raw/listagem_*.xlsx` e o `data/canonical/exports_canonical.zip`
+# deixam de ter caminho de apagamento real que não seja eliminar o repositório.
 
 # Pacotes parciais e de desenvolvimento de campus
 data/dist/indicadores_*.zip
