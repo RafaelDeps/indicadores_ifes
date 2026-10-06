@@ -1,0 +1,87 @@
+# Registro de pendências de governança (feature 016, FR-016).
+#
+# ## Estado em 2026-10-05: as três pendências estão RESOLVIDAS
+#
+# O portão abre. Para fechá-lo de novo, apague (ou esvazie) o `registro` de
+# qualquer uma delas — o portão resolve contra o disco, nunca contra este
+# arquivo. As `descricao` abaixo são o registro histórico do que era exigido,
+# escritas no momento em que a pendência foi aberta; elas não descrevem o
+# estado atual.
+#
+# Este arquivo é a **única** fonte de verdade sobre o que impede a publicação
+# dos insumos brutos. O portão `etl/scripts/check_governanca.py` o consulta antes
+# do build; a página `/dados/` lê o mesmo arquivo para decidir se os insumos
+# brutos aparecem como disponíveis.
+#
+# ## Como uma pendência é resolvida
+#
+#   pendência resolvida  ⟺  `registro` existe no disco  ∧  (se `contem` presente,
+#                                                      o arquivo o contém)
+#
+# Não há campo `resolvida`: um booleano seria estado duplicado, capaz de divergir
+# do disco. A consequência é deliberada — apagar o arquivo de registro **reabre**
+# a pendência, e é o comportamento correto para um gate.
+#
+# ## Por que existe `contem`
+#
+# `emenda-principio-iv` registra a emenda do Princípio IV **no mesmo arquivo que
+# já contém a versão anterior**. A existência do arquivo, sozinha, não distingue
+# "constitution sem emenda" de "constitution emendada" — e o gate precisa
+# distinguir, porque uma delas autoriza publicar dado pessoal e a outra não.
+# Sem `contem`, o gate abriria com a constitution ainda em 1.1.0.
+#
+# A asserção cobre a linha do rodapé (`**Version**: 2.0.0 | …`), que é a
+# única declaração de versão do arquivo. Uma cópia dessa linha no cabeçalho,
+# que existiu durante a implementação, faria `grep` responder duas vezes — e a
+# segunda resposta era a velha.
+#
+# ## Para quitar uma pendência
+#
+# Crie o arquivo em `registro` (e satisfaça `contem`, se houver). **Não** edite
+# este YAML para declarar a pendência resolvida: o portão resolve contra o disco
+# e ignora qualquer afordância desse tipo.
+#
+# ## `descricao` vs `aviso_visitante`
+#
+# `descricao` é texto de mantenedor: aparece no log do portão, no CI, e cita
+# identificadores internos (versões, nomes de spec). `aviso_visitante` é o texto
+# que o visitante lê em `/dados/` quando o portão está fechado, e é redigido sem
+# identificadores internos (FR-011). Os dois campos existem porque um texto só
+# falharia para metade dos leitores.
+
+pendencias:
+  - id: emenda-principio-iv
+    descricao: >-
+      Emenda MAJOR do Princípio IV na constitution (1.1.0 -> 2.0.0), com data de
+      emenda e Sync Impact Report no cabeçalho do arquivo. Publicar dado pessoal
+      no site público contraria o Princípio IV como está escrito; a decisão D-01
+      exige a emenda, não uma interpretação.
+    registro: .specify/memory/constitution.md
+    contem: '**Version**: 2.0.0'
+    aviso_visitante: >-
+      A publicação dos arquivos de origem está suspensa até a revisão
+      institucional dos dados pessoais ser concluída.
+
+  - id: revisao-privacidade
+    descricao: >-
+      Revisão de privacidade antes do merge (Princípio IV + "Privacy review").
+      APROVADA por Paulo Sérgio dos Santos Júnior, Diretor de Extensão e Pesquisa
+      do Campus Serra, em 2026-10-05, cobrindo a base legal de tratar e publicar
+      (art. 7º, II da LGPD) e a transferência internacional (art. 33 da LGPD).
+      RESOLVIDA em 2026-10-05: autorização transcrita para
+      docs/revisao-privacidade.md.
+    registro: docs/revisao-privacidade.md
+    aviso_visitante: >-
+      Os arquivos de origem estão sendo preparados para publicação e serão
+      disponibilizados aqui em breve.
+
+  - id: base-legal
+    descricao: >-
+      Base legal para publicação de dado pessoal (art. 7º, II da LGPD),
+      autorizada por Paulo Sérgio dos Santos Júnior, Diretor de Extensão e
+      Pesquisa do Campus Serra, em 2026-10-05. Ver §3 de
+      specs/012-gate-proveniencia-workflow-dados/medidas-de-protecao.md.
+    registro: specs/012-gate-proveniencia-workflow-dados/medidas-de-protecao.md
+    aviso_visitante: >-
+      Os arquivos de origem estão sendo preparados para publicação e serão
+      disponibilizados aqui em breve.

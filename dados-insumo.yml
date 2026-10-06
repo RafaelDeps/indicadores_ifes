@@ -1,0 +1,45 @@
+# Manifesto de insumo da cadeia de dados.
+#
+# Este arquivo é versionado **de propósito**: os identificadores dos assets não
+# são segredo, e um repositório que clona tem de saber o que baixar sem precisar
+# de acesso ao repositório privado. O que exige credencial é o *conteúdo* dos
+# assets — as planilhas têm nome, matrícula e data de nascimento.
+#
+# As chaves são sem acento de propósito: são identificadores consumidos por um
+# leitor próprio no workflow, e um identificador com acento é risco de
+# codificação sem contrapartida. A prosa em volta delas é acentuada normalmente.
+#
+# Nenhum valor aqui é inventado. Os `asset_id` vieram de
+# `GET /repos/henriqk0/indicadores-dados-listagem/releases/tags/v1` e a revisão
+# do canônico é o SHA de `main` verificado por download.
+
+versao: 'v1'
+dono: henriqk0
+repositorio: indicadores-dados-listagem
+
+arquivos:
+  - nome: listagem_2024_1.xlsx
+    asset_id: 603973121
+  - nome: listagem_2024_2.xlsx
+    asset_id: 603973112
+  - nome: listagem_2025_1.xlsx
+    asset_id: 603973116
+  - nome: listagem_2025_2.xlsx
+    asset_id: 603973114
+  - nome: listagem_2026_1.xlsx
+    asset_id: 603973120
+  - nome: listagem_2026_2.xlsx
+    asset_id: 603973133
+
+# O canônico é público e vem pela rede pública, sem credencial: é a diferença
+# entre o repositório público, que aloja o agregado, e o privado, que aloja o
+# dado pessoal.
+#
+# `revisao` é uma SHA de 40 caracteres, nunca `main`. Referência móvel tornaria a
+# entrada não-reprodutível e o portão não a veria: ele compara cobertura, não
+# identidade. Mudar a revisão é um commit do manifesto e passa por revisão
+# humana, porque quebra a reprodutibilidade sem que nada avise.
+export_canonico:
+  repositorio: RafaelDeps/horizon_etl
+  caminho: data/exports/exports_canonical.zip
+  revisao: '1517ca6acf0205d49d7d54366ae8278324c145f0'

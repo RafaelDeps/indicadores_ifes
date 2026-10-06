@@ -52,12 +52,28 @@ indicadores_ifes/
 | `/pilar-2/<sigla>/` | Detalhe do indicador de fomento/parcerias                        |
 | `/pilar-3/`         | Produtividade e Propriedade Intelectual (PIPRO, PIPROT, PIPROTR) |
 | `/pilar-3/<sigla>/` | Detalhe de produção científica e ativos de PI                    |
+| `/dados/`           | Download dos arquivos do painel e guia de instalação da cadeia   |
 
 ### Ano e Campus de Referência
 
 - Nenhum valor é exibido sem um ano e campus explícitos; valores temporais nunca são somados.
 - Filtros de navegação por campus e ano refletem na URL (`?campus=serra&ano=2025`).
 - Indicadores sem apuração para determinado contexto exibem _"Dado indisponível"_ com justificativa textual fundamentada — nunca zero presumido ou estimativa arbitrária.
+
+### Página de downloads (`/dados/`)
+
+- O botão **Dados** fica no cabeçalho em qualquer largura de tela, e também na
+  gaveta móvel — o link não depende de breakpoint.
+- A listagem é derivada do disco em tempo de build por
+  `carregarDownloads()` (`src/lib/downloads.ts`). Nenhum nome de arquivo é
+  escrito no template: um artefato ausente aparece como **indisponível**, com o
+  motivo, e **sem** link — jamais um `<a>` que dá 404.
+- O aggregate `indicadores.zip` é sempre oferecido. Os insumos brutos
+  (`exports_canonical.zip` e `listagem_*.xlsx`) só são quando o portão de
+  governança está aberto — ver a seção de LGPD abaixo.
+- Os artefatos disponíveis são copiados para `public/dados/` pelo
+  `make check-governanca`, **antes** do `npm run build`. O diretório é
+  versionado só com `.gitkeep`; o conteúdo é gerado e fica no `.gitignore`.
 
 ---
 
@@ -112,6 +128,9 @@ A automação do projeto é centralizada no `Makefile`:
    - Aplicação rigorosa das regras de nulidade: denominadores nulos resultam em `null` com motivo formal cadastrado.
 
 2. **Privacidade e LGPD (Princípio CONIF IV)**:
-   - O repositório e os pacotes de distribuição contêm exclusivamente dados agregados e desidentificados.
+   - O **pacote de distribuição** (`indicadores.zip`) contém exclusivamente dados agregados e desidentificados.
    - O módulo `etl/tracking/` sanitiza automaticamente qualquer identificador discente ou pessoal em logs e atestados de auditoria (`data/reports/etl_run_report.md`).
-   - A fonte canônica (`exports_canonical.zip`, tamanho variável conforme o export) permanece estritamente isolada sob `data/canonical/` e é permanentemente ignorada pelo Git.
+   - **Os insumos brutos contêm dado pessoal, não dado sensível** (art. 5º, II da LGPD): a planilha de matrícula e o export canônico têm a coluna `Nome` com os nomes completos, e **não estão anonimizados**.
+   - A partir de 2026-10-05 (feature 016, decisão D-01), `data/canonical/` e `data/raw/` passam a ser **versionados** — a versão anterior os ignorava. A publicação dos insumos brutos é pública e sem autenticação, sob a base legal do art. 7º, II da LGPD e a autorização de transferência internacional do art. 33, registradas em `docs/revisao-privacidade.md`.
+   - A publicação é condicionada a um **portão automático** (`make check-governanca`, registro em `.specify/governanca/pendencias.yaml`). Com o portão fechado, o site sobe com o agregado e **omite** os insumos brutos, com aviso ao visitante. Ele falha **fechado**: registro ausente ou ilegível interrompe o build, em vez de publicar sem avaliação.
+   - Aviso que a decisão não elimina: **versionar é permanente**. Apagar um arquivo da `main` não apaga o objeto do histórico.

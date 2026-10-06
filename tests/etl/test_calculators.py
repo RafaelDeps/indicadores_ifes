@@ -109,3 +109,32 @@ def test_calcular_pilar3_metricas_e_fidelidade() -> None:
 
     # Ativos transferidos são estritamente None
     assert p3.total_transferidos_piprotr is None
+
+
+def test_eh_pesquisador_em_pesquisa_classificacao_estrita() -> None:
+    from etl.core.logic.calculators.papeis import eh_pesquisador_em_pesquisa
+
+    ref = RefCampus(id=1, name="Serra")
+    p_servidor = Pessoa(id=1, name="Prof", classification="researcher", campus=ref)
+    p_externo = Pessoa(id=2, name="Externo", classification="outside_ifes", campus=None)
+    p_aluno = Pessoa(id=3, name="Aluno", classification="student", campus=ref)
+    p_sem_classif = Pessoa(id=4, name="Indefinido", classification=None, campus=ref)
+
+    # Servidor institucional do IFES -> True
+    assert eh_pesquisador_em_pesquisa(p_servidor, "pesquisador") is True
+    assert eh_pesquisador_em_pesquisa(p_servidor, "coordenador") is True
+    assert eh_pesquisador_em_pesquisa(p_servidor, "") is True
+
+    # Colaborador externo outside_ifes -> SEMPRE False
+    assert eh_pesquisador_em_pesquisa(p_externo, "researcher") is False
+    assert eh_pesquisador_em_pesquisa(p_externo, "coordinator") is False
+    assert eh_pesquisador_em_pesquisa(p_externo, "pesquisador") is False
+
+    # Estudante -> SEMPRE False para QSPP
+    assert eh_pesquisador_em_pesquisa(p_aluno, "student researcher") is False
+    assert eh_pesquisador_em_pesquisa(p_aluno, "pesquisador discente") is False
+    assert eh_pesquisador_em_pesquisa(p_aluno, "researcher") is False
+
+    # Sem classificação ou pessoa ausente -> False
+    assert eh_pesquisador_em_pesquisa(p_sem_classif, "pesquisador") is False
+    assert eh_pesquisador_em_pesquisa(None, "pesquisador") is False

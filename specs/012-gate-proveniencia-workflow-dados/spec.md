@@ -292,14 +292,27 @@ confere o resultado e abre um pull request — sem alterar nada fora do escopo.
 
 ### Privacidade
 
-- **FR-026**: Nenhuma linha de nome, matrícula, data de nascimento ou tipo de
+- **FR-026**: ~~Nenhuma linha de nome, matrícula, data de nascimento ou tipo de
   cota das planilhas de matrícula MAY aparecer no repositório público, no log do
-  workflow, no pull request ou em artefato de execução.
+  workflow, no pull request ou em artefato de execução.~~
+  **Revogado pela feature 016 (2026-10-05, decisão D-01).** A linha de nome e a
+  de matrícula passam a ser **versionadas** em `data/raw/` e servidas
+  publicamente, sem autenticação, sob a base legal do art. 7º, II da LGPD e a
+  autorização de transferência internacional do art. 33 — registradas em
+  `docs/revisao-privacidade.md`. O que permanece vedado: que a linha entre no
+  **log** do workflow, no corpo de um pull request ou em relatório de execução
+  (`etl/tracking/` continua sanitizando logs e atestados). A publicação dos
+  arquivos fica condicionada ao portão automático de
+  `.specify/governanca/pendencias.yaml`.
 - **FR-027**: As medidas de proteção adotadas DEVEM ser registradas em documento
   versionado, de modo que a conformidade seja auditável e não dependa de
   conhecimento tácito.
-- **FR-028**: Nenhum dado individual DEVE ser incorporado ao pacote publicado,
-  que permanece agregado.
+- **FR-028**: Nenhum dado individual DEVE ser incorporado ao **pacote publicado**,
+  que permanece agregado. **Mantido sem alteração pela feature 016**: o
+  `indicadores.zip` continua sendo o único agregado e segue sem dado individual.
+  O que a feature 016 acrescenta é um segundo canal — a página `/dados/` — onde os
+  **insumos brutos**, marcados como tal, são oferecidos separadamente do
+  agregado. Nenhum dado de insumo entra no pacote.
 
 ### Key Entities
 

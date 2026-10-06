@@ -34,6 +34,11 @@ jobs:
       # entradas do ETL são gitignored e não existem no CI; em clone o check-dados
       # valida o contrato e emite apenas a linha INFO: de entradas ausentes, exit 0)
       - run: PYTHONPATH=. python -m etl.scripts.check_dados
+      # Portão de governança (spec 016, FR-016). Roda ANTES de `npm run build`
+      # porque é ele que decide se os insumos brutos chegam a `public/dados/`.
+      # Gate fechado ⇒ AVISO: + exit 0, e o site sobe com o agregado sozinho;
+      # registro de pendências quebrado ⇒ ERRO: + exit 1, e o build para.
+      - run: PYTHONPATH=. python -m etl.scripts.check_governanca
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test
@@ -53,6 +58,16 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # O portão roda de novo porque é este job que **publica**. O gate em
+      # Python e o gate em TypeScript leem o mesmo registro, mas só o Python
+      # interrompe o build: se o registro estiver quebrado, o erro precisa
+      # aparecer no log do deploy, e não passar como site publicado sem
+      # insumos.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-etl.txt
+      - run: PYTHONPATH=. python -m etl.scripts.check_governanca
       - run: npm run build
       - uses: actions/configure-pages@v5
       - id: deployment

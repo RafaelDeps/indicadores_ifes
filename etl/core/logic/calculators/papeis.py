@@ -8,13 +8,11 @@ def eh_pesquisador_em_pesquisa(pessoa: Pessoa | None, papeis_str: str) -> bool:
 
     Espelha exatamente a regra do `aggregator` (staff_unicos) para que o
     cruzamento NTECPP permaneça consistente com o NEP publicado.
+    Apenas pessoas com vínculo institucional comprovado de pesquisador
+    (classification == 'researcher') são elegíveis. Colaboradores externos
+    (outside_ifes) e discentes (student) são estritamente excluídos.
     """
-    return (
-        (pessoa is not None and pessoa.classification == "researcher")
-        or "coord" in papeis_str
-        or "pesquisador" in papeis_str
-        or "researcher" in papeis_str
-    )
+    return pessoa is not None and pessoa.classification == "researcher"
 
 
 def eh_estudante_em_pesquisa(pessoa: Pessoa | None, papeis_str: str) -> bool:

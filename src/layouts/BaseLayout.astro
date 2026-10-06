@@ -4,6 +4,7 @@ import SeletorTema from '../components/SeletorTema.astro';
 import BuscaRapida from '../components/BuscaRapida.astro';
 import { obterCampiParaSelect, obterAnosParaSelect, datasetPadrao } from '../lib/dataset';
 import { resolverContextoFiltro } from '../lib/ano';
+import { rotaDentroDe } from '../lib/rota';
 import '../styles/tokens.css';
 
 interface Props {
@@ -15,10 +16,19 @@ const { title, description = 'Indicadores de Pesquisa e Inovação dos 3 pilares
   Astro.props;
 
 const pathname = Astro.url.pathname;
-const isHome = pathname === '/' || pathname === '';
-const isPilar1 = pathname.startsWith('/pilar-1');
-const isPilar2 = pathname.startsWith('/pilar-2');
-const isPilar3 = pathname.startsWith('/pilar-3');
+const rawBaseUrl = import.meta.env.BASE_URL ?? '/';
+/*
+ * A rota precisa ser comparada **sem o base**: no build estático,
+ * `Astro.url.pathname` vem como `/indicadores_ifes/pilar-1/`, e todo
+ * `startsWith('/pilar-1')` era falso — nenhuma aba do cabeçalho marcava a
+ * própria página, em nenhuma das quatro. `rotaDentroDe` normaliza e compara por
+ * segmento (ver `src/lib/rota.ts`).
+ */
+const isHome = rotaDentroDe(pathname, rawBaseUrl, '');
+const isPilar1 = rotaDentroDe(pathname, rawBaseUrl, 'pilar-1');
+const isPilar2 = rotaDentroDe(pathname, rawBaseUrl, 'pilar-2');
+const isPilar3 = rotaDentroDe(pathname, rawBaseUrl, 'pilar-3');
+const isDados = rotaDentroDe(pathname, rawBaseUrl, 'dados');
 
 const campiOpcoes = obterCampiParaSelect();
 const anosOpcoes = obterAnosParaSelect();
@@ -192,6 +202,9 @@ const fontFaceCss = pesos
 
         <div class="cabecalho-acoes">
           <SeletorTema />
+          <a href="/dados/" class="link-dados" aria-current={isDados ? 'page' : undefined}>
+            Dados
+          </a>
           <button
             class="btn-menu-drawer"
             aria-label="Abrir menu de navegação"
@@ -304,6 +317,13 @@ const fontFaceCss = pesos
               aria-current={isPilar3 ? 'page' : undefined}
             >
               Pilar 3
+            </a>
+            <a
+              href="/dados/"
+              class:list={['drawer-link', { ativa: isDados }]}
+              aria-current={isDados ? 'page' : undefined}
+            >
+              Dados
             </a>
           </nav>
         </div>
@@ -467,6 +487,56 @@ const fontFaceCss = pesos
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  /*
+   * Botão "Dados" do cabeçalho (feature 016, T019).
+   *
+   * `.nav-pilares` é `display: none` abaixo de 768 px, e é aí que a busca e os
+   * filtros somem também. Este link fica **fora** desse contêiner de propósito:
+   * se fosse uma quinta aba de `.nav-pilares`, ele desapareceria junto com as
+   * abas no viewport estreito, que é justamente onde não há gaveta como
+   * alternativa. Visível em qualquer largura, com `margin-left: auto` para
+   * colar à direita.
+   *
+   * O rótulo curto ("Dados") e o `nowrap` mantêm a largura do cabeçalho estável
+   * entre 320 px e a largura de desktop — sem eles, o link flexiona a cada
+   * quebra e empurra o botão do menu para fora da tela.
+   */
+  .link-dados {
+    display: inline-block;
+    margin-left: auto;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-muted);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    /* `nowrap` mantém a largura do cabeçalho estável entre 320 px e desktop: sem
+       ele, o rótulo quebra em duas linhas e empurra o botão do menu para fora
+       da tela no viewport estreito (QS-10, item 1). */
+    white-space: nowrap;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease;
+  }
+
+  .link-dados:hover {
+    color: var(--color-primary-dark);
+    background: var(--color-emerald-50);
+  }
+
+  .link-dados[aria-current='page'] {
+    color: var(--color-primary-dark);
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+  }
+
+  .link-dados:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   .drawer-busca {

@@ -33,6 +33,15 @@
   --color-badge-unavailable: #f1f5f9;
   --color-badge-unavailable-text: #475569;
 
+  /* Marcação de dado pessoal (feature 016, FR-015).
+     Reaproveita a família `--color-notice-*` já existente em vez de criar uma
+     paleta paralela para o mesmo aviso: dois nomes para o mesmo sinal é como os
+     dois divergem depois. O badge carrega ícone **e** texto, então a cor é
+     reforço e nunca o único canal (FR-019, A-2). */
+  --color-dado-pessoal-text: var(--color-notice-text);
+  --color-dado-pessoal-bg: var(--color-notice-bg);
+  --color-dado-pessoal-border: var(--color-notice-border);
+
   /* Tipografia */
   --font-sans: 'Manrope', 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
@@ -64,4 +73,8 @@
   --color-notice-border: #fbbf24;
   --color-badge-unavailable: #1e293b;
   --color-badge-unavailable-text: #94a3b8;
+
+  /* A marcação de dado pessoal herda o modo escuro por referência, então o
+     tema escuro é o mesmo sinal com os mesmos nomes — não um segundo valor
+     para lembrar de atualizar (A-5, FR-019). */
 }
