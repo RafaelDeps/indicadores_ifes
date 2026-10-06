@@ -1,1 +1,3 @@
-{ "feature_directory": "specs/015-qspp-lotacao-campus" }
+{
+  "feature_directory": "specs/016-download-data-files"
+}
