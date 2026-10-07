@@ -64,3 +64,65 @@ def buscar_campus_por_nome_ou_slug(termo: str, campi: list[Campus]) -> Campus | 
             return campus
 
     return None
+
+
+CAMPI_CANONICOS_SLUGS: list[str] = [
+    "serra",
+    "vitoria",
+    "vilavelha",
+    "itapina",
+    "colatina",
+    "alegre",
+    "guarapari",
+    "vendanovadoimigrante",
+    "cachoeirodeitapemirim",
+    "saomateus",
+    "cefor",
+    "piuma",
+    "cariacica",
+    "linhares",
+    "aracruz",
+    "viana",
+    "santateresa",
+    "centroserrano",
+    "presidentekennedy",
+    "ibatiba",
+    "novavenecia",
+    "montanha",
+    "barradesaofrancisco",
+]
+
+
+def resolver_campi_facto(
+    instituicao: str, referencia: str = "", departamento: str = ""
+) -> tuple[str, ...]:
+    """
+    Resolve os slugs dos campi aos quais um projeto da FACTO pertence.
+    Retorna uma tupla de slugs (ex.: ('serra', 'todos'), ('cefor', 'todos'), ('todos',) ou () para externas).
+    """
+    n_inst = normalizar_slug(instituicao)
+    if not n_inst:
+        return ()
+
+    # Verifica se pertence ao IFES
+    is_ifes = ("espiritosanto" in n_inst) or ("ifes" in n_inst)
+    if not is_ifes:
+        return ()
+
+    # Reitoria
+    if "reitoria" in n_inst:
+        n_ref = normalizar_slug(referencia)
+        n_dept = normalizar_slug(departamento)
+        if "cefor" in n_ref or "cefor" in n_dept:
+            return ("cefor", "todos")
+        for c in CAMPI_CANONICOS_SLUGS:
+            if c in n_ref or c in n_dept:
+                return (c, "todos")
+        return ("todos",)
+
+    # Campi específicos
+    for c in CAMPI_CANONICOS_SLUGS:
+        if c in n_inst:
+            return (c, "todos")
+
+    return ("todos",)

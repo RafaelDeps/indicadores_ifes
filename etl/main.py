@@ -6,10 +6,12 @@ import sys
 from pathlib import Path
 
 from etl.adapters.sinks.zip_indicadores_sink import ZipIndicadoresSink
+from etl.adapters.sources.facto_csv_source import FactoCsvSource
 from etl.adapters.sources.zip_canonical_source import ZipCanonicalSource
 from etl.cli_comum import parsear_anos
 from etl.core.logic.resolvers.campus_resolver import normalizar_slug
 from etl.flows.indicadores_flow import IndicadoresFlow
+
 
 
 def criar_argument_parser() -> argparse.ArgumentParser:
@@ -39,6 +41,11 @@ def criar_argument_parser() -> argparse.ArgumentParser:
         "-a",
         default="2024,2025,2026",
         help="Anos de referência separados por vírgula (padrão: 2024,2025,2026)",
+    )
+    parser.add_argument(
+        "--facto-dir",
+        default=os.getenv("FACTO_DIR", "data/raw/pilar2"),
+        help="Diretório contendo dados da FACTO para o Pilar 2 (padrão: data/raw/pilar2)",
     )
     parser.add_argument(
         "--soft",
@@ -97,12 +104,14 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Carregando dados canônicos de {caminho_entrada}...")
     source = ZipCanonicalSource(caminho_entrada)
     sink = ZipIndicadoresSink(caminho_saida)
+    facto_source = FactoCsvSource(Path(args.facto_dir))
 
     flow = IndicadoresFlow(
         source=source,
         sink=sink,
         anos=anos,
         campus_filtro=campus,
+        facto_source=facto_source,
     )
 
     resultado = flow.run()
@@ -112,6 +121,7 @@ def main(argv: list[str] | None = None) -> int:
             f"arquivos gerados em {caminho_saida}"
         )
     return resultado.codigo_saida
+
 
 
 if __name__ == "__main__":

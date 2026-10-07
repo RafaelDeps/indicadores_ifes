@@ -14,6 +14,7 @@ def test_cli_parser_defaults() -> None:
     assert args.saida is None
     assert args.campus is None
     assert args.anos == "2024,2025,2026"
+    assert args.facto_dir == "data/raw/pilar2"
 
 
 def test_cli_parser_custom_args() -> None:
@@ -28,12 +29,16 @@ def test_cli_parser_custom_args() -> None:
             "Serra",
             "--anos",
             "2025,2026",
+            "--facto-dir",
+            "custom/pilar2",
         ]
     )
     assert args.entrada == "custom_in.zip"
     assert args.saida == "custom_out.zip"
     assert args.campus == "Serra"
     assert args.anos == "2025,2026"
+    assert args.facto_dir == "custom/pilar2"
+
 
 
 def test_cli_executa_campus_isolado(tmp_path: Path) -> None:

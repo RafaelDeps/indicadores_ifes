@@ -13,6 +13,7 @@ from etl.core.logic.models.canonical import (
     TipoProducao,
 )
 from etl.core.logic.models.export import RegistroPilarJson, ResultadoFlow
+from etl.core.logic.models.facto import ProjetoFacto
 from etl.core.logic.models.indicators import (
     AgregadosCampus,
     AgregadosPilar1,
@@ -40,4 +41,5 @@ __all__ = [
     "AgregadosCampus",
     "EstudanteListagem",
     "ListagensExtraidas",
+    "ProjetoFacto",
 ]

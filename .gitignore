@@ -18,8 +18,10 @@ venv/
 .tmp-*
 
 # Governança de Dados (Padrão Horizon)
+.cache_canonical/
 data/canonical/*
 !data/canonical/.gitkeep
+
 
 
 # Dados (do campus Serra)

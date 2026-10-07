@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from etl.core.logic.calculators.papeis import (
     eh_estudante_em_pesquisa,
     eh_pesquisador_em_pesquisa,
 )
+from etl.core.logic.calculators.pillar2 import calcular_pilar2
 from etl.core.logic.models import (
     AgregadosCampus,
     AgregadosPilar1,
@@ -24,6 +27,9 @@ from etl.core.logic.temporal.activity_filter import (
     membro_ativo_em_ano,
 )
 
+if TYPE_CHECKING:
+    from etl.core.logic.models.facto import ProjetoFacto
+
 NOME_TIPO_PC = "softwares_sem_patente"
 ESCOPO_TODOS_SLUG = "todos"
 ESCOPO_TODOS_NOME = "Todos os Campi"
@@ -33,11 +39,13 @@ def agregar_indicadores(
     exportacao: ExportCanonicos,
     anos: list[int],
     campus_filtro: str | None = None,
+    projetos_facto: list[ProjetoFacto] | None = None,
 ) -> tuple[dict[int, dict[str, AgregadosCampus]], list[str]]:
     """
     Agrega iniciativas, pessoas, artigos e produções por campus e ano,
     gerando métricas consolidadas dos Pilares 1, 2 e 3 tanto para os campi
     individuais quanto para o escopo institucional 'todos'.
+
     """
     avisos: list[str] = list(exportacao.avisos)
     registro_pessoas, avisos_pessoas = criar_registro_pessoas(
@@ -263,7 +271,11 @@ def agregar_indicadores(
                 percentual_calculado_picot=None,
             )
 
-            pilar2 = AgregadosPilar2()
+            pilar2 = calcular_pilar2(
+                projetos=projetos_facto,
+                campus_slug=slug,
+                ano=ano,
+            )
 
             pilar3 = AgregadosPilar3(
                 npb_producao_bibliografica=npb,

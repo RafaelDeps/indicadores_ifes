@@ -30,11 +30,8 @@ CAMPOS_QUE_DEVEM_SER_NULOS = {
     "percentual_calculado_PIES",
     "NTECPP_cotistas_em_pesquisa",
     "percentual_calculado_PICOT",
-    "TAFPPI_valor_total_aporte_pesquisa",
     "OCC_valor_orcamento_total_capital_custeio",
     "percentual_calculado_PINV",
-    "NAPPCT_acordos_parceria_firmados",
-    "total_acumulado_PIPDI",
     "total_transferidos_PIPROTR",
 }
 
@@ -44,7 +41,7 @@ def _valor_valido(valor: Any) -> bool:
         return True
     if isinstance(valor, bool):
         return False
-    return isinstance(valor, int) and valor >= 0
+    return isinstance(valor, (int, float)) and valor >= 0
 
 
 def validar_arquivos_pilar(

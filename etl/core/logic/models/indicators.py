@@ -18,13 +18,13 @@ class AgregadosPilar1:
 
 @dataclass
 class AgregadosPilar2:
-    """Métricas do Pilar 2 (Fomento e Conexão) — sabidamente estritamente nulos."""
+    """Métricas do Pilar 2 (Fomento e Conexão com o Ecossistema)."""
 
-    tafppi_valor_total_aporte_pesquisa: None = None
+    tafppi_valor_total_aporte_pesquisa: float | None = None
     occ_valor_orcamento_total_capital_custeio: None = None
     percentual_calculado_pinv: None = None
-    nappct_acordos_parceria_firmados: None = None
-    total_acumulado_pipdi: None = None
+    nappct_acordos_parceria_firmados: int | None = None
+    total_acumulado_pipdi: int | None = None
 
 
 @dataclass
