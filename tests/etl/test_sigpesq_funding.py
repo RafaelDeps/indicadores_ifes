@@ -152,18 +152,20 @@ def test_extrair_e_calcular_tafppi_real_canonical() -> None:
     val_2025_todos = calcular_tafppi(None, "todos", 2025, projetos_sigpesq=projetos)
     val_2026_todos = calcular_tafppi(None, "todos", 2026, projetos_sigpesq=projetos)
 
-    assert val_2024_todos == 12173495.28
-    assert val_2025_todos == 31648313.18
-    assert val_2026_todos == 17842650.00
+    # Valores oficiais do pacote canônico (ver specs/017 Independent Test).
+    # pytest.approx: valores vêm de round(soma, 2) de floats binários.
+    assert val_2024_todos == pytest.approx(12067095.28, abs=0.01)
+    assert val_2025_todos == pytest.approx(28270178.52, abs=0.01)
+    assert val_2026_todos == pytest.approx(17842650.00, abs=0.01)
 
     # Valores específicos do Campus Serra (sem vazamento de outros campi)
     val_2024_serra = calcular_tafppi(None, "serra", 2024, projetos_sigpesq=projetos)
     val_2025_serra = calcular_tafppi(None, "serra", 2025, projetos_sigpesq=projetos)
     val_2026_serra = calcular_tafppi(None, "serra", 2026, projetos_sigpesq=projetos)
 
-    assert val_2024_serra == 12067095.28
-    assert val_2025_serra == 26332461.50
-    assert val_2026_serra == 338500.00
+    assert val_2024_serra == pytest.approx(6168475.28, abs=0.01)
+    assert val_2025_serra == pytest.approx(25954326.84, abs=0.01)
+    assert val_2026_serra == pytest.approx(338500.00, abs=0.01)
 
 
 def test_agregar_indicadores_com_sigpesq(mock_export_canonicos) -> None:

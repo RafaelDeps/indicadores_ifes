@@ -55,7 +55,7 @@ def test_tafppi_consolidacao_nova_ia_2025() -> None:
 
 
 def test_tafppi_real_canonical_serra_2025() -> None:
-    """Verifica que o TAFPPI de Serra em 2025 atinge exatamente R$ 26.332.461,50 com dados reais."""
+    """Verifica que o TAFPPI de Serra em 2025 reproduz o valor oficial (specs/018 SC-004)."""
     caminho_real = Path("data/canonical/exports_canonical.zip")
     if not caminho_real.is_file():
         pytest.skip("data/canonical/exports_canonical.zip não encontrado")
@@ -64,7 +64,7 @@ def test_tafppi_real_canonical_serra_2025() -> None:
     projetos = source.extrair_projetos_sigpesq()
 
     val_2025_serra = calcular_tafppi(None, "serra", 2025, projetos_sigpesq=projetos)
-    assert val_2025_serra == 26332461.50
+    assert val_2025_serra == pytest.approx(25954326.84, abs=0.01)
 
 
 def test_pinv_serra_preserva_occ_nulo(tmp_path: Path) -> None:
