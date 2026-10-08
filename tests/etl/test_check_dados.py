@@ -462,3 +462,41 @@ def test_check_dados_ordem_saudavel_do_make_dados_silencioso(
     assert "AVISO:" not in err
     assert "proveniência" not in err
     assert "INFO:" not in err
+
+
+def test_check_dados_aceita_pilar2_com_pinv_preenchido(tmp_path: Path, capsys) -> None:
+    """Garante que check-dados aceita arquivos de Pilar 2 com percentual_calculado_PINV numérico."""
+    pacote = tmp_path / "indicadores.zip"
+    pilar2_dados = {
+        "campus": "Serra",
+        "ano_referencia": 2024,
+        "pilar": "Fomento e Conexao com o Ecossistema",
+        "indicadores": {
+            "PINV": {
+                "descricao": "Percentual de Investimento em Pesquisa, Pos e Inovacao",
+                "TAFPPI_valor_total_aporte_pesquisa": 12067095.28,
+                "OCC_valor_orcamento_total_capital_custeio": None,
+                "percentual_calculado_PINV": 496.78,
+            },
+            "PIPDI": {
+                "descricao": "Quantidade de Acordos de Parceria para PDeI",
+                "NAPPCT_acordos_parceria_firmados": 15,
+                "total_acumulado_PIPDI": 15,
+            },
+        },
+    }
+    _escrever_zip(
+        pacote,
+        [
+            RegistroPilarJson(
+                nome="pilar2_serra_2024.json",
+                conteudo=json.dumps(pilar2_dados, ensure_ascii=False, indent=2),
+            )
+        ],
+    )
+
+    rc = main(["--pacote", str(pacote), "--canonical", "", "--raw", ""])
+    out = capsys.readouterr()
+    assert rc == 0
+    assert "atendem ao contrato CONIF" in out.out
+    assert "ERRO:" not in out.err

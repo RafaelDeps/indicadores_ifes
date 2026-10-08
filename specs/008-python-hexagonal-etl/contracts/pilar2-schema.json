@@ -24,7 +24,10 @@
           "additionalProperties": false,
           "properties": {
             "descricao": { "type": "string" },
-            "TAFPPI_valor_total_aporte_pesquisa": { "type": "null" },
+            "TAFPPI_valor_total_aporte_pesquisa": {
+              "type": ["number", "null"],
+              "minimum": 0
+            },
             "OCC_valor_orcamento_total_capital_custeio": { "type": "null" },
             "percentual_calculado_PINV": { "type": "null" }
           }
@@ -35,8 +38,14 @@
           "additionalProperties": false,
           "properties": {
             "descricao": { "type": "string" },
-            "NAPPCT_acordos_parceria_firmados": { "type": "null" },
-            "total_acumulado_PIPDI": { "type": "null" }
+            "NAPPCT_acordos_parceria_firmados": {
+              "type": ["integer", "null"],
+              "minimum": 0
+            },
+            "total_acumulado_PIPDI": {
+              "type": ["integer", "null"],
+              "minimum": 0
+            }
           }
         }
       }

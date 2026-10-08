@@ -17,6 +17,8 @@ htmlcov/
 venv/
 .tmp-*
 
+.cache_canonical/
+
 # `data/canonical/` e `data/raw/` são versionados por decisão institucional de
 # 2026-10-05 (spec 012 §2.1; feature 016, decisão D-01). Antes, ambos eram
 # ignorados e só o `.gitkeep` preservava o diretório. A mudança **reverte** o

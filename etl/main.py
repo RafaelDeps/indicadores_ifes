@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 
 from etl.adapters.sinks.zip_indicadores_sink import ZipIndicadoresSink
+from etl.adapters.sources.facto_csv_source import FactoCsvSource
+from etl.adapters.sources.pinv_json_source import PinvJsonSource
 from etl.adapters.sources.zip_canonical_source import ZipCanonicalSource
 from etl.cli_comum import parsear_anos
 from etl.core.logic.resolvers.campus_resolver import normalizar_slug
@@ -39,6 +41,16 @@ def criar_argument_parser() -> argparse.ArgumentParser:
         "-a",
         default="2024,2025,2026",
         help="Anos de referência separados por vírgula (padrão: 2024,2025,2026)",
+    )
+    parser.add_argument(
+        "--facto-dir",
+        default=os.getenv("FACTO_DIR", "data/raw/pilar2"),
+        help="Diretório contendo dados da FACTO para o Pilar 2 (padrão: data/raw/pilar2)",
+    )
+    parser.add_argument(
+        "--pinv-dir",
+        default=os.getenv("PINV_DIR", "data"),
+        help="Diretório contendo dados de percentual PINV por campus (padrão: data)",
     )
     parser.add_argument(
         "--soft",
@@ -97,12 +109,16 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Carregando dados canônicos de {caminho_entrada}...")
     source = ZipCanonicalSource(caminho_entrada)
     sink = ZipIndicadoresSink(caminho_saida)
+    facto_source = FactoCsvSource(Path(args.facto_dir))
+    pinv_source = PinvJsonSource(Path(args.pinv_dir))
 
     flow = IndicadoresFlow(
         source=source,
         sink=sink,
         anos=anos,
         campus_filtro=campus,
+        facto_source=facto_source,
+        pinv_source=pinv_source,
     )
 
     resultado = flow.run()

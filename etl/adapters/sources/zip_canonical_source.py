@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -10,12 +11,22 @@ from etl.core.logic.models import (
     AutorProducao,
     Campus,
     ExportCanonicos,
+    FonteFinanciamento,
     Iniciativa,
     MembroEquipe,
     Pessoa,
     Producao,
+    ProjetoSigpesqFinanciamento,
     RefCampus,
     TipoProducao,
+)
+from etl.core.logic.resolvers.campus_resolver import (
+    normalizar_slug,
+    resolver_campus_sigpesq,
+)
+from etl.core.logic.temporal.activity_filter import (
+    extrair_ano_mes_inicio,
+    projetar_ano_fim,
 )
 from etl.core.ports.source import ISource
 
@@ -238,3 +249,154 @@ class ZipCanonicalSource(ISource):
             tipos_producao=tipos,
             avisos=avisos,
         )
+
+    def extrair_projetos_sigpesq(self) -> list[ProjetoSigpesqFinanciamento]:
+        """Extrai os projetos de pesquisa e seus dados de financiamento de project_sigpesq_files_json/."""
+        if not self.caminho_zip.exists():
+            return []
+
+        projetos: list[ProjetoSigpesqFinanciamento] = []
+
+        try:
+            with zipfile.ZipFile(self.caminho_zip, "r") as zf:
+                nomes_sigpesq = [
+                    n
+                    for n in zf.namelist()
+                    if n.startswith("project_sigpesq_files_json/")
+                    and n.endswith(".json")
+                ]
+
+                # Mapeamento auxiliar de pesquisadores para campus institucional
+                pesquisadores_campus_map: dict[str, str] = {}
+                if "researchers_canonical.json" in zf.namelist():
+                    try:
+                        with zf.open("researchers_canonical.json") as rf:
+                            r_list = json.loads(rf.read().decode("utf-8"))
+                            for r in r_list:
+                                r_nome = r.get("name")
+                                r_c = r.get("campus")
+                                if r_nome and r_c and isinstance(r_c, dict):
+                                    c_name = r_c.get("name", "")
+                                    if c_name:
+                                        pesquisadores_campus_map[
+                                            normalizar_slug(r_nome)
+                                        ] = c_name
+                    except Exception:
+                        pass
+
+                for nome_arquivo in nomes_sigpesq:
+                    try:
+                        with zf.open(nome_arquivo) as f:
+                            dados = json.loads(f.read().decode("utf-8"))
+                    except (json.JSONDecodeError, OSError):
+                        continue
+
+                    codigo = dados.get("codigo") or Path(nome_arquivo).stem
+                    titulo = dados.get("titulo")
+
+                    # Datas de vigência
+                    datas = dados.get("datas") or {}
+                    inicio_str = str(datas.get("inicio") or "")
+                    fim_str = str(datas.get("fim") or "")
+                    duracao_meses_raw = datas.get("duracao_meses")
+                    duracao_meses: int | None = None
+                    if (
+                        duracao_meses_raw is not None
+                        and str(duracao_meses_raw).strip().isdigit()
+                    ):
+                        duracao_meses = int(str(duracao_meses_raw).strip())
+
+                    ano_inicio, mes_inicio = extrair_ano_mes_inicio(inicio_str)
+
+                    # Fallback para cronograma quando inicio_str for nulo/vazio
+                    cronograma = dados.get("cronograma") or []
+                    datas_cronograma: list[str] = []
+                    if isinstance(cronograma, list):
+                        for ativ in cronograma:
+                            if isinstance(ativ, dict):
+                                for k in ("inicio", "fim"):
+                                    val_data = ativ.get(k)
+                                    if (
+                                        val_data
+                                        and isinstance(val_data, str)
+                                        and re.search(r"\d{4}", val_data)
+                                    ):
+                                        datas_cronograma.append(val_data.strip())
+
+                    if ano_inicio is None and datas_cronograma:
+                        ano_inicio, mes_inicio = extrair_ano_mes_inicio(
+                            min(datas_cronograma)
+                        )
+
+                    m_fim = re.search(r"(\d{4})", fim_str)
+                    ano_fim = int(m_fim.group(1)) if m_fim else None
+
+                    if ano_fim is None and ano_inicio is not None:
+                        ano_fim = projetar_ano_fim(
+                            ano_inicio=ano_inicio,
+                            duracao_meses=duracao_meses,
+                            mes_inicio=mes_inicio,
+                        )
+
+                    if ano_fim is None and datas_cronograma:
+                        m_cron_fim = re.search(r"(\d{4})", max(datas_cronograma))
+                        if m_cron_fim:
+                            ano_fim = int(m_cron_fim.group(1))
+
+                    # Financiamento e Fontes
+                    fin = dados.get("financiamento") or {}
+                    valor_total = fin.get("valor_total")
+                    fontes_list: list[FonteFinanciamento] = []
+                    for f_item in fin.get("fontes") or []:
+                        f_nome = f_item.get("fonte", "")
+                        f_tipo = f_item.get("tipo")
+                        f_val = f_item.get("valor")
+                        fontes_list.append(
+                            FonteFinanciamento(
+                                fonte=f_nome,
+                                tipo=f_tipo,
+                                valor=float(f_val) if f_val is not None else None,
+                            )
+                        )
+
+                    if valor_total is None and fontes_list:
+                        valores_fontes = [
+                            f.valor for f in fontes_list if f.valor is not None
+                        ]
+                        if valores_fontes:
+                            valor_total = sum(valores_fontes)
+
+                    if valor_total is None:
+                        valor_total = 0.0
+                    else:
+                        valor_total = float(valor_total)
+
+                    # Resolução de Campus
+                    coord = dados.get("coordenador") or {}
+                    coord_nome = (coord.get("nome") or "").strip()
+                    coord_campus = (coord.get("campus") or "").strip()
+
+                    campus_slug, campus_nome = resolver_campus_sigpesq(
+                        coord_campus=coord_campus,
+                        coord_nome=coord_nome,
+                        equipe=dados.get("equipe", []),
+                        pesquisadores_campus_map=pesquisadores_campus_map,
+                    )
+
+                    projetos.append(
+                        ProjetoSigpesqFinanciamento(
+                            codigo=codigo,
+                            titulo=titulo,
+                            campus_slug=campus_slug,
+                            campus_nome=campus_nome,
+                            ano_inicio=ano_inicio,
+                            ano_fim=ano_fim,
+                            duracao_meses=duracao_meses,
+                            valor_total=round(valor_total, 2),
+                            fontes=fontes_list,
+                        )
+                    )
+        except (zipfile.BadZipFile, OSError):
+            return []
+
+        return projetos

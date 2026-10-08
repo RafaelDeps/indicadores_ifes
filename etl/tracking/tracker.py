@@ -19,6 +19,7 @@ class ExecutionMetrics:
     total_iniciativas: int = 0
     total_pessoas: int = 0
     total_producoes: int = 0
+    total_projetos_facto: int = 0
     iniciativas_ativas_por_ano: dict[int, int] = field(default_factory=dict)
     resumo_campi: dict[str, dict[str, int]] = field(default_factory=dict)
     total_arquivos_gerados: int = 0
@@ -53,11 +54,13 @@ class ExecutionTracker:
         total_iniciativas: int,
         total_pessoas: int,
         total_producoes: int,
+        total_projetos_facto: int = 0,
     ) -> None:
         self.metricas.total_campi = total_campi
         self.metricas.total_iniciativas = total_iniciativas
         self.metricas.total_pessoas = total_pessoas
         self.metricas.total_producoes = total_producoes
+        self.metricas.total_projetos_facto = total_projetos_facto
 
     def registrar_iniciativas_ativas_por_ano(
         self, ativas_por_ano: dict[int, int]
@@ -106,6 +109,7 @@ class ExecutionTracker:
             f"| Campi Institucionais | {m.total_campi} |",
             f"| Pessoas Registradas (Pesquisadores / Discentes) | {m.total_pessoas} |",
             f"| Projetos / Iniciativas Totais | {m.total_iniciativas} |",
+            f"| Projetos FACTO (Pilar 2) | {m.total_projetos_facto} |",
             f"| Produções Técnicas e Bibliográficas | {m.total_producoes} |",
             "",
             "## 2. Iniciativas Ativas por Ano de Referência",

@@ -58,6 +58,7 @@ def _montar_pilar1(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:
 
 
 def _montar_pilar2(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:
+    p2 = agregados.pilar2
     return {
         "campus": agregados.campus_nome,
         "ano_referencia": ano,
@@ -65,14 +66,18 @@ def _montar_pilar2(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:
         "indicadores": {
             "PINV": {
                 "descricao": DESCRICOES["PINV"],
-                "TAFPPI_valor_total_aporte_pesquisa": None,
-                "OCC_valor_orcamento_total_capital_custeio": None,
-                "percentual_calculado_PINV": None,
+                "TAFPPI_valor_total_aporte_pesquisa": p2.tafppi_valor_total_aporte_pesquisa,
+                "OCC_valor_orcamento_total_capital_custeio": p2.occ_valor_orcamento_total_capital_custeio,
+                "percentual_calculado_PINV": (
+                    round(float(p2.percentual_calculado_pinv), 2)
+                    if p2.percentual_calculado_pinv is not None
+                    else None
+                ),
             },
             "PIPDI": {
                 "descricao": DESCRICOES["PIPDI"],
-                "NAPPCT_acordos_parceria_firmados": None,
-                "total_acumulado_PIPDI": None,
+                "NAPPCT_acordos_parceria_firmados": p2.nappct_acordos_parceria_firmados,
+                "total_acumulado_PIPDI": p2.total_acumulado_pipdi,
             },
         },
     }

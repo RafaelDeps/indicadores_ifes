@@ -157,7 +157,11 @@ def mock_export_canonicos(
     )
 
 
-def criar_zip_canonico_fake(caminho_zip: Path, dados: dict[str, list[dict]]) -> None:
+def criar_zip_canonico_fake(
+    caminho_zip: Path,
+    dados: dict[str, list[dict]],
+    sigpesq_files: dict[str, dict] | None = None,
+) -> None:
     """Utilitário de teste para criar um exports_canonical.zip sintético."""
     caminho_zip.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(caminho_zip, "w") as z:
@@ -165,3 +169,93 @@ def criar_zip_canonico_fake(caminho_zip: Path, dados: dict[str, list[dict]]) -> 
             z.writestr(
                 nome_arquivo, json.dumps(registros, ensure_ascii=False, indent=2)
             )
+        if sigpesq_files:
+            for nome_arquivo, conteudo in sigpesq_files.items():
+                z.writestr(
+                    nome_arquivo, json.dumps(conteudo, ensure_ascii=False, indent=2)
+                )
+
+
+@pytest.fixture
+def mock_pinv_serra_dict() -> dict:
+    """Dados sintéticos para teste do leitor de PINV por campus."""
+    return {
+        "indicador": "PINV",
+        "nome": "Percentual de Investimento em Pesquisa, Pós e Inovação",
+        "pilar": 2,
+        "campus": "Serra",
+        "campus_slug": "serra",
+        "unidade": "%",
+        "valores_por_ano": {
+            "2024": 496.78,
+            "2025": 1111.35,
+            "2026": 610.63,
+        },
+    }
+
+
+@pytest.fixture
+def mock_sigpesq_projetos_dict() -> dict[str, dict]:
+    """Dados sintéticos de projetos de pesquisa do SIGPESQ para testes de Pilar 2."""
+    return {
+        "project_sigpesq_files_json/PJ_7875.json": {
+            "codigo": "PJ 7875",
+            "titulo": "Definição de Processo de Desenvolvimento de Software ConectaFAPES",
+            "coordenador": {
+                "nome": "Paulo Sérgio dos Santos Júnior",
+                "campus": "Serra",
+            },
+            "datas": {"inicio": "2024-03-01", "fim": "2025-12-31"},
+            "financiamento": {
+                "valor_total": 5898620.0,
+                "moeda": "BRL",
+                "fontes": [
+                    {
+                        "fonte": "FAPES",
+                        "valor": 5898620.0,
+                        "tipo": "Contrato de Projeto",
+                    }
+                ],
+            },
+        },
+        "project_sigpesq_files_json/PJ_9793.json": {
+            "codigo": "PJ 9793",
+            "titulo": "Metodologia Integrada ArcelorMittal",
+            "coordenador": {
+                "nome": "Dirceu Soares Júnior",
+                "campus": "Ifes – Campus Serra",
+            },
+            "datas": {"inicio": "2024-06-01", "fim": "2025-05-31"},
+            "financiamento": {
+                "valor_total": 269855.28,
+                "moeda": "BRL",
+                "fontes": [
+                    {
+                        "fonte": "ArcelorMittal",
+                        "valor": 269855.28,
+                        "tipo": "Acordo",
+                    }
+                ],
+            },
+        },
+        "project_sigpesq_files_json/PJ_8503.json": {
+            "codigo": "PJ 8503",
+            "titulo": "Núcleo Otimizado e Virtualizado FINEP",
+            "coordenador": {
+                "nome": "Karin Satie Komati",
+                "campus": "Serra",
+            },
+            "datas": {"inicio": "2025-01-15", "fim": "2026-12-31"},
+            "financiamento": {
+                "valor_total": 10000000.0,
+                "moeda": "BRL",
+                "fontes": [
+                    {
+                        "fonte": "FINEP",
+                        "valor": 10000000.0,
+                        "tipo": "Financiamento público",
+                    }
+                ],
+            },
+        },
+    }
