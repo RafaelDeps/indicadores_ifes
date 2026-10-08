@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+from typing import TYPE_CHECKING, Any
 
 from etl.adapters.sinks.json_pilar_sink import formatar_arquivos_pilar
 from etl.core.logic.calculators.aggregator import agregar_indicadores
@@ -8,6 +9,9 @@ from etl.core.logic.models import RegistroPilarJson, ResultadoFlow
 from etl.core.ports.sink import ISink
 from etl.core.ports.source import ISource
 from etl.tracking.tracker import ExecutionTracker
+
+if TYPE_CHECKING:
+    from etl.adapters.sources.pinv_json_source import PinvJsonSource
 
 ANOS_PADRAO = [2024, 2025, 2026]
 
@@ -23,6 +27,7 @@ class IndicadoresFlow:
         campus_filtro: str | None = None,
         tracker: ExecutionTracker | None = None,
         facto_source: Any | None = None,
+        pinv_source: PinvJsonSource | None = None,
     ) -> None:
         self.source = source
         self.sink = sink
@@ -30,6 +35,7 @@ class IndicadoresFlow:
         self.campus_filtro = campus_filtro
         self.tracker = tracker or ExecutionTracker()
         self.facto_source = facto_source
+        self.pinv_source = pinv_source
 
     def run(self) -> ResultadoFlow:
         caminho_in = getattr(self.source, "caminho_zip", "fonte_desconhecida")
@@ -49,12 +55,28 @@ class IndicadoresFlow:
                 for af in avisos_facto:
                     self.tracker.adicionar_aviso(af)
 
+            projetos_sigpesq = None
+            if hasattr(self.source, "extrair_projetos_sigpesq"):
+                projetos_sigpesq = self.source.extrair_projetos_sigpesq()
+
+            dados_pinv_por_campus = {}
+            if self.pinv_source is not None:
+                for c in exportacao.campi:
+                    dados_c = self.pinv_source.carregar_por_campus(c.slug)
+                    if dados_c is not None:
+                        dados_pinv_por_campus[c.slug] = dados_c
+                dados_todos = self.pinv_source.carregar_por_campus("todos")
+                if dados_todos is not None:
+                    dados_pinv_por_campus["todos"] = dados_todos
+
             self.tracker.registrar_volumetria(
                 total_campi=len(exportacao.campi),
                 total_iniciativas=len(exportacao.iniciativas),
                 total_pessoas=len(exportacao.pessoas) + len(exportacao.estudantes),
                 total_producoes=len(exportacao.producoes),
-                total_projetos_facto=len(projetos_facto) if projetos_facto is not None else 0,
+                total_projetos_facto=(
+                    len(projetos_facto) if projetos_facto is not None else 0
+                ),
             )
 
             for aviso_ext in exportacao.avisos:
@@ -66,6 +88,8 @@ class IndicadoresFlow:
                 anos=self.anos,
                 campus_filtro=self.campus_filtro,
                 projetos_facto=projetos_facto,
+                dados_pinv_por_campus=dados_pinv_por_campus,
+                projetos_sigpesq=projetos_sigpesq,
             )
 
             avisos_totais = avisos_facto + avisos

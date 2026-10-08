@@ -31,7 +31,6 @@ CAMPOS_QUE_DEVEM_SER_NULOS = {
     "NTECPP_cotistas_em_pesquisa",
     "percentual_calculado_PICOT",
     "OCC_valor_orcamento_total_capital_custeio",
-    "percentual_calculado_PINV",
     "total_transferidos_PIPROTR",
 }
 

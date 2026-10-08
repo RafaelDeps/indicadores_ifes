@@ -68,7 +68,11 @@ def _montar_pilar2(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:
                 "descricao": DESCRICOES["PINV"],
                 "TAFPPI_valor_total_aporte_pesquisa": p2.tafppi_valor_total_aporte_pesquisa,
                 "OCC_valor_orcamento_total_capital_custeio": p2.occ_valor_orcamento_total_capital_custeio,
-                "percentual_calculado_PINV": p2.percentual_calculado_pinv,
+                "percentual_calculado_PINV": (
+                    round(float(p2.percentual_calculado_pinv), 2)
+                    if p2.percentual_calculado_pinv is not None
+                    else None
+                ),
             },
             "PIPDI": {
                 "descricao": DESCRICOES["PIPDI"],
@@ -77,7 +81,6 @@ def _montar_pilar2(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:
             },
         },
     }
-
 
 
 def _montar_pilar3(agregados: AgregadosCampus, ano: int) -> dict[str, Any]:

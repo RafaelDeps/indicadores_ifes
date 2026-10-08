@@ -62,7 +62,6 @@ class ExecutionTracker:
         self.metricas.total_producoes = total_producoes
         self.metricas.total_projetos_facto = total_projetos_facto
 
-
     def registrar_iniciativas_ativas_por_ano(
         self, ativas_por_ano: dict[int, int]
     ) -> None:
@@ -112,7 +111,6 @@ class ExecutionTracker:
             f"| Projetos / Iniciativas Totais | {m.total_iniciativas} |",
             f"| Projetos FACTO (Pilar 2) | {m.total_projetos_facto} |",
             f"| Produções Técnicas e Bibliográficas | {m.total_producoes} |",
-
             "",
             "## 2. Iniciativas Ativas por Ano de Referência",
             "",

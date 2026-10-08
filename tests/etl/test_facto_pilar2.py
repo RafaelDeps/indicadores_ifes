@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
-import tempfile
 
 import pytest
 
@@ -237,7 +236,9 @@ def test_calcular_pipdi_filtering() -> None:
     assert p2_serra_2026.nappct_acordos_parceria_firmados == 0
 
     # Teste Vitoria 2025 (expirado em 2024)
-    p2_vitoria_2025 = calcular_pilar2(projetos=projetos, campus_slug="vitoria", ano=2025)
+    p2_vitoria_2025 = calcular_pilar2(
+        projetos=projetos, campus_slug="vitoria", ano=2025
+    )
     assert p2_vitoria_2025.nappct_acordos_parceria_firmados == 0
 
     # Teste Todos 2024 (Serra + Vitória)
@@ -247,6 +248,7 @@ def test_calcular_pipdi_filtering() -> None:
 
 def test_pipdi_schema_validation() -> None:
     import json
+
     from etl.adapters.sinks.json_pilar_sink import _montar_pilar2
     from etl.adapters.sinks.zip_indicadores_sink import (
         RegistroPilarJson,
@@ -371,11 +373,15 @@ def test_tafppi_aggregation_start_year() -> None:
     assert p2_serra_2025.tafppi_valor_total_aporte_pesquisa is None
 
     # Vitória 2024: nenhum projeto -> None
-    p2_vitoria_2024 = calcular_pilar2(projetos=projetos, campus_slug="vitoria", ano=2024)
+    p2_vitoria_2024 = calcular_pilar2(
+        projetos=projetos, campus_slug="vitoria", ano=2024
+    )
     assert p2_vitoria_2024.tafppi_valor_total_aporte_pesquisa is None
 
     # Vitória 2025: 30.000,00
-    p2_vitoria_2025 = calcular_pilar2(projetos=projetos, campus_slug="vitoria", ano=2025)
+    p2_vitoria_2025 = calcular_pilar2(
+        projetos=projetos, campus_slug="vitoria", ano=2025
+    )
     assert p2_vitoria_2025.tafppi_valor_total_aporte_pesquisa == 30000.0
 
     # Todos 2024: 200.000,50
@@ -456,6 +462,7 @@ def test_indicadores_flow_with_missing_facto_dir(tmp_path: Path) -> None:
 def test_indicadores_flow_with_facto_source(tmp_path: Path) -> None:
     import json
     import zipfile
+
     from etl.adapters.sinks.zip_indicadores_sink import ZipIndicadoresSink
     from etl.adapters.sources.facto_csv_source import FactoCsvSource
     from etl.adapters.sources.zip_canonical_source import ZipCanonicalSource
@@ -484,7 +491,6 @@ def test_indicadores_flow_with_facto_source(tmp_path: Path) -> None:
     )
     (facto_dir / "projetos.csv").write_text(csv_content, encoding="utf-8")
 
-
     flow = IndicadoresFlow(
         source=ZipCanonicalSource(caminho_entrada),
         sink=ZipIndicadoresSink(caminho_saida),
@@ -503,6 +509,3 @@ def test_indicadores_flow_with_facto_source(tmp_path: Path) -> None:
         assert pinv["TAFPPI_valor_total_aporte_pesquisa"] == 150000.0
         assert pinv["OCC_valor_orcamento_total_capital_custeio"] is None
         assert pinv["percentual_calculado_PINV"] is None
-
-
-

@@ -66,7 +66,8 @@ class ProjetoFacto:
         if not self.data_inicio:
             return False
         inicio_ano = self.data_inicio.year
-        datas_fim = [d for d in (self.data_vigencia, self.data_encerramento) if d is not None]
+        datas_fim = [
+            d for d in (self.data_vigencia, self.data_encerramento) if d is not None
+        ]
         fim_ano = max(d.year for d in datas_fim) if datas_fim else 9999
         return inicio_ano <= ano <= fim_ano
-

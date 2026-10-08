@@ -89,14 +89,15 @@ describe('Orquestrador de Dataset Multi-Campus (src/lib/dataset.ts)', () => {
   });
 
   it('deve carregar os 2 indicadores do Pilar 2 para Serra em 2026', () => {
+    const bruto2 = brutoPilar(2, 'serra', 2026);
     const indicadoresP2 = obterIndicadoresDoPilar(dataset, 2, 'serra', 2026);
     expect(indicadoresP2.length).toBe(2);
 
     const pinv = indicadoresP2.find((i) => i.sigla === 'PINV');
-    expect(pinv?.valores[0].valor).toBeNull();
+    expect(pinv?.valores[0].valor).toBe(bruto2.indicadores.PINV.percentual_calculado_PINV);
 
     const pipdi = indicadoresP2.find((i) => i.sigla === 'PIPDI');
-    expect(pipdi?.valores[0].valor).toBeNull();
+    expect(pipdi?.valores[0].valor).toBe(bruto2.indicadores.PIPDI.total_acumulado_PIPDI);
   });
 
   it('deve carregar os 3 indicadores do Pilar 3 para Serra em 2026 preservando zeros estritos e nulls', () => {

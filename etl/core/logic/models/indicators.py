@@ -22,7 +22,7 @@ class AgregadosPilar2:
 
     tafppi_valor_total_aporte_pesquisa: float | None = None
     occ_valor_orcamento_total_capital_custeio: None = None
-    percentual_calculado_pinv: None = None
+    percentual_calculado_pinv: float | int | None = None
     nappct_acordos_parceria_firmados: int | None = None
     total_acumulado_pipdi: int | None = None
 

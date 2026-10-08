@@ -40,7 +40,6 @@ def test_cli_parser_custom_args() -> None:
     assert args.facto_dir == "custom/pilar2"
 
 
-
 def test_cli_executa_campus_isolado(tmp_path: Path) -> None:
     caminho_entrada = tmp_path / "exports_canonical.zip"
     caminho_saida_campus = tmp_path / "indicadores_serra.zip"

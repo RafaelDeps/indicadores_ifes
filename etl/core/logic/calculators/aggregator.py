@@ -10,7 +10,6 @@ from etl.core.logic.calculators.pillar2 import calcular_pilar2
 from etl.core.logic.models import (
     AgregadosCampus,
     AgregadosPilar1,
-    AgregadosPilar2,
     AgregadosPilar3,
     Campus,
     ExportCanonicos,
@@ -29,6 +28,11 @@ from etl.core.logic.temporal.activity_filter import (
 
 if TYPE_CHECKING:
     from etl.core.logic.models.facto import ProjetoFacto
+    from etl.core.logic.models.pillar2_models import (
+        DadosPinvCampus,
+        ProjetoSigpesqFinanciamento,
+    )
+
 
 NOME_TIPO_PC = "softwares_sem_patente"
 ESCOPO_TODOS_SLUG = "todos"
@@ -40,6 +44,8 @@ def agregar_indicadores(
     anos: list[int],
     campus_filtro: str | None = None,
     projetos_facto: list[ProjetoFacto] | None = None,
+    dados_pinv_por_campus: dict[str, DadosPinvCampus] | None = None,
+    projetos_sigpesq: list[ProjetoSigpesqFinanciamento] | None = None,
 ) -> tuple[dict[int, dict[str, AgregadosCampus]], list[str]]:
     """
     Agrega iniciativas, pessoas, artigos e produções por campus e ano,
@@ -271,10 +277,18 @@ def agregar_indicadores(
                 percentual_calculado_picot=None,
             )
 
+            dados_pinv = (
+                dados_pinv_por_campus.get(slug)
+                if dados_pinv_por_campus is not None
+                else None
+            )
+
             pilar2 = calcular_pilar2(
                 projetos=projetos_facto,
                 campus_slug=slug,
                 ano=ano,
+                dados_pinv=dados_pinv,
+                projetos_sigpesq=projetos_sigpesq,
             )
 
             pilar3 = AgregadosPilar3(

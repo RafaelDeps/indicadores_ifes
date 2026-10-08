@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import csv
+import re
 from datetime import date, datetime
 from pathlib import Path
-import re
 
 from etl.core.logic.models.facto import ProjetoFacto
 from etl.core.logic.resolvers.campus_resolver import resolver_campi_facto

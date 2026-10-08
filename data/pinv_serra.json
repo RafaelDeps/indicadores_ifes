@@ -1,0 +1,30 @@
+{
+  "indicador": "PINV",
+  "nome": "Percentual de Investimento em Pesquisa, Pós e Inovação",
+  "pilar": 2,
+  "campus": "Serra",
+  "campus_slug": "serra",
+  "unidade": "%",
+  "resultados_anuais": [
+    {
+      "ano": 2024,
+      "percentual": 496.78,
+      "percentual_formatado": "496,78%"
+    },
+    {
+      "ano": 2025,
+      "percentual": 1111.35,
+      "percentual_formatado": "1.111,35%"
+    },
+    {
+      "ano": 2026,
+      "percentual": 610.63,
+      "percentual_formatado": "610,63%"
+    }
+  ],
+  "valores_por_ano": {
+    "2024": 496.78,
+    "2025": 1111.35,
+    "2026": 610.63
+  }
+}
