@@ -1,0 +1,245 @@
+---
+/**
+ * Cartão de um artefato downloadable (feature 016, T028–T030).
+ *
+ * Duas decisões estruturais:
+ *
+ * 1. **O `href` só existe quando `disponivel`.** É a proibição Pg-2 na prática:
+ *    um `<a>` sem `href` não é focável e não é clicável, então um artefato
+ *    bloqueado pelo portão não pode virar link que dá 404. O caminho do arquivo
+ *    continua no modelo — o que muda é o elemento, não a informação.
+ * 2. **A marcação de dado pessoal é ícone + texto.** O ícone é `aria-hidden` e
+ *    o texto carrega o significado (A-2, FR-015): quem não distingue o âmbar do
+ *    fundo claro, ou quem usa leitor de tela, recebe a mesma informação.
+ */
+
+import type { ArtefatoDownload } from '../lib/downloads';
+import {
+  formatarAnos,
+  formatarBytes,
+  formatarCampi,
+  formatarDataArquivo,
+  formatarFormato,
+} from '../lib/formatarArquivo';
+
+interface Props {
+  artefato: ArtefatoDownload;
+  /** Base do site, para montar a URL de download sob o subendereço (FR-022). */
+  base?: string;
+}
+
+const { artefato, base = '/' } = Astro.props;
+
+const ehDadoPessoal = artefato.natureza === 'dado-pessoal';
+const urlDownload = `${base}${artefato.caminhoPublico}`.replace(/\/{2,}/g, '/');
+const metadados = [
+  { rotulo: 'Formato', valor: formatarFormato(artefato.arquivo) },
+  { rotulo: 'Tamanho', valor: formatarBytes(artefato.bytes) },
+  { rotulo: 'Anos', valor: formatarAnos(artefato.anos) },
+  { rotulo: 'Campi', valor: formatarCampi(artefato.campi) },
+  { rotulo: 'Atualizado em', valor: formatarDataArquivo(artefato.atualizadoEm) },
+].filter((m) => m.valor !== '—' || m.rotulo === 'Formato');
+---
+
+<article class="cartao-download" id={artefato.id}>
+  <header class="cartao-topo">
+    <h3 class="cartao-titulo">{artefato.rotulo}</h3>
+    {
+      ehDadoPessoal && (
+        <p class="marca-dado-pessoal">
+          <svg
+            class="marca-icone"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+          </svg>
+          <span>Contém dados pessoais</span>
+        </p>
+      )
+    }
+  </header>
+
+  <p class="cartao-descricao">{artefato.descricao}</p>
+
+  <dl class="cartao-meta">
+    {
+      metadados.map((meta) => (
+        <div class="meta-item">
+          <dt>{meta.rotulo}</dt>
+          <dd>{meta.valor}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <footer class="cartao-acao">
+    {
+      artefato.disponivel ? (
+        <a class="btn-download" href={urlDownload} download={artefato.arquivo}>
+          Baixar {artefato.arquivo}
+        </a>
+      ) : (
+        <p class="cartao-indisponivel" role="note">
+          <span class="indisponivel-titulo">Indisponível para download</span>
+          <span class="indisponivel-motivo">{artefato.motivoIndisponivel}</span>
+        </p>
+      )
+    }
+  </footer>
+</article>
+
+<style>
+  .cartao-download {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    /* Sem `width` fixa: o cartão cede à largura do contêiner e a lista quebra em
+       vez de forçar rolagem horizontal (Pg-5). */
+    min-width: 0;
+  }
+
+  .cartao-topo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cartao-titulo {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    overflow-wrap: anywhere;
+  }
+
+  .marca-dado-pessoal {
+    display: inline-flex;
+    align-self: start;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-dado-pessoal-text);
+    background: var(--color-dado-pessoal-bg);
+    border: 1px solid var(--color-dado-pessoal-border);
+    border-radius: 8px;
+    /* O badge não precisa de forma de pílula; o objetivo é ocupar a linha
+       que lhe cabe e não quebrar em um círculo de três linhas em 320 px. */
+    max-width: 100%;
+  }
+
+  .marca-icone {
+    flex: 0 0 auto;
+  }
+
+  .cartao-descricao {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .cartao-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.6rem 0.85rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.82rem;
+    min-width: 0;
+  }
+
+  .meta-item dt {
+    color: var(--color-muted);
+  }
+
+  .meta-item dd {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-text);
+    overflow-wrap: anywhere;
+  }
+
+  /* linha de arquivo removida intencionalmente (duplicada com o botão) */
+
+  .cartao-acao {
+    margin-top: auto;
+    padding-top: 0.35rem;
+  }
+
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-surface);
+    background: var(--color-primary);
+    border-radius: 6px;
+    text-decoration: none;
+    /* Em vez de quebrar o nome no meio, o botão conta com o cartão para
+       controlar a linha. */
+  }
+
+  .btn-download:hover {
+    background: var(--color-primary-dark);
+  }
+
+  .btn-download:active {
+    background: var(--color-primary-dark);
+    filter: brightness(0.9);
+  }
+
+  /* Foco visível em todos os controles (A-3, FR-021). */
+  .btn-download:focus-visible {
+    outline: 3px solid var(--color-primary-dark);
+    outline-offset: 2px;
+  }
+
+  .cartao-indisponivel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    background: var(--color-notice-bg);
+    border: 1px solid var(--color-notice-border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--color-notice-text);
+  }
+
+  .indisponivel-titulo {
+    font-weight: 600;
+  }
+
+  .indisponivel-motivo {
+    color: var(--color-notice-text);
+  }
+</style>

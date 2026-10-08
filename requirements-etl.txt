@@ -3,3 +3,9 @@ black==26.5.1
 isort==9.0.2
 flake8==7.4.1
 openpyxl>=3.1.0
+# Lê `.specify/governanca/pendencias.yaml`, o registro que decide se os insumos
+# brutos podem ser publicados (FR-016). Adicionado na feature 016; justificado em
+# `specs/016-download-data-files/plan.md` (Complexity Tracking). A alternativa
+# rejeitada é um parser YAML escrito à mão: um gate que precisa falhar *fechado*
+# não pode ter a própria leitura do arquivo sob suspeita.
+PyYAML==6.0.3

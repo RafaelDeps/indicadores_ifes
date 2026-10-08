@@ -1,4 +1,50 @@
 <!--
+=== SYNC IMPACT REPORT — AMENDMENT 2.0.0 (2026-10-05) ===
+Version change: 1.1.0 → 2.0.0 (MAJOR: a principle was changed in substance)
+Modified principles:
+  IV (Aggregated Data Only) — REWRITTEN. Was an unconditional prohibition on
+    individual-level data in the repository, in build artifacts, and in Git
+    history. It now permits publication of the raw chain inputs
+    (`exports_canonical.zip`, `listagem_*.xlsx`), subject to a governance gate.
+Added sections:
+  - Inside IV: "Publicação dos insumos brutos" — the conditions, the
+    fail-closed gate, and what the principle does not settle
+  - Inside IV: "O que este princípio não resolve" — irreversibility of history
+Removed sections: none
+Summary: Feature 016 (Página de Downloads dos Dados) decided that the files
+  used by `make dados` are themselves public, so that a reader can reproduce
+  the indicators. This is a direct contradiction of IV as written: those files
+  contain the `Nome` column with full names. The contradiction is resolved by
+  amending the principle, not by reinterpreting it — the feature's requirement
+  FR-016a records this amendment as a precondition of publication.
+
+  The amendment is conditional in substance and unconditional in mechanism:
+  publishing raw inputs is permitted only while the gate in
+  `.specify/governanca/pendencias.yaml` is open, and the gate fails CLOSED —
+  a missing or unparseable registry stops the build rather than publishing.
+
+  Legal basis for the permitted processing: art. 7º, II (legitimate interest)
+  and art. 33 (international transfer), authorized 2026-10-05 by Paulo Sérgio
+  dos Santos Júnior, Diretor de Extensão e Pesquisa do Campus Serra. The
+  versioned record is `docs/revisao-privacidade.md`.
+Templates requiring updates:
+  ✅ .specify/templates/plan-template.md — Constitution Check gate is generic
+     and derives gates from this file; no change needed
+  ✅ .specify/templates/spec-template.md — compatible; no change needed
+  ✅ .specify/templates/tasks-template.md — tests remain MANDATORY per
+     Principle II (unchanged in that respect); no change needed
+  ✅ .specify/templates/commands/ — directory absent; no command files to review
+  ⚠️ README.md — UPDATED in this change: the section "Governança de Dados,
+     Fidelidade e LGPD" no longer claims the canonical source is
+     "permanentemente ignorada pelo Git", and now states that raw inputs
+     contain personal (not sensitive) data and are published under the gate
+  ⚠️ specs/012-gate-proveniencia-workflow-dados/spec.md — UPDATED: FR-026
+     revoked (raw rows are now versioned and served), FR-028 kept and
+     clarified (the aggregate package still carries no individual data)
+  ⚠️ specs/012-gate-proveniencia-workflow-dados/medidas-de-protecao.md —
+     UPDATED: §3 corrected (legitimate interest, not legal obligation; personal
+     data, not sensitive data), §4.1 closed (international transfer authorized)
+  Follow-up TODOs: none
 === SYNC IMPACT REPORT — AMENDMENT 1.1.0 (2026-09-29) ===
 Version change: 1.0.0 → 1.1.0 (Minor: expanded guidance — no principle removed)
 Modified principles: II (test runner rule no longer "Vitest only")
@@ -43,6 +89,10 @@ name inferred from repository directory (indicadores_ifes) and site purpose.
 
 # Indicadores de Pesquisa e Inovação IFES Constitution
 
+> A versão vigente está no rodapé do arquivo, na seção "Governance". Mantê-la
+> também aqui, no cabeçalho, criava duas respostas para "qual é a versão?" — e
+> foi assim que o portão de governança leu 1.1.0 de uma constitution já emendada.
+
 ## Core Principles
 
 ### I. Simplicity
@@ -74,14 +124,64 @@ shown as zero, a dash, or any substitute that could be read as a value.
 **Rationale**: the site's credibility depends on being a faithful public view
 of the official report; a single invented number invalidates it.
 
-### IV. Aggregated Data Only
+### IV. Aggregated Data Only, With Conditional Publication of Raw Inputs
 
-The repository and the published site are public. Only aggregated data MAY be
-committed or rendered. Names, CPF, registration numbers, or any
-individual-level data MUST NOT appear in the codebase, data files, build
-artifacts, or Git history. **Rationale**: legal and ethical privacy obligation
-(LGPD); exposure of personal data in a public Git history is effectively
-irreversible.
+The repository and the published site are public. **Only aggregated data MAY be
+rendered, and only aggregated data is offered as a download.** The aggregate
+package (`indicadores.zip`) MUST NOT contain names, CPF, registration numbers,
+or any individual-level datum.
+
+Individual-level data MAY, however, be **published** — as raw chain inputs,
+offered separately from the aggregate, explicitly marked as personal data and
+explicitly not anonymized. The following conditions are mandatory:
+
+1. **Scope.** The permitted set is exactly the files `make dados` consumes:
+   `data/canonical/exports_canonical.zip` and `data/raw/listagem_*.xlsx`. No
+   other individual-level file is covered by this permission.
+2. **Marking.** Every published raw input MUST be labelled, in pt-BR, as
+   containing personal data and not being anonymized. The marking MUST NOT rely
+   on color alone.
+3. **No open credentials.** Publication MUST be anonymous — no token, no login,
+   no gated access. A restricted channel was rejected: it would signal control
+   that does not exist and invite credential handling the project must not do.
+4. **Governance gate.** Publication is permitted only while the gate declared in
+   `.specify/governanca/pendencias.yaml` is open. The gate MUST fail **closed**:
+   a missing, unreadable, or structurally invalid registry stops the build; a
+   pending item omits the raw inputs from the site and reports the pendency. It
+   MUST NOT fail open, because failing open means publishing personal data
+   without the evaluation that authorizes it.
+5. **Separation of duties.** Raw inputs MUST NOT be incorporated into the
+   aggregate. The aggregate remains aggregate.
+6. **Pipelines, logs and reports.** Individual-level rows MUST NOT appear in
+   workflow logs, pull request bodies, or execution reports. `etl/tracking/`
+   continues to sanitize them.
+
+**Rationale**: the site's purpose is to let a reader _verify_ the numbers, and
+verification is impossible without the inputs. The prior absolute prohibition
+was honest about irreversibility but did not say that the inputs and the
+aggregate are different artifacts with different risks; conflating them made the
+choice appear to be "publish personal data" rather than "publish inputs
+separately, labelled, under a gate". Exposure of personal data in a public Git
+history is effectively irreversible, and this principle does not pretend
+otherwise — see below.
+
+#### O que este princípio NÃO resolve
+
+Recording the irreversibility here, because a permission that hides its cost
+gets misread as a clearance:
+
+- **Versioning is permanent.** Once the raw inputs are committed, deleting them
+  from `main` does not delete the objects. There is no erasure path short of
+  removing the repository. A future reversal of this decision would not restore
+  the prior state.
+- **The gate governs publication, not history.** A closed gate stops new
+  publications; it does not unpublish what a previous open gate served.
+- **Anonymization remains the pipeline's goal, not the inputs' state.**
+  `etl/tracking/` sanitizes logs and attestations; it does not anonymize the
+  source files.
+- **This permission covers personal data, not sensitive data** (art. 5º, II,
+  LGPD). Should the inputs ever acquire sensitive data, this amendment does not
+  authorize publishing them and a new decision is required.
 
 ### V. Basic Quality
 
@@ -136,4 +236,4 @@ broken content; gates are cheaper than rollbacks.
   MUST be either justified in the plan's Complexity Tracking section or
   rejected.
 
-**Version**: 1.1.0 | **Ratified**: 2026-09-21 | **Last Amended**: 2026-09-29
+**Version**: 2.0.0 | **Ratified**: 2026-09-21 | **Last Amended**: 2026-10-05

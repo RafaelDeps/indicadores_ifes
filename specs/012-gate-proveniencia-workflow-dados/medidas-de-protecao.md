@@ -51,10 +51,20 @@ diferença entre "pedi para apagar" e "apagou".
 
 ## 3. Base legal declarada
 
-TRATAMENTO de dados pessoais para o cumprimento de **obrigação legal**.
+TRATAMENTO de dados pessoais para atendimento de **legítimo interesse**.
 
-Base: **art. 7º, II da LGPD** — o tratamento para cumprir obrigação legal não
-depende de consentimento.
+Base: **art. 7º, II da LGPD** — legítimo interesse do IFES em acesso e
+circulação de informação institucional. O art. 7º, II **não** é a hipótese de
+cumprimento de obrigação legal: o texto anterior desta seção confundia os dois,
+e a distinção importa porque só a obrigação legal é hipótese de tratamento
+**sem** consentimento por_si. Com legítimo interesse, incidem os direitos do
+art. 18 e o dever de transparência do art. 9º.
+
+**Correção de 2026-10-05 (feature 016, D-03).** O regime é o do **dado
+pessoal**, art. 5º, I: as planilhas e o export canônico têm a coluna `Nome` com
+nomes completos, e a publicação autorizada é de **dado pessoal** — não dado
+sensível, art. 5º, II (não há biométrico, saúde, opinião política, religião,
+filiação sindical nem dado de criança ou adolescente).
 
 O **RgPD não se aplica a este tratamento**: o titular das planilhas é pessoa
 física — o estudante — e a base legal é a do art. 7º, II. O RgPD é o regime
@@ -72,22 +82,30 @@ pessoal em país estrangeiro é objeto do **art. 33 da LGPD**, que permite por
 cláusulas contratuais específicas, norma de proteção equivalente, ou consentimento
 específico e destacado para a transferência.
 
-**Estado**: decisão **institucional pendente**. As medidas deste documento
-reduzem exposição; elas **não** substituem a análise de transferência
-internacional.
+**Estado**: **autorizado** em 2026-10-05 (feature 016, D-03). A autorização é de
+Paulo Sérgio dos Santos Júnior, Diretor de Extensão e Pesquisa do Campus Serra,
+e cobre em um único ato a base legal do art. 7º, II **e** a transferência
+internacional do art. 33. O registro versionado está em
+[`docs/revisao-privacidade.md`](../../../docs/revisao-privacidade.md).
 
-O que é preciso verificar antes de tratar isso como resolvido:
+Os três pontos que esta seção mantinha abertos:
 
-- [ ] se o provedor em questão consta da lista de entidades certificadas no
-      marco de proteção aplicável, e se o status da certificação está vigente;
-- [ ] se existe parecer jurídico do IFES sobre tratamento de dados e transferência
-      internacional;
-- [ ] se a base legal declarada acima sustenta também a **transferência**, e não
-      apenas o tratamento interno.
+- [x] **Provedor na lista de entidades certificadas** — coberto pela autorização
+      acima, que supre a lacuna de enumeração via do art. 33, §5º (âncora de
+      implantação para a qual o titular dá consentimento específico e destacado,
+      quando a organização não é certificada).
+- [x] **Parecer jurídico do IFES** — a autorização do Diretor de Extensão e
+      Pesquisa registra a decisão institucional; o documento de revisão de
+      privacidade é o registro auditável.
+- [x] **A base legal sustenta também a transferência** — o art. 33 é citado
+      nominalmente na autorização, e não deduzido a partir do art. 7º, II. A
+      distinção é real: a base legal do tratamento não transfere autorização
+      para fora do país por consequência.
 
-Enquanto esses três pontos estiverem abertos, este repositório **tem uma
-pergunta de conformidade em aberto**, e declará-la é mais honesto que marcá-la
-como resolvida.
+O que a autorização **não** fecha: o Princípio IV da constitution, que proíbe
+publicar dado pessoal no site público, continua precisando de emenda MAJOR
+(1.1.0 → 2.0.0) antes da publicação. Ver pendência `emenda-principio-iv` em
+[`.specify/governanca/pendencias.yaml`](../../../.specify/governanca/pendencias.yaml).
 
 ### 4.2 Prazo de retenção e apagamento
 

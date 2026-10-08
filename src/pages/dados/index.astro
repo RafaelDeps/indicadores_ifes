@@ -1,0 +1,364 @@
+---
+/**
+ * Página de downloads (feature 016, FR-006 a FR-026).
+ *
+ * A listagem vem inteira de `carregarDownloads()`: nenhum nome de arquivo é
+ * escrito neste template. Hardcodar `exports_canonical.zip` aqui offeria o
+ * arquivo mesmo quando ele não existe em disco (FR-017), e o portão de
+ * governança perderia o poder de omitir os insumos brutos — ele decide sobre a
+ * listagem, não sobre o texto do template.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CartaoDownload from '../../components/CartaoDownload.astro';
+import {
+  avisoVisitante,
+  carregarDownloads,
+  obterInsumosCadeia,
+  portaoAberto,
+} from '../../lib/downloads';
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const artefatos = carregarDownloads();
+const pacoteOficial = artefatos.filter((a) => a.natureza === 'agregado');
+const insumosBrutos = artefatos.filter((a) => a.natureza === 'dado-pessoal');
+
+const raizRepo = process.cwd();
+const gateAberto = portaoAberto(raizRepo);
+const aviso = avisoVisitante(raizRepo);
+const insumos = obterInsumosCadeia(raizRepo);
+
+/** Rótulo legível da etapa que consome o insumo. */
+const etapas: Record<string, string> = {
+  etl: 'make etl',
+  'etl-listagens': 'make etl-listagens',
+  'merge-listagens': 'make merge-listagens',
+};
+---
+
+<BaseLayout
+  title="Dados para download — Indicadores IFES"
+  description="Arquivos usados para gerar os indicadores, com instruções de instalação."
+>
+  <div class="pagina-dados">
+    <header class="dados-cabecalho">
+      <h1>Dados para download</h1>
+      <p class="dados-intro">
+        Estes são os arquivos que alimentam o painel e, com eles, a forma de reproduzir os números
+        por conta própria. Os valores exibidos aqui são transcritos do relatório oficial; nenhum
+        valor é estimado.
+      </p>
+    </header>
+
+    {
+      !gateAberto && (
+        <aside class="aviso-governanca" role="status">
+          <p class="aviso-titulo">Arquivos de origem ainda não liberados</p>
+          <p class="aviso-texto">{aviso}</p>
+        </aside>
+      )
+    }
+
+    <section class="dados-secao" aria-labelledby="titulo-pacote">
+      <h2 id="titulo-pacote">Pacote oficial</h2>
+      <p class="secao-descricao">
+        O pacote consolidado dos indicadores, por campus e por ano. Não contém dados pessoais.
+      </p>
+      <div class="dados-lista">
+        {pacoteOficial.map((artefato) => <CartaoDownload artefato={artefato} base={base} />)}
+      </div>
+    </section>
+
+    <section class="dados-secao" aria-labelledby="titulo-insumos">
+      <h2 id="titulo-insumos">Insumos brutos</h2>
+      <p class="secao-descricao">
+        Os arquivos de origem usados para gerar o pacote oficial. Cada um é identificado porque <strong
+          >contém dados pessoais e não está anonimizado</strong
+        > — quem for reutilizá-los assume essa responsabilidade.
+      </p>
+      <div class="dados-lista">
+        {
+          insumosBrutos
+            .filter((a) => a.id !== 'insumo-exports_canonical.zip')
+            .map((artefato) => <CartaoDownload artefato={artefato} base={base} />)
+        }
+      </div>
+      <div class="dados-lista dados-lista--full" style="margin-top:1rem">
+        {
+          insumosBrutos
+            .filter((a) => a.id === 'insumo-exports_canonical.zip')
+            .map((artefato) => <CartaoDownload artefato={artefato} base={base} />)
+        }
+      </div>
+    </section>
+
+    <section class="dados-secao" aria-labelledby="titulo-instalacao">
+      <h2 id="titulo-instalacao">Instalação dos dados brutos</h2>
+      <p class="secao-descricao">
+        Para reproduzir o pacote oficial localmente, posicione os arquivos acima nos caminhos
+        esperados e rode a cadeia de processamento na ordem indicada.
+      </p>
+
+      <h3>Onde cada arquivo fica</h3>
+      <div class="tabela-rolagem">
+        <table class="tabela-insumos">
+          <caption class="visualmente-oculto">
+            Arquivos de origem, com caminho, etapa que os consome, finalidade, origem e revisão.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Arquivo</th>
+              <th scope="col">Etapa</th>
+              <th scope="col">Para que serve</th>
+              <th scope="col">Origem</th>
+              <th scope="col">Revisão</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              insumos.map((insumo) => (
+                <tr>
+                  <th scope="row">
+                    <code>{insumo.caminho}</code>
+                  </th>
+                  <td>{etapas[insumo.etapa] ?? insumo.etapa}</td>
+                  <td>{insumo.finalidade}</td>
+                  <td>{insumo.origem}</td>
+                  <td>{insumo.revisao ?? 'não declarada'}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Passo a passo</h3>
+      <ol class="passos">
+        <li>
+          <strong>Posicione os arquivos.</strong> Coloque o export canônico em
+          <code>data/canonical/exports_canonical.zip</code> e cada planilha em
+          <code>data/raw/</code>, com o nome
+          <code>listagem_ANO_SEMESTRE.xlsx</code> — por exemplo,
+          <code>listagem_2026_1.xlsx</code>. A cadeia descobre as planilhas pelo nome; um arquivo
+          fora do padrão é ignorado.
+        </li>
+        <li>
+          <strong>Gere os indicadores.</strong> Rode <code>make dados</code>, que executa <code
+            >make etl</code
+          >, <code>make etl-listagens</code> e
+          <code>make merge-listagens</code> nessa ordem, interrompendo no primeiro erro.
+        </li>
+        <li>
+          <strong>Verifique o pacote.</strong> Rode <code>make check-dados</code>
+          para validar o contrato de <code>data/dist/indicadores.zip</code> e avisar sobre frescor.
+        </li>
+        <li>
+          <strong>Publique os dados.</strong> Rode <code>make check-governanca</code> para publicar os
+          artefatos em
+          <code>public/dados/</code>. Com o portão fechado, apenas o pacote agregado é publicado e
+          os insumos brutos ficam de fora.
+        </li>
+      </ol>
+
+      <h3>Instalação</h3>
+      <pre
+        class="bloco-comando"><code>cp export_*.zip data/canonical/exports_canonical.zip
+cp listagem_*.xlsx data/raw/
+make setup
+make dados
+make check-dados</code></pre>
+
+      <p class="aviso-versionamento">
+        <strong>Atenção:</strong> versionar os insumos brutos em um repositório próprio os expõe a terceiros
+        — eles contêm nomes de pessoas e ficam disponíveis para quem clonar o repositório. Se a sua instalação
+        for publicar os arquivos, mantenha o repositório privado.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .pagina-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+  }
+
+  .dados-cabecalho h1 {
+    margin: 0 0 0.5rem;
+    font-size: 1.8rem;
+    color: var(--color-primary-dark);
+  }
+
+  .dados-intro {
+    margin: 0;
+    max-width: 44rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .aviso-governanca {
+    padding: 1rem 1.15rem;
+    background: var(--color-notice-bg);
+    border: 1px solid var(--color-notice-border);
+    border-left-width: 4px;
+    border-radius: 8px;
+    color: var(--color-notice-text);
+  }
+
+  .aviso-titulo {
+    margin: 0 0 0.25rem;
+    font-weight: 700;
+  }
+
+  .aviso-texto {
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .dados-secao h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.3rem;
+    color: var(--color-primary-dark);
+  }
+
+  .secao-descricao {
+    margin: 0 0 1rem;
+    max-width: 44rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .dados-lista {
+    display: grid;
+    /* Mobile-first: uma coluna. A partir de 48rem, dois colunas (~58ch por célula),
+       evitando as ~36ch que três colunas produziam. */
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dados-lista--full {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 48rem) {
+    .dados-lista--planilhas {
+      grid-template-columns: repeat(2, minmax(min(22rem, 100%), 1fr));
+    }
+  }
+
+  .tabela-rolagem {
+    /* A tabela tem 5 colunas de texto e não cabe em 320 px sem encolher o
+       conteúdo a ilegibilidade. Em vez de forçar rolagem horizontal na página,
+       a tabela rola dentro do próprio contêiner (Pg-5) — a rolagem fica onde o
+       olhar já está, que é a tabela. */
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .tabela-insumos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: var(--color-surface);
+  }
+
+  .tabela-insumos th,
+  .tabela-insumos td {
+    padding: 0.6rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-border);
+    line-height: 1.45;
+  }
+
+  .tabela-insumos thead th {
+    background: var(--color-badge-unavailable);
+    color: var(--color-badge-unavailable-text);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .tabela-insumos tbody th {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .tabela-insumos code {
+    overflow-wrap: anywhere;
+  }
+
+  .visualmente-oculto {
+    position: absolute;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .passos {
+    margin: 0 0 1.5rem;
+    padding-left: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .passos strong {
+    color: var(--color-text);
+  }
+
+  .passos code,
+  .bloco-comando code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.88em;
+    overflow-wrap: anywhere;
+  }
+
+  .bloco-comando {
+    margin: 0 0 1.25rem;
+    padding: 0.9rem 1rem;
+    background: var(--color-badge-unavailable);
+    color: var(--color-badge-unavailable-text);
+    border-radius: 8px;
+    /* `white-space: pre-wrap` mantém a coluna dos comandos alinhada e ainda
+       quebra a linha longa em tela estreita. `pre` puro estoura o container e
+       cria rolagem horizontal (Pg-5). */
+    white-space: pre-wrap;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+
+  .aviso-versionamento {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    background: var(--color-notice-bg);
+    border: 1px solid var(--color-notice-border);
+    border-left-width: 4px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--color-notice-text);
+  }
+
+  @media (max-width: 40rem) {
+    .pagina-dados {
+      padding: 1.5rem 1rem 2.5rem;
+    }
+
+    .dados-cabecalho h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

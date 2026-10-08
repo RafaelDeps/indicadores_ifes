@@ -19,7 +19,7 @@ SOFT_NORMALIZADO = $(shell echo '$(SOFT)' | tr '[:upper:]' '[:lower:]' | tr -d '
 SOFT_ATIVO = $(filter 1 true yes on,$(SOFT_NORMALIZADO))
 SOFT_ARGS = $(if $(SOFT_ATIVO),--soft,)
 
-.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens dados check-dados test test-etl test-web test-watch lint format format-check check clean
+.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens dados check-dados check-governanca test test-etl test-web test-watch lint format format-check check clean
 
 help: ## Exibe os comandos disponíveis
 	@echo "Indicadores IFES - Comandos disponíveis"
@@ -37,7 +37,7 @@ install: ## Instala dependências do projeto frontend
 dev: ## Inicia o servidor de desenvolvimento do Astro
 	npm run dev
 
-build: ## Executa o build de produção do Astro
+build: check-governanca ## Executa o build de produção do Astro (roda o portão de governança antes)
 	npm run build
 
 preview: ## Inicia o servidor de pré-visualização do Astro
@@ -74,6 +74,9 @@ dados: ## Gera o pacote completo na ordem etl → etl-listagens → merge-listag
 
 check-dados: ## Valida o contrato e a frescor do pacote data/dist/indicadores.zip (AVISO:/INFO: informativos, exit 0; violação de contrato → ERRO + 1)
 	$(PYTHON) -m etl.scripts.check_dados
+
+check-governanca: ## Verifica o portão de governança e copia os artefatos para public/dados (gate fechado → AVISO + exit 0; registro quebrado → ERRO + 1)
+	$(PYTHON) -m etl.scripts.check_governanca
 
 test: test-etl test-web ## Executa a suíte completa de testes automatizados (pytest e vitest)
 

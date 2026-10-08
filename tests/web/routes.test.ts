@@ -9,6 +9,7 @@ const PAGINAS = [
   'src/pages/pilar-2/[sigla].astro',
   'src/pages/pilar-3/index.astro',
   'src/pages/pilar-3/[sigla].astro',
+  'src/pages/dados/index.astro',
 ];
 
 describe('contrato de rotas dos 3 pilares CONIF', () => {
@@ -49,5 +50,19 @@ describe('contrato de rotas dos 3 pilares CONIF', () => {
       expect(detalhe).toContain('getStaticPaths');
       expect(detalhe).toContain('sigla');
     }
+  });
+
+  it('a página de downloads é acessível pela rota /dados/', () => {
+    // A rota precisa ser `/dados/` e não `/dados` — o Astro resolve o
+    // diretório para `dados/index.html`, e o link do cabeçalho depende disso.
+    expect(existsSync('src/pages/dados/index.astro')).toBe(true);
+    expect(existsSync('src/pages/dados.astro')).toBe(false);
+  });
+
+  it('a página de downloads não exige getStaticPaths — é estática e única', () => {
+    const dados = readFileSync('src/pages/dados/index.astro', 'utf-8');
+    // Uma rota sem parâmetro não tem o que parametrizar; `getStaticPaths`
+    // aqui sugeriria que a página gera rotas dinâmicas, que ela não gera.
+    expect(dados).not.toContain('getStaticPaths');
   });
 });
