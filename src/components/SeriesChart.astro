@@ -1,7 +1,7 @@
 ---
 import type { ValorAnual } from '../data/indicadores';
 import { formatValor } from '../lib/formatters';
-import { construirLinha, mapearPontos, calcularEscala } from '../lib/chart';
+import { construirLinha, mapearPontos } from '../lib/chart';
 
 interface Props {
   valores: ValorAnual[];
@@ -15,7 +15,6 @@ const MARGEM = 36;
 
 const pontos = mapearPontos(valores, LARGURA, ALTURA, MARGEM);
 const linha = construirLinha(pontos);
-const escala = calcularEscala(valores, ALTURA, MARGEM);
 
 function rotuloDoPonto(ano: number): string {
   const item = valores.find((v) => v.ano === ano);
@@ -29,23 +28,11 @@ function rotuloDoPonto(ano: number): string {
     data-grafico-svg
     viewBox={`0 0 ${LARGURA} ${ALTURA}`}
     role="img"
-    aria-label="Série histórica do indicador com rótulos numéricos e eixos de escala"
+    aria-label="Série histórica do indicador com rótulos numéricos"
     style={pontos.length > 0 ? '' : 'display: none;'}
   >
-    {/* Linhas de grade e referências da escala vertical */}
-    <g class="escala-grupo" data-grafico-escala>
-      {
-        escala &&
-          escala.linhas.map((l) => (
-            <g class="grade-linha">
-              <line class="linha-guia" x1={MARGEM} y1={l.y} x2={LARGURA - MARGEM} y2={l.y} />
-              <text class="rotulo-escala" x={MARGEM - 6} y={l.y + 4} text-anchor="end">
-                {l.rotulo}
-              </text>
-            </g>
-          ))
-      }
-    </g>
+    {/* Grupo de escala mantido vazio para evitar poluição visual */}
+    <g class="escala-grupo" data-grafico-escala></g>
 
     {/* Eixo horizontal (tempo) */}
     <line class="eixo" x1={MARGEM} y1={ALTURA - MARGEM} x2={LARGURA - MARGEM} y2={ALTURA - MARGEM}
@@ -111,19 +98,6 @@ function rotuloDoPonto(ano: number): string {
   .eixo {
     stroke: var(--color-border);
     stroke-width: 1.5;
-  }
-
-  .linha-guia {
-    stroke: var(--color-border);
-    stroke-width: 1;
-    stroke-dasharray: 3 3;
-    opacity: 0.6;
-  }
-
-  .rotulo-escala {
-    font-size: 0.72rem;
-    fill: var(--color-muted);
-    font-variant-numeric: tabular-nums;
   }
 
   .rotulo-ano {

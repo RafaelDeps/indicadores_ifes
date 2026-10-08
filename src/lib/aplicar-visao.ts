@@ -126,23 +126,10 @@ export function aplicarVisaoGrafico(doc: Document, grafico: VisaoGraficoDetalhe)
     elLinha.setAttribute('d', grafico.linhaD);
   }
 
-  // Atualiza linhas de escala
+  // Grupo de escala mantido vazio para evitar poluição visual
   const elEscala = doc.querySelector('[data-grafico-escala]');
-  if (elEscala && grafico.escala) {
-    const LARGURA = 560;
-    const MARGEM = 36;
-    elEscala.innerHTML = grafico.escala.linhas
-      .map(
-        (l) => `
-        <g class="grade-linha">
-          <line class="linha-guia" x1="${MARGEM}" y1="${l.y}" x2="${LARGURA - MARGEM}" y2="${l.y}" />
-          <text class="rotulo-escala" x="${MARGEM - 6}" y="${l.y + 4}" text-anchor="end">
-            ${l.rotulo}
-          </text>
-        </g>
-      `,
-      )
-      .join('');
+  if (elEscala) {
+    elEscala.innerHTML = '';
   }
 
   // Atualiza pontos de dados
