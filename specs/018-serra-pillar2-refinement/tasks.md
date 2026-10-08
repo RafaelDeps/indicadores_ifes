@@ -113,10 +113,10 @@
 
 **Purpose**: Execução dos testes integrados, builds e validação de ponta a ponta
 
-- [X] T017 [P] Executar suíte completa de testes do ETL com `.venv/bin/pytest tests/etl`
-- [X] T018 [P] Executar suíte completa de testes do frontend com `npm run test:web`
-- [X] T019 Executar compilação estática do Astro com `npm run build`
-- [X] T020 Executar validação contratual da cadeia de dados com `make check-dados`
+- [x] T017 [P] Executar suíte completa de testes do ETL com `.venv/bin/pytest tests/etl`
+- [x] T018 [P] Executar suíte completa de testes do frontend com `npm run test:web`
+- [x] T019 Executar compilação estática do Astro com `npm run build`
+- [x] T020 Executar validação contratual da cadeia de dados com `make check-dados`
 
 ---
 

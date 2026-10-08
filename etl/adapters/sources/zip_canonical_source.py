@@ -308,6 +308,26 @@ class ZipCanonicalSource(ISource):
 
                     ano_inicio, mes_inicio = extrair_ano_mes_inicio(inicio_str)
 
+                    # Fallback para cronograma quando inicio_str for nulo/vazio
+                    cronograma = dados.get("cronograma") or []
+                    datas_cronograma: list[str] = []
+                    if isinstance(cronograma, list):
+                        for ativ in cronograma:
+                            if isinstance(ativ, dict):
+                                for k in ("inicio", "fim"):
+                                    val_data = ativ.get(k)
+                                    if (
+                                        val_data
+                                        and isinstance(val_data, str)
+                                        and re.search(r"\d{4}", val_data)
+                                    ):
+                                        datas_cronograma.append(val_data.strip())
+
+                    if ano_inicio is None and datas_cronograma:
+                        ano_inicio, mes_inicio = extrair_ano_mes_inicio(
+                            min(datas_cronograma)
+                        )
+
                     m_fim = re.search(r"(\d{4})", fim_str)
                     ano_fim = int(m_fim.group(1)) if m_fim else None
 
@@ -317,6 +337,11 @@ class ZipCanonicalSource(ISource):
                             duracao_meses=duracao_meses,
                             mes_inicio=mes_inicio,
                         )
+
+                    if ano_fim is None and datas_cronograma:
+                        m_cron_fim = re.search(r"(\d{4})", max(datas_cronograma))
+                        if m_cron_fim:
+                            ano_fim = int(m_cron_fim.group(1))
 
                     # Financiamento e Fontes
                     fin = dados.get("financiamento") or {}
