@@ -2,6 +2,8 @@
 
 Dashboard público para acompanhamento dos indicadores institucionais do modelo CONIF, destinado a gestores do IFES e à comunidade acadêmica. O projeto é composto por um pipeline de engenharia de dados em Python (`etl/`) inspirado no `horizon_etl` e uma interface web estática de alta performance construída em Astro (`src/`).
 
+Link do site: 
+https://rafaeldeps.github.io/indicadores_ifes/
 ---
 
 ## 🏛️ Arquitetura do Repositório
