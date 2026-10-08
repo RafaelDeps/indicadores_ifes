@@ -163,12 +163,6 @@ export function aplicarVisaoGrafico(doc: Document, grafico: VisaoGraficoDetalhe)
         <circle class="ponto ${p.ativo ? 'ponto-ativo' : ''}" cx="${p.x}" cy="${p.y}" r="6">
           <title>${p.ano}: ${p.textoRotulo}</title>
         </circle>
-        <g class="tooltip-svg" pointer-events="none">
-          <rect class="tooltip-bg" x="${p.x - 45}" y="${p.y - 38}" width="90" height="26" rx="4" />
-          <text class="tooltip-texto" x="${p.x}" y="${p.y - 21}" text-anchor="middle">
-            ${p.ano}: ${p.textoRotulo}
-          </text>
-        </g>
       </g>
     `,
       )

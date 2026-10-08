@@ -80,21 +80,6 @@ function rotuloDoPonto(ano: number): string {
               >
                 <title>{rotuloDoPonto(ponto.ano)}</title>
               </circle>
-
-              {/* Tooltip contextual no hover/foco */}
-              <g class="tooltip-svg" pointer-events="none">
-                <rect
-                  class="tooltip-bg"
-                  x={ponto.x - 45}
-                  y={ponto.y - 38}
-                  width="90"
-                  height="26"
-                  rx="4"
-                />
-                <text class="tooltip-texto" x={ponto.x} y={ponto.y - 21} text-anchor="middle">
-                  {ponto.ano}: {ponto.textoRotulo}
-                </text>
-              </g>
             </g>
           );
         })
@@ -186,27 +171,6 @@ function rotuloDoPonto(ano: number): string {
     font-weight: 700;
     fill: var(--color-ink);
     font-variant-numeric: tabular-nums;
-  }
-
-  .tooltip-svg {
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-
-  .grupo-ponto:hover .tooltip-svg,
-  .grupo-ponto:focus-visible .tooltip-svg {
-    opacity: 1;
-  }
-
-  .tooltip-bg {
-    fill: var(--color-ink);
-    opacity: 0.9;
-  }
-
-  .tooltip-texto {
-    fill: var(--color-surface);
-    font-size: 0.75rem;
-    font-weight: 600;
   }
 
   .sem-grafico {

@@ -22,8 +22,8 @@ def test_carregar_pinv_sucesso(tmp_path: Path, mock_pinv_serra_dict: dict) -> No
     assert resultado.campus_slug == "serra"
     assert resultado.unidade == "%"
     assert resultado.valores_por_ano[2024] == 496.78
-    assert resultado.valores_por_ano[2025] == 1111.35
-    assert resultado.valores_por_ano[2026] == 610.63
+    assert resultado.valores_por_ano[2025] == 1035.17
+    assert resultado.valores_por_ano[2026] == 12.41
 
 
 def test_carregar_pinv_arquivo_ausente(tmp_path: Path) -> None:

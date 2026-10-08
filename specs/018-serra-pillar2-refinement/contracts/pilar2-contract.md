@@ -14,9 +14,9 @@
   "indicadores": {
     "PINV": {
       "descricao": "Percentual de Investimento em Pesquisa, Pos e Inovacao",
-      "TAFPPI_valor_total_aporte_pesquisa": 25954326.84,
+      "TAFPPI_valor_total_aporte_pesquisa": 26332461.5,
       "OCC_valor_orcamento_total_capital_custeio": null,
-      "percentual_calculado_PINV": 1111.35
+      "percentual_calculado_PINV": 1035.17
     },
     "PIPDI": {
       "descricao": "Quantidade de Acordos de Parceria para PDeI",

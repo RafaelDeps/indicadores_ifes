@@ -74,8 +74,8 @@ def test_pinv_serra_preserva_occ_nulo(tmp_path: Path) -> None:
 
     assert dados_serra is not None
     assert dados_serra.valores_por_ano[2024] == 496.78
-    assert dados_serra.valores_por_ano[2025] == 1111.35
-    assert dados_serra.valores_por_ano[2026] == 610.63
+    assert dados_serra.valores_por_ano[2025] == 1035.17
+    assert dados_serra.valores_por_ano[2026] == 12.41
 
     pilar2_res = calcular_pilar2(
         projetos=None,
@@ -85,5 +85,5 @@ def test_pinv_serra_preserva_occ_nulo(tmp_path: Path) -> None:
         projetos_sigpesq=[],
     )
 
-    assert pilar2_res.percentual_calculado_pinv == 1111.35
+    assert pilar2_res.percentual_calculado_pinv == 1035.17
     assert pilar2_res.occ_valor_orcamento_total_capital_custeio is None

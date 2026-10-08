@@ -13,18 +13,18 @@
     },
     {
       "ano": 2025,
-      "percentual": 1111.35,
-      "percentual_formatado": "1.111,35%"
+      "percentual": 1035.17,
+      "percentual_formatado": "1.035,17%"
     },
     {
       "ano": 2026,
-      "percentual": 610.63,
-      "percentual_formatado": "610,63%"
+      "percentual": 12.41,
+      "percentual_formatado": "12,41%"
     }
   ],
   "valores_por_ano": {
     "2024": 496.78,
-    "2025": 1111.35,
-    "2026": 610.63
+    "2025": 1035.17,
+    "2026": 12.41
   }
 }
