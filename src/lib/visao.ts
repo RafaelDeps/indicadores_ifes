@@ -304,13 +304,16 @@ export function computarVisaoHistoricoDetalhe(
     };
   }
 
+  const sufixoPercentual = indCompleto.tipoValor === 'percentual' ? '%' : '';
+
   const linhas: LinhaHistorico[] = indCompleto.valores
     .slice()
     .sort((a, b) => a.ano - b.ano)
     .map((v) => ({
       ano: v.ano,
       valor: v.valor,
-      valorFormatado: v.valor !== null ? formatValor(v.valor) : TEXTO_INDISPONIVEL,
+      valorFormatado:
+        v.valor !== null ? formatValor(v.valor) + sufixoPercentual : TEXTO_INDISPONIVEL,
       disponivel: v.valor !== null,
       motivoIndisponivel: v.motivoIndisponivel,
       ativo: v.ano === contexto.ano,

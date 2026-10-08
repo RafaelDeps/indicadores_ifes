@@ -135,7 +135,11 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
         <SeriesChart valores={serie} anoSelecionado={anoEfetivo ?? undefined} />
       </div>
       <div class="historico-wrapper">
-        <HistoricalSeries valores={serie} anoSelecionado={anoEfetivo ?? undefined} />
+        <HistoricalSeries
+          valores={serie}
+          anoSelecionado={anoEfetivo ?? undefined}
+          mostrarPercentual={indicador.tipoValor === 'percentual'}
+        />
       </div>
     </section>
 

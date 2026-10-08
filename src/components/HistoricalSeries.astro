@@ -6,9 +6,11 @@ import { formatValor } from '../lib/formatters';
 interface Props {
   valores: ValorAnual[];
   anoSelecionado?: number;
+  /** Sufixa `%` aos valores de indicadores calculados por razão (ex.: B/A). */
+  mostrarPercentual?: boolean;
 }
 
-const { valores, anoSelecionado } = Astro.props;
+const { valores, anoSelecionado, mostrarPercentual = false } = Astro.props;
 const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO);
 ---
 
@@ -23,11 +25,13 @@ const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO
     {
       valores.map((valor) => {
         const ativo = valor.ano === anoSelecionado;
+        const sufixoPercentual = mostrarPercentual && valor.valor !== null ? '%' : '';
         return (
           <tr data-historico-ano={valor.ano} class:list={[{ 'linha-ativa': ativo }]}>
             <th scope="row">{valor.ano}</th>
             <td>
               {formatValor(valor.valor)}
+              {sufixoPercentual}
               {valor.motivoIndisponivel && (
                 <span class="motivo-ano"> — {valor.motivoIndisponivel}</span>
               )}
@@ -49,30 +53,38 @@ const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO
     border-radius: 8px;
   }
 
-  .serie th,
-  .serie td {
-    text-align: left;
+  /*
+   * Estes estilos precisam ser globais a partir do ancestral `.serie`:
+   * o corpo da tabela (`[data-historico-corpo]`) é reescrito por JS
+   * (`aplicarVisaoHistorico`) e os `<tr>/<th>/<td>` injetados NÃO recebem o
+   * atributo de escopo do Astro (`data-astro-cid-*`). Selectores escopados
+   * deixariam de valer logo após a sincronização inicial da tela.
+   */
+  .serie :global(th),
+  .serie :global(td) {
+    text-align: center;
+    vertical-align: middle;
     padding: 0.5rem 0.75rem;
     border-bottom: 1px solid var(--color-border);
   }
 
-  .serie tbody tr:last-child th,
-  .serie tbody tr:last-child td {
+  .serie :global(tbody tr:last-child th),
+  .serie :global(tbody tr:last-child td) {
     border-bottom: none;
   }
 
-  .serie tbody tr.linha-ativa th,
-  .serie tbody tr.linha-ativa td {
+  .serie :global(tbody tr.linha-ativa th),
+  .serie :global(tbody tr.linha-ativa td) {
     background: var(--color-emerald-50);
     font-weight: 700;
     color: var(--color-primary-dark);
   }
 
-  .serie td {
+  .serie :global(td) {
     font-variant-numeric: tabular-nums;
   }
 
-  .motivo-ano {
+  .serie :global(.motivo-ano) {
     color: var(--color-notice-text);
     font-size: 0.9rem;
   }
