@@ -22,7 +22,8 @@ const isPilar3 = pathname.startsWith('/pilar-3');
 
 const campiOpcoes = obterCampiParaSelect();
 const anosOpcoes = obterAnosParaSelect();
-const urlCampus = Astro.url.searchParams.get('campus');
+const urlCampusParam = Astro.url.searchParams.get('campus');
+const urlCampus = urlCampusParam && urlCampusParam !== 'todos' ? urlCampusParam : 'serra';
 const urlAno = Astro.url.searchParams.get('ano');
 const contextoInicial = resolverContextoFiltro(urlCampus, urlAno, campiOpcoes, anosOpcoes);
 const datasetJson = JSON.stringify(datasetPadrao);
@@ -163,8 +164,13 @@ const fontFaceCss = pesos
             >
               {
                 campiOpcoes.map((c) => (
-                  <option value={c.slug} selected={c.slug === contextoInicial.campus}>
+                  <option
+                    value={c.slug}
+                    disabled={c.slug === 'todos'}
+                    selected={c.slug === contextoInicial.campus}
+                  >
                     {c.nome}
+                    {c.slug === 'todos' ? ' (Desativado)' : ''}
                   </option>
                 ))
               }
@@ -249,8 +255,13 @@ const fontFaceCss = pesos
               >
                 {
                   campiOpcoes.map((c) => (
-                    <option value={c.slug} selected={c.slug === contextoInicial.campus}>
+                    <option
+                      value={c.slug}
+                      disabled={c.slug === 'todos'}
+                      selected={c.slug === contextoInicial.campus}
+                    >
                       {c.nome}
+                      {c.slug === 'todos' ? ' (Desativado)' : ''}
                     </option>
                   ))
                 }

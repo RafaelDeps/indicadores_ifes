@@ -66,3 +66,34 @@ def test_membro_ativo_fallback_datas_iniciativa() -> None:
     assert membro_ativo_em_ano(membro, 2024, ini) is False
     assert membro_ativo_em_ano(membro, 2025, ini) is True
     assert membro_ativo_em_ano(membro, 2026, ini) is True
+
+
+def test_extrair_ano_mes_inicio() -> None:
+    from etl.core.logic.temporal.activity_filter import extrair_ano_mes_inicio
+
+    assert extrair_ano_mes_inicio("2025-06-15") == (2025, 6)
+    assert extrair_ano_mes_inicio("2025-01-01") == (2025, 1)
+    assert extrair_ano_mes_inicio("2025-12") == (2025, 12)
+    assert extrair_ano_mes_inicio("2025") == (2025, 1)
+    assert extrair_ano_mes_inicio(None) == (None, None)
+    assert extrair_ano_mes_inicio("") == (None, None)
+    assert extrair_ano_mes_inicio("invalid") == (None, None)
+
+
+def test_projetar_ano_fim() -> None:
+    from etl.core.logic.temporal.activity_filter import projetar_ano_fim
+
+    # 36 meses iniciando em Jan/2025 -> 2027
+    assert projetar_ano_fim(2025, 36, mes_inicio=1) == 2027
+    # 36 meses iniciando em Ago/2026 -> 2029
+    assert projetar_ano_fim(2026, 36, mes_inicio=8) == 2029
+    # 60 meses iniciando em Jan/2025 -> 2029
+    assert projetar_ano_fim(2025, 60, mes_inicio=1) == 2029
+    # 12 meses iniciando em Jan/2025 -> 2025
+    assert projetar_ano_fim(2025, 12, mes_inicio=1) == 2025
+    # 12 meses iniciando em Março/2024 -> 2025
+    assert projetar_ano_fim(2024, 12, mes_inicio=3) == 2025
+    # Fallback quando duracao_meses é None ou <= 0
+    assert projetar_ano_fim(2025, None) == 2025
+    assert projetar_ano_fim(2025, 0) == 2025
+    assert projetar_ano_fim(None, 36) is None

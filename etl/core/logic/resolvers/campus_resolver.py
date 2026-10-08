@@ -126,3 +126,49 @@ def resolver_campi_facto(
             return (c, "todos")
 
     return ("todos",)
+
+
+def resolver_campus_sigpesq(
+    coord_campus: str = "",
+    coord_nome: str = "",
+    equipe: list[dict] | None = None,
+    pesquisadores_campus_map: dict[str, str] | None = None,
+) -> tuple[str, str]:
+    """
+    Resolve o campus de um projeto do SIGPESQ garantindo fidelidade e evitando vazamento entre campi:
+    1. Se coord_campus indicar explicitamente um dos campi institucionais canônicos, atribui a ele.
+    2. Se coord_campus indicar Reitoria, Proex, PRPPG ou afins, atribui a 'todos' (Reitoria).
+    3. Se coord_campus for genérico ('IFES') ou ausente, busca a lotação do coordenador em pesquisadores_campus_map.
+    4. Se houver membros da equipe com campus institucional explícito ou no mapa, resolve pela equipe.
+    5. Se não for atribuível a um campus específico, atribui ao escopo institucional 'todos'.
+    """
+    norm_campus = normalizar_slug(coord_campus or "")
+
+    # 1. Campus declarado no coordenador
+    for c_slug in CAMPI_CANONICOS_SLUGS:
+        if c_slug in norm_campus:
+            return c_slug, coord_campus
+
+    # 2. Reitoria / Proex / PRPPG
+    if any(r in norm_campus for r in ["reitoria", "proex", "prppg"]):
+        return "todos", "Reitoria"
+
+    # 3. Coordenador no cadastro institucional
+    norm_coord = normalizar_slug(coord_nome or "")
+    if pesquisadores_campus_map and norm_coord in pesquisadores_campus_map:
+        c_nome = pesquisadores_campus_map[norm_coord]
+        return normalizar_slug(c_nome), c_nome
+
+    # 4. Membros da equipe
+    for m in equipe or []:
+        m_inst = normalizar_slug(m.get("instituicao") or "")
+        for c_slug in CAMPI_CANONICOS_SLUGS:
+            if c_slug in m_inst:
+                return c_slug, m.get("instituicao", "")
+        m_nome = normalizar_slug(m.get("nome") or "")
+        if pesquisadores_campus_map and m_nome in pesquisadores_campus_map:
+            c_nome = pesquisadores_campus_map[m_nome]
+            return normalizar_slug(c_nome), c_nome
+
+    # 5. Institucional geral
+    return "todos", "IFES (Institucional)"

@@ -101,10 +101,14 @@ class IndicadoresFlow:
             ativas_por_ano: dict[int, int] = {}
             for ano in self.anos:
                 total_ano = 0
-                if ano in agregados_por_ano and "todos" in agregados_por_ano[ano]:
-                    total_ano = agregados_por_ano[ano][
-                        "todos"
-                    ].pilar1.ntpp_projetos_pesquisa_ativos
+                if ano in agregados_por_ano:
+                    if "todos" in agregados_por_ano[ano]:
+                        total_ano = agregados_por_ano[ano][
+                            "todos"
+                        ].pilar1.ntpp_projetos_pesquisa_ativos
+                    elif agregados_por_ano[ano]:
+                        primeiro = next(iter(agregados_por_ano[ano].values()))
+                        total_ano = primeiro.pilar1.ntpp_projetos_pesquisa_ativos
                 ativas_por_ano[ano] = total_ano
             self.tracker.registrar_iniciativas_ativas_por_ano(ativas_por_ano)
 

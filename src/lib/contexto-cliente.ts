@@ -151,7 +151,10 @@ export function sincronizarTela(
   if (!dataset) return;
 
   const paramsUrl = extrairParametrosDeUrl(window.location.search);
-  const campusSolicitado = campusDesejado ?? paramsUrl.campus;
+  let campusSolicitado = campusDesejado ?? paramsUrl.campus;
+  if (!campusSolicitado || campusSolicitado === 'todos') {
+    campusSolicitado = 'serra';
+  }
   const anoSolicitado = anoDesejado ?? paramsUrl.ano;
 
   const contexto = resolverContextoComAjuste(campusSolicitado, anoSolicitado, dataset);

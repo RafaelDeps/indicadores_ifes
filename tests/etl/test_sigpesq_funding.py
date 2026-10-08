@@ -147,14 +147,23 @@ def test_extrair_e_calcular_tafppi_real_canonical() -> None:
 
     assert len(projetos) > 0
 
-    # Valores esperados para Serra e Todos
-    val_2024 = calcular_tafppi(None, "serra", 2024, projetos_sigpesq=projetos)
-    val_2025 = calcular_tafppi(None, "serra", 2025, projetos_sigpesq=projetos)
-    val_2026 = calcular_tafppi(None, "serra", 2026, projetos_sigpesq=projetos)
+    # Valores institucionais consolidados (todos os campi)
+    val_2024_todos = calcular_tafppi(None, "todos", 2024, projetos_sigpesq=projetos)
+    val_2025_todos = calcular_tafppi(None, "todos", 2025, projetos_sigpesq=projetos)
+    val_2026_todos = calcular_tafppi(None, "todos", 2026, projetos_sigpesq=projetos)
 
-    assert val_2024 == 12067095.28
-    assert val_2025 == 28270178.52
-    assert val_2026 == 17842650.00
+    assert val_2024_todos == 12067095.28
+    assert val_2025_todos == 28270178.52
+    assert val_2026_todos == 17842650.00
+
+    # Valores específicos do Campus Serra (sem vazamento de outros campi)
+    val_2024_serra = calcular_tafppi(None, "serra", 2024, projetos_sigpesq=projetos)
+    val_2025_serra = calcular_tafppi(None, "serra", 2025, projetos_sigpesq=projetos)
+    val_2026_serra = calcular_tafppi(None, "serra", 2026, projetos_sigpesq=projetos)
+
+    assert val_2024_serra == 6168475.28
+    assert val_2025_serra == 25954326.84
+    assert val_2026_serra == 338500.00
 
 
 def test_agregar_indicadores_com_sigpesq(mock_export_canonicos) -> None:

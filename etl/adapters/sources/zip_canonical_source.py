@@ -20,6 +20,14 @@ from etl.core.logic.models import (
     RefCampus,
     TipoProducao,
 )
+from etl.core.logic.resolvers.campus_resolver import (
+    normalizar_slug,
+    resolver_campus_sigpesq,
+)
+from etl.core.logic.temporal.activity_filter import (
+    extrair_ano_mes_inicio,
+    projetar_ano_fim,
+)
 from etl.core.ports.source import ISource
 
 ARQUIVOS_OBRIGATORIOS = [
@@ -271,7 +279,7 @@ class ZipCanonicalSource(ISource):
                                     c_name = r_c.get("name", "")
                                     if c_name:
                                         pesquisadores_campus_map[
-                                            r_nome.strip().lower()
+                                            normalizar_slug(r_nome)
                                         ] = c_name
                     except Exception:
                         pass
@@ -290,15 +298,25 @@ class ZipCanonicalSource(ISource):
                     datas = dados.get("datas") or {}
                     inicio_str = str(datas.get("inicio") or "")
                     fim_str = str(datas.get("fim") or "")
+                    duracao_meses_raw = datas.get("duracao_meses")
+                    duracao_meses: int | None = None
+                    if (
+                        duracao_meses_raw is not None
+                        and str(duracao_meses_raw).strip().isdigit()
+                    ):
+                        duracao_meses = int(str(duracao_meses_raw).strip())
 
-                    m_inicio = re.search(r"(\d{4})", inicio_str)
-                    ano_inicio = int(m_inicio.group(1)) if m_inicio else None
+                    ano_inicio, mes_inicio = extrair_ano_mes_inicio(inicio_str)
 
                     m_fim = re.search(r"(\d{4})", fim_str)
                     ano_fim = int(m_fim.group(1)) if m_fim else None
 
                     if ano_fim is None and ano_inicio is not None:
-                        ano_fim = ano_inicio
+                        ano_fim = projetar_ano_fim(
+                            ano_inicio=ano_inicio,
+                            duracao_meses=duracao_meses,
+                            mes_inicio=mes_inicio,
+                        )
 
                     # Financiamento e Fontes
                     fin = dados.get("financiamento") or {}
@@ -331,48 +349,14 @@ class ZipCanonicalSource(ISource):
                     # Resolução de Campus
                     coord = dados.get("coordenador") or {}
                     coord_nome = (coord.get("nome") or "").strip()
-                    coord_campus = coord.get("campus") or ""
-                    equipe_insts = " ".join(
-                        [m.get("instituicao") or "" for m in dados.get("equipe", [])]
+                    coord_campus = (coord.get("campus") or "").strip()
+
+                    campus_slug, campus_nome = resolver_campus_sigpesq(
+                        coord_campus=coord_campus,
+                        coord_nome=coord_nome,
+                        equipe=dados.get("equipe", []),
+                        pesquisadores_campus_map=pesquisadores_campus_map,
                     )
-                    texto_campus = f"{coord_campus} {equipe_insts}".lower()
-
-                    campus_slug = None
-                    campus_nome = None
-
-                    if "serra" in texto_campus:
-                        campus_slug = "serra"
-                        campus_nome = "Serra"
-                    elif coord_nome.lower() in pesquisadores_campus_map:
-                        c_pesq = pesquisadores_campus_map[coord_nome.lower()]
-                        if "serra" in c_pesq.lower():
-                            campus_slug = "serra"
-                            campus_nome = "Serra"
-                        else:
-                            from etl.core.logic.resolvers.campus_resolver import (
-                                normalizar_slug,
-                            )
-
-                            campus_slug = normalizar_slug(c_pesq)
-                            campus_nome = c_pesq
-                    elif (
-                        "ifes" in texto_campus
-                        or not coord_campus
-                        or coord_nome
-                        in [
-                            "Paulo Sérgio dos Santos Júnior",
-                            "Victorio Albani de Carvalho",
-                        ]
-                    ):
-                        campus_slug = "serra"
-                        campus_nome = "Serra"
-                    else:
-                        from etl.core.logic.resolvers.campus_resolver import (
-                            normalizar_slug,
-                        )
-
-                        campus_slug = normalizar_slug(coord_campus)
-                        campus_nome = coord_campus
 
                     projetos.append(
                         ProjetoSigpesqFinanciamento(
@@ -382,6 +366,7 @@ class ZipCanonicalSource(ISource):
                             campus_nome=campus_nome,
                             ano_inicio=ano_inicio,
                             ano_fim=ano_fim,
+                            duracao_meses=duracao_meses,
                             valor_total=round(valor_total, 2),
                             fontes=fontes_list,
                         )

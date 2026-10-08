@@ -16,7 +16,13 @@ class PinvJsonSource:
         """Busca pinv_<campus_slug>.json na raiz de data ou em data/raw/pilar2/."""
         caminhos_candidatos = [
             self.diretorio_base / f"pinv_{campus_slug}.json",
+            self.diretorio_base / "data" / f"pinv_{campus_slug}.json",
             self.diretorio_base / "raw" / "pilar2" / f"pinv_{campus_slug}.json",
+            self.diretorio_base
+            / "data"
+            / "raw"
+            / "pilar2"
+            / f"pinv_{campus_slug}.json",
         ]
 
         for caminho in caminhos_candidatos:

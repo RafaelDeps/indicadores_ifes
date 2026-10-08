@@ -22,8 +22,16 @@ class ProjetoSigpesqFinanciamento:
     campus_nome: str | None = None
     ano_inicio: int | None = None
     ano_fim: int | None = None
+    duracao_meses: int | None = None
     valor_total: float = 0.0
     fontes: list[FonteFinanciamento] = field(default_factory=list)
+
+    def ativo_em_ano(self, ano: int) -> bool:
+        """Indica se o projeto esteve ativo no ano civil especificado."""
+        if self.ano_inicio is None:
+            return False
+        fim = self.ano_fim if self.ano_fim is not None else self.ano_inicio
+        return self.ano_inicio <= ano <= fim
 
 
 @dataclass

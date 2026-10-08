@@ -122,11 +122,7 @@ def calcular_pipdi(
     if projetos_sigpesq is not None:
         for ps in projetos_sigpesq:
             pertence_campus = campus_slug == "todos" or ps.campus_slug == campus_slug
-            vigente = (
-                ps.ano_inicio is not None
-                and ps.ano_fim is not None
-                and ps.ano_inicio <= ano <= ps.ano_fim
-            )
+            vigente = ps.ativo_em_ano(ano)
             if pertence_campus and vigente and eh_parceria_externa_sigpesq(ps):
                 count += 1
 
