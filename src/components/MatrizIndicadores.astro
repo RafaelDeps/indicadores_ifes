@@ -1,0 +1,825 @@
+---
+import { obterIndicadoresMatriz, obterTagsDisponiveis, normalizarTexto } from '../lib/matriz';
+
+export interface Props {
+  anoReferencia?: number;
+}
+
+const { anoReferencia } = Astro.props;
+const itens = obterIndicadoresMatriz(anoReferencia);
+const tags = obterTagsDisponiveis(itens);
+---
+
+<div class="matriz-container" data-componente-matriz>
+  <!-- Barra de Controles: Busca e Chips de Tags -->
+  <div class="matriz-painel-controles">
+    <div class="busca-wrapper">
+      <label for="busca-matriz-input" class="sr-only">Pesquisar indicadores</label>
+      <div class="busca-input-container">
+        <svg
+          class="icone-busca"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          stroke="currentColor"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          id="busca-matriz-input"
+          type="search"
+          class="input-busca-matriz"
+          placeholder="Buscar por sigla, nome ou palavra-chave..."
+          aria-label="Buscar indicadores da matriz"
+          autocomplete="off"
+          data-busca-matriz
+        />
+        <button
+          type="button"
+          class="btn-limpar-busca"
+          aria-label="Limpar termo de busca"
+          data-btn-limpar-busca
+          hidden
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tags-wrapper">
+      <span id="label-tags-tematicas" class="tags-titulo">Filtrar por área temática:</span>
+      <div class="chips-grupo" role="group" aria-labelledby="label-tags-tematicas" data-chips-tags>
+        <button type="button" class="chip-tag chip-ativo" data-chip-tag="todas" aria-pressed="true">
+          Todas <span class="chip-total">({itens.length})</span>
+        </button>
+        {
+          tags.map((tag) => (
+            <button type="button" class="chip-tag" data-chip-tag={tag.id} aria-pressed="false">
+              {tag.nome} <span class="chip-total">({tag.total})</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Status e Contagem -->
+  <div class="matriz-status-linha">
+    <span class="contador-resultados" data-contador-resultados aria-live="polite">
+      Exibindo {itens.length} de {itens.length} indicadores
+    </span>
+  </div>
+
+  <!-- Tabela Consolidada -->
+  <div class="tabela-wrapper" tabindex="0" role="region" aria-label="Tabela de dados rolável">
+    <table class="tabela-matriz" aria-label="Matriz consolidada de indicadores do Campus Serra">
+      <thead>
+        <tr>
+          <th scope="col" class="col-pilar">
+            <button
+              type="button"
+              class="btn-ordenar"
+              data-coluna="pilar"
+              aria-sort="ascending"
+              aria-label="Ordenar por Pilar"
+            >
+              <span>Pilar</span>
+              <span class="icone-ordem" aria-hidden="true">▲</span>
+            </button>
+          </th>
+          <th scope="col" class="col-sigla">
+            <button
+              type="button"
+              class="btn-ordenar"
+              data-coluna="sigla"
+              aria-sort="none"
+              aria-label="Ordenar por Sigla"
+            >
+              <span>Sigla</span>
+              <span class="icone-ordem" aria-hidden="true">↕</span>
+            </button>
+          </th>
+          <th scope="col" class="col-nome">
+            <button
+              type="button"
+              class="btn-ordenar"
+              data-coluna="nome"
+              aria-sort="none"
+              aria-label="Ordenar por Nome do Indicador"
+            >
+              <span>Indicador</span>
+              <span class="icone-ordem" aria-hidden="true">↕</span>
+            </button>
+          </th>
+          <th scope="col" class="col-valor">Último Valor</th>
+          <th scope="col" class="col-delta">Variação Recente</th>
+          <th scope="col" class="col-polaridade">Polaridade</th>
+          <th scope="col" class="col-acao">Ação</th>
+        </tr>
+      </thead>
+      <tbody data-tabela-corpo>
+        {
+          itens.map((item) => {
+            const tagsIds = item.tags.map((t) => normalizarTexto(t)).join(' ');
+            const temDelta = item.delta && item.delta.tipo !== 'sem_base';
+            return (
+              <tr
+                class="linha-indicador"
+                data-linha-indicador
+                data-sigla={item.sigla}
+                data-nome={item.nome}
+                data-pilar={item.pilarNumero}
+                data-tags={tagsIds}
+              >
+                <td class="col-pilar">
+                  <span class={`badge-pilar badge-pilar-${item.pilarNumero}`}>
+                    Pilar {item.pilarNumero}
+                  </span>
+                </td>
+                <td class="col-sigla">
+                  <a href={item.urlDetalhe} class="link-sigla">
+                    {item.sigla}
+                  </a>
+                </td>
+                <td class="col-nome">
+                  <div class="nome-bloco">
+                    <a href={item.urlDetalhe} class="nome-titulo">
+                      {item.nome}
+                    </a>
+                    <div class="mini-tags">
+                      {item.tags.map((t) => (
+                        <span class="mini-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </td>
+                <td class="col-valor">
+                  <span class="valor-texto">{item.ultimoValorFormatado}</span>
+                </td>
+                <td class="col-delta">
+                  {temDelta ? (
+                    <span
+                      class:list={[
+                        'delta-badge',
+                        {
+                          positivo: item.delta?.positivo === true,
+                          negativo: item.delta?.positivo === false,
+                        },
+                      ]}
+                      aria-label={item.delta?.descricaoAcessivel}
+                    >
+                      <span aria-hidden="true">{item.delta?.simbolo}</span>{' '}
+                      {item.delta?.valorFormatado}
+                    </span>
+                  ) : (
+                    <span class="delta-neutro" aria-label="Sem comparação anterior">
+                      —
+                    </span>
+                  )}
+                </td>
+                <td class="col-polaridade">
+                  <span class="polaridade-texto">{item.polaridadeRotulo}</span>
+                </td>
+                <td class="col-acao">
+                  <a
+                    href={item.urlDetalhe}
+                    class="btn-ver-ficha"
+                    aria-label={`Ver ficha técnica do indicador ${item.sigla}`}
+                  >
+                    Ver ficha <span aria-hidden="true">→</span>
+                  </a>
+                </td>
+              </tr>
+            );
+          })
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Estado Vazio para Busca sem Resultados -->
+  <div class="estado-vazio" data-estado-vazio hidden>
+    <div class="estado-vazio-conteudo">
+      <svg
+        class="icone-vazio"
+        viewBox="0 0 24 24"
+        width="40"
+        height="40"
+        stroke="currentColor"
+        stroke-width="1.5"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        <line x1="8" y1="11" x2="14" y2="11"></line>
+      </svg>
+      <h3>Nenhum indicador encontrado</h3>
+      <p>Nenhuma métrica corresponde aos filtros e termos de busca pesquisados.</p>
+      <button type="button" class="btn-reset-filtros" data-btn-reset-filtros>
+        Limpar filtros e busca
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .matriz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Painel de Controles */
+  .matriz-painel-controles {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Campo de Busca */
+  .busca-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .icone-busca {
+    position: absolute;
+    left: 0.85rem;
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+
+  .input-busca-matriz {
+    width: 100%;
+    padding: 0.65rem 2.2rem 0.65rem 2.5rem;
+    font-size: 0.92rem;
+    font-family: inherit;
+    color: var(--color-ink);
+    background: var(--color-surface-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .input-busca-matriz:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(23, 132, 71, 0.15);
+  }
+
+  .btn-limpar-busca {
+    position: absolute;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+  }
+
+  .btn-limpar-busca:hover {
+    color: var(--color-ink);
+  }
+
+  /* Chips de Tags */
+  .tags-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tags-titulo {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .chips-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chip-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: var(--color-surface-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .chip-tag:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+  }
+
+  .chip-tag.chip-ativo {
+    background: var(--color-primary-dark);
+    color: var(--color-emerald-50);
+    border-color: var(--color-primary-dark);
+  }
+
+  .chip-total {
+    font-size: 0.75rem;
+    opacity: 0.85;
+  }
+
+  /* Status da Matriz */
+  .matriz-status-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.25rem;
+  }
+
+  .contador-resultados {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  /* Tabela Responsiva */
+  .tabela-wrapper {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  .tabela-matriz {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 780px;
+  }
+
+  .tabela-matriz th {
+    background: var(--color-surface-bg);
+    padding: 0.75rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    border-bottom: 2px solid var(--color-border);
+    white-space: nowrap;
+  }
+
+  .btn-ordenar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-weight: 700;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .btn-ordenar:hover {
+    color: var(--color-primary);
+  }
+
+  .btn-ordenar:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .icone-ordem {
+    font-size: 0.75rem;
+    color: var(--color-primary);
+  }
+
+  .tabela-matriz td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+    font-size: 0.9rem;
+  }
+
+  .linha-indicador:last-child td {
+    border-bottom: none;
+  }
+
+  .linha-indicador:hover td {
+    background: var(--color-surface-bg);
+  }
+
+  /* Estilos das Células */
+  .badge-pilar {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 6px;
+    border: 1px solid rgba(23, 132, 71, 0.2);
+    background: var(--color-emerald-50);
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  .link-sigla {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--color-primary-dark);
+    text-decoration: none;
+  }
+
+  .link-sigla:hover {
+    text-decoration: underline;
+  }
+
+  .nome-bloco {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .nome-titulo {
+    font-weight: 600;
+    color: var(--color-ink);
+    text-decoration: none;
+    line-height: 1.35;
+  }
+
+  .nome-titulo:hover {
+    color: var(--color-primary);
+  }
+
+  .mini-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .mini-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: var(--color-surface-bg);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+
+  .valor-texto {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+
+  .delta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.2rem 0.45rem;
+    border-radius: 6px;
+    background: var(--color-surface-bg);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .delta-badge.positivo {
+    background: var(--color-emerald-50);
+    color: var(--color-emerald-700);
+  }
+
+  .delta-badge.negativo {
+    background: var(--color-notice-bg);
+    color: var(--color-notice-text);
+  }
+
+  .delta-neutro {
+    color: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .polaridade-texto {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  .btn-ver-ficha {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    background: var(--color-surface-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .btn-ver-ficha:hover {
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  /* Estado Vazio */
+  .estado-vazio {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .estado-vazio-conteudo {
+    max-width: 24rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .icone-vazio {
+    color: var(--color-muted);
+  }
+
+  .estado-vazio h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--color-ink);
+  }
+
+  .estado-vazio p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    line-height: 1.45;
+  }
+
+  .btn-reset-filtros {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-primary-dark);
+    color: var(--color-emerald-50);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .btn-reset-filtros:hover {
+    background: var(--color-primary-dark);
+  }
+</style>
+
+<script>
+  function normalizarTexto(texto: string): string {
+    return texto
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
+  function inicializarMatriz() {
+    const container = document.querySelector<HTMLElement>('[data-componente-matriz]');
+    if (!container) return;
+
+    const inputBusca = container.querySelector<HTMLInputElement>('[data-busca-matriz]');
+    const btnLimparBusca = container.querySelector<HTMLButtonElement>('[data-btn-limpar-busca]');
+    const chips = container.querySelectorAll<HTMLButtonElement>('[data-chip-tag]');
+    const linhas = Array.from(
+      container.querySelectorAll<HTMLTableRowElement>('[data-linha-indicador]'),
+    );
+    const corpoTabela = container.querySelector<HTMLTableSectionElement>('[data-tabela-corpo]');
+    const contador = container.querySelector<HTMLElement>('[data-contador-resultados]');
+    const estadoVazio = container.querySelector<HTMLElement>('[data-estado-vazio]');
+    const btnReset = container.querySelector<HTMLButtonElement>('[data-btn-reset-filtros]');
+    const botoesOrdenar = container.querySelectorAll<HTMLButtonElement>('.btn-ordenar');
+
+    let tagAtiva = 'todas';
+    let termoAtivo = '';
+    let colunaOrdem: 'pilar' | 'sigla' | 'nome' = 'pilar';
+    let direcaoOrdem: 'asc' | 'desc' = 'asc';
+
+    function filtrarLinhas() {
+      let visiveis = 0;
+      const tagNorm = normalizarTexto(tagAtiva);
+      const buscaNorm = normalizarTexto(termoAtivo);
+
+      linhas.forEach((linha) => {
+        const sigla = normalizarTexto(linha.getAttribute('data-sigla') ?? '');
+        const nome = normalizarTexto(linha.getAttribute('data-nome') ?? '');
+        const pilar = normalizarTexto(linha.getAttribute('data-pilar') ?? '');
+        const tags = normalizarTexto(linha.getAttribute('data-tags') ?? '');
+
+        let matchTag = true;
+        if (tagNorm !== 'todas') {
+          matchTag = tags.split(' ').includes(tagNorm);
+        }
+
+        let matchBusca = true;
+        if (buscaNorm) {
+          matchBusca =
+            sigla.includes(buscaNorm) ||
+            nome.includes(buscaNorm) ||
+            pilar.includes(buscaNorm) ||
+            tags.includes(buscaNorm);
+        }
+
+        const exibir = matchTag && matchBusca;
+        linha.hidden = !exibir;
+        if (exibir) visiveis++;
+      });
+
+      if (contador) {
+        contador.textContent = `Exibindo ${visiveis} de ${linhas.length} indicadores`;
+      }
+
+      if (estadoVazio && corpoTabela) {
+        const temResultados = visiveis > 0;
+        estadoVazio.hidden = temResultados;
+        const tabelaWrapper = container.querySelector<HTMLElement>('.tabela-wrapper');
+        if (tabelaWrapper) tabelaWrapper.hidden = !temResultados;
+      }
+    }
+
+    function ordenarLinhas(coluna: 'pilar' | 'sigla' | 'nome', alternar = true) {
+      if (!corpoTabela) return;
+
+      if (alternar) {
+        if (colunaOrdem === coluna) {
+          direcaoOrdem = direcaoOrdem === 'asc' ? 'desc' : 'asc';
+        } else {
+          colunaOrdem = coluna;
+          direcaoOrdem = 'asc';
+        }
+      }
+
+      // Atualizar atributos aria-sort e ícones nos cabeçalhos
+      botoesOrdenar.forEach((btn) => {
+        const col = btn.getAttribute('data-coluna');
+        const icone = btn.querySelector('.icone-ordem');
+        if (col === colunaOrdem) {
+          btn.setAttribute('aria-sort', direcaoOrdem === 'asc' ? 'ascending' : 'descending');
+          if (icone) icone.textContent = direcaoOrdem === 'asc' ? '▲' : '▼';
+        } else {
+          btn.setAttribute('aria-sort', 'none');
+          if (icone) icone.textContent = '↕';
+        }
+      });
+
+      const fator = direcaoOrdem === 'asc' ? 1 : -1;
+
+      linhas.sort((a, b) => {
+        if (colunaOrdem === 'pilar') {
+          const pA = Number(a.getAttribute('data-pilar') ?? '0');
+          const pB = Number(b.getAttribute('data-pilar') ?? '0');
+          if (pA !== pB) return (pA - pB) * fator;
+          const sA = a.getAttribute('data-sigla') ?? '';
+          const sB = b.getAttribute('data-sigla') ?? '';
+          return sA.localeCompare(sB, 'pt-BR') * fator;
+        }
+
+        if (colunaOrdem === 'sigla') {
+          const sA = a.getAttribute('data-sigla') ?? '';
+          const sB = b.getAttribute('data-sigla') ?? '';
+          return sA.localeCompare(sB, 'pt-BR') * fator;
+        }
+
+        if (colunaOrdem === 'nome') {
+          const nA = a.getAttribute('data-nome') ?? '';
+          const nB = b.getAttribute('data-nome') ?? '';
+          return nA.localeCompare(nB, 'pt-BR') * fator;
+        }
+
+        return 0;
+      });
+
+      linhas.forEach((linha) => corpoTabela.appendChild(linha));
+    }
+
+    // Eventos dos chips de tags
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const tag = chip.getAttribute('data-chip-tag') ?? 'todas';
+        tagAtiva = tag;
+
+        chips.forEach((c) => {
+          const ativo = c === chip;
+          c.classList.toggle('chip-ativo', ativo);
+          c.setAttribute('aria-pressed', String(ativo));
+        });
+
+        filtrarLinhas();
+      });
+    });
+
+    // Evento de digitação na busca
+    if (inputBusca) {
+      inputBusca.addEventListener('input', () => {
+        termoAtivo = inputBusca.value.trim();
+        if (btnLimparBusca) btnLimparBusca.hidden = termoAtivo === '';
+        filtrarLinhas();
+      });
+    }
+
+    // Evento de limpar busca
+    if (btnLimparBusca && inputBusca) {
+      btnLimparBusca.addEventListener('click', () => {
+        inputBusca.value = '';
+        termoAtivo = '';
+        btnLimparBusca.hidden = true;
+        inputBusca.focus();
+        filtrarLinhas();
+      });
+    }
+
+    // Evento dos botões de ordenação
+    botoesOrdenar.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const coluna = btn.getAttribute('data-coluna') as 'pilar' | 'sigla' | 'nome' | null;
+        if (coluna) ordenarLinhas(coluna, true);
+      });
+    });
+
+    // Evento de reset de filtros
+    if (btnReset && inputBusca) {
+      btnReset.addEventListener('click', () => {
+        inputBusca.value = '';
+        termoAtivo = '';
+        if (btnLimparBusca) btnLimparBusca.hidden = true;
+
+        tagAtiva = 'todas';
+        chips.forEach((c) => {
+          const isTodas = c.getAttribute('data-chip-tag') === 'todas';
+          c.classList.toggle('chip-ativo', isTodas);
+          c.setAttribute('aria-pressed', String(isTodas));
+        });
+
+        filtrarLinhas();
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarMatriz);
+  } else {
+    inicializarMatriz();
+  }
+</script>

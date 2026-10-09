@@ -1,20 +1,23 @@
 ---
 import type { ValorAnual } from '../data/indicadores';
 import { formatValor } from '../lib/formatters';
-import { construirLinha, mapearPontos } from '../lib/chart';
+import { construirLinha, mapearPontos, mapearBarras } from '../lib/chart';
 
 interface Props {
   valores: ValorAnual[];
   anoSelecionado?: number;
+  sigla?: string;
+  nome?: string;
 }
 
-const { valores, anoSelecionado } = Astro.props;
+const { valores, anoSelecionado, sigla = 'indicador', nome = 'Indicador' } = Astro.props;
 const LARGURA = 560;
 const ALTURA = 240;
 const MARGEM = 36;
 
 const pontos = mapearPontos(valores, LARGURA, ALTURA, MARGEM);
 const linha = construirLinha(pontos);
+const barras = mapearBarras(valores, LARGURA, ALTURA, MARGEM);
 
 function rotuloDoPonto(ano: number): string {
   const item = valores.find((v) => v.ano === ano);
@@ -22,14 +25,62 @@ function rotuloDoPonto(ano: number): string {
 }
 ---
 
-<div class="grafico-wrapper">
+<div class="grafico-wrapper" data-grafico-container data-sigla={sigla} data-nome={nome}>
+  {/* Barra de alternância entre tipos de visualização e exportação */}
+  <div class="controles-grafico" role="group" aria-label="Tipo de visualização do gráfico">
+    <button
+      type="button"
+      class="btn-alternancia ativo"
+      data-btn-modo="linha"
+      aria-pressed="true"
+      title="Exibir gráfico de linha (evolução temporal)"
+    >
+      <svg
+        class="icone-modo"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+      </svg>
+      <span>Linha</span>
+    </button>
+    <button
+      type="button"
+      class="btn-alternancia"
+      data-btn-modo="barras"
+      aria-pressed="false"
+      title="Exibir gráfico de barras (volume por ano)"
+    >
+      <svg
+        class="icone-modo"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="18" y1="20" x2="18" y2="10"></line>
+        <line x1="12" y1="20" x2="12" y2="4"></line>
+        <line x1="6" y1="20" x2="6" y2="14"></line>
+      </svg>
+      <span>Barras</span>
+    </button>
+  </div>
+
   <svg
     class="grafico"
     data-grafico-svg
     viewBox={`0 0 ${LARGURA} ${ALTURA}`}
     role="img"
     aria-label="Série histórica do indicador com rótulos numéricos"
-    style={pontos.length > 0 ? '' : 'display: none;'}
+    style={pontos.length > 0 || barras.length > 0 ? '' : 'display: none;'}
   >
     {/* Grupo de escala mantido vazio para evitar poluição visual */}
     <g class="escala-grupo" data-grafico-escala></g>
@@ -38,35 +89,70 @@ function rotuloDoPonto(ano: number): string {
     <line class="eixo" x1={MARGEM} y1={ALTURA - MARGEM} x2={LARGURA - MARGEM} y2={ALTURA - MARGEM}
     ></line>
 
-    {/* Linha da série de dados */}
-    <path class="linha" data-grafico-linha d={linha} fill="none"></path>
+    {/* Camada 1: Visualização em Linha */}
+    <g class="camada-linha" data-camada-linha>
+      <path class="linha" data-grafico-linha d={linha} fill="none"></path>
+      <g class="pontos-grupo" data-grafico-pontos>
+        {
+          pontos.map((ponto) => {
+            const ativo = ponto.ano === anoSelecionado;
+            return (
+              <g class="grupo-ponto" tabindex="0" data-ponto-ano={ponto.ano}>
+                <text class="rotulo-dado" x={ponto.rotuloX} y={ponto.rotuloY} text-anchor="middle">
+                  {ponto.textoRotulo}
+                </text>
+                <text class="rotulo-ano" x={ponto.x} y={ALTURA - MARGEM + 18} text-anchor="middle">
+                  {ponto.ano}
+                </text>
+                <circle
+                  class:list={['ponto', { 'ponto-ativo': ativo }]}
+                  cx={ponto.x}
+                  cy={ponto.y}
+                  r={ativo ? 8 : 6}
+                >
+                  <title>{rotuloDoPonto(ponto.ano)}</title>
+                </circle>
+              </g>
+            );
+          })
+        }
+      </g>
+    </g>
 
-    {/* Pontos de dados com rótulos visíveis e tooltips */}
-    <g class="pontos-grupo" data-grafico-pontos>
+    {/* Camada 2: Visualização em Barras */}
+    <g class="camada-barras" data-camada-barras style="display: none;">
       {
-        pontos.map((ponto) => {
-          const ativo = ponto.ano === anoSelecionado;
+        barras.map((barra) => {
+          const ativo = barra.ano === anoSelecionado;
           return (
-            <g class="grupo-ponto" tabindex="0" data-ponto-ano={ponto.ano}>
-              {/* Rótulo numérico visível sobre o ponto */}
-              <text class="rotulo-dado" x={ponto.rotuloX} y={ponto.rotuloY} text-anchor="middle">
-                {ponto.textoRotulo}
+            <g class="grupo-barra" tabindex="0" data-barra-ano={barra.ano}>
+              <text class="rotulo-dado" x={barra.centroX} y={barra.rotuloY} text-anchor="middle">
+                {barra.textoRotulo}
               </text>
-
-              {/* Rótulo do ano no eixo horizontal */}
-              <text class="rotulo-ano" x={ponto.x} y={ALTURA - MARGEM + 18} text-anchor="middle">
-                {ponto.ano}
-              </text>
-
-              {/* Círculo do ponto */}
-              <circle
-                class:list={['ponto', { 'ponto-ativo': ativo }]}
-                cx={ponto.x}
-                cy={ponto.y}
-                r={ativo ? 8 : 6}
+              <text
+                class="rotulo-ano"
+                x={barra.centroX}
+                y={ALTURA - MARGEM + 18}
+                text-anchor="middle"
               >
-                <title>{rotuloDoPonto(ponto.ano)}</title>
-              </circle>
+                {barra.ano}
+              </text>
+              <rect
+                class:list={[
+                  'barra',
+                  {
+                    'barra-ativa': ativo && barra.disponivel,
+                    'barra-indisponivel': !barra.disponivel,
+                  },
+                ]}
+                x={barra.x}
+                y={barra.y}
+                width={barra.largura}
+                height={barra.altura}
+                rx={barra.rx}
+              >
+                <title>{rotuloDoPonto(barra.ano)}</title>
+              </rect>
             </g>
           );
         })
@@ -74,7 +160,11 @@ function rotuloDoPonto(ano: number): string {
     </g>
   </svg>
 
-  <p class="sem-grafico" data-grafico-vazio style={pontos.length > 0 ? 'display: none;' : ''}>
+  <p
+    class="sem-grafico"
+    data-grafico-vazio
+    style={pontos.length > 0 || barras.length > 0 ? 'display: none;' : ''}
+  >
     Não há valores suficientes para desenhar o gráfico.
   </p>
 </div>
@@ -83,6 +173,50 @@ function rotuloDoPonto(ano: number): string {
   .grafico-wrapper {
     position: relative;
     width: 100%;
+  }
+
+  /* Barra de alternância */
+  .controles-grafico {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-alternancia {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .btn-alternancia:hover {
+    color: var(--color-ink);
+    border-color: var(--color-primary-light);
+  }
+
+  .btn-alternancia.ativo {
+    color: var(--color-primary-dark);
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+  }
+
+  .icone-modo {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2.2;
   }
 
   .grafico {
@@ -113,7 +247,8 @@ function rotuloDoPonto(ano: number): string {
     stroke-linejoin: round;
   }
 
-  .grupo-ponto {
+  .grupo-ponto,
+  .grupo-barra {
     outline: none;
     cursor: pointer;
   }
@@ -140,6 +275,36 @@ function rotuloDoPonto(ano: number): string {
     fill: var(--color-primary-dark);
   }
 
+  /* Estilização das barras verticais */
+  .barra {
+    fill: var(--color-primary);
+    opacity: 0.82;
+    transition:
+      fill 0.15s ease,
+      opacity 0.15s ease,
+      filter 0.15s ease;
+  }
+
+  .barra.barra-ativa {
+    fill: var(--color-primary-dark);
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(23, 132, 71, 0.45));
+  }
+
+  .barra.barra-indisponivel {
+    fill: none;
+    stroke: var(--color-muted);
+    stroke-dasharray: 3, 3;
+    stroke-width: 1.5;
+    opacity: 0.65;
+  }
+
+  .grupo-barra:hover .barra:not(.barra-indisponivel),
+  .grupo-barra:focus-visible .barra:not(.barra-indisponivel) {
+    opacity: 1;
+    fill: var(--color-primary-dark);
+  }
+
   .rotulo-dado {
     font-size: 0.82rem;
     font-weight: 700;
@@ -152,3 +317,57 @@ function rotuloDoPonto(ano: number): string {
     font-style: italic;
   }
 </style>
+
+<script>
+  function inicializarAlternanciaGrafico() {
+    const containers = document.querySelectorAll<HTMLElement>('[data-grafico-container]');
+
+    containers.forEach((container) => {
+      const btnLinha = container.querySelector<HTMLButtonElement>('[data-btn-modo="linha"]');
+      const btnBarras = container.querySelector<HTMLButtonElement>('[data-btn-modo="barras"]');
+      const camadaLinha = container.querySelector<SVGElement>('[data-camada-linha]');
+      const camadaBarras = container.querySelector<SVGElement>('[data-camada-barras]');
+
+      if (!btnLinha || !btnBarras || !camadaLinha || !camadaBarras) return;
+
+      function definirModo(modo: 'linha' | 'barras', salvar = true) {
+        const isLinha = modo === 'linha';
+        btnLinha.classList.toggle('ativo', isLinha);
+        btnLinha.setAttribute('aria-pressed', isLinha ? 'true' : 'false');
+
+        btnBarras.classList.toggle('ativo', !isLinha);
+        btnBarras.setAttribute('aria-pressed', !isLinha ? 'true' : 'false');
+
+        camadaLinha.style.display = isLinha ? '' : 'none';
+        camadaBarras.style.display = !isLinha ? '' : 'none';
+
+        if (salvar) {
+          try {
+            sessionStorage.setItem('ifes_grafico_modo', modo);
+          } catch {
+            // Ignora se storage estiver bloqueado
+          }
+        }
+      }
+
+      btnLinha.addEventListener('click', () => definirModo('linha'));
+      btnBarras.addEventListener('click', () => definirModo('barras'));
+
+      // Restaura modo da sessão se existir
+      try {
+        const modoSalvo = sessionStorage.getItem('ifes_grafico_modo');
+        if (modoSalvo === 'barras') {
+          definirModo('barras', false);
+        }
+      } catch {
+        // Ignora erro
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarAlternanciaGrafico);
+  } else {
+    inicializarAlternanciaGrafico();
+  }
+</script>

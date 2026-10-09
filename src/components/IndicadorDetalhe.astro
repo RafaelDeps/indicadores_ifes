@@ -1,5 +1,6 @@
 ---
 import ComponentCount from './ComponentCount.astro';
+import FormulaEquacao from './FormulaEquacao.astro';
 import HistoricalSeries from './HistoricalSeries.astro';
 import SeriesChart from './SeriesChart.astro';
 import type { Indicador, ValorAnual } from '../data/indicadores';
@@ -17,6 +18,17 @@ const { indicador, pilarNumero, anoEfetivo, serie, valorPrincipal } = Astro.prop
 const temComponentes = indicador.componentes && indicador.componentes.length > 0;
 ---
 
+<!-- Cabeçalho Formal Exclusivo para Impressão A4 -->
+<div class="cabecalho-impressao" aria-hidden="true">
+  <div class="marca-impressao">
+    <h1>IFES • Campus Serra</h1>
+    <p>Observatório Institucional de Indicadores CONIF</p>
+  </div>
+  <div class="meta-impressao">
+    <span>Data de Emissão: {new Intl.DateTimeFormat('pt-BR').format(new Date())}</span>
+  </div>
+</div>
+
 <!-- Banner Superior com Resultado Destacado -->
 <div class="detalhe-banner">
   <div class="banner-conteudo">
@@ -28,6 +40,33 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
       <span aria-current="page">{indicador.sigla}</span>
     </nav>
     <h1>{indicador.nome} ({indicador.sigla})</h1>
+    <div class="banner-acoes">
+      <button
+        type="button"
+        class="btn-imprimir-ficha"
+        data-btn-imprimir
+        onclick="window.print()"
+        aria-label="Imprimir ficha completa do indicador"
+        title="Imprimir ou gerar PDF formal da ficha deste indicador"
+      >
+        <svg
+          class="icone-imprimir"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+          ></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span>Imprimir Ficha</span>
+      </button>
+    </div>
   </div>
   <div class="banner-destaque-caixa" data-detalhe-sigla={indicador.sigla}>
     <span class="destaque-rotulo" data-detalhe-ano-rotulo>
@@ -69,9 +108,7 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
 
     <section class="bloco-formula" aria-label="Fórmula de cálculo">
       <h2>Fórmula de cálculo</h2>
-      <div class="formula-mono">
-        <code>{indicador.formula}</code>
-      </div>
+      <FormulaEquacao formula={indicador.formula} sigla={indicador.sigla} />
     </section>
 
     <section class="bloco-variaveis" aria-label="Variáveis da fórmula">
@@ -94,7 +131,7 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
             {
               indicador.variaveisFormula && indicador.variaveisFormula.length > 0 ? (
                 indicador.variaveisFormula.map((v) => (
-                  <tr>
+                  <tr data-linha-variavel={v.simbolo}>
                     <td class="col-simbolo">
                       <code>{v.simbolo}</code>
                     </td>
@@ -104,7 +141,7 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
                 ))
               ) : indicador.variaveis && indicador.variaveis.length > 0 ? (
                 indicador.variaveis.map((v) => (
-                  <tr>
+                  <tr data-linha-variavel={v.sigla}>
                     <td class="col-simbolo">
                       <code>{v.sigla}</code>
                     </td>
@@ -132,13 +169,21 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
       <h2>Série histórica e evolução recente</h2>
       <h3 class="sr-only">Valor por ano</h3>
       <div class="grafico-wrapper">
-        <SeriesChart valores={serie} anoSelecionado={anoEfetivo ?? undefined} />
+        <SeriesChart
+          valores={serie}
+          anoSelecionado={anoEfetivo ?? undefined}
+          sigla={indicador.sigla}
+          nome={indicador.nome}
+        />
       </div>
       <div class="historico-wrapper">
         <HistoricalSeries
           valores={serie}
           anoSelecionado={anoEfetivo ?? undefined}
           mostrarPercentual={indicador.tipoValor === 'percentual'}
+          sigla={indicador.sigla}
+          nome={indicador.nome}
+          unidade={indicador.unidade ?? ''}
         />
       </div>
     </section>
@@ -443,4 +488,160 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
     margin: 0.15rem 0 0;
     font-weight: 500;
   }
+
+  /* Destaque ativo sincronizado entre fórmula e tabela de variáveis */
+  .tabela-variaveis tr.destaque-ativo {
+    background: var(--color-emerald-50);
+    transition: background 0.15s ease;
+  }
+
+  .tabela-variaveis tr.destaque-ativo td {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+  }
+
+  /* Cabeçalho formal exclusivo para impressão A4 */
+  .cabecalho-impressao {
+    display: none;
+  }
+
+  .banner-acoes {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .btn-imprimir-ficha {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .btn-imprimir-ficha:hover {
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .icone-imprimir {
+    width: 14px;
+    height: 14px;
+  }
+
+  @media print {
+    /* Exibir cabeçalho formal na folha impressa */
+    .cabecalho-impressao {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--color-primary);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .marca-impressao h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--color-primary-dark);
+    }
+
+    .marca-impressao p {
+      margin: 0.15rem 0 0;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    .meta-impressao {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    /* Ocultar navegação, cabeçalhos do site, seletores e botões interativos */
+    :global(header),
+    :global(footer),
+    :global(.menu-principal),
+    :global(.gaveta-mobile),
+    :global(.seletor-tema-wrapper),
+    .breadcrumb,
+    .banner-acoes,
+    .btn-imprimir-ficha,
+    :global(.controles-grafico),
+    :global(.historico-cabecalho-acoes) {
+      display: none !important;
+    }
+
+    /* Expandir layout e evitar quebras de página inadequadas */
+    .detalhe-grade-2col {
+      display: block;
+    }
+
+    .bloco-texto,
+    .bloco-formula,
+    .bloco-variaveis,
+    .card-aside {
+      box-shadow: none !important;
+      border: 1px solid var(--color-border) !important;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      margin-bottom: 1.25rem;
+    }
+  }
 </style>
+
+<script>
+  function configurarCorrelacaoFormula() {
+    const tokens = document.querySelectorAll<HTMLElement>('[data-variavel-simbolo]');
+    const linhas = document.querySelectorAll<HTMLTableRowElement>('[data-linha-variavel]');
+
+    if (!tokens.length || !linhas.length) return;
+
+    function destacar(simbolo: string | null, ativar: boolean) {
+      if (!simbolo) return;
+      tokens.forEach((el) => {
+        if (el.getAttribute('data-variavel-simbolo') === simbolo) {
+          el.classList.toggle('destaque-ativo', ativar);
+        }
+      });
+      linhas.forEach((row) => {
+        if (row.getAttribute('data-linha-variavel') === simbolo) {
+          row.classList.toggle('destaque-ativo', ativar);
+        }
+      });
+    }
+
+    tokens.forEach((el) => {
+      const simbolo = el.getAttribute('data-variavel-simbolo');
+      el.addEventListener('mouseenter', () => destacar(simbolo, true));
+      el.addEventListener('mouseleave', () => destacar(simbolo, false));
+      el.addEventListener('focus', () => destacar(simbolo, true));
+      el.addEventListener('blur', () => destacar(simbolo, false));
+    });
+
+    linhas.forEach((row) => {
+      const simbolo = row.getAttribute('data-linha-variavel');
+      row.addEventListener('mouseenter', () => destacar(simbolo, true));
+      row.addEventListener('mouseleave', () => destacar(simbolo, false));
+      row.addEventListener('focusin', () => destacar(simbolo, true));
+      row.addEventListener('focusout', () => destacar(simbolo, false));
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', configurarCorrelacaoFormula);
+  } else {
+    configurarCorrelacaoFormula();
+  }
+</script>

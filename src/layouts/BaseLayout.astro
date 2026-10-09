@@ -29,6 +29,8 @@ const isPilar1 = rotaDentroDe(pathname, rawBaseUrl, 'pilar-1');
 const isPilar2 = rotaDentroDe(pathname, rawBaseUrl, 'pilar-2');
 const isPilar3 = rotaDentroDe(pathname, rawBaseUrl, 'pilar-3');
 const isDados = rotaDentroDe(pathname, rawBaseUrl, 'dados');
+const isSobreConif = rotaDentroDe(pathname, rawBaseUrl, 'sobre-conif');
+const isMatriz = rotaDentroDe(pathname, rawBaseUrl, 'matriz');
 
 const campiOpcoes = obterCampiParaSelect();
 const anosOpcoes = obterAnosParaSelect();
@@ -330,6 +332,20 @@ const fontFaceCss = pesos
               Pilar 3
             </a>
             <a
+              href="/matriz/"
+              class:list={['drawer-link', { ativa: isMatriz }]}
+              aria-current={isMatriz ? 'page' : undefined}
+            >
+              Matriz
+            </a>
+            <a
+              href="/sobre-conif/"
+              class:list={['drawer-link', { ativa: isSobreConif }]}
+              aria-current={isSobreConif ? 'page' : undefined}
+            >
+              Sobre o Modelo
+            </a>
+            <a
               href="/dados/"
               class:list={['drawer-link', { ativa: isDados }]}
               aria-current={isDados ? 'page' : undefined}
@@ -561,9 +577,6 @@ const fontFaceCss = pesos
     }
     .cabecalho-filtros {
       display: flex;
-    }
-    .btn-menu-drawer {
-      display: none;
     }
   }
 

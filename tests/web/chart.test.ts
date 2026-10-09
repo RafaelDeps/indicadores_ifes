@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { construirLinha, mapearPontos, calcularEscala } from '../../src/lib/chart';
+import { construirLinha, mapearPontos, calcularEscala, mapearBarras } from '../../src/lib/chart';
 
 const LARGURA = 560;
 const ALTURA = 240;
@@ -106,5 +106,75 @@ describe('calcularEscala', () => {
   it('retorna null se não houver valores disponíveis', () => {
     const escala = calcularEscala([{ ano: 2024, valor: null }], ALTURA);
     expect(escala).toBeNull();
+  });
+});
+
+describe('mapearBarras', () => {
+  it('calcula posições e dimensões geométricas proporcionais para anos com dados', () => {
+    const barras = mapearBarras(
+      [
+        { ano: 2022, valor: 10 },
+        { ano: 2023, valor: 25 },
+        { ano: 2024, valor: 50 },
+      ],
+      LARGURA,
+      ALTURA,
+    );
+
+    expect(barras).toHaveLength(3);
+    expect(barras.map((b) => b.ano)).toEqual([2022, 2023, 2024]);
+
+    // O ano 2024 (50) deve ter altura maior que 2022 (10)
+    expect(barras[2].altura).toBeGreaterThan(barras[0].altura);
+    // As barras devem avançar da esquerda para a direita
+    expect(barras[0].x).toBeLessThan(barras[1].x);
+    expect(barras[1].x).toBeLessThan(barras[2].x);
+
+    // Centro do rótulo e raio dos cantos
+    expect(barras[0].centroX).toBe(barras[0].x + barras[0].largura / 2);
+    expect(barras[0].rx).toBeGreaterThan(0);
+    expect(barras[0].disponivel).toBe(true);
+    expect(barras[0].textoRotulo).toBe('10');
+    expect(barras[2].textoRotulo).toBe('50');
+  });
+
+  it('trata anos com dado indisponível com disponivel=false e texto Indisp.', () => {
+    const barras = mapearBarras(
+      [
+        { ano: 2022, valor: 20 },
+        { ano: 2023, valor: null },
+        { ano: 2024, valor: 40 },
+      ],
+      LARGURA,
+      ALTURA,
+    );
+
+    expect(barras).toHaveLength(3);
+    expect(barras[1].ano).toBe(2023);
+    expect(barras[1].disponivel).toBe(false);
+    expect(barras[1].valor).toBeNull();
+    expect(barras[1].textoRotulo).toBe('Indisp.');
+    expect(barras[1].altura).toBeLessThanOrEqual(6);
+  });
+
+  it('retorna array vazio quando a lista de valores está vazia', () => {
+    const barras = mapearBarras([], LARGURA, ALTURA);
+    expect(barras).toEqual([]);
+  });
+
+  it('posiciona adequadamente quando todos os valores são iguais', () => {
+    const barras = mapearBarras(
+      [
+        { ano: 2023, valor: 30 },
+        { ano: 2024, valor: 30 },
+      ],
+      LARGURA,
+      ALTURA,
+    );
+
+    expect(barras).toHaveLength(2);
+    expect(barras[0].altura).toBe(barras[1].altura);
+    expect(barras[0].altura).toBeGreaterThan(0);
+    expect(barras[0].textoRotulo).toBe('30');
   });
 });

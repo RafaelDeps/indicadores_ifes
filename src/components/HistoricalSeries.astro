@@ -8,41 +8,86 @@ interface Props {
   anoSelecionado?: number;
   /** Sufixa `%` aos valores de indicadores calculados por razão (ex.: B/A). */
   mostrarPercentual?: boolean;
+  sigla?: string;
+  nome?: string;
+  unidade?: string;
 }
 
-const { valores, anoSelecionado, mostrarPercentual = false } = Astro.props;
+const {
+  valores,
+  anoSelecionado,
+  mostrarPercentual = false,
+  sigla = 'indicador',
+  nome = 'Indicador',
+  unidade = '',
+} = Astro.props;
 const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO);
 ---
 
-<table class="serie" data-tabela-historico>
-  <thead>
-    <tr>
-      <th scope="col">Ano</th>
-      <th scope="col">Valor</th>
-    </tr>
-  </thead>
-  <tbody data-historico-corpo>
-    {
-      valores.map((valor) => {
-        const ativo = valor.ano === anoSelecionado;
-        const sufixoPercentual = mostrarPercentual && valor.valor !== null ? '%' : '';
-        return (
-          <tr data-historico-ano={valor.ano} class:list={[{ 'linha-ativa': ativo }]}>
-            <th scope="row">{valor.ano}</th>
-            <td>
-              {formatValor(valor.valor)}
-              {sufixoPercentual}
-              {valor.motivoIndisponivel && (
-                <span class="motivo-ano"> — {valor.motivoIndisponivel}</span>
-              )}
-            </td>
-          </tr>
-        );
-      })
-    }
-  </tbody>
-</table>
-{temAnoEmAndamento && <p class="aviso-serie">{AVISO_ANO_EM_ANDAMENTO}</p>}
+<div
+  class="historico-container"
+  data-historico-container
+  data-serie-json={JSON.stringify(valores)}
+  data-sigla={sigla}
+  data-nome={nome}
+  data-unidade={unidade}
+>
+  <div class="historico-cabecalho-acoes">
+    <button
+      type="button"
+      class="btn-exportar-csv"
+      data-btn-exportar-csv
+      aria-label="Exportar série histórica em planilha CSV"
+      title="Baixar planilha CSV com os dados da série histórica"
+    >
+      <svg
+        class="icone-csv"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      <span>Exportar CSV</span>
+    </button>
+  </div>
+
+  <table class="serie" data-tabela-historico>
+    <thead>
+      <tr>
+        <th scope="col">Ano</th>
+        <th scope="col">Valor</th>
+      </tr>
+    </thead>
+    <tbody data-historico-corpo>
+      {
+        valores.map((valor) => {
+          const ativo = valor.ano === anoSelecionado;
+          const sufixoPercentual = mostrarPercentual && valor.valor !== null ? '%' : '';
+          return (
+            <tr data-historico-ano={valor.ano} class:list={[{ 'linha-ativa': ativo }]}>
+              <th scope="row">{valor.ano}</th>
+              <td>
+                {formatValor(valor.valor)}
+                {sufixoPercentual}
+                {valor.motivoIndisponivel && (
+                  <span class="motivo-ano"> — {valor.motivoIndisponivel}</span>
+                )}
+              </td>
+            </tr>
+          );
+        })
+      }
+    </tbody>
+  </table>
+  {temAnoEmAndamento && <p class="aviso-serie">{AVISO_ANO_EM_ANDAMENTO}</p>}
+</div>
 
 <style>
   .serie {
@@ -94,4 +139,81 @@ const temAnoEmAndamento = valores.some((valor) => valor.ano === ANO_EM_ANDAMENTO
     font-size: 0.8rem;
     color: var(--color-notice-text);
   }
+
+  .historico-cabecalho-acoes {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-exportar-csv {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.55rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .btn-exportar-csv:hover {
+    color: var(--color-primary-dark);
+    border-color: var(--color-primary);
+    background: var(--color-emerald-50);
+  }
+
+  .icone-csv {
+    width: 13px;
+    height: 13px;
+  }
 </style>
+
+<script>
+  import { gerarCsvSerieHistorica, dispararDownloadArquivo } from '../lib/exportar-csv';
+
+  function inicializarExportacaoCsv() {
+    const containers = document.querySelectorAll<HTMLElement>('[data-historico-container]');
+
+    containers.forEach((container) => {
+      const btnCsv = container.querySelector<HTMLButtonElement>('[data-btn-exportar-csv]');
+      if (!btnCsv) return;
+
+      btnCsv.addEventListener('click', () => {
+        try {
+          const rawSerie = container.getAttribute('data-serie-json');
+          const sigla = container.getAttribute('data-sigla') || 'indicador';
+          const nome = container.getAttribute('data-nome') || 'Indicador';
+          const unidade = container.getAttribute('data-unidade') || '';
+
+          const serie = rawSerie ? JSON.parse(rawSerie) : [];
+          const csvConteudo = gerarCsvSerieHistorica({
+            campus: 'Campus Serra',
+            indicadorNome: nome,
+            sigla,
+            unidade,
+            serie,
+          });
+
+          const nomeArquivo = `ifes_serra_${sigla.toLowerCase()}_serie_historica.csv`;
+          dispararDownloadArquivo(csvConteudo, nomeArquivo);
+        } catch (err) {
+          console.error('Erro ao exportar CSV:', err);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarExportacaoCsv);
+  } else {
+    inicializarExportacaoCsv();
+  }
+</script>

@@ -10,6 +10,7 @@ const PAGINAS = [
   'src/pages/pilar-3/index.astro',
   'src/pages/pilar-3/[sigla].astro',
   'src/pages/dados/index.astro',
+  'src/pages/sobre-conif/index.astro',
 ];
 
 describe('contrato de rotas dos 3 pilares CONIF', () => {

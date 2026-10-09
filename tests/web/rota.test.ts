@@ -92,4 +92,10 @@ describe('rotaDentroDe', () => {
     expect(rotaDentroDe('/dados/', '/', 'dados')).toBe(true);
     expect(rotaDentroDe('/', '/', '')).toBe(true);
   });
+
+  it('reconhece a rota sobre-conif e não a confunde com pilares', () => {
+    expect(rotaDentroDe('/indicadores_ifes/sobre-conif/', BASE, 'sobre-conif')).toBe(true);
+    expect(rotaDentroDe('/indicadores_ifes/sobre-conif', BASE, 'sobre-conif')).toBe(true);
+    expect(rotaDentroDe('/indicadores_ifes/sobre-conif/', BASE, 'pilar-1')).toBe(false);
+  });
 });

@@ -1,0 +1,453 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pilares = [
+  {
+    numero: 1,
+    titulo: 'Engajamento Acadêmico e Inclusão',
+    slugPilar: 'pilar-1',
+    icone: 'academic',
+    descricao:
+      'Mede o envolvimento direto da comunidade acadêmica em atividades de pesquisa e inovação. Acompanha a mobilização de docentes, técnicos e discentes, com atenção prioritária a bolsas e à inclusão de estudantes cotistas.',
+    foco: 'Pessoas, bolsas de pesquisa e ações afirmativas',
+    indicadores: [
+      { sigla: 'NTPP', nome: 'Número Total de Projetos de Pesquisa', rota: '/pilar-1/ntpp/' },
+      {
+        sigla: 'QSPP',
+        nome: 'Quantitativo de Servidores em Projetos de Pesquisa',
+        rota: '/pilar-1/qspp/',
+      },
+      {
+        sigla: 'PIES',
+        nome: 'Percentual de Inclusão de Estudantes em Projetos de Pesquisa',
+        rota: '/pilar-1/pies/',
+      },
+      {
+        sigla: 'PICOT',
+        nome: 'Percentual de Estudantes Cotistas em Projetos de Pesquisa',
+        rota: '/pilar-1/picot/',
+      },
+    ],
+  },
+  {
+    numero: 2,
+    titulo: 'Fomento e Conexão com o Ecossistema',
+    slugPilar: 'pilar-2',
+    icone: 'network',
+    descricao:
+      'Avalia a capacidade institucional de captar recursos financeiros externos e estabelecer parcerias estratégicas com empresas, governos e agências de fomento para a execução de projetos de Pesquisa, Desenvolvimento e Inovação (PDeI).',
+    foco: 'Captação financeira externa, acordos de cooperação e Polo Embrapii',
+    indicadores: [
+      {
+        sigla: 'PINV',
+        nome: 'Percentual de Recursos de Fontes Externas em P&I',
+        rota: '/pilar-2/pinv/',
+      },
+      {
+        sigla: 'PIPDI',
+        nome: 'Quantidade de Acordos de Parceria em PDeI',
+        rota: '/pilar-2/pipdi/',
+      },
+    ],
+  },
+  {
+    numero: 3,
+    titulo: 'Produtividade e Propriedade Intelectual',
+    slugPilar: 'pilar-3',
+    icone: 'patent',
+    descricao:
+      'Mapeia os resultados concretos gerados pelas atividades de pesquisa, incluindo a produção bibliográfica e técnica qualificada, o depósito e concessão de patentes, registros de software e contratos de transferência de tecnologia.',
+    foco: 'Produção científica, proteção de ativos intangíveis e transferência ao mercado',
+    indicadores: [
+      {
+        sigla: 'PIPRO',
+        nome: 'Produção Intelectual de Pesquisa e Inovação por Servidor',
+        rota: '/pilar-3/pipro/',
+      },
+      {
+        sigla: 'PIPROT',
+        nome: 'Ativos de Propriedade Intelectual Protegidos',
+        rota: '/pilar-3/piprot/',
+      },
+      {
+        sigla: 'PIPROTR',
+        nome: 'Ativos de Propriedade Intelectual Transferidos',
+        rota: '/pilar-3/piprotr/',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Sobre o Modelo CONIF — Indicadores IFES (Campus Serra)"
+  description="Entenda o que é o modelo CONIF, a estrutura dos três pilares de Pesquisa e Inovação e a relevância estratégica para o IFES Campus Serra."
+>
+  <nav class="trilha" aria-label="Trilha de navegação">
+    <a href="/">Início</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Sobre o Modelo CONIF</span>
+  </nav>
+
+  <header class="pagina-cabecalho">
+    <div class="distintivo">Metodologia Institucional</div>
+    <h1>O Modelo CONIF de Pesquisa e Inovação</h1>
+    <p class="subtitulo">
+      Compreenda as diretrizes do Conselho Nacional das Instituições da Rede Federal (CONIF) para
+      avaliação da Pesquisa, Pós-Graduação e Inovação, e como esses dados orientam o desenvolvimento
+      do IFES Campus Serra.
+    </p>
+  </header>
+
+  <!-- Seção 1: Contexto e Origem do Modelo -->
+  <section class="secao-bloco" aria-labelledby="titulo-origem">
+    <h2 id="titulo-origem" class="titulo-secao">O que é o modelo CONIF?</h2>
+    <div class="card-texto">
+      <p>
+        O <strong
+          >Conselho Nacional das Instituições da Rede Federal de Educação Profissional, Científica e
+          Tecnológica (CONIF)</strong
+        >
+        estruturou um conjunto integrado de indicadores com o objetivo de padronizar e dar visibilidade
+        às atividades de <strong>Pesquisa, Pós-Graduação e Inovação</strong> desenvolvidas em todos os
+        Institutos Federais do Brasil.
+      </p>
+      <p>
+        Historicamente, cada instituição mensurava suas atividades com critérios próprios. O modelo
+        CONIF criou uma linguagem métrica comum, estabelecendo fórmulas matemáticas objetivas,
+        critérios uniformes de apuração temporal e auditoria sobre os sistemas acadêmicos oficiais.
+        Isso garante comparações consistentes e séries históricas confiáveis para subsidiar
+        políticas públicas de educação profissional e tecnológica.
+      </p>
+    </div>
+  </section>
+
+  <!-- Seção 2: Os 3 Pilares do Modelo -->
+  <section class="secao-bloco" aria-labelledby="titulo-pilares">
+    <div class="secao-topo">
+      <h2 id="titulo-pilares" class="titulo-secao">Os Três Pilares Estruturantes</h2>
+      <p class="secao-subtitulo">
+        O modelo organiza a maturidade científica e tecnológica em três dimensões complementares:
+      </p>
+    </div>
+
+    <div class="grade-pilares">
+      {
+        pilares.map((p) => (
+          <article class="card-pilar-explicativo">
+            <div class="pilar-cabecalho">
+              <span class="pilar-etiqueta">Pilar {p.numero}</span>
+              <h3 class="pilar-titulo">{p.titulo}</h3>
+              <p class="pilar-foco">
+                <strong>Foco:</strong> {p.foco}
+              </p>
+            </div>
+
+            <p class="pilar-descricao">{p.descricao}</p>
+
+            <div class="pilar-indicadores-bloco">
+              <h4 class="subtitulo-indicadores">Indicadores monitorados:</h4>
+              <ul class="lista-atalhos">
+                {p.indicadores.map((ind) => (
+                  <li>
+                    <a href={ind.rota} class="link-atalho" title={`Ver indicador ${ind.sigla}`}>
+                      <span class="sigla-badge">{ind.sigla}</span>
+                      <span class="nome-indicador">{ind.nome}</span>
+                      <span class="seta-icone" aria-hidden="true">
+                        →
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="pilar-rodape">
+              <a href={`/${p.slugPilar}/`} class="btn-ver-pilar">
+                Explorar todos os indicadores do Pilar {p.numero}
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .trilha {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-muted);
+  }
+
+  .trilha a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .trilha a:hover {
+    text-decoration: underline;
+  }
+
+  .pagina-cabecalho {
+    margin-bottom: 2.5rem;
+  }
+
+  .distintivo {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    margin-bottom: 0.6rem;
+    border: 1px solid rgba(23, 132, 71, 0.15);
+  }
+
+  .distintivo-verde {
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary-light);
+  }
+
+  h1 {
+    font-size: 1.95rem;
+    font-weight: 800;
+    color: var(--color-ink);
+    margin: 0 0 0.6rem 0;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .subtitulo {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 52rem;
+  }
+
+  .secao-bloco {
+    margin-bottom: 3rem;
+  }
+
+  .secao-topo {
+    margin-bottom: 1.25rem;
+  }
+
+  .titulo-secao {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0 0 0.4rem 0;
+  }
+
+  .secao-subtitulo {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .card-texto {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: var(--color-ink);
+    line-height: 1.7;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card-texto p {
+    margin: 0;
+  }
+
+  /* Grade dos 3 Pilares */
+  .grade-pilares {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .grade-pilares {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .card-pilar-explicativo {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .card-pilar-explicativo:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .pilar-cabecalho {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.85rem;
+  }
+
+  .pilar-etiqueta {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+  }
+
+  .pilar-titulo {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0 0 0.4rem 0;
+    line-height: 1.35;
+  }
+
+  .pilar-foco {
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .pilar-descricao {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .pilar-indicadores-bloco {
+    background: var(--color-surface-bg);
+    border-radius: 8px;
+    padding: 0.85rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .subtitulo-indicadores {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin: 0 0 0.6rem 0;
+  }
+
+  .lista-atalhos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .link-atalho {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-ink);
+    font-size: 0.85rem;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .link-atalho:hover {
+    border-color: var(--color-primary);
+    background: var(--color-emerald-50);
+    color: var(--color-primary-dark);
+  }
+
+  .link-atalho:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+
+  .sigla-badge {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+  }
+
+  .nome-indicador {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .seta-icone {
+    color: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .link-atalho:hover .seta-icone {
+    color: var(--color-primary);
+  }
+
+  .btn-ver-pilar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    background: var(--color-emerald-50);
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid rgba(23, 132, 71, 0.2);
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .btn-ver-pilar:hover {
+    background: var(--color-primary);
+    color: #ffffff;
+  }
+
+  .btn-ver-pilar:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+</style>

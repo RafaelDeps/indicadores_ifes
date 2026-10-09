@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MatrizIndicadores from '../../components/MatrizIndicadores.astro';
+---
+
+<BaseLayout
+  title="Matriz Consolidada de Indicadores — IFES Campus Serra"
+  description="Visão sinóptica e comparativa de todos os 9 indicadores do modelo CONIF no IFES Campus Serra com filtros temáticos e busca em tempo real."
+>
+  <main class="matriz-pagina" id="conteudo-principal">
+    <nav class="breadcrumb" aria-label="Trilha de navegação">
+      <a href="/">Início</a>
+      <span aria-hidden="true" class="separador">/</span>
+      <span aria-current="page">Matriz de Indicadores</span>
+    </nav>
+
+    <header class="cabecalho-matriz">
+      <div class="cabecalho-info">
+        <span class="badge-campus">IFES Campus Serra</span>
+        <h1 class="titulo-pagina">Matriz Geral Consolidada de Indicadores</h1>
+        <p class="descricao-pagina">
+          Visão sinóptica e panorâmica de todos os 9 indicadores institucionais estabelecidos pelo
+          modelo de governança CONIF. Utilize os filtros temáticos ou a busca em tempo real para
+          analisar o desempenho histórico e metodológico do campus.
+        </p>
+      </div>
+    </header>
+
+    <section aria-label="Tabela consolidada de indicadores">
+      <MatrizIndicadores />
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .matriz-pagina {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .separador {
+    color: var(--color-border);
+  }
+
+  .cabecalho-matriz {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  .cabecalho-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .badge-campus {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    background: var(--color-emerald-50);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid rgba(23, 132, 71, 0.2);
+  }
+
+  .titulo-pagina {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-ink);
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .descricao-pagina {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.55;
+    max-width: 52rem;
+  }
+</style>

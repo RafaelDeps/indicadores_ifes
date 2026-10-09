@@ -117,3 +117,93 @@ export function construirLinha(pontos: PontoGrafico[]): string {
     )
     .join(' ');
 }
+
+export interface BarraGrafico {
+  ano: number;
+  valor: number | null;
+  x: number;
+  y: number;
+  largura: number;
+  altura: number;
+  rx: number;
+  centroX: number;
+  rotuloY: number;
+  textoRotulo: string;
+  disponivel: boolean;
+}
+
+export function mapearBarras(
+  valores: ValorParaGrafico[],
+  largura: number,
+  altura: number,
+  margem = 36,
+): BarraGrafico[] {
+  if (!valores || valores.length === 0) {
+    return [];
+  }
+
+  const ordenados = [...valores].sort((a, b) => a.ano - b.ano);
+  const totalSlots = ordenados.length;
+  const larguraUtil = largura - 2 * margem;
+  const slotLargura = larguraUtil / totalSlots;
+  const larguraBarra = Math.max(14, Math.min(48, slotLargura * 0.58));
+  const rx = 4;
+
+  const yBase = altura - margem;
+  const alturaUtil = altura - 2 * margem;
+
+  const disponiveis = ordenados.filter((v) => v.valor !== null).map((v) => v.valor as number);
+  const minimo = disponiveis.length > 0 ? Math.min(...disponiveis) : 0;
+  const maximo = disponiveis.length > 0 ? Math.max(...disponiveis) : 0;
+
+  return ordenados.map((item, indice) => {
+    const centroSlot = margem + indice * slotLargura + slotLargura / 2;
+    const x = centroSlot - larguraBarra / 2;
+    const centroX = centroSlot;
+
+    if (item.valor === null) {
+      const altIndisp = 4;
+      const y = yBase - altIndisp;
+      const rotuloY = y - 8;
+      return {
+        ano: item.ano,
+        valor: null,
+        x,
+        y,
+        largura: larguraBarra,
+        altura: altIndisp,
+        rx,
+        centroX,
+        rotuloY,
+        textoRotulo: 'Indisp.',
+        disponivel: false,
+      };
+    }
+
+    const val = item.valor;
+    let altBarra: number;
+    if (maximo === minimo) {
+      altBarra = alturaUtil * 0.5;
+    } else {
+      const proporcao = (val - minimo) / (maximo - minimo);
+      altBarra = 8 + proporcao * (alturaUtil - 16);
+    }
+
+    const y = yBase - altBarra;
+    const rotuloY = y - 8;
+
+    return {
+      ano: item.ano,
+      valor: val,
+      x,
+      y,
+      largura: larguraBarra,
+      altura: altBarra,
+      rx,
+      centroX,
+      rotuloY,
+      textoRotulo: FORMATADOR.format(val),
+      disponivel: true,
+    };
+  });
+}
