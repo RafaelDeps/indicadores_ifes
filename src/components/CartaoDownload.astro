@@ -8,9 +8,9 @@
  *    um `<a>` sem `href` não é focável e não é clicável, então um artefato
  *    bloqueado pelo portão não pode virar link que dá 404. O caminho do arquivo
  *    continua no modelo — o que muda é o elemento, não a informação.
- * 2. **A marcação de dado pessoal é ícone + texto.** O ícone é `aria-hidden` e
- *    o texto carrega o significado (A-2, FR-015): quem não distingue o âmbar do
- *    fundo claro, ou quem usa leitor de tela, recebe a mesma informação.
+ * 2. **Marcações de natureza foram removidas (2026-10-14).** Os artefatos são
+ *    dados públicos divulgados pela própria instituição; o badge "Contém dados
+ *    pessoais" sugeria uma restrição que não existe e foi retirado da página.
  */
 
 import type { ArtefatoDownload } from '../lib/downloads';
@@ -29,8 +29,6 @@ interface Props {
 }
 
 const { artefato, base = '/' } = Astro.props;
-
-const ehDadoPessoal = artefato.natureza === 'dado-pessoal';
 const urlDownload = `${base}${artefato.caminhoPublico}`.replace(/\/{2,}/g, '/');
 const metadados = [
   { rotulo: 'Formato', valor: formatarFormato(artefato.arquivo) },
@@ -44,28 +42,6 @@ const metadados = [
 <article class="cartao-download" id={artefato.id}>
   <header class="cartao-topo">
     <h3 class="cartao-titulo">{artefato.rotulo}</h3>
-    {
-      ehDadoPessoal && (
-        <p class="marca-dado-pessoal">
-          <svg
-            class="marca-icone"
-            viewBox="0 0 24 24"
-            width="16"
-            height="16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
-          </svg>
-          <span>Contém dados pessoais</span>
-        </p>
-      )
-    }
   </header>
 
   <p class="cartao-descricao">{artefato.descricao}</p>
@@ -123,29 +99,6 @@ const metadados = [
     font-weight: 600;
     color: var(--color-primary-dark);
     overflow-wrap: anywhere;
-  }
-
-  .marca-dado-pessoal {
-    display: inline-flex;
-    align-self: start;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0;
-    padding: 0.2rem 0.55rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--color-dado-pessoal-text);
-    background: var(--color-dado-pessoal-bg);
-    border: 1px solid var(--color-dado-pessoal-border);
-    border-radius: 8px;
-    /* O badge não precisa de forma de pílula; o objetivo é ocupar a linha
-       que lhe cabe e não quebrar em um círculo de três linhas em 320 px. */
-    max-width: 100%;
-  }
-
-  .marca-icone {
-    flex: 0 0 auto;
   }
 
   .cartao-descricao {

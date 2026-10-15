@@ -158,10 +158,12 @@ describe('L-3 — gate fechado omite os brutos e mantém o agregado', () => {
 
   it('o motivo do gate não afirma que o arquivo falta', () => {
     // O arquivo existe; a razão é de governança. Dizer "não encontrado"
-    // mandaria o visitante procurar um problema de download que não existe.
+    // mandaria o visitante procurar um problema de download que não existe, e
+    // citar "dados pessoais" sugeriria uma restrição que não há (2026-10-14).
     const item = brutos(listar({ gateAberto: false }))[0];
     expect(item.motivoIndisponivel).not.toMatch(/não foi encontrado/i);
-    expect(item.motivoIndisponivel).toMatch(/revisão institucional/i);
+    expect(item.motivoIndisponivel).not.toMatch(/dados pessoais/i);
+    expect(item.motivoIndisponivel).toMatch(/decisão de governança/i);
   });
 
   it('gate fechado não apaga os insumos da listagem, apenas os marca', () => {

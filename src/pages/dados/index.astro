@@ -63,20 +63,18 @@ const etapas: Record<string, string> = {
 
     <section class="dados-secao" aria-labelledby="titulo-pacote">
       <h2 id="titulo-pacote">Pacote oficial</h2>
-      <p class="secao-descricao">
-        O pacote consolidado dos indicadores, por campus e por ano. Não contém dados pessoais.
-      </p>
+      <p class="secao-descricao">O pacote consolidado dos indicadores, por campus e por ano.</p>
       <div class="dados-lista">
         {pacoteOficial.map((artefato) => <CartaoDownload artefato={artefato} base={base} />)}
       </div>
     </section>
 
     <section class="dados-secao" aria-labelledby="titulo-insumos">
-      <h2 id="titulo-insumos">Insumos brutos</h2>
+      <h2 id="titulo-insumos">Insumos</h2>
       <p class="secao-descricao">
-        Os arquivos de origem usados para gerar o pacote oficial. Cada um é identificado porque <strong
-          >contém dados pessoais e não está anonimizado</strong
-        > — quem for reutilizá-los assume essa responsabilidade.
+        Os arquivos de origem usados para gerar o pacote oficial — dados institucionais divulgados
+        pela própria academia, disponíveis para quem quiser reproduzir os cálculos por conta própria
+        ou conferir os números do painel.
       </p>
       <div class="dados-lista">
         {
@@ -169,12 +167,6 @@ cp listagem_*.xlsx data/raw/
 make setup
 make dados
 make check-dados</code></pre>
-
-      <p class="aviso-versionamento">
-        <strong>Atenção:</strong> versionar os insumos brutos em um repositório próprio os expõe a terceiros
-        — eles contêm nomes de pessoas e ficam disponíveis para quem clonar o repositório. Se a sua instalação
-        for publicar os arquivos, mantenha o repositório privado.
-      </p>
     </section>
   </div>
 </BaseLayout>
@@ -338,18 +330,6 @@ make check-dados</code></pre>
     white-space: pre-wrap;
     overflow-x: auto;
     line-height: 1.6;
-  }
-
-  .aviso-versionamento {
-    margin: 0;
-    padding: 0.85rem 1rem;
-    background: var(--color-notice-bg);
-    border: 1px solid var(--color-notice-border);
-    border-left-width: 4px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: var(--color-notice-text);
   }
 
   @media (max-width: 40rem) {

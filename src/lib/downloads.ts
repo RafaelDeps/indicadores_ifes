@@ -509,7 +509,7 @@ function construirArtefato(params: {
 
   let motivo: string | null = null;
   if (natureza === 'dado-pessoal' && !gateAberto) {
-    motivo = 'Indisponível enquanto a revisão institucional dos dados pessoais não é concluída.';
+    motivo = 'Indisponível no momento, por decisão de governança.';
   } else if (!existe) {
     motivo = 'Indisponível: o arquivo não foi encontrado no repositório.';
   }

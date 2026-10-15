@@ -1,5 +1,6 @@
 /**
- * Legibilidade dos cartões de download (feature 016).
+ * Legibilidade dos cartões de download (feature 016; marcações removidas em
+ * 2026-10-14 — os artefatos são dados públicos divulgados pela instituição).
  *
  * A página `/dados/` falhava de um jeito que nenhum teste anterior pegava, porque
  * todos os contratos vigentes mediam *presença* — o link existe, o texto do badge
@@ -7,21 +8,12 @@
  * cartão pode cumprir A-2, Pg-2 e FR-015 ao mesmo tempo e ainda assim ser
  * ilegível, e era o que acontecia.
  *
- * Os quatro defeitos, e o que cada um produzia na tela:
- *
- * 1. O aviso de dado pessoal aparecia **três vezes por cartão** (intro da seção,
- *    badge, descrição) e 17 vezes na página. Repetido assim, vira fundo: o
- *    visitante aprende a pulá-lo, e o aviso perde a função de parar a mão antes
- *    do clique — que é o que FR-015 pede.
- * 2. O badge dividia a mesma linha flex do `h3` com `space-between`. Título e
- *    badge são largos demais para conviver, então a linha quebrava quase sempre e
- *    o badge landingava sozinho na borda, longe do botão que ele alerta.
- * 3. `grid-template-columns: repeat(auto-fit, minmax(0, 1fr))` resolve para
- *    **uma coluna em qualquer largura** — `auto-fit` colapsa as pistas extras e a
- *    única `1fr` que sobra ocupa a linha inteira. A 960px isso são cartões de
- *    920px de conteúdo, ~128 caracteres por linha, 1,7× o ideal de 45–75.
- * 4. Metadados em pares `dt`/`dd` inline, quatro deles em sequência: ocupavam
- *    920px em uma linha só e quebravam no meio do par em tela estreita.
+ * A partir de 2026-10-14 a premissa mudou: os avisos de "dado pessoal /
+ * não anonimizado" e o badge foram retirados porque sugeriam uma restrição
+ * que não existe. Os testes abaixo invertem a direção — o que hoje precisa
+ * passar é a **ausência** dessas mensagens, junto com a legibilidade que
+ * já estava garantida (grade 2 colunas, metadados empilhados, medida da
+ * descrição).
  *
  * Os testes leem o texto-fonte dos arquivos, como `pagina-dados.test.ts`.
  */
@@ -48,48 +40,44 @@ function fonteDeDownloads(): string {
   return downloads;
 }
 
-describe('legibilidade — o aviso de dado pessoal aparece uma vez por cartão', () => {
-  it('o badge não repete a cláusula "não anonimizado"', () => {
-    // O badge é o marcador de antes-do-clique. Carregar a frase inteira ali
-    // duplica o que a intro da seção já disse e transforma o aviso em ruído.
-    const textoDoBadge = cartao.slice(
-      cartao.indexOf('marca-dado-pessoal'),
-      cartao.indexOf('</svg>'),
-    );
-    expect(textoDoBadge).not.toMatch(/anonimizad/i);
+describe('legibilidade — a página não carrega avisos de restrição de dados', () => {
+  it('o cartão não tem badge de dado pessoal', () => {
+    // 2026-10-14: os artefatos são dados públicos divulgados pela própria
+    // instituição; o badge "Contém dados pessoais" sugeria uma restrição que
+    // não existe e um visitante podia entender errado.
+    expect(cartao).not.toMatch(/Contém dados pessoais/);
+    expect(cartao).not.toMatch(/marca-dado-pessoal/);
   });
 
-  it('o badge identifica dados pessoais mesmo sem a cláusula', () => {
-    expect(cartao).toMatch(/Contém dados pessoais/);
+  it('a página não anuncia dado pessoal nem anonimização', () => {
+    expect(pagina).not.toMatch(/dados pessoais/i);
+    expect(pagina).not.toMatch(/anonimizad/i);
+    expect(pagina).not.toMatch(/assume essa responsabilidade/i);
   });
 
-  it('a descrição de uma planilha não repete o aviso', () => {
-    // `descricaoPara` era a terceira ocorrência. A descrição diz o que o
-    // arquivo é; quem diz que ele tem dado pessoal é o badge.
+  it('a página não adverte sobre versionar os arquivos', () => {
+    expect(pagina).not.toMatch(/mantenha o repositório privado/i);
+    expect(pagina).not.toMatch(/expõe a terceiros/i);
+  });
+
+  it('a descrição de uma planilha não menciona dado pessoal', () => {
     const ramoPlanilha = downloads.slice(
       downloads.indexOf('function descricaoPara'),
       downloads.indexOf('function descricaoPara') + 2000,
     );
     const textos = ramoPlanilha.match(/'[^']*'/g) ?? [];
-    const texto = textos.join(' ').replace(/Contém dados\s*pessoais/, '');
-    expect(texto).not.toMatch(/dados pessoais/i);
+    expect(textos.join(' ')).not.toMatch(/dados pessoais/i);
   });
 
-  it('a descrição do export canônico não repete o aviso', () => {
+  it('a descrição do export canônico não menciona dado pessoal', () => {
     expect(descricaoDe('exports_canonical.zip')).not.toMatch(/dados pessoais/i);
   });
 
-  it('a descrição do agregado não repete "não contém dados pessoais"', () => {
-    expect(descricaoDe('indicadores.zip')).not.toMatch(/não contém dados pessoais/i);
-  });
-
-  it('o aviso sobrevive uma vez, na intro da seção de insumos brutos', () => {
-    const inicio = pagina.indexOf('id="titulo-insumos"');
-    const sectStart = pagina.lastIndexOf('<section', inicio);
-    const end = pagina.indexOf('id="titulo-instalacao"', inicio);
-    const intro =
-      sectStart !== -1 && end !== -1 ? pagina.slice(sectStart, end) : pagina.slice(inicio, end);
-    expect(intro).toMatch(/não está anonimizado/i);
+  it('o motivo do gate fechado não menciona dado pessoal', () => {
+    // O texto aparece quando o portão está fechado; a razão é de governança,
+    // sem qualificar o conteúdo do arquivo.
+    expect(fonteDeDownloads()).not.toMatch(/revisão institucional dos dados pessoais/i);
+    expect(fonteDeDownloads()).toMatch(/decisão de governança/i);
   });
 });
 
@@ -103,7 +91,7 @@ function descricaoDe(nomeArquivo: string): string {
   return textos.join(' ').replace(/\s+/g, ' ').trim();
 }
 
-describe('legibilidade — o badge tem a linha dele', () => {
+describe('legibilidade — a descrição tem medida e o cabeçalho do cartão é limpo', () => {
   it('o cabeçalho do cartão não é uma linha flex título+badge', () => {
     // `justify-content: space-between` numa linha com dois textos largos só
     // produz quebra — e a quebra joga o badge para o canto oposto ao botão.
@@ -111,22 +99,10 @@ describe('legibilidade — o badge tem a linha dele', () => {
     expect(topo).not.toMatch(/space-between/);
   });
 
-  it('o badge ocupa a largura disponível, não o inlineNatural', () => {
-    const marca = cssDoCartao().slice(
-      cssDoCartao().indexOf('.marca-dado-pessoal'),
-      cssDoCartao().indexOf('.marca-icone'),
-    );
-    expect(marca).toMatch(/align-self:\s*start/);
-  });
-
-  it('o badge não é uma pílula que quebra em várias linhas', () => {
-    // `border-radius: 999px` com texto que quebra em 320px desenha uma cápsula
-    // de três linhas. O raio curto sobrevive à quebra legível.
-    const marca = cssDoCartao().slice(
-      cssDoCartao().indexOf('.marca-dado-pessoal'),
-      cssDoCartao().indexOf('.marca-icone'),
-    );
-    expect(marca).not.toMatch(/999px/);
+  it('a descrição tem limite de medida, como rede de segurança do 1-coluna', () => {
+    // Entre 320px e o breakpoint a grade tem uma coluna só; sem o limite a
+    // descrição corre livre e chega a ~100ch em tablet.
+    expect(cssDoCartao()).toMatch(/max-width:\s*\d+ch/);
   });
 });
 
@@ -197,12 +173,6 @@ describe('legibilidade — a grade é mobile-first e tem 2 colunas, não 3', () 
     expect(lista).toMatch(/repeat\(2,/);
     expect(lista).not.toMatch(/repeat\(3,/);
     expect(lista).not.toMatch(/auto-fit/);
-  });
-
-  it('a descrição tem limite de medida, como rede de segurança do 1-coluna', () => {
-    // Entre 320px e o breakpoint a grade tem uma coluna só; sem o limite a
-    // descrição corre livre e chega a ~100ch em tablet.
-    expect(cssDoCartao()).toMatch(/max-width:\s*\d+ch/);
   });
 });
 

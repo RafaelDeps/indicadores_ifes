@@ -46,20 +46,19 @@ describe('A-1 — nome acessível do link de download', () => {
   });
 });
 
-describe('A-2 — a marcação de dado pessoal não depende de cor', () => {
-  it('o texto da marcação está presente na página', () => {
+describe('A-2 — a página não carrega marcação de restrição de dados (2026-10-14)', () => {
+  it('o cartão não traz badge de dado pessoal', () => {
     const cartao = componente();
     if (!cartao) return;
-    expect(cartao).toMatch(/dados pessoais/i);
+    // Os artefatos são dados públicos divulgados pela própria instituição; o
+    // badge sugeria uma restrição que não existe e foi removido.
+    expect(cartao).not.toMatch(/dados pessoais/i);
   });
 
-  it('a marcação não é só um ícone: o texto viaja junto', () => {
-    const cartao = componente();
-    if (!cartao) return;
-    // Um badge só-ícone falha quem não distingue a cor do fundo (FR-019) e quem
-    // usa leitor de tela (A-2). O `aria-hidden` do ícone é o que permite isso.
-    expect(cartao).toMatch(/aria-hidden/);
-    expect(cartao).toMatch(/dados pessoais/i);
+  it('a página não adverte sobre dado pessoal nem sobre versionar', () => {
+    expect(superficie()).not.toMatch(/dados pessoais/i);
+    expect(superficie()).not.toMatch(/mantenha o repositório privado/i);
+    expect(superficie()).not.toMatch(/assume essa responsabilidade/i);
   });
 });
 
@@ -221,9 +220,11 @@ describe('US3 — guia de instalação (FR-009, FR-010, FR-012, FR-024)', () => 
     expect(pagina).toMatch(/white-space:\s*pre-wrap/);
   });
 
-  it('a página avisa que versionar os insumos os expõe a terceiros', () => {
-    expect(pagina).toMatch(/versionar/i);
-    expect(pagina).toMatch(/terceiros|expõe|expoe/i);
+  it('a página não adverte sobre versionar os insumos (2026-10-14)', () => {
+    // Dados públicos divulgados pela instituição: o aviso antigo sugería uma
+    // restrição que não existe e foi removido com o bloco que o carregava.
+    expect(pagina).not.toMatch(/versionar os insumos/i);
+    expect(pagina).not.toMatch(/terceiros|expõe|expoe/i);
   });
 
   it('o guia e a listagem de download não divergem de insumo', () => {
