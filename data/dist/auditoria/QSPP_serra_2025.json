@@ -1,0 +1,489 @@
+{
+  "indicador": "QSPP",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2025,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2025_1.xlsx",
+      "revisao": "2025-1"
+    },
+    {
+      "arquivo": "listagem_2025_2.xlsx",
+      "revisao": "2025-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "unica",
+      "simbolo": "SUPP",
+      "rotulo": "Servidores Únicos Participantes",
+      "unidade": "Servidores",
+      "tipoContagem": "contagem",
+      "apurado": 75,
+      "detalhado": true,
+      "campos": [
+        "nome",
+        "projeto",
+        "papel"
+      ],
+      "registros": [
+        {
+          "nome": "Moises Savedra Omena",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Coordinator Researcher",
+          "person_id": 468
+        },
+        {
+          "nome": "Felipe Frechiani De Oliveira",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Researcher",
+          "person_id": 470
+        },
+        {
+          "nome": "Danilo De Paula E Silva",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Researcher",
+          "person_id": 133
+        },
+        {
+          "nome": "Flavio Barcelos Braz Da Silva",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Researcher",
+          "person_id": 132
+        },
+        {
+          "nome": "Wagner Teixeira da Costa",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Researcher",
+          "person_id": 380
+        },
+        {
+          "nome": "Jefferson Oliveira Andrade",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Coordinator",
+          "person_id": 1263
+        },
+        {
+          "nome": "Karin Satie Komati",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Coordinator Researcher",
+          "person_id": 383
+        },
+        {
+          "nome": "Jefferson O. Andrade",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Researcher",
+          "person_id": 382
+        },
+        {
+          "nome": "Francisco De Assis Boldt",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Researcher",
+          "person_id": 499
+        },
+        {
+          "nome": "Vitor Faiçal Campana",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Researcher",
+          "person_id": 501
+        },
+        {
+          "nome": "Adelson Pereira Do Nascimento",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Researcher",
+          "person_id": 390
+        },
+        {
+          "nome": "Daniel Ribeiro Trindade",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Researcher",
+          "person_id": 502
+        },
+        {
+          "nome": "Leandro Colombi Resendo",
+          "projeto": "Otimização da Eficiência Energética do Uso de Gás na Siderurgia usando Neuro-Evolução",
+          "papel": "Researcher",
+          "person_id": 271
+        },
+        {
+          "nome": "Marco Antonio De Souza Leite Cuadros",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Coordinator",
+          "person_id": 126
+        },
+        {
+          "nome": "Gustavo Maia De Almeida",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Researcher",
+          "person_id": 127
+        },
+        {
+          "nome": "Maxwell Eduardo Monteiro",
+          "projeto": "Cidades e Prédios Inteligentes 2.2",
+          "papel": "Coordinator Researcher",
+          "person_id": 533
+        },
+        {
+          "nome": "Jussara Farias Fardin",
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "papel": "Researcher",
+          "person_id": 1062
+        },
+        {
+          "nome": "Vinícius Secchin De Melo",
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "papel": "Researcher",
+          "person_id": 123
+        },
+        {
+          "nome": "Jose Leandro Felix Salles",
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "papel": "Researcher",
+          "person_id": 1055
+        },
+        {
+          "nome": "Renner Sartorio Camargo",
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "papel": "Researcher",
+          "person_id": 549
+        },
+        {
+          "nome": "Fabiano Borges Ruy",
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "papel": "Coordinator Researcher",
+          "person_id": 551
+        },
+        {
+          "nome": "Paulo Sérgio Dos Santos Júnior",
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "papel": "Researcher",
+          "person_id": 471
+        },
+        {
+          "nome": "Victorio Albani De Carvalho",
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "papel": "Researcher",
+          "person_id": 326
+        },
+        {
+          "nome": "Rogerio Passos Do Amaral Pereira",
+          "projeto": "Kit didático utilizando uma planta piloto de correias transportadora",
+          "papel": "Coordinator Researcher",
+          "person_id": 514
+        },
+        {
+          "nome": "Gabriel Tozatto Zago",
+          "projeto": "CLASSIFICAÇÃO DE IMAGENS DE OCT COM IA INTERPRETÁVEL",
+          "papel": "Coordinator Researcher",
+          "person_id": 149
+        },
+        {
+          "nome": "Rosiane Ribeiro Rocha",
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "papel": "Coordinator",
+          "person_id": 148
+        },
+        {
+          "nome": "Tatiane Policário Chagas",
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "papel": "Researcher",
+          "person_id": 574
+        },
+        {
+          "nome": "Wallas Gusmao Thomas",
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino em Engenharia Utilizando Tecnologias do Laboratório Maker",
+          "papel": "Researcher",
+          "person_id": 579
+        },
+        {
+          "nome": "Thiago Meireles Paixão",
+          "projeto": "ANÁLISE FACIAL EM SELFIES PARA IDENTIFICAÇÃO DE ANSIEDADE E DEPRESSÃO EM PACIENTES GESTANTES",
+          "papel": "Coordinator Researcher",
+          "person_id": 585
+        },
+        {
+          "nome": "Eduardo Max Amaro Amaral",
+          "projeto": "ANÁLISE FACIAL EM SELFIES PARA IDENTIFICAÇÃO DE ANSIEDADE E DEPRESSÃO EM PACIENTES GESTANTES",
+          "papel": "Researcher",
+          "person_id": 586
+        },
+        {
+          "nome": "Mateus Conrad Barcellos Da Costa",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Coordinator",
+          "person_id": 588
+        },
+        {
+          "nome": "Dirceu Soares Júnior",
+          "projeto": "Sistema de Aquisição de Dados e Aprendizado de Máquina em planta piloto de Aciaria LD",
+          "papel": "Coordinator",
+          "person_id": 513
+        },
+        {
+          "nome": "Maikon Chaider Silva Scaldaferro",
+          "projeto": "Estoicismo Red Pill: a apropriação da Filosofia Clássica por uma agenda política contemporânea",
+          "papel": "Coordinator Researcher",
+          "person_id": 78
+        },
+        {
+          "nome": "Marta Talitha Carvalho Freire Mendes",
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas \nOrientada a Agentes",
+          "papel": "Coordinator",
+          "person_id": 379
+        },
+        {
+          "nome": "Marcelo Queiroz Schimidt",
+          "projeto": "Inteligência artificial explicável para diagnóstico cardiovascular: transformando a interpretação de ecgs na atenção à saúde",
+          "papel": "Researcher",
+          "person_id": 1068
+        },
+        {
+          "nome": "João Vitor Ferreira Duque",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Researcher",
+          "person_id": 634
+        },
+        {
+          "nome": "Renato Tannure Rotta De Almeida",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Researcher",
+          "person_id": 635
+        },
+        {
+          "nome": "Edmilson Bermudes Rocha Junior",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Researcher",
+          "person_id": 636
+        },
+        {
+          "nome": "Cristina Klippel Dominicini",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Coordinator Researcher",
+          "person_id": 272
+        },
+        {
+          "nome": "Gilmar Luiz Vassoler",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Researcher",
+          "person_id": 648
+        },
+        {
+          "nome": "Luiz Alberto Pinto",
+          "projeto": "Classificação de patologias da coluna vertebral a partir de imagens de Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net.",
+          "papel": "Coordinator",
+          "person_id": 124
+        },
+        {
+          "nome": "Richard Junior Manuel Godinez Tello",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Coordinator Researcher",
+          "person_id": 378
+        },
+        {
+          "nome": "Hilário Tomaz Alves De Oliveira",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Coordinator",
+          "person_id": 319
+        },
+        {
+          "nome": "Bruno Cardoso Coutinho",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Researcher",
+          "person_id": 320
+        },
+        {
+          "nome": "Leonardo Aguiar do Amaral",
+          "projeto": "Tecnologias de Prototipagem e Simulação CAD/CAE no Ensino de Física e Engenharia com Aplicações na Agricultura de Precisão e Processos de Fabricação Mecânica",
+          "papel": "Coordinator Researcher",
+          "person_id": 675
+        },
+        {
+          "nome": "Rafael Peixoto Derenzi Vivacqua",
+          "projeto": "EXPERIMENTOS DIDÁTICOS EM FÍSICA COM O AUXILIO DO ARDUINO",
+          "papel": "Researcher",
+          "person_id": 678
+        },
+        {
+          "nome": "Rosilene De Sa Ribeiro",
+          "projeto": "EXPERIMENTOS DIDÁTICOS EM FÍSICA COM O AUXILIO DO ARDUINO",
+          "papel": "Researcher",
+          "person_id": 377
+        },
+        {
+          "nome": "Leandro Melo de Sa",
+          "projeto": "EXPERIMENTOS DIDÁTICOS EM FÍSICA COM O AUXILIO DO ARDUINO",
+          "papel": "Researcher",
+          "person_id": 376
+        },
+        {
+          "nome": "Fidelis Zanetti De Castro",
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "papel": "Coordinator",
+          "person_id": 680
+        },
+        {
+          "nome": "Cassius Zanetti Resende",
+          "projeto": "Estudo e Implementação do Protocolo OPC UA como Camada de Comunicação para Dispositivos IoT",
+          "papel": "Coordinator Researcher",
+          "person_id": 692
+        },
+        {
+          "nome": "Marcos Paulo Kohler Caldas",
+          "projeto": "Automatização de módulos didáticos para ensino da disciplina de Instalações Elétricas",
+          "papel": "Coordinator Researcher",
+          "person_id": 695
+        },
+        {
+          "nome": "Sérgio Nery Simões",
+          "projeto": "Análise da Efetividade de Programas de Formação Continuada De Professores Utilizando Técnicas de Ciência de Dados e Inteligência Artificial: Um Estudo Aplicado aos Dados do Cefope/ES",
+          "papel": "Coordinator Researcher",
+          "person_id": 681
+        },
+        {
+          "nome": "Amarildo Mendes Lemos",
+          "projeto": "Ecos e reflexos do livro de Affonso Claudio \"Insurreição do Queimado. Episódio da Província do Espírito Santo\"",
+          "papel": "Coordinator Researcher",
+          "person_id": 296
+        },
+        {
+          "nome": "Carlos Lins Borges Azevedo",
+          "projeto": "Sistema de recomendação baseado em Inteligência Computacional para manejo de culturas de morango infestadas por ácaros-rajados",
+          "papel": "Coordinator",
+          "person_id": 469
+        },
+        {
+          "nome": "Daniel Cruz Cavalieri",
+          "projeto": "Utilização de Conditional Variational Autoencoder para Análise de Sinais EEG em Pacientes Pós-AVC",
+          "papel": "Researcher",
+          "person_id": 125
+        },
+        {
+          "nome": "Kelly Assis de Souza Gazolli",
+          "projeto": "Um estudo sobre geração e detecção de DeepFake de Voz",
+          "papel": "Researcher",
+          "person_id": 1264
+        },
+        {
+          "nome": "Adilson Ribeiro Prado",
+          "projeto": "Cultura Impressa: Esculturas 3D de artesãos locais com filamento de material reciclado",
+          "papel": "Researcher",
+          "person_id": 655
+        },
+        {
+          "nome": "Rafael Emerick Zape De Oliveira",
+          "projeto": "Estudo de viabilidade para desenvolvimento de ambiente experimental para desenvolvimento de tecnologias em Indústria 4.0 e Internet",
+          "papel": "Coordinator",
+          "person_id": 719
+        },
+        {
+          "nome": "Rodrigo Fernandes Calhau",
+          "projeto": "Laboratório de Educação em Desenvolvimento de Soluções (LEDS)",
+          "papel": "Researcher",
+          "person_id": 736
+        },
+        {
+          "nome": "Francisco José Casarim Rapchan",
+          "projeto": "Laboratório de Educação em Desenvolvimento de Soluções (LEDS)",
+          "papel": "Researcher",
+          "person_id": 1308
+        },
+        {
+          "nome": "Bruno Ramos Gonzaga",
+          "projeto": "Programa IFES Para Todos",
+          "papel": "Researcher",
+          "person_id": 312
+        },
+        {
+          "nome": "Wagner Kirmse Caldas",
+          "projeto": "Programa IFES Para Todos",
+          "papel": "Researcher",
+          "person_id": 1284
+        },
+        {
+          "nome": "Giordana dos Santos Sperandio",
+          "projeto": "Programa IFES Para Todos",
+          "papel": "Researcher",
+          "person_id": 745
+        },
+        {
+          "nome": "Flávio Garcia Pereira",
+          "projeto": "Descentralização do Tratamento de Resíduo Sólido para produção de biocombustível sustentável: SKID Indústria 4.0",
+          "papel": "Coordinator",
+          "person_id": 654
+        },
+        {
+          "nome": "Marcos Simão Guimarães",
+          "projeto": "LabMaker 4.0: capacitando professores para a cultura maker e tecnologias da indústria 4.0",
+          "papel": "Researcher",
+          "person_id": 1069
+        },
+        {
+          "nome": "Adrianna Machado Meneguelli",
+          "projeto": "Teatro Mundo",
+          "papel": "Coordinator",
+          "person_id": 24
+        },
+        {
+          "nome": "Avelino Forechi Silva",
+          "projeto": "Instituto de Inteligência Computacional Aplicada - I2CA",
+          "papel": "Researcher",
+          "person_id": 1185
+        },
+        {
+          "nome": "Leonardo Azevedo Scardua",
+          "projeto": "EDITAL FAPES N 10/2024 - PROCAP 2025 MESTRADO",
+          "papel": "Researcher",
+          "person_id": 1159
+        },
+        {
+          "nome": "Ronaldo Aparecida Marques",
+          "projeto": "NRI (Núcleo de Relações Internacionais)",
+          "papel": "Coordinator",
+          "person_id": 737
+        },
+        {
+          "nome": "Ernani Leite Ribeiro Filho",
+          "projeto": "PROGRAMA REGULAR DE PROMOÇÃO DA CULTURA E DA ARTE NO IFES CAMPUS SERRA",
+          "papel": "Researcher",
+          "person_id": 1103
+        },
+        {
+          "nome": "Emmanuel Marques Silva",
+          "projeto": "Processos mentais e vida financeira saudável: do endividamento ao investimento",
+          "papel": "Researcher",
+          "person_id": 713
+        },
+        {
+          "nome": "Carline Santos Borges",
+          "projeto": "Jovens com deficiência no Ensino Superior e no mundo de trabalho: das práticas educacionais à efetiva inclusão social",
+          "papel": "Coordinator",
+          "person_id": 1097
+        },
+        {
+          "nome": "Filipe Wall Mutz",
+          "projeto": "Desenvolvimento de uma Inteligência Computacional Autônoma (ICA) para monitoramento e controle automático de um alto forno",
+          "papel": "Researcher",
+          "person_id": 1104
+        },
+        {
+          "nome": "Hilario Seibel Junior",
+          "projeto": "O \"Preço do Tempo\" no Judiciário: Aplicação de Inteligência Artificial Explicável e Análise de Sobrevivência na Justiça Federal",
+          "papel": "Coordinator",
+          "person_id": 749
+        },
+        {
+          "nome": "Fábio de Oliveira Lima",
+          "projeto": "Planejamento de Redes Ópticas Elásticas",
+          "papel": "Coordinator",
+          "person_id": 1080
+        }
+      ]
+    }
+  ]
+}

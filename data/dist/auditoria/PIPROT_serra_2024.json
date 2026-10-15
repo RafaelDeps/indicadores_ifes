@@ -1,0 +1,140 @@
+{
+  "indicador": "PIPROT",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2024,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2024_1.xlsx",
+      "revisao": "2024-1"
+    },
+    {
+      "arquivo": "listagem_2024_2.xlsx",
+      "revisao": "2024-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "PC",
+      "rotulo": "Programas de Computador",
+      "unidade": "Softwares",
+      "tipoContagem": "contagem",
+      "apurado": 9,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano"
+      ],
+      "registros": [
+        {
+          "titulo": "ESTIMATIVA DE PROFUNDIDADE MONOCULAR COM U-NET",
+          "ano": 2024
+        },
+        {
+          "titulo": "APLICATIVO PARA VIDEO SUPER RESOLUTION",
+          "ano": 2024
+        },
+        {
+          "titulo": "Obtenção de Entidades e Relações de Restrições de Processos de Negócio a partir de Texto",
+          "ano": 2024
+        },
+        {
+          "titulo": "Categorização Automática de Currículos de Profissionais de TIC Utilizando Redes Neurais Profundas",
+          "ano": 2024
+        },
+        {
+          "titulo": "Classificação de faróis danificados de veículos",
+          "ano": 2024
+        },
+        {
+          "titulo": "Detecção de Deepfakes em Vídeo",
+          "ano": 2024
+        },
+        {
+          "titulo": "Aplicativo para Reconhecimento Facial e Geolocalização de Prestadores de Serviços da VEPEMA / TJES",
+          "ano": 2024
+        },
+        {
+          "titulo": "Sistema de Gestão de Prestadores de Serviço da VEPEMA / TJES",
+          "ano": 2024
+        },
+        {
+          "titulo": "AutoBioLearn: An Automated Data Science Framework for eXplainable Analyses (XAI) of Clinical Datasets",
+          "ano": 2024
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "PA",
+      "rotulo": "Patentes e Modelos de Utilidade",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": 0,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "RM",
+      "rotulo": "Registros de Marca",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "DI",
+      "rotulo": "Desenhos Industriais",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": 0,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "C",
+      "rotulo": "Cultivares",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "TC",
+      "rotulo": "Topografia de Circuitos",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "OGM",
+      "rotulo": "Organismos Geneticamente Modificados",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    }
+  ]
+}

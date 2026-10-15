@@ -1,9 +1,25 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import IndicatorCard from '../../components/IndicatorCard.astro';
+import MemoriaCalculo from '../../components/MemoriaCalculo.astro';
+import SecaoRastreabilidade from '../../components/SecaoRastreabilidade.astro';
+import BotaoRaioX from '../../components/BotaoRaioX.astro';
+import RaioXDrawer from '../../components/RaioXDrawer.astro';
+import { portaoAberto } from '../../lib/downloads';
+import { anoPadrao } from '../../lib/ano';
+import { obterAnosDisponiveis } from '../../lib/dataset';
 import { obterIndicadoresPorPilar } from '../../lib/selectors';
+import { obterRastreabilidadePilar } from '../../lib/rastreabilidade';
 
 const indicadoresP3 = obterIndicadoresPorPilar(3, 'serra');
+const anoMemoria = (ind: (typeof indicadoresP3)[number]) =>
+  anoPadrao(ind) ?? obterAnosDisponiveis().at(-1) ?? 2026;
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const rastreabilidade = obterRastreabilidadePilar(3);
+const citacoes = rastreabilidade.artefatos.map((artefato) => ({ rotulo: artefato.rotulo }));
+const exibirRaiox = portaoAberto();
 ---
 
 <BaseLayout title="Pilar 3 — Produtividade e Propriedade Intelectual | Indicadores IFES">
@@ -18,8 +34,22 @@ const indicadoresP3 = obterIndicadoresPorPilar(3, 'serra');
     transferência de tecnologia.
   </p>
   <div class="grade">
-    {indicadoresP3.map((indicador) => <IndicatorCard indicador={indicador} />)}
+    {
+      indicadoresP3.map((indicador) => (
+        <div class="celula-indicador">
+          <IndicatorCard indicador={indicador} />
+          {exibirRaiox && <BotaoRaioX sigla={indicador.sigla} />}
+          <MemoriaCalculo
+            indicador={indicador}
+            contextoInicial={{ campus: 'serra', ano: anoMemoria(indicador) }}
+            citacoes={citacoes}
+          />
+        </div>
+      ))
+    }
   </div>
+  <SecaoRastreabilidade rastreabilidade={rastreabilidade} base={base} />
+  {exibirRaiox && <RaioXDrawer base={base} />}
 </BaseLayout>
 
 <style>
@@ -45,6 +75,16 @@ const indicadoresP3 = obterIndicadoresPorPilar(3, 'serra');
     grid-template-columns: 1fr;
     gap: 1rem;
     margin-top: 1.5rem;
+  }
+
+  .celula-indicador {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .celula-indicador :global(.cartao-indicador) {
+    border-radius: 12px 12px 0 0;
+    box-shadow: none;
   }
 
   @media (min-width: 640px) {

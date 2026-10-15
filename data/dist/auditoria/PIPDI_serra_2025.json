@@ -1,0 +1,214 @@
+{
+  "indicador": "PIPDI",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2025,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2025_1.xlsx",
+      "revisao": "2025-1"
+    },
+    {
+      "arquivo": "listagem_2025_2.xlsx",
+      "revisao": "2025-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "unica",
+      "simbolo": "NAPPCT",
+      "rotulo": "Acordos de Parceria Firmados",
+      "unidade": "Acordos",
+      "tipoContagem": "contagem",
+      "apurado": 29,
+      "detalhado": true,
+      "campos": [
+        "projeto",
+        "codigo",
+        "inicio",
+        "fim"
+      ],
+      "registros": [
+        {
+          "projeto": "Mina Digital de Rochas Ornamentais: plataforma de integração da lavra à comercialização usando tecnologia Blockchain",
+          "codigo": "PJ 7219",
+          "inicio": "2022",
+          "fim": "2026"
+        },
+        {
+          "projeto": "OTIMIZAÇÃO DA EFICIÊNCIA ENERGÉTICA DO USO DE GÁS NA SIDERURGIA USANDO NEURO-EVOLUÇÃO",
+          "codigo": "PJ 7220",
+          "inicio": "2022",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "codigo": "PJ 7398",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "CDIG",
+          "codigo": "PJ 7734",
+          "inicio": "2023",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "codigo": "PJ 7776",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "codigo": "PJ 7809",
+          "inicio": "2023",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "codigo": "PJ 7875",
+          "inicio": "2024",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Injustiça econômica versus injustiça simbólica: uma análise das eleições municipais no Espírito Santo à Luz da Teoria Crítica de Nancy Fraser",
+          "codigo": "PJ 7989",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax ‘Priori-RX’",
+          "codigo": "PJ 8029",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "CLASSIFICAÇÃO DE IMAGENS DE OCT COM IA INTERPRETÁVEL",
+          "codigo": "PJ 8072",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Aplicação de roteamento na origem para ciência de dados intensiva",
+          "codigo": "PJ 8079",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Desenvolvimento de uma caneta eletrônica para Air Writing: uma abordagem híbrida baseada em dispositivos e visão computacional",
+          "codigo": "PJ 8093",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE MATERIAIS DIDÁTICOS INOVADORES PARA O ENSINO DE DISCIPLINAS TÉCNICAS COM TECNOLOGIAS DA INDÚSTRIA 4.0",
+          "codigo": "PJ 8134",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Identificação de ansiedade e depressão via análise facial em base de dados reduzida",
+          "codigo": "PJ 8141",
+          "inicio": "2025",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Um estudo sobre geração e detecção de DeepFake de Voz",
+          "codigo": "PJ 8167",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Utilização de Conditional Variational Autoencoder para Análise de Sinais EEG em Pacientes Pós-AVC",
+          "codigo": "PJ 8239",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "ANÁLISE FACIAL EM SELFIES PARA IDENTIFICAÇÃO DE ANSIEDADE E DEPRESSÃO EM PACIENTES GESTANTES",
+          "codigo": "PJ 8302",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Otimização Processual com Inteligência Artificial",
+          "codigo": "PJ 8429",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "BPM Pós-Gestão – Automação Inteligente para Programas de Pós-graduação",
+          "codigo": "PJ 8438",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Núcleo Otimizado e Virtualizado para Aplicações de Inteligência Artificial (NOVA-IA)",
+          "codigo": "PJ 8503",
+          "inicio": "2025",
+          "fim": "2028"
+        },
+        {
+          "projeto": "Núcleo Otimizado e Virtualizado para Aplicações de Inteligência Artificial para a Indústria (NOVA-IA INDÚSTRIA)",
+          "codigo": "PJ 8504",
+          "inicio": "2025",
+          "fim": "2027"
+        },
+        {
+          "projeto": "Programa Institucional de Iniciação Científica e Tecnológica Ifes 2025-2026",
+          "codigo": "PJ 8681",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Feira Digital: Uma plataforma de Conexão Direta entre Produtores e Consumidores",
+          "codigo": "PJ 8715",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE KITS DIDÁTICOS PARA O ENSINO DE ENGENHARIA DE CONTROLE E AUTOMAÇÃO",
+          "codigo": "PJ 8854",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net",
+          "codigo": "PJ 8893",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana Sustentável",
+          "codigo": "PJ 8980",
+          "inicio": "2025",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Recuperação de Conhecimento em Documentos com Conteúdo Textual e Visual para o SUFRAMA-GPT",
+          "codigo": "PJ 9152",
+          "inicio": "2025",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Roteamento de fonte PolKA na engenharia de tráfego em redes científicas com uso intensivo de dados",
+          "codigo": "PJ 9702",
+          "inicio": "2025",
+          "fim": "2028"
+        },
+        {
+          "projeto": "Desenvolvimento de Metodologia Integrada para Medição, Análise Causal e Controle da Curvatura de Ponta (Turn-Up/Turn-Down) em Laminadores de Tiras a Quente",
+          "codigo": "PJ 9793",
+          "inicio": "2024",
+          "fim": "2026"
+        }
+      ]
+    }
+  ]
+}

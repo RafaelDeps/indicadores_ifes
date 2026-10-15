@@ -1,0 +1,166 @@
+{
+  "indicador": "PIPDI",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2024,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2024_1.xlsx",
+      "revisao": "2024-1"
+    },
+    {
+      "arquivo": "listagem_2024_2.xlsx",
+      "revisao": "2024-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "unica",
+      "simbolo": "NAPPCT",
+      "rotulo": "Acordos de Parceria Firmados",
+      "unidade": "Acordos",
+      "tipoContagem": "contagem",
+      "apurado": 21,
+      "detalhado": true,
+      "campos": [
+        "projeto",
+        "codigo",
+        "inicio",
+        "fim"
+      ],
+      "registros": [
+        {
+          "projeto": "Programabilidade do Plano de Dados para Redes Autônomas",
+          "codigo": "PJ 6921",
+          "inicio": "2022",
+          "fim": "2024"
+        },
+        {
+          "projeto": "PREDIÇÃO DE TEMPERATURA EM ALTO-FORNOS UTILIZANDO APRENDIZADO DE MÁQUINA",
+          "codigo": "PJ 7063",
+          "inicio": "2022",
+          "fim": "2024"
+        },
+        {
+          "projeto": "Polynomial Key-based Architecture for Source Routing in Network Fabrics",
+          "codigo": "PJ 7111",
+          "inicio": "2022",
+          "fim": "2024"
+        },
+        {
+          "projeto": "Mina Digital de Rochas Ornamentais: plataforma de integração da lavra à comercialização usando tecnologia Blockchain",
+          "codigo": "PJ 7219",
+          "inicio": "2022",
+          "fim": "2026"
+        },
+        {
+          "projeto": "OTIMIZAÇÃO DA EFICIÊNCIA ENERGÉTICA DO USO DE GÁS NA SIDERURGIA USANDO NEURO-EVOLUÇÃO",
+          "codigo": "PJ 7220",
+          "inicio": "2022",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Classificação de imagens de OCT utilizando Deep Learning",
+          "codigo": "PJ 7226",
+          "inicio": "2023",
+          "fim": "2024"
+        },
+        {
+          "projeto": "Um sistema de percepção sensorial tátil da força de preensão para garras robóticas",
+          "codigo": "PJ 7653",
+          "inicio": "2023",
+          "fim": "2024"
+        },
+        {
+          "projeto": "Beacon Visual: Um dispositivo eletrônico de apoio a pessoas com deficiência visual para localização dentro de um ambiente",
+          "codigo": "PJ 7655",
+          "inicio": "2023",
+          "fim": "2024"
+        },
+        {
+          "projeto": "CDIG",
+          "codigo": "PJ 7734",
+          "inicio": "2023",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Desenvolvimento de um Medidor de Desgaste de Furo de Lança de Convertedores LD",
+          "codigo": "PJ 7786",
+          "inicio": "2023",
+          "fim": "2024"
+        },
+        {
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "codigo": "PJ 7809",
+          "inicio": "2023",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "codigo": "PJ 7875",
+          "inicio": "2024",
+          "fim": "2026"
+        },
+        {
+          "projeto": "Transformação Digital da Avaliação Pedagógica do PNLD: Da Pesquisa à Inovação",
+          "codigo": "PJ 7889",
+          "inicio": "2024",
+          "fim": "2024"
+        },
+        {
+          "projeto": "Injustiça econômica versus injustiça simbólica: uma análise das eleições municipais no Espírito Santo à Luz da Teoria Crítica de Nancy Fraser",
+          "codigo": "PJ 7989",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "CLASSIFICAÇÃO DE IMAGENS DE OCT COM IA INTERPRETÁVEL",
+          "codigo": "PJ 8072",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Aplicação de roteamento na origem para ciência de dados intensiva",
+          "codigo": "PJ 8079",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Desenvolvimento de uma caneta eletrônica para Air Writing: uma abordagem híbrida baseada em dispositivos e visão computacional",
+          "codigo": "PJ 8093",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Um estudo sobre geração e detecção de DeepFake de Voz",
+          "codigo": "PJ 8167",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Utilização de Conditional Variational Autoencoder para Análise de Sinais EEG em Pacientes Pós-AVC",
+          "codigo": "PJ 8239",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "BPM Pós-Gestão – Automação Inteligente para Programas de Pós-graduação",
+          "codigo": "PJ 8438",
+          "inicio": "2024",
+          "fim": "2025"
+        },
+        {
+          "projeto": "Desenvolvimento de Metodologia Integrada para Medição, Análise Causal e Controle da Curvatura de Ponta (Turn-Up/Turn-Down) em Laminadores de Tiras a Quente",
+          "codigo": "PJ 9793",
+          "inicio": "2024",
+          "fim": "2026"
+        }
+      ]
+    }
+  ]
+}

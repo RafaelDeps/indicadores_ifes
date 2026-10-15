@@ -19,7 +19,7 @@ SOFT_NORMALIZADO = $(shell echo '$(SOFT)' | tr '[:upper:]' '[:lower:]' | tr -d '
 SOFT_ATIVO = $(filter 1 true yes on,$(SOFT_NORMALIZADO))
 SOFT_ARGS = $(if $(SOFT_ATIVO),--soft,)
 
-.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens dados check-dados check-governanca test test-etl test-web test-watch lint format format-check check clean
+.PHONY: help setup install dev build preview etl etl-campus etl-listagens merge-listagens auditoria dados check-dados check-governanca test test-etl test-web test-watch lint format format-check check clean
 
 help: ## Exibe os comandos disponíveis
 	@echo "Indicadores IFES - Comandos disponíveis"
@@ -63,14 +63,18 @@ etl-listagens: ## Executa o ETL das listagens de matrícula gerando data/dist/in
 merge-listagens: ## Integra NTE/NTECPP das listagens em data/dist/indicadores.zip preservando todos os demais campos canônicos (SOFT=1 tolera listagens ausentes)
 	$(PYTHON) -m etl.scripts.merge_listagens_indicadores --listagens data/dist/indicadores_listagens.zip --canonical data/dist/indicadores.zip --saida data/dist/indicadores.zip $(SOFT_ARGS)
 
-dados: ## Gera o pacote completo na ordem etl → etl-listagens → merge-listagens, parando no 1º erro (SOFT=1 tolera entradas ausentes)
+auditoria: ## Gera as fixtures de auditoria para o Raio-X do Indicador sob data/dist/auditoria/ (SOFT=1 tolera insumos ausentes)
+	$(PYTHON) -m etl.main_auditoria $(SOFT_ARGS)
+
+dados: ## Gera o pacote completo na ordem etl → etl-listagens → merge-listagens → auditoria, parando no 1º erro (SOFT=1 tolera entradas ausentes)
 	@$(PYTHON) -m etl.scripts.cadeia_dados $(SOFT_ARGS); \
 	guard=$$?; \
 	if [ $$guard -eq 3 ]; then exit $(if $(SOFT_ATIVO),0,1); fi; \
 	if [ $$guard -ne 0 ]; then exit $$guard; fi; \
 	$(MAKE) --no-print-directory etl \
 	&& $(MAKE) --no-print-directory etl-listagens \
-	&& $(MAKE) --no-print-directory merge-listagens
+	&& $(MAKE) --no-print-directory merge-listagens \
+	&& $(MAKE) --no-print-directory auditoria
 
 check-dados: ## Valida o contrato e a frescor do pacote data/dist/indicadores.zip (AVISO:/INFO: informativos, exit 0; violação de contrato → ERRO + 1)
 	$(PYTHON) -m etl.scripts.check_dados

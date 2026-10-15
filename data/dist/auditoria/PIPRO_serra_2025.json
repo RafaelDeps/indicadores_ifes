@@ -1,0 +1,824 @@
+{
+  "indicador": "PIPRO",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2025,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2025_1.xlsx",
+      "revisao": "2025-1"
+    },
+    {
+      "arquivo": "listagem_2025_2.xlsx",
+      "revisao": "2025-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "NPB",
+      "rotulo": "Produções Acadêmicas Bibliográficas",
+      "unidade": "Artigos",
+      "tipoContagem": "contagem",
+      "apurado": 116,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano",
+        "tipo"
+      ],
+      "registros": [
+        {
+          "titulo": "Classificação Automática de Rochas Ornamentais com Rede Neural Siamesa para Mapeamento e Zoneamento Agromineral",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "TECNOLOGIA 3D NO ENSINO DE VÁLVULAS DE CONTROLE: MODELAGEM E IMPRESSÃO DE MODELOS DIDÁTICOS PARA MELHORAR O PROCESSO DE ENSINO-APRENDIZAGEM",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "TECNOLOGIA 3D NO ENSINO DE MOTORES DE INDUÇÃO TRIFÁSICOS: MODELAGEM E IMPRESSÃO DE MODELOS DIDÁTICOS PARA MELHORAR O PROCESSO DE ENSINO-APRENDIZAGEM",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "EXPERIÊNCIAS E REFLEXÕES SOBRE O PROJETO DE EXTENSÃO 'SERRAMAKER: FOMENTANDO A CULTURA MAKER NO MUNICÍPIO DA SERRA'",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Benchmark Dataset of Narrative Student Essays with Multi-Competency Grades for Automatic Essay Scoring in Brazilian Portuguese",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Large Language Models for Chatbot Applications Handling Sensitive Information",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Unveiling Business Processes Control-Flow: Automated Extraction of Entities and Constraint Relations from Text",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Data-Driven Analysis for Improving Educational Policies: A Case in Brazil?s Textbook Program",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Comparação de Modelos de Embeddings e LLMs para Geração Aumentada por Recuperação em Português",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Benchmarking Large Language Models for Text-to-SQL in Brazilian Portuguese and English",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Enhancing E-Commerce with a RAG-Powered Conversational Recommender System",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Evaluating Machine Learning Algorithms for Software Effort Estimation from Textual Descriptions of Requirements",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "GPT-3.5 for Data Augmentation in Automatic Essay Scoring: A Preliminary Analysis",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Exploring T5-Based Code QA Systems to Support Teaching Programming in Portuguese and English",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Application of Machine Learning for the Detection and Classification of Spinal Pathologies Using YOLO12x",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Detecçãoo Automática de Símbolos Gráficos em Projetos de Proteção Contra Incêndio",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Failure Monitoring in Pelletizing Process Fans Using Statistical Methods",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Construção e desenvolvimento de uma sistema de controle de uma estrutura robótica de reabilitação (ERR) baseada no framework ROS",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "CONSTRUÇÃO DE UMA PLATAFORMA LINEAR MÓVEL PARA CALIBRAÇÃO DE SENSORES DE PROXIMIDADE INDUTIVOS E CAPACITIVOS EM AULA PRÁTICA DE INSTRUMENTAÇÃO INDUSTRIAL",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "TECNOLOGIA 3D NO ENSINO DE MÁQUINAS DE CORRENTECONTÍNUA: MODELAGEM E IMPRESSÃO DE MODELOS DIDÁTICOSPARA MELHORAR O PROCESSO DE ENSINOAPRENDIZAGEM",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "EXPERIÊNCIAS E REFLEXÕES SOBRE O PROJETO DE EXTENSÃO",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "AutomatizaçãO Da DetecçãO De Daphnia Magna Em Ambientes AquáTicos Por Meio De Deep Learning E AnáLise De Imagens",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Algoritmo Genético para a Otimização do Problema do Sequenciamento de Tarefas com Produção Multi-Estágio, Máquinas Paralelas e Tempo de Setup: Estudo de Caso da Logística do Beneficiamento de Rochas Ornamentais",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Optimizing Ornamental Stone Processing: A Parallel Genetic Algorithm for Multi-Stage Scheduling with Setup Times",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Optimization of the Energy Management of a Real Electrical Facility with Energy Storage and Distributed Generation Using Simulated Annealing",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Experiências e Reflexões sobre o Projeto de Extensão 'SerraMaker: Fomentando a Cultura Maker no Município da Serra'",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Um Sistema Hardware/Software para Detecção de Obstáculos em Vias Urbanas",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Desenvolvimento e Avaliação de um Sistema de Escrita e Desenho no Ar com Caneta Eletrônica e VLMs",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Driver Drowsiness Detection: Comparative Analysis of BiLSTM and CNN+BiLSTM Architectures",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Predicting Temperatures Inside a Steel Slab Reheating Furnace Using Neural Networks",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Storm Impact Prediction for Grids: A System for Distribution Networks",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Use of Computer Vision with Artificial Intelligence for Detection and Classification of Briquettes",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "DeepSteel: Automação da Medição de Largura de Placas de Aço Usando Redes Neurais",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Estimador adaptativo fuzzy para controladores regulatórios de distúrbios periódicos com frequência variável aplicado numa planta didática",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Uso de Visão Computacional Para Detecção de Pólipos Colorretais: Análise Comparativa Entre YOLO11s, UNet, UNet++ e Avaliação Multicêntrica",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Aplicação de D eep Learning para Análise de Desgaste de Bocais em Convertedores LD/BOF",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Application of Computer Vision and Artificial Intelligence for Briquette Detection and Classification",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Sistema De VisãO Computacional Para InspeçãO Dimensional De Placas No Lingotamento ContíNuo*",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "AplicaçõEs De InteligêNcia Artificial Generativa Em CiêNcia De Dados: Desafios TéCnicos E ÉTicos No Uso De Dados SintéTicos",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "PrediçãO De EvasãO Escolar: AvaliaçãO De TéCnicas De Balanceamento Supervisionadas Com InterpretaçãO Local Via Lime",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "PrevisãO Da Passagem De EscóRia No Lingotamento ContíNuo Com Redes Neurais Recorrentes Aplicadas à AnáLise De VibraçãO",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "ComparaçãO Entre Yolov11 E Yolov12 Na DetecçãO De Defeitos Em Chapas MetáLicas",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Towards a Universal Vibration Analysis Dataset",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Assessing the Effectiveness of Transfer Learning in Chest X-ray Analysis with the BRAX Dataset",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Selective Embedding for Deep Learning",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "An accelerometer-based dataset for monitoring slag in steel manufacturing",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Integrating Spatial and Temporal Features for Bearing Fault Diagnosis",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Evaluating Transformer-Based Architectures for Simultaneous Audio Speech Transcription and Background Audio Captioning",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Comparative Evaluation of Text Recognition Methods for Field Extraction in Brazilian National Driver?s Licenses",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Pig Detection Using Computer Vision Models Trained on Synthetic Datasets",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Spectrogram Vision Transformer (ViT) Approach for Cross-Domain Bearing Fault Diagnosis on the UORED-VAFCLS Dataset",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Surface-enhanced Raman spectroscopy as a tool for food and environmental monitoring of pesticides: recent trends and perspectives",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Desenvolvimento de um protótipo de sistema de automação residencial para o controle de acesso a residências por meio de reconhecimento facial",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Photovoltaic Energy Forecasting Using Machine Learning: Application in a Federal Public Institution",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Advancing the Domain of Strategy Planning and Implementation through Enterprise Architecture: A Research Agenda for Capability-Based Management",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Blast furnace control by hierarchical similarity search in historical data",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Depression and Anxiety Screening for Pregnant Women via Free Conversational Speech in Naturalistic Condition",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "A machine learning approach for intra- and inter-cast hot metal temperature forecasting",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Pt-HotpotQA: Evaluating Multi-Hop Question Answering on Original and Portuguese-translated Datasets Using LLMs",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "RagPharma: A RAG-Based Chatbot for Medicine Leaflets with a Dual-Dataset Evaluation Framework",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Automatic Multiple-Choice Question Generation and Evaluation Systems Based on LLM: A Study Case With University Resolutions",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "AI-Driven Early Mental Health Screening: Analyzing Selfies of Pregnant Women",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Previsão de demanda de curto prazo usando aprendizado de máquina com dados por telemetria: Um estudo de caso no Brasil",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Ciclos Políticos e Desempenho dos Bancos: Uma Revisão Sistemática da Literatura",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Inflação: uma análise entre a variação do valor Cesta Básica de alimentos e o Poder de Compra regional.",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Escala FK4BR: Desenvolvimento de uma medida ultra-curta de conhecimento financeiro",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Contabilidade mental: desenvolvimento e validação de escala",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Traços de personalidade Big Five e a propensão ao endividamento: uma abordagem metodológica para o desenvolvimento da escala BF15BR",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Atitude dos brasileiros em relação ao endividamento pessoal: uma abordagem para desenvolvimento e validação de escala de mensuração",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Vieses comportamentais e endividamento pessoal: uma revisão sistemática da literatura",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Escala FK3BR: Desenvolvimento de uma Medida Ultra-Curta de Conhecimento Financeiro",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "DASBR: uma nova escala para avaliar a atitude ao endividamento",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Integrated Photonic Neural Networks for Equalizing Optical Communication Signals: A Review",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Reificação e reconhecimento: a teoria crítica tem algo a dizer sobre a Questão Palestina?",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Crise do Estado-nação e onda populista: um olhar a partir da Teoria Crítica",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Detecça o e Medição Online de Rasgos, Furos e Arranhados em Correia Transportadora",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Mediçãoo de Defeitos Superficiais em Chapas Metalicas com YOLOv11",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Estimador adaptativo fuzzy para controladores regulato rios de disturbios perio dicos com freque ncia varia vel aplicado numa planta dida tica",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Leveraging artificial intelligence for integrative omics analysis to elucidate Covid-19 response",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Utilização de Redes Autoencoders Variacionais Condicionais para Expandir a Base de Dados de Espectros de Raman do Coque Metalúrgico",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "An Efficient Non-Intrusive Load Monitoring Approach via Spectrogram Analysis and Kernel PCA",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Automated Skin Cancer Detection and Diagnosis Using Neural Networks and Multi-Agent Systems,",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Automatic Detection of Cardiac Pathologies from ECG Signals Using Variational Autoencoders (VAE)",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Influence of Different Excitations in the Identification of a Nonlinear Cart-Pendulum System",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Comparative Analysis of Machine Learning Models for Misogynistic Hate Speech Detection in Brazilian Portuguese: A Study Using the MINA-BR Dataset",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Pipeline for Multivariate Time Series Forecasting of Gas Consumption in Pelletization Process",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Evaluation of automated pressure transient detection methods for efficient oil well management",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Previsão de Vazão de Rios usando Rede Perceptron Multi-Camada Otimizada por Neural Architecture Search",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "O Uso de Jogos na Educação Financeira: Uma Revisão Sistemática",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Evoluindo Arquiteturas para Previsão de Séries Temporais via Neuroevolução Gramatical",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Reconhecimento de Emoções na Fala entre Idiomas: Inglês versus Alemão",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Resource-Management Strategy Game for Teaching Financial Principles to STEM Professionals",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Combining Clustering and Association Rule Mining in Educational Data: Patterns in Diagnostic Assessments",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Detecting Misogynistic Hate Speech in Portuguese",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Solar Flare Prediction Using Multivariate Time Series and Cost-Sensitive Machine Learning",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Finite State Machine-Based Smart Contracts on Tezos: A Time-Locked Vault Implementation in Jus",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Comparative Analysis of Machine Learning Models for Misogynistic Hate Speech Detection in Brazilian Portuguese: a Study Using the Mina-Br Dataset",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "The Jus Programming Language: Towards a Functional Language for Secure and Verifiable Smart Contracts on Tezos",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "MTS-PolKA: Weighted Multipath Traffic Splitting With Source Routing for Elephant and Mice Flows",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "A Path-Aware Routing for Data Intensive Science: Proposal, Deployment and Evaluation in High-Performance Testbed",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Business Process Design Support with Automated Interviews",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Preliminary Panoramic View of Continuous Software Engineering Adoption in Brazilian Organizations",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "LEDS: The Rise of the (Collective) Force ¿ 10 Years of Impact on Innovation and Education in Software Engineering: What we Have Learned by Integrating Teaching, Research, and Extension in Higher Education",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Apoio na adoção da Lei Geral de Proteção de Dados Pessoais por meio de anotações semânticas em descrições de serviços Web",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Desenvolvimento De Sistema Para Monitoramento De Anomalias Em Correias Transportadoras Utilizando VisãO Computacional",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Reconhecimento De Caracteres ÓPticos Em Placas De AçO",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Detecção Automática de Desalinhamentos em Correias Transportadoras Utilizando Visão Computacional e Redes Neurais",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Avaliação da Eficácia do Programa Sinapse da Inovação no Fomento ao Empreendedorismo Capixaba Uma Análise de Sobrevivência Empresarial e Propriedade Intelectual.",
+          "ano": 2025,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "A ESTRUTURA INTELECTUAL DOS DISTRITOS DE INOVAÇÃO: UMA ANÁLISE BIBLIOMÉTRICA DA PRODUÇÃO CIENTÍFICA NAS BASES DE DADOS SCOPUS E WEB OF SCIENCE",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "The Jus Programming Language: Towards A Functional Language For Secure and Verifiable Smart Contracts On Tezos",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Formal Verification of Epistemic States with Uncertainty in Multi-Agent Systems",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Four-Valued Model Checking for Byzantine Fault Tolerant Consensus Verification",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Grammatical Neuroevolution for Efficient Multivariate Time Series Forecasting",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Análise Comparativa de Técnicas de Aprendizado de Máquina na Previsão da Geração de Energia Eólica: Um Estudo de Caso de Dados do Brasil",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Arquitetura Iot Com InteligêNcia Artificial Para Monitoramento E ClassificaçãO De Falhas Em CâMaras De ConservaçãO De Vacinas",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Forecasting Wind and Solar Energy Generation Using Recurrent Neural Networks: A Comparison Between LSTM and GRU",
+          "ano": 2025,
+          "tipo": "Conference Event"
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "NPT",
+      "rotulo": "Produções Técnicas e Tecnológicas",
+      "unidade": "Produções",
+      "tipoContagem": "contagem",
+      "apurado": 35,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano",
+        "tipo"
+      ],
+      "registros": [
+        {
+          "titulo": "Parecer de 4 artigos para a 26th International Conference on Artificial Intelligence in Education (AIED)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o 20th European Conference on Technology Enhanced Learning (ECTEL)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 8 artigos para o XXII Encontro Nacional de Inteligência Artificial e Computacional (ENIAC)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para a 10ª Escola Regional de Informática do Espírito Santo (ERI-ES)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o XXXVI Simpósio Brasileiro de Informática na Educação (SBIE)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 5 artigos para o XVI Simpósio Brasileiro de Tecnologia da Informação e da Linguagem Humana (STIL)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliação de 5 trabalhos submetidos ao 53° Congresso Brasileira de Educação em Engenharia - COBENGE 2025 e VIII Simpósio Internacional de Educação em Engenharia",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer para submissão de artigo para o periódico Computer and Industrial Engineering",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Webinar: Otimização da Indústria",
+          "ano": 2025,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Avaliador dos projetos de pesquisa submetidos aos Editais 2025/2026 do Programa Institucional de Iniciação Científica, Desenvolvimento Tecnológico e Inovação (PICTI)",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para o Seminário Integrado de Software e Hardware (SEMISH) 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para o SEMISH 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliador da IX Jornada de Integração do Ifes, realizada de 10 a 14 de Novembro de 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Estudante do Campus Serra compartilha experiências com colegas sobre tecnologias que contribuem para seu processo de ensino-aprendizagem",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Campus Serra inicia capacitação de professores do Projeto LabMaker 4.0",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Polo de Inovação do Ifes celebra dez anos de atividades",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Estudantes do Ifes-Serra conquistam medalhas na OBR Teórica 2025",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Equipe de Robótica do Ifes ? Serra conquista Prêmio Maker na etapa estadual da OBR 2025",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Steel Slag Flow Dataset (SSFD)",
+          "ano": 2025,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Alunos do ES desenvolvem tecnologia que permite 'escrever no ar'",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Electrical consumption and demand Dataset from the Federal Institute of Espírito Santo",
+          "ano": 2025,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Avaliadora dos projetos de pesquisa submetidos aos Editais 2025/2026 do Programa Institucional de Iniciação Científica, Desenvolvimento Tecnológico e Inovação (PICTI), do Instituto Federal do Espírito Santo",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "IA Generativa não e tudo (AI.Brasil)",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Painel em Vitória discute uso da IA para identificar estresse e depressão",
+          "ano": 2025,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Parecer de artigos submetidos à 10a Escola Regional de Informática do ES",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o WIT 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o ERMAC 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para o ENIAC 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de artigos para o CLEI 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 4 artigos para o SBSI 2026",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o ENCOINFO 2025 - XXVII Congresso de Computação e Tecnologias da Informação",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o 11º ENCompIF 2025",
+          "ano": 2025,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Planejamento da Produção: Modelos híbridos combinando mineração de processos e simulação",
+          "ano": 2025,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Avaliadora dos projetos de pesquisa do Programa Institucional de Iniciação Científica, Desenvolvimento Tecnológico e Inovação (PICTI), do Instituto Federal do Espírito Santo",
+          "ano": 2025,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "High-Voltage Vertical Disconnect Switches: Open and Closed Position Status Dataset",
+          "ano": 2025,
+          "tipo": "produtos_tecnologicos"
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "PC",
+      "rotulo": "Programas de Computador",
+      "unidade": "Softwares",
+      "tipoContagem": "contagem",
+      "apurado": 0,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano"
+      ],
+      "registros": []
+    }
+  ]
+}

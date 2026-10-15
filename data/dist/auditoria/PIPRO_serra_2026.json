@@ -1,0 +1,314 @@
+{
+  "indicador": "PIPRO",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2026,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2026_1.xlsx",
+      "revisao": "2026-1"
+    },
+    {
+      "arquivo": "listagem_2026_2.xlsx",
+      "revisao": "2026-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "NPB",
+      "rotulo": "Produções Acadêmicas Bibliográficas",
+      "unidade": "Artigos",
+      "tipoContagem": "contagem",
+      "apurado": 26,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano",
+        "tipo"
+      ],
+      "registros": [
+        {
+          "titulo": "A Web-Based Information System for Ornamental Rock Classification and Similarity Search Using Siamese Networks",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Brazilian Portuguese Image Captioning with Transformers: A Study on Cross-Native-Translated Dataset",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "To Describe or Not to Describe? Benchmarking Database Representations for Schema Linking in Text-to-SQL",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Automating Business Process Modeling: An LLM-Based Approach with Situation-Based Modeling Notation",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A fórmula prismoidal: a chave mestra para o cálculo de volumes",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Multi-Modal Multivariate Forecasting of Recoverable LDG in Steelmaking: A Comparative Study of LSTM and Ensemble GBDT Strategies",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "A Luminous Pen for Air-Writing: Hybrid Approach with Computer Vision and Vision?Language Models",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Proper Body Landmark Subset Enables More Accurate and 5X Faster Recognition of Isolated Signs in LIBRAS",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Industrial steel slag flow data loading method for deep learning applications",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Comparative Evaluation of YOLO-family Detectors for Pig Detection in Precision Livestock Systems",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Exploring question answering: metric analysis and evaluation framework for enhanced interpretability",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Segmentation of River Networks from Multispectral Remote Sensing Data Using Deep Neural Networks",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Cognitive Biases and Consumer Debt Behavior: A Systematic Literature Review",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "CPM9: Desenvolvimento e Validação de uma Escala para Mensuração das Percepções Culturais sobre o Dinheiro",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Percepções culturais sobre o dinheiro e propensão ao endividamento: um estudo de equações estruturais",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Cloud-based remote laboratory for teaching modern control systems: enhancing practical learning through interactive simulations",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Unrecognized Even in Death: The Statistical Invisibility of Autistic People in Brazilian Suicide Mortality Records",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Mitigate microbial contamination and fuel degradation in marine diesel B20: Evidence from multi-analytical and metagenomic approaches",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Desindustrialização e hegemonia do capital financeiro: determinantes históricos e aspectos metodológicos sobre o estudo da ação política do empresariado industrial",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Calibration of the Pressure X Flow Curve of Supersonic Nozzles for Experiments in Physical Modeling at 1:10 Scale",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Path-Aware Network with Residue Number System : Intrinsic Path Verification and High-Performance Routing",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Garantias de QoS em Redes de Transporte 6G: Roteamento na Origem Orientado a Filas de Serviço",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Avaliação do uso de Aprendizado de Máquina para Engenharia de Tráfego em Redes Cientes de Caminho",
+          "ano": 2026,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A ESTRUTURA INTELECTUAL DOS DISTRITOS DE INOVAÇÃO uma análise bibliométrica da produção científica nas bases de dados Scopus e Web of Science",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Sperm sncRNA networks are synchronized by a coordination between adverse childhood experiences (ACE) and current stress",
+          "ano": 2026,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "The miRNA-coordinated synergism for placental gene regulation throughout pregnancy",
+          "ano": 2026,
+          "tipo": "Journal"
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "NPT",
+      "rotulo": "Produções Técnicas e Tecnológicas",
+      "unidade": "Produções",
+      "tipoContagem": "contagem",
+      "apurado": 22,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano",
+        "tipo"
+      ],
+      "registros": [
+        {
+          "titulo": "Programação Orientada a Objetos - Teoria e Prática",
+          "ano": 2026,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Programação Orientada a Objetos - Teoria e Prática (Versão Mobile)",
+          "ano": 2026,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Parecer de 4 artigos para a XXII Simpósio Brasileiro de Sistemas de Informação (SBSI)",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 5 artigos para o 21th European Conference on Technology Enhanced Learning (ECTEL)",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para a 27th International Conference on Artificial Intelligence in Education (AIED)",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para a 17th International Conference on Computational Processing of Portuguese (PROPOR 2026)",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 Artigo para o 53º Seminário Integrado de Software e Hardware (SEMISH)",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliador de Artigos Centíficos no VI BELs - Behavioral Science Lab Seminars - Ára temática: Economia Comportamental",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Workshop: mercado de capitais na prática ? fundamentos da compra, venda e valorização das ações",
+          "ano": 2026,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o WIT 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o SEMISH 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para o 12º ENCompIF 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o CBA 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o CLEI 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o SBIE 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o Sibgrapi 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 artigo para o IEEE LACCI 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para o ENIAC 2026",
+          "ano": 2026,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "PodInovar na Fapes: episódio 14 destaca o ineditismo dos Centros Temáticos no Espírito Santo",
+          "ano": 2026,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Avaliadora dos projetos de pesquisa do Programa Institucional de Iniciação Científica, Desenvolvimento Tecnológico e Inovação (PICTI), do Instituto Federal do Espírito Santo",
+          "ano": 2026,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Multi-Horizon Wind Power Forecasting Using Machine Learning and Deep Learning Models",
+          "ano": 2026,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Processed Wind Power and Weather Time Series for Machine Learning Applications in Brazil",
+          "ano": 2026,
+          "tipo": "outras_producoes_tecnicas"
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "PC",
+      "rotulo": "Programas de Computador",
+      "unidade": "Softwares",
+      "tipoContagem": "contagem",
+      "apurado": 1,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano"
+      ],
+      "registros": [
+        {
+          "titulo": "Multi-Horizon Wind Power Forecasting Using Machine Learning and Deep Learning Models",
+          "ano": 2026
+        }
+      ]
+    }
+  ]
+}

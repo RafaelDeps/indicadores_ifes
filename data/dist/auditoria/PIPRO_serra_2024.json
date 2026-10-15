@@ -1,0 +1,826 @@
+{
+  "indicador": "PIPRO",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2024,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2024_1.xlsx",
+      "revisao": "2024-1"
+    },
+    {
+      "arquivo": "listagem_2024_2.xlsx",
+      "revisao": "2024-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "NPB",
+      "rotulo": "Produções Acadêmicas Bibliográficas",
+      "unidade": "Artigos",
+      "tipoContagem": "contagem",
+      "apurado": 97,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano",
+        "tipo"
+      ],
+      "registros": [
+        {
+          "titulo": "Defect detection in the textile industry using the YOLOv8 model",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Comprehensive Evaluation of Publicly Available QRS Detection Algorithms for ECG Analysis",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "AUTOMATIC DISEASE DETECTION IN OCT IMAGES USING A REDUCED-SIZE DEEP LEARNING MODEL",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Assessing Abstractive and Extractive Methods for Automatic News Summarization",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Comparative Evaluation of Transformer-Based Vision Encoder-Decoder Models for Brazilian Portuguese Image Captioning",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Combinação de Modelos de Aprendizado de Máquina utilizando Teoria de Resposta ao Item para Avaliação de Coesão Textual em Redações no contexto do ENEM",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Geração Automática de Perguntas em Português do Brasil Usando os Modelos PTT5 e FLAN-T5",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Sumarização Automática de Artigos de Notícias em Português: Da Extração à Abstração com Abordagens Clássicas e Modelos Neurais",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Uma Base de Dados Anotada para Extração Automática de Entidades e Restrições de Modelos de Processos de Negócio",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Retas tangentes a conicas e suas unicidades",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "MTS-PolKA: Divisão de Tráfego Multicaminhos em Proporção de Peso com Roteamento na Fonte",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Surface-Enhanced Raman Scattering Combined with Machine Learning for Rapid and Sensitive Detection of Anti-SARS-CoV-2 IgG",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "EXPERIÊNCIAS E REFLEXÕES SOBRE O PROJETO DE ENSINO 'OFICINAS DO MUNDO MAKER' REALIZADO NO IFES CAMPUS SERRA",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "DETECTION AND CLASSIFICATION OF SPINAL PATHOLOGIES IN X-RAY SCANS USING THE YOLOV8 NETWORK",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Implementation of a convolutional network for detection of PPE in automotive repair services",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Automatic Detection of Seafloor Bedforms for 3D Bathymetric Data",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Detection and classification of spinal pathologies in x-ray scans using the YOLOv8 network",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Plataforma robótica móvel utilizada no ensino de ROS e SLAM",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "UMA PROPOSTA DE APRENDIZAGEM BASEADA EM PROJETOS INTEGRANDO FUNDAMENTOS DE MATEMÁTICA E FÍSICA DA EDUCAÇÃO BÁSICA COM UM ROBÔ SEGUIDOR DE LINHA",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "PROPOSTA DE BANCADA DIDÁTICA PARA INSTRUMENTAÇÃO E CONTROLE DE NÍVEL E VAZÃO - MODELAGEM 3D",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "PROPOSTA DE BANCADA DIDÁTICA PARA INSTRUMENTAÇÃO E CONTROLE DE NÍVEL E VAZÃO - P&ID e DCP",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Comparative Methods for Addressing Imbalanced Datasets in Predicting Medical Appointment No-Shows",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Um Estudo Comparativo de Tecnicas de Aprendizado de Máquina para a Predição de Temperatura em Regeneradores",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Modelo de Programação Linear para Otimização da Alocação de Atividades Lavoura-Pecuária para Agricultura Familiar",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "MODELO EXATO PARA O PROBLEMA DA GRADE DE HORÁRIO ESCOLAR CONSIDERANDO CUSTO PEDAGÓGICO E PREFERÊNCIAS DOCENTES: REALIDADE DOS INSTITUTOS FEDERAIS",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Modelo Exato para Otimização do Problema do Sequenciamento para Produção Multi-Estágio e Tarefas em Máquinas Paralelas Considerando tempo Setup: Estudo de Caso do Beneficiamento de Rochas Ornamentais",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "CONTROLE LOGÍSTICO DE UM PÁTIO DE PLACAS COM EMPILHAMENTO UTILIZANDO LÓGICA FUZZY",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Modelo de Programação Linear Inteira para Otimização do Transporte na Colheita Florestal",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "SOLUCIONANDO O PROBLEMA DE ROTEAMENTO DE VEÍCULOS CAPACITADO COM ALGORITMOS GENÉTICOS E PARALELISMO",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Combinando Programação Linear com Modelo Analítico de Balanço de Materiais para Otimização do Gerenciamento de Reservatórios de Petróleo",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Uma Proposta de Aprendizagem Baseada em Projetos Integrando Fundamentos de Matemática e Física da Educação Básica com um Robô Seguidor de Linha",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Experiências e Reflexões sobre o Projeto de Ensino 'Oficinas Do Mundo Maker' realizado no Ifes Campus Serra",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Reconhecimento de Texto para Sistemas Air Writing: Um Estudo Experimental",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Sistema de Apoio à Localização em Ambientes Internos para Pessoas com Deficiência Visual Utilizando Tecnologia Beacon",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Expert system for early sign stuck pipe detection: Feature engineering and fuzzy logic approach",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "SRcdFuzzy: Software for simulating adaptive regulatory controllers of cyclical disturbances with frequency variations estimated from fuzzy logic",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Iron ore pellets measurement using deep learning based on YOLACT",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Predictability of Energy Consumption in a Public Institution Using ANN",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Intelligent analysis system and automatic conference of train formations at EFVM using computation vision",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Tomato Detection and Classification by Color, Size, and Imperfections using Computer Vision",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Emergency callback prioritize",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Checking the Status of High Voltage Disconnection Switches Using Siamese Convolutional Neural Networks",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Enhancing Brazilian Sign Language Recognition Through Skeleton Image Representation",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Aprimoramento de Modelos de Classificação com Dados Enriquecidos via Web Scraping: Um Estudo de Caso da Competição Dog Breed Identification",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Segmentação de Estradas em Mapas de Remissão utilizando Redes Neurais",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Efficient monitoring of longitudinal tears in conveyor belts using 2D laser scanner and statistical methods",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "APLICAÇÃO DE REDES AUTOENCODERS VARIACIONAIS CONDICIONAIS PARA O AUMENTO DA BASE DE ESPECTROS DE RAMAN DE AMOSTRAS DE SÍNTER",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "OCR-BASED FRAMEWORK FOR CALCULATING THE ROI OF RESIDENTIAL SOLAR ENERGY INSTALLATIONS",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Framework Baseado em OCR para Cálculo de ROI de Instalação Residencial de Energia Solar",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Modeling competences in enterprise architecture: from knowledge, skills, and attitudes to organizational capabilities",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Ontological Analysis of Advanced Capability Modeling in ArchiMate: A First Step Towards Language Revision",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Ontological Foundations of Resilience",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Core-O: A Competence Reference Ontology for Professional and Learning Ecosystems",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Colonialidade do poder e mercado financeiro da América Latina: análise crítica dos acordos de Basileia",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Impact of Tax Policies on Foreign Direct Investment: A Decade of Bibliometric Analysis and Systematic Review",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "A Theoretical Framework to analyze the effects and characteristics that determine an SME with Peter Pan Syndrome",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Tecnocracia e negacionismo: a face de Janus da erosão democrática",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "É o suicídio um problema filosófico?",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Predicting diabetic retinopathy stage using Siamese Convolutional Neural Network",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "DESENVOLVIMENTO DE UM SISTEMA DE PERCEPÇÃO PARA ROBÔS COLABORATIVOS USANDO ROS2",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Thermal Inspection of Electrical Substation?s Equipments Using YOLOv8",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Exploring Speech Emotion Recognition based on XLSR-53 Model and UMAP",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Long short-term memory neural networks applied in demand forecast in the retail market",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Checking the coupling between overhead crane hook and steel ladle trunnion in Steelmaking Plant using convolutional neural networks",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Excitation signals to state-space realization and linear-regression identification methods applied to a MIMO system",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Detecting Misogynistic Hate Speech in Portuguese",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Comparative Evaluation of Image Classification Models for Ornamental Rock Classification",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Automating Rock Classification: A Vision Transformer Approach in Brazil's Ornamental Stone",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Relato de Experiência: Inclusão de Biografias de Pesquisadoras na Wikipédia",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Implementing Neuroevolution for Gas Consumption Forecasting in the Steel Industry",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Study of Slag Properties in Steel Dephosphorization in the EAF",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Impacto da Ordem entre a Seleção de Características e a Janela Deslizante em Séries Temporais Multivariadas na Previsão do Consumo de Gás na Pelotização de Minério de Ferro",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Utilização de Redes Neurais Convolucionais para Classificação da Esquizofrenia através de Microestados",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Análise das Movimentações Admissionais e Demissionais do Estado do Espírito Santo: Antes, Durante e Após a Pandemia da COVID-19",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Deepfake detection using Eulerian video magnification and Deep Learning",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Predicting Blockchain Application Performance with Machine Learning Techniques",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Machine Learning Techniques for Egg Production Prediction",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "A Comparative Study of CNN for Prediction of Human Cancer Types Integrating Protein-Protein Interaction Networks and Omics Data",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "PoT-PolKA: Let the Edge Control the Proof-of-Transit in Path-Aware Networks",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "MM-INT: Telemetria em Switches Programáveis com Múltiplas Filas usando Roteamento Multicaminhos na Origem",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "PathSec: Path-Aware Secure Routing with Native Path Verification and Auditability",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Framework for Integrating Machine Learning Methods for Path-Aware Source Routing",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "An Annotated Dataset for Automatic Extraction of Entities and Restrictions from Business Process Models",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Eco-inovações em cidades inteligentes: uma abordagem baseada em políticas de incentivo",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Proteção da Propriedade Intelectual: Utilização do Desenho Industrial entre Empreendedores do Setor Joalheiro da Região Metropolitana da Grande Vitória/ES",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "AVALIAÇÃO DA EFICÁCIA DO PROGRAMA SINAPSE DA INOVAÇÃO NO FOMENTO AO EMPREENDEDORISMO CAPIXABA: UMA ANÁLISE DE SOBREVIVÊNCIA EMPRESARIAL E PROPRIEDADE INTELECTUAL",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Aplicação do Provador de Teoremas LEAN no Ensino de Lógica Matemática para Alunos de Sistemas de Informação: Um Estudo de Caso",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Alteration of circulating ACE2-network related microRNAs in patients with COVID-19",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "Maternal immune response during pregnancy and neurodevelopmental outcomes: A longitudinal approach",
+          "ano": 2024,
+          "tipo": "Journal"
+        },
+        {
+          "titulo": "AutoBioLearn: An Automated Data Science Framework for eXplainable Analyses (XAI) of Clinical Datasets",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "TÉCNICAS DE MACHINE LEARNING PARA A PREVISÃO DA SUPERFÍCIE ESPECÍFICA DO MINÉRIO DE FERRO APÓS O PROCESSO DE PRENSAGEM",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "USO DE INTELIGÊNCIA ARTIFICIAL NA INVESTIGAÇÃO DA EVASÃO ESCOLAR",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "DESENVOLVIMENTO DE SENSORES VIRTUAIS USANDO REDES NEURAIS RECORRENTES",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "DESVENDANDO O POTENCIAL DO APRENDIZADO DE MÁQUINA NA EDUCAÇÃO: UMA ABORDAGEM INTEGRADA UTILIZANDO PLATAFORMA WEB",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "DESENVOLVIMENTO DE UMA PLATAFORMA DE COLETA DE DADOS DE TEMPERATURA PARA APLICAÇÕES DE MODELAGEM NO ENSINO DE ENGENHARIA",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "Diagnóstico de Falhas em Rolamentos de Motores Elétricos com Base na Análise da Assinatura da Corrente do Motor",
+          "ano": 2024,
+          "tipo": "Conference Event"
+        },
+        {
+          "titulo": "EVOLUÇÃO TECNOLÓGICA DOS VEÍCULOS ELÉTRICOS",
+          "ano": 2024,
+          "tipo": "Journal"
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "NPT",
+      "rotulo": "Produções Técnicas e Tecnológicas",
+      "unidade": "Produções",
+      "tipoContagem": "contagem",
+      "apurado": 47,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano",
+        "tipo"
+      ],
+      "registros": [
+        {
+          "titulo": "ESTIMATIVA DE PROFUNDIDADE MONOCULAR COM U-NET",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "APLICATIVO PARA VIDEO SUPER RESOLUTION",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Obtenção de Entidades e Relações de Restrições de Processos de Negócio a partir de Texto",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Categorização Automática de Currículos de Profissionais de TIC Utilizando Redes Neurais Profundas",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Parecer de 4 artigos para o 19th European Conference on Technology Enhanced Learning (ECTEL)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 Artigo para o 51º Seminário Integrado de Software e Hardware (SEMISH)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 Artigos para o XXXV Simpósio Brasileiro de Informática na Educação (SBIE)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 Artigos para o 9ª Escola Regional de Informática do Espírito Santo (ERI-ES)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 1 Artigo para o 21º Encontro Nacional de Inteligência Artificial (ENIAC)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 5 Artigos para o 15th Symposium in Information and Human Language Technology (STIL)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliação de 4 trabalhos submetidos ao 52° Congresso Brasileiro de Educação em Engenharia - COBENGE 2024 e VII Simpósio Internacional de Educação em Engenharia",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Alunos do curso de Engenharia realizam atividades em escola estadual da Serra do projeto SerraMaker",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Estudantes do Campus Serra realizam ação referente ao Projeto SerraMaker",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Pesquisa Operacional",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Modelagem para Otimização para Vale",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Modelagem para Otimização para ArcelorMittal Tubarão",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Avaliador dos projetos de pesquisa submetidos aos Editais 2024/2025 do Programa Institucional de Iniciação Científica, Desenvolvimento Tecnológico e Inovação (PICTI)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliador de 8 resumos expandidos na 16ª Jornada Científica e Tecnológica e 13º Simpósio de Pós-Graduação do IFSULDEMINAS",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliação de 1 projeto científico na Feira de Ciências e Inovação Capixaba (Fecinc 2024)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 2 artigos para o Escola Regional de Informática (ERI-ES) de 2024",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Estudantes do Campus Serra são premiadas no ERI-ES 2024",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Cadeira de rodas robotizada desenvolvida no Campus Serra é matéria do E-book dos 20 anos da FAPES",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Campus Serra realiza capacitação em Tecnologias da Economia 4.0 para professores da rede pública",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Programação diversa marca os dias de Jornada de Integração na Serra",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Estudantes do Campus Serra são premiados na Jornada de Integração 2024 - Região Central",
+          "ano": 2024,
+          "tipo": "entrevistas"
+        },
+        {
+          "titulo": "Avaliação de artigo Científico: Código ERC 45.1-18",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "II Congresso Interinstitucional de Contabilidade e Controladoria - Monitoria",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "II Congresso Interinstitucional de Contabilidade e Controladoria",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Classificação de faróis danificados de veículos",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Parecer de artigo para 9ª ESCOLA REGIONAL DE INFORMÁTICA DO ESPÍRITO SANTO (ERI-ES 2024) (ERI-ES 2024)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Ornamental Rocks dataset",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Detecção de Deepfakes em Vídeo",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Parecer de 3 artigoS para o SEMISH 2024",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o CLEI",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 4 artigos para o SBRC 2024",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliadora dos projetos de pesquisa submetidos aos Editais 2024/2025 do Programa Institucional de Iniciação Científica, Desenvolvimento Tecnológico e Inovação (PICTI), do Instituto Federal do Espírito Santo",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 5 artigos para o ERI-ES 2024",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Parecer de 3 artigos para o ENIAC 2024",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Avaliador dos trabalhos de iniciação científica na Jornada de Integração do Ifes",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Descrições textuais anotadas para extraçao de modelos de processo",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "SBMN dataset",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Aplicativo para Reconhecimento Facial e Geolocalização de Prestadores de Serviços da VEPEMA / TJES",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Sistema de Gestão de Prestadores de Serviço da VEPEMA / TJES",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        },
+        {
+          "titulo": "Parecer em 5 artigos para a 9ª Escola Regional de Informática do Espírito Santo (ERI-ES 2024)",
+          "ano": 2024,
+          "tipo": "trabalhos_tecnicos"
+        },
+        {
+          "titulo": "Introdução à Especificação Formal de Sistemas com TLA+: Fundamentos e Exemplos Práticos",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "Introduction to Systems Specification with TLA+",
+          "ano": 2024,
+          "tipo": "outras_producoes_tecnicas"
+        },
+        {
+          "titulo": "AutoBioLearn: An Automated Data Science Framework for eXplainable Analyses (XAI) of Clinical Datasets",
+          "ano": 2024,
+          "tipo": "softwares_sem_patente"
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "PC",
+      "rotulo": "Programas de Computador",
+      "unidade": "Softwares",
+      "tipoContagem": "contagem",
+      "apurado": 9,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano"
+      ],
+      "registros": [
+        {
+          "titulo": "ESTIMATIVA DE PROFUNDIDADE MONOCULAR COM U-NET",
+          "ano": 2024
+        },
+        {
+          "titulo": "APLICATIVO PARA VIDEO SUPER RESOLUTION",
+          "ano": 2024
+        },
+        {
+          "titulo": "Obtenção de Entidades e Relações de Restrições de Processos de Negócio a partir de Texto",
+          "ano": 2024
+        },
+        {
+          "titulo": "Categorização Automática de Currículos de Profissionais de TIC Utilizando Redes Neurais Profundas",
+          "ano": 2024
+        },
+        {
+          "titulo": "Classificação de faróis danificados de veículos",
+          "ano": 2024
+        },
+        {
+          "titulo": "Detecção de Deepfakes em Vídeo",
+          "ano": 2024
+        },
+        {
+          "titulo": "Aplicativo para Reconhecimento Facial e Geolocalização de Prestadores de Serviços da VEPEMA / TJES",
+          "ano": 2024
+        },
+        {
+          "titulo": "Sistema de Gestão de Prestadores de Serviço da VEPEMA / TJES",
+          "ano": 2024
+        },
+        {
+          "titulo": "AutoBioLearn: An Automated Data Science Framework for eXplainable Analyses (XAI) of Clinical Datasets",
+          "ano": 2024
+        }
+      ]
+    }
+  ]
+}

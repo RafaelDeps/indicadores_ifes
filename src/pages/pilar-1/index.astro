@@ -1,9 +1,27 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import IndicatorCard from '../../components/IndicatorCard.astro';
+import MemoriaCalculo from '../../components/MemoriaCalculo.astro';
+import SecaoRastreabilidade from '../../components/SecaoRastreabilidade.astro';
+import BotaoRaioX from '../../components/BotaoRaioX.astro';
+import RaioXDrawer from '../../components/RaioXDrawer.astro';
+import { portaoAberto } from '../../lib/downloads';
+import { anoPadrao } from '../../lib/ano';
+import { obterAnosDisponiveis } from '../../lib/dataset';
 import { obterIndicadoresPorPilar } from '../../lib/selectors';
+import { obterRastreabilidadePilar } from '../../lib/rastreabilidade';
 
 const indicadoresP1 = obterIndicadoresPorPilar(1, 'serra');
+// Contexto inicial da memória: o mesmo critério do cartão (ano padrão do
+// indicador para o campus padrão). O cliente corrige pela URL na 1ª pintura.
+const anoMemoria = (ind: (typeof indicadoresP1)[number]) =>
+  anoPadrao(ind) ?? obterAnosDisponiveis().at(-1) ?? 2026;
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const rastreabilidade = obterRastreabilidadePilar(1);
+const citacoes = rastreabilidade.artefatos.map((artefato) => ({ rotulo: artefato.rotulo }));
+const exibirRaiox = portaoAberto();
 ---
 
 <BaseLayout title="Pilar 1 — Engajamento Acadêmico e Inclusão | Indicadores IFES">
@@ -17,8 +35,22 @@ const indicadoresP1 = obterIndicadoresPorPilar(1, 'serra');
     Engajamento Acadêmico e Inclusão — quatro indicadores do modelo CONIF, com valores por ano.
   </p>
   <div class="grade">
-    {indicadoresP1.map((indicador) => <IndicatorCard indicador={indicador} />)}
+    {
+      indicadoresP1.map((indicador) => (
+        <div class="celula-indicador">
+          <IndicatorCard indicador={indicador} />
+          {exibirRaiox && <BotaoRaioX sigla={indicador.sigla} />}
+          <MemoriaCalculo
+            indicador={indicador}
+            contextoInicial={{ campus: 'serra', ano: anoMemoria(indicador) }}
+            citacoes={citacoes}
+          />
+        </div>
+      ))
+    }
   </div>
+  <SecaoRastreabilidade rastreabilidade={rastreabilidade} base={base} />
+  {exibirRaiox && <RaioXDrawer base={base} />}
 </BaseLayout>
 
 <style>
@@ -44,6 +76,16 @@ const indicadoresP1 = obterIndicadoresPorPilar(1, 'serra');
     grid-template-columns: 1fr;
     gap: 1rem;
     margin-top: 1.5rem;
+  }
+
+  .celula-indicador {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .celula-indicador :global(.cartao-indicador) {
+    border-radius: 12px 12px 0 0;
+    box-shadow: none;
   }
 
   @media (min-width: 640px) {

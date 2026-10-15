@@ -1,0 +1,108 @@
+{
+  "indicador": "PIPROT",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2026,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2026_1.xlsx",
+      "revisao": "2026-1"
+    },
+    {
+      "arquivo": "listagem_2026_2.xlsx",
+      "revisao": "2026-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "PC",
+      "rotulo": "Programas de Computador",
+      "unidade": "Softwares",
+      "tipoContagem": "contagem",
+      "apurado": 1,
+      "detalhado": true,
+      "campos": [
+        "titulo",
+        "ano"
+      ],
+      "registros": [
+        {
+          "titulo": "Multi-Horizon Wind Power Forecasting Using Machine Learning and Deep Learning Models",
+          "ano": 2026
+        }
+      ]
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "PA",
+      "rotulo": "Patentes e Modelos de Utilidade",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": 0,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "RM",
+      "rotulo": "Registros de Marca",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "DI",
+      "rotulo": "Desenhos Industriais",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": 0,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "C",
+      "rotulo": "Cultivares",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "TC",
+      "rotulo": "Topografia de Circuitos",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "OGM",
+      "rotulo": "Organismos Geneticamente Modificados",
+      "unidade": "Ativos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    }
+  ]
+}

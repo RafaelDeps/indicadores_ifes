@@ -2,8 +2,12 @@ import type { DatasetCompleto } from './dataset-core';
 import { resolverContextoComAjuste } from './contexto';
 import { computarVisaoGeral, computarVisaoPilar, computarVisaoDetalhe } from './visao';
 import { aplicarVisaoGeral, aplicarVisaoPilar, aplicarVisaoDetalhe } from './aplicar-visao';
+import { computarVisaoMemoria, type VisaoMemoria } from './memoria';
+import { aplicarMemoria } from './aplicar-memoria';
+import { PILARES } from '../data/indicadores';
 import { obterTemaSalvo, aplicarTema } from './tema';
 import { criarIndiceBusca, pesquisarIndicadores } from './busca';
+import { inicializarRaiox, recarregarRaioxSeAberto } from './raiox-cliente';
 
 let datasetCache: DatasetCompleto | null = null;
 
@@ -186,6 +190,20 @@ export function sincronizarTela(
     aplicarVisaoPilar(document, metricasPilar);
   }
 
+  // Memória de cálculo (spec 025): recalcula as memórias do pilar e reescreve
+  // os hooks `data-memoria-*` — independentemente do <details> estar aberto.
+  if (document.querySelector('[data-memoria]')) {
+    const path = window.location.pathname;
+    const pilarNum = path.includes('/pilar-2') ? 2 : path.includes('/pilar-3') ? 3 : 1;
+    const pilar = PILARES.find((p) => p.numero === pilarNum);
+    if (pilar) {
+      const memorias = pilar.indicadoresSiglas
+        .map((sigla) => computarVisaoMemoria(dataset, sigla, contexto))
+        .filter((memoria): memoria is VisaoMemoria => memoria !== undefined);
+      aplicarMemoria(document, memorias);
+    }
+  }
+
   const elSiglaDetalhe = document.querySelector('[data-detalhe-sigla]');
   if (elSiglaDetalhe) {
     const sigla = elSiglaDetalhe.getAttribute('data-detalhe-sigla');
@@ -199,6 +217,9 @@ export function sincronizarTela(
 
   // Propaga parâmetros nos links internos
   propagarLinksInternos(document, contexto.campus, contexto.ano);
+
+  // Raio-X do Indicador (spec 026): se aberto, re-busca a fixture no novo contexto
+  recarregarRaioxSeAberto();
 }
 
 export function inicializarContextoCliente(): void {
@@ -292,6 +313,9 @@ export function inicializarContextoCliente(): void {
 
   // Inicializa a busca rápida
   inicializarBuscaRapida(document);
+
+  // Inicializa o Raio-X do Indicador
+  inicializarRaiox(document);
 
   // Executa sincronização inicial da tela
   sincronizarTela(undefined, undefined, false);

@@ -1,0 +1,67 @@
+---
+export interface Props {
+  sigla: string;
+  rotulo?: string;
+}
+
+const { sigla, rotulo = 'Raio-X do Indicador' } = Astro.props;
+---
+
+<button
+  type="button"
+  class="btn-raiox"
+  data-raiox-trigger={sigla}
+  aria-label={`Raio-X do Indicador ${sigla}`}
+  title={`Inspecionar microdados e auditoria do indicador ${sigla}`}
+>
+  <svg
+    class="icone-lupa"
+    viewBox="0 0 24 24"
+    width="14"
+    height="14"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+  <span class="texto-btn">{rotulo}</span>
+</button>
+
+<style>
+  .btn-raiox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    margin-top: 0.5rem;
+    width: fit-content;
+  }
+
+  .btn-raiox:hover {
+    background: var(--color-emerald-50);
+    border-color: var(--color-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .btn-raiox:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .icone-lupa {
+    font-size: 0.9rem;
+  }
+</style>

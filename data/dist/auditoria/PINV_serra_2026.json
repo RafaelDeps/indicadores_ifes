@@ -1,0 +1,57 @@
+{
+  "indicador": "PINV",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2026,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2026_1.xlsx",
+      "revisao": "2026-1"
+    },
+    {
+      "arquivo": "listagem_2026_2.xlsx",
+      "revisao": "2026-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "TAFPPI",
+      "rotulo": "Total de Aporte em Pesquisa e Pós-Graduação",
+      "unidade": "R$",
+      "tipoContagem": "soma",
+      "apurado": 338500.0,
+      "detalhado": true,
+      "campos": [
+        "projeto",
+        "codigo",
+        "valor",
+        "fonte"
+      ],
+      "registros": [
+        {
+          "projeto": "COMBATE INTEGRADO À DESINFORMAÇÃO: UM SISTEMA MULTIMODAL PARA DETECÇÃO DE DEEPFAKES",
+          "codigo": "PJ 9536",
+          "valor": 338500.0,
+          "fonte": "FAPES"
+        }
+      ]
+    },
+    {
+      "papel": "denominador",
+      "simbolo": "OCC",
+      "rotulo": "Orçamento Total de Capital e Custeio",
+      "unidade": "R$",
+      "tipoContagem": "soma",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    }
+  ]
+}

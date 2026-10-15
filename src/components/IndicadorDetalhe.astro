@@ -3,6 +3,9 @@ import ComponentCount from './ComponentCount.astro';
 import FormulaEquacao from './FormulaEquacao.astro';
 import HistoricalSeries from './HistoricalSeries.astro';
 import SeriesChart from './SeriesChart.astro';
+import BotaoRaioX from './BotaoRaioX.astro';
+import RaioXDrawer from './RaioXDrawer.astro';
+import { portaoAberto } from '../lib/downloads';
 import type { Indicador, ValorAnual } from '../data/indicadores';
 import { formatDate, formatValor } from '../lib/formatters';
 
@@ -16,6 +19,9 @@ interface Props {
 
 const { indicador, pilarNumero, anoEfetivo, serie, valorPrincipal } = Astro.props;
 const temComponentes = indicador.componentes && indicador.componentes.length > 0;
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const exibirRaiox = portaoAberto();
 ---
 
 <!-- Cabeçalho Formal Exclusivo para Impressão A4 -->
@@ -41,6 +47,7 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
     </nav>
     <h1>{indicador.nome} ({indicador.sigla})</h1>
     <div class="banner-acoes">
+      {exibirRaiox && <BotaoRaioX sigla={indicador.sigla} />}
       <button
         type="button"
         class="btn-imprimir-ficha"
@@ -230,6 +237,8 @@ const temComponentes = indicador.componentes && indicador.componentes.length > 0
     </section>
   </aside>
 </div>
+
+{exibirRaiox && <RaioXDrawer base={base} />}
 
 <style>
   .detalhe-banner {

@@ -1,4 +1,27 @@
 <!--
+=== SYNC IMPACT REPORT — AMENDMENT 3.0.0 (2026-10-15) ===
+Version change: 2.0.0 → 3.0.0 (MAJOR: Principle IV expanded to authorize audit microdata and fixture rendering)
+Modified principles:
+  IV (Aggregated Data Only, With Conditional Publication of Raw Inputs) — AMENDED.
+    Extended to authorize generation of lightweight audit fixtures (`data/dist/auditoria/`
+    published to `public/auditoria/`) and client-side rendering of individual-level
+    microdata in the "Raio-X do Indicador" audit drawer for institutional transparency
+    and social control. The prohibition on individual data in the canonical aggregate package
+    (`indicadores.zip`) and in pipeline logs remains strictly enforced. All publication
+    remains subject to the fail-closed governance gate.
+Added sections:
+  - Inside IV: Explicit scope for audit fixtures and drawer microdata under FR-012/FR-013.
+Removed sections: none
+Summary: Feature 026 (Raio-X do Indicador) implements microdata auditing allowing anyone
+  to inspect the exact students, researchers, and projects used in calculations.
+  Under Option A of FR-004, full records (Nome, Matrícula, Curso, Projeto, Papel)
+  are rendered in the audit drawer. This MAJOR amendment authorizes the publication of
+  derived audit fixtures and drawer rendering under the fail-closed governance gate,
+  backed by legal basis (Art. 7º, II and Art. 33 LGPD) recorded in `docs/revisao-privacidade.md`.
+Templates requiring updates:
+  ✅ .specify/templates/plan-template.md — compatible; no change needed
+  ✅ .specify/templates/spec-template.md — compatible; no change needed
+  ✅ .specify/templates/tasks-template.md — compatible; no change needed
 === SYNC IMPACT REPORT — AMENDMENT 2.0.0 (2026-10-05) ===
 Version change: 1.1.0 → 2.0.0 (MAJOR: a principle was changed in substance)
 Modified principles:
@@ -124,37 +147,21 @@ shown as zero, a dash, or any substitute that could be read as a value.
 **Rationale**: the site's credibility depends on being a faithful public view
 of the official report; a single invented number invalidates it.
 
-### IV. Aggregated Data Only, With Conditional Publication of Raw Inputs
+### IV. Aggregated Data Only, With Conditional Publication of Raw Inputs and Audit Microdata
 
-The repository and the published site are public. **Only aggregated data MAY be
-rendered, and only aggregated data is offered as a download.** The aggregate
-package (`indicadores.zip`) MUST NOT contain names, CPF, registration numbers,
-or any individual-level datum.
+The repository and the published site are public. **Only aggregated data is offered in the standard download package (`indicadores.zip`), which MUST NOT contain names, CPF, registration numbers, or any individual-level datum.**
 
-Individual-level data MAY, however, be **published** — as raw chain inputs,
-offered separately from the aggregate, explicitly marked as personal data and
-explicitly not anonymized. The following conditions are mandatory:
+Individual-level data MAY, however, be **published as raw chain inputs** and **rendered as microdata in the dedicated audit drawer ("Raio-X do Indicador")**, offered separately from the aggregate, explicitly marked as personal data and explicitly not anonymized. The following conditions are mandatory:
 
-1. **Scope.** The permitted set is exactly the files `make dados` consumes:
-   `data/canonical/exports_canonical.zip` and `data/raw/listagem_*.xlsx`. No
-   other individual-level file is covered by this permission.
-2. **Marking.** Every published raw input MUST be labelled, in pt-BR, as
-   containing personal data and not being anonymized. The marking MUST NOT rely
-   on color alone.
-3. **No open credentials.** Publication MUST be anonymous — no token, no login,
-   no gated access. A restricted channel was rejected: it would signal control
-   that does not exist and invite credential handling the project must not do.
-4. **Governance gate.** Publication is permitted only while the gate declared in
-   `.specify/governanca/pendencias.yaml` is open. The gate MUST fail **closed**:
-   a missing, unreadable, or structurally invalid registry stops the build; a
-   pending item omits the raw inputs from the site and reports the pendency. It
-   MUST NOT fail open, because failing open means publishing personal data
-   without the evaluation that authorizes it.
-5. **Separation of duties.** Raw inputs MUST NOT be incorporated into the
-   aggregate. The aggregate remains aggregate.
-6. **Pipelines, logs and reports.** Individual-level rows MUST NOT appear in
-   workflow logs, pull request bodies, or execution reports. `etl/tracking/`
-   continues to sanitize them.
+1. **Scope.** The permitted individual-level files are:
+   - Raw chain inputs consumed by `make dados`: `data/canonical/exports_canonical.zip` and `data/raw/listagem_*.xlsx`;
+   - Audit fixtures derived by `make auditoria`: `data/dist/auditoria/{SIGLA}_{campus}_{ano}.json` published to `public/auditoria/`.
+     No other individual-level file is covered by this permission.
+2. **Marking.** Every published raw input and the Raio-X audit drawer MUST be labelled, in pt-BR, as containing personal data and not being anonymized (Art. 7º, II LGPD). The marking MUST NOT rely on color alone (FR-013).
+3. **No open credentials.** Publication MUST be anonymous — no token, no login, no gated access. A restricted channel was rejected: it would signal control that does not exist and invite credential handling the project must not do.
+4. **Governance gate.** Publication and drawer offering are permitted only while the gate declared in `.specify/governanca/pendencias.yaml` is open. The gate MUST fail **closed**: a missing, unreadable, or structurally invalid registry stops the build; a pending item omits the raw inputs and audit fixtures from the site and reports the pendency. It MUST NOT fail open, because failing open means publishing personal data without the evaluation that authorizes it.
+5. **Separation of duties.** Raw inputs and audit fixtures MUST NOT be incorporated into `indicadores.zip`. The aggregate remains strictly aggregated.
+6. **Pipelines, logs and reports.** Individual-level rows MUST NOT appear in workflow logs, pull request bodies, or execution reports. `etl/tracking/` continues to sanitize them.
 
 **Rationale**: the site's purpose is to let a reader _verify_ the numbers, and
 verification is impossible without the inputs. The prior absolute prohibition
@@ -236,4 +243,4 @@ broken content; gates are cheaper than rollbacks.
   MUST be either justified in the plan's Complexity Tracking section or
   rejected.
 
-**Version**: 2.0.0 | **Ratified**: 2026-09-21 | **Last Amended**: 2026-10-05
+**Version**: 3.0.0 | **Ratified**: 2026-09-21 | **Last Amended**: 2026-10-15

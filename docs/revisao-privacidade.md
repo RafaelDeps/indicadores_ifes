@@ -14,15 +14,17 @@ publicação — e o site sobe com o agregado sozinho.
 
 ## 1. O que se publica
 
-| Arquivo                                             | Natureza     | Contém dado pessoal                      |
-| --------------------------------------------------- | ------------ | ---------------------------------------- |
-| `data/canonical/exports_canonical.zip`              | Insumo bruto | Sim — relação de estudantes e servidores |
-| `data/raw/listagem_*.xlsx` (6 planilhas, 2024–2026) | Insumo bruto | Sim — matrícula por semestre             |
-| `data/dist/indicadores.zip`                         | Agregado     | Não — indicadores desidentificados       |
+| Arquivo                                               | Natureza             | Contém dado pessoal                                                    |
+| ----------------------------------------------------- | -------------------- | ---------------------------------------------------------------------- |
+| `data/canonical/exports_canonical.zip`                | Insumo bruto         | Sim — relação de estudantes e servidores                               |
+| `data/raw/listagem_*.xlsx` (6 planilhas, 2024–2026)   | Insumo bruto         | Sim — matrícula por semestre                                           |
+| `data/dist/auditoria/*.json` (27 fixtures, 2024–2026) | Fixture de auditoria | Sim — micradados de estudantes, pesquisadores e projetos para o Raio-X |
+| `data/dist/indicadores.zip`                           | Agregado             | Não — indicadores desidentificados                                     |
 
 ## 2. Classificação: dado pessoal, não dado sensível
 
-Os insumos contêm a coluna `Nome` com nomes completos (art. 5º, I da LGPD).
+Os insumos e as fixtures de auditoria derivadas contêm dados pessoais identificáveis
+(nome completo, matrícula/ID, curso, projeto e papel — art. 5º, I da LGPD).
 **Não** são dado sensível nos termos do art. 5º, II: não há dado biométrico,
 dado de saúde, opinião política, religião, filiação sindical ou dado referente
 a crianças e adolescentes.
@@ -32,16 +34,26 @@ incida integralmente, e a distinção importa porque muda o regime de
 consentimento: o art. 7º, II não exige consentimento quando há legítimo
 interesse, e é sobre essa base que a publicação se apoia.
 
+## 2.1. Princípio da Minimização e Escopo das Fixtures (Feature 026)
+
+Para o recurso do Raio-X do Indicador (feature 026), a extração de micradados
+restringe-se estritamente ao necessário para a conferência social das fórmulas:
+
+- Apenas registros efetivamente contabilizados no cálculo são incluídos;
+- CPFs, telefones, endereços ou quaisquer outros identificadores diretos são excluídos;
+- O drawer exibe marcação explícita de transparência institucional e controle social (FR-013);
+- As fixtures são publicadas sob o mesmo portão fail-closed (`make check-governanca`).
+
 ## 3. Base legal
 
 **Art. 7º, II da LGPD** — tratamento necessário para atendimento de legítimo
 interesse do IFES, no uso de dados de acesso e circulação de informação
-institucional, desde que anonimizados quando possível.
+institucional e controle social, desde que anonimizados quando possível.
 
 **Art. 33 da LGPD** — transferência internacional autorizada pela
 autorização acima, com as cláusulas contratuais aplicáveis ao caso.
 
-**Data da autorização:** 2026-10-05.
+**Data da autorização:** 2026-10-05 (ratificada para a feature 026 em 2026-10-15).
 
 ## 4. Autorização
 

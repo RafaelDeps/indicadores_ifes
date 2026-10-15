@@ -27,6 +27,7 @@ from etl.core.logic.temporal.activity_filter import (
 )
 
 if TYPE_CHECKING:
+    from etl.core.logic.calculators.coletor_registros import ColetorRegistros
     from etl.core.logic.models.facto import ProjetoFacto
     from etl.core.logic.models.pillar2_models import (
         DadosPinvCampus,
@@ -46,6 +47,7 @@ def agregar_indicadores(
     projetos_facto: list[ProjetoFacto] | None = None,
     dados_pinv_por_campus: dict[str, DadosPinvCampus] | None = None,
     projetos_sigpesq: list[ProjetoSigpesqFinanciamento] | None = None,
+    coletor: ColetorRegistros | None = None,
 ) -> tuple[dict[int, dict[str, AgregadosCampus]], list[str]]:
     """
     Agrega iniciativas, pessoas, artigos e produções por campus e ano,
@@ -140,6 +142,20 @@ def agregar_indicadores(
 
             for esc in escopos_afetados:
                 iniciativas_contagem[esc][ano] += 1
+                if coletor:
+                    coletor.adicionar_registro(
+                        "PRE",
+                        esc,
+                        ano,
+                        {
+                            "projeto": ini.name,
+                            "status": ini.status or "Ativo",
+                            "inicio": ini.start_date,
+                            "fim": ini.end_date,
+                            "campus": ref_campus.name if ref_campus else None,
+                        },
+                        id_unico=ini.id,
+                    )
                 for membro in ini.team:
                     if not membro_ativo_em_ano(membro, ano, ini):
                         continue
@@ -151,8 +167,29 @@ def agregar_indicadores(
                     eh_estudante = eh_estudante_em_pesquisa(pessoa, papeis_str)
 
                     if eh_pesquisador:
+                        nome_pessoa = getattr(membro, "person_name", None) or (
+                            pessoa.name
+                            if pessoa
+                            else f"Pesquisador #{membro.person_id}"
+                        )
+                        papel_nome = (
+                            " ".join(membro.roles) if membro.roles else "Pesquisador"
+                        )
                         if esc == ESCOPO_TODOS_SLUG:
                             staff_unicos[esc][ano].add(membro.person_id)
+                            if coletor:
+                                coletor.adicionar_registro(
+                                    "SUPP",
+                                    esc,
+                                    ano,
+                                    {
+                                        "nome": nome_pessoa,
+                                        "projeto": ini.name,
+                                        "papel": papel_nome,
+                                        "person_id": membro.person_id,
+                                    },
+                                    id_unico=membro.person_id,
+                                )
                             if pessoa and pessoa.campus is None:
                                 if pessoa.id not in avisados_pesquisador_sem_campus:
                                     avisados_pesquisador_sem_campus.add(pessoa.id)
@@ -168,9 +205,41 @@ def agregar_indicadores(
                                 and normalizar_slug(pessoa.campus.name) == esc
                             ):
                                 staff_unicos[esc][ano].add(membro.person_id)
+                                if coletor:
+                                    coletor.adicionar_registro(
+                                        "SUPP",
+                                        esc,
+                                        ano,
+                                        {
+                                            "nome": nome_pessoa,
+                                            "projeto": ini.name,
+                                            "papel": papel_nome,
+                                            "person_id": membro.person_id,
+                                        },
+                                        id_unico=membro.person_id,
+                                    )
 
                     if eh_estudante:
+                        nome_estudante = getattr(membro, "person_name", None) or (
+                            pessoa.name if pessoa else f"Estudante #{membro.person_id}"
+                        )
+                        papel_estudante = (
+                            " ".join(membro.roles) if membro.roles else "Student"
+                        )
                         students_unicos[esc][ano].add(membro.person_id)
+                        if coletor:
+                            coletor.adicionar_registro(
+                                "NEP",
+                                esc,
+                                ano,
+                                {
+                                    "nome": nome_estudante,
+                                    "projeto": ini.name,
+                                    "papel": papel_estudante,
+                                    "person_id": membro.person_id,
+                                },
+                                id_unico=membro.person_id,
+                            )
 
     # --- 2. Processamento de Artigos e Produções (Pilar 3) ---
     autores_por_producao: dict[int, list[int]] = {}
@@ -227,6 +296,18 @@ def agregar_indicadores(
         escopos_art = [ESCOPO_TODOS_SLUG] + [s for s in c_slugs if s in todos_escopos]
         for esc in escopos_art:
             npb_contagem[esc][ano_art] += 1
+            if coletor:
+                coletor.adicionar_registro(
+                    "NPB",
+                    esc,
+                    ano_art,
+                    {
+                        "titulo": artigo.title,
+                        "ano": artigo.year,
+                        "tipo": artigo.type or "Journal",
+                    },
+                    id_unico=artigo.id,
+                )
 
     # Produções -> NPT e PC
     for prod in exportacao.producoes:
@@ -246,8 +327,31 @@ def agregar_indicadores(
         escopos_prod = [ESCOPO_TODOS_SLUG] + [s for s in c_slugs if s in todos_escopos]
         for esc in escopos_prod:
             npt_contagem[esc][ano_prod] += 1
+            if coletor:
+                coletor.adicionar_registro(
+                    "NPT",
+                    esc,
+                    ano_prod,
+                    {
+                        "titulo": prod.title,
+                        "ano": prod.year,
+                        "tipo": nome_tipo or "Produção Técnica",
+                    },
+                    id_unico=prod.id,
+                )
             if nome_tipo == NOME_TIPO_PC or "software" in nome_tipo.lower():
                 pc_contagem[esc][ano_prod] += 1
+                if coletor:
+                    coletor.adicionar_registro(
+                        "PC",
+                        esc,
+                        ano_prod,
+                        {
+                            "titulo": prod.title,
+                            "ano": prod.year,
+                        },
+                        id_unico=prod.id,
+                    )
 
     # --- 3. Montagem dos AgregadosCampus por Ano ---
     resultado: dict[int, dict[str, AgregadosCampus]] = {ano: {} for ano in anos}

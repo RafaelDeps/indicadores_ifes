@@ -423,6 +423,37 @@ def _publicar(
     return alvo
 
 
+def sincronizar_publico_auditoria(
+    portao_aberto: bool,
+    pasta_dist: Path | str = "data/dist/auditoria",
+    pasta_publica: Path | str = "public/auditoria",
+) -> list[Path]:
+    """Sincroniza as fixtures de auditoria com a pasta pública.
+
+    Se o portão estiver aberto: copia as fixtures de pasta_dist para pasta_publica.
+    Se o portão estiver fechado: limpa pasta_publica (fail-closed).
+    Retorna a lista de arquivos publicados (ou vazia se fechado).
+    """
+    p_dist = Path(pasta_dist)
+    p_pub = Path(pasta_publica)
+
+    if not portao_aberto:
+        _limpar_saida(p_pub)
+        return []
+
+    p_pub.mkdir(parents=True, exist_ok=True)
+    _limpar_saida(p_pub)
+
+    publicados: list[Path] = []
+    if p_dist.is_dir():
+        for arq in sorted(p_dist.glob("*.json")):
+            destino = p_pub / arq.name
+            shutil.copy2(arq, destino)
+            publicados.append(destino)
+
+    return publicados
+
+
 def _relatorio_bloqueio(resultado: ResultadoPortao) -> str:
     """Monta o `AVISO:` — nomeia quais pendências e como quitá-las (P-5)."""
     bloqueantes = resultado.bloqueantes
@@ -513,6 +544,11 @@ def main(argv: list[str] | None = None) -> int:
 
     publicados_insumo: list[str] = []
     if not resultado.aberto:
+        sincronizar_publico_auditoria(
+            portao_aberto=False,
+            pasta_dist=raiz / "data/dist/auditoria",
+            pasta_publica=raiz / "public/auditoria",
+        )
         print(_relatorio_bloqueio(resultado))
         print(
             f"OK: pacote agregado publicado ({len(publicados_agregado)} "
@@ -526,6 +562,12 @@ def main(argv: list[str] | None = None) -> int:
         except ErroGovernanca as erro:
             sys.stderr.write(f"ERRO: {erro}\n")
             return 1
+
+    sincronizar_publico_auditoria(
+        portao_aberto=True,
+        pasta_dist=raiz / "data/dist/auditoria",
+        pasta_publica=raiz / "public/auditoria",
+    )
 
     print(
         f"OK: portão aberto ({len(pendencias)} pendência(s) registrada(s)); "

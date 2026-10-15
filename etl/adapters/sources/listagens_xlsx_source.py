@@ -51,8 +51,9 @@ def _texto(valor: object) -> str | None:
 class ListagensXlsxSource:
     """Fonte de extração das planilhas `data/raw/listagem_<AAAA>_<S>.xlsx`."""
 
-    def __init__(self, pasta: Path | str) -> None:
+    def __init__(self, pasta: Path | str, reter_nome_curso: bool = False) -> None:
         self.pasta = Path(pasta)
+        self.reter_nome_curso = reter_nome_curso
 
     def extract(self) -> ListagensExtraidas:
         extraidas = ListagensExtraidas()
@@ -234,6 +235,16 @@ class ListagensXlsxSource:
                 situacao=_texto(linha[3] if len(linha) > 3 else None),
                 forma_ingresso=_texto(linha[6] if len(linha) > 6 else None),
                 forma_matricula_cota=_texto(linha[7] if len(linha) > 7 else None),
+                nome=(
+                    _texto(linha[1] if len(linha) > 1 else None)
+                    if self.reter_nome_curso
+                    else None
+                ),
+                curso=(
+                    _texto(linha[2] if len(linha) > 2 else None)
+                    if self.reter_nome_curso
+                    else None
+                ),
             )
             alunos.append(estudante)
 

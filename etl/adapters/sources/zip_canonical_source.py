@@ -262,8 +262,13 @@ class ZipCanonicalSource(ISource):
                 nomes_sigpesq = [
                     n
                     for n in zf.namelist()
-                    if n.startswith("project_sigpesq_files_json/")
+                    if (
+                        n.startswith("project_sigpesq_files_json/")
+                        or n.startswith("PJ")
+                        or "sigpesq" in n.lower()
+                    )
                     and n.endswith(".json")
+                    and n not in ARQUIVOS_OBRIGATORIOS
                 ]
 
                 # Mapeamento auxiliar de pesquisadores para campus institucional
@@ -371,10 +376,16 @@ class ZipCanonicalSource(ISource):
                     else:
                         valor_total = float(valor_total)
 
-                    # Resolução de Campus
                     coord = dados.get("coordenador") or {}
                     coord_nome = (coord.get("nome") or "").strip()
                     coord_campus = (coord.get("campus") or "").strip()
+                    if not coord_campus and dados.get("campus"):
+                        c_val = dados.get("campus")
+                        coord_campus = (
+                            c_val.get("name", "")
+                            if isinstance(c_val, dict)
+                            else str(c_val)
+                        ).strip()
 
                     campus_slug, campus_nome = resolver_campus_sigpesq(
                         coord_campus=coord_campus,

@@ -1,0 +1,63 @@
+{
+  "indicador": "PINV",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2024,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2024_1.xlsx",
+      "revisao": "2024-1"
+    },
+    {
+      "arquivo": "listagem_2024_2.xlsx",
+      "revisao": "2024-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "TAFPPI",
+      "rotulo": "Total de Aporte em Pesquisa e Pós-Graduação",
+      "unidade": "R$",
+      "tipoContagem": "soma",
+      "apurado": 6168475.28,
+      "detalhado": true,
+      "campos": [
+        "projeto",
+        "codigo",
+        "valor",
+        "fonte"
+      ],
+      "registros": [
+        {
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "codigo": "PJ 7875",
+          "valor": 5898620.0,
+          "fonte": "FAPES (Fundação de Amparo à Pesquisa e Inovação do Espírito Santo)"
+        },
+        {
+          "projeto": "Desenvolvimento de Metodologia Integrada para Medição, Análise Causal e Controle da Curvatura de Ponta (Turn-Up/Turn-Down) em Laminadores de Tiras a Quente",
+          "codigo": "PJ 9793",
+          "valor": 269855.28,
+          "fonte": "Parceiro Privado (ArcelorMittal)"
+        }
+      ]
+    },
+    {
+      "papel": "denominador",
+      "simbolo": "OCC",
+      "rotulo": "Orçamento Total de Capital e Custeio",
+      "unidade": "R$",
+      "tipoContagem": "soma",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    }
+  ]
+}

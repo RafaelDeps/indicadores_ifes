@@ -1,0 +1,370 @@
+---
+/**
+ * Memória de cálculo de um indicador (spec 025, US1).
+ *
+ * `<details>` nativo, recolhido por padrão (clarificação Q2): abrir/fechar é
+ * estado local de leitura, nunca persistido na URL nem escrito pelo aplicador
+ * cliente. Os valores iniciais são apurados no build para o contexto padrão
+ * (mesmo critério do cartão); `aplicarMemoria` os reescreve a cada troca de
+ * contexto pelos hooks `data-memoria-*`.
+ */
+import type { Indicador } from '../data/indicadores';
+import type { ContextoFiltro } from '../lib/dataset-core';
+import { datasetPadrao, obterCampiDisponiveis } from '../lib/dataset';
+import { computarVisaoMemoria } from '../lib/memoria';
+
+export interface CitacaoOrigem {
+  /** Rótulo canônico do artefato, o mesmo exibido na seção de rastreabilidade. */
+  rotulo: string;
+}
+
+export interface Props {
+  indicador: Indicador;
+  contextoInicial: ContextoFiltro;
+  /** Arquivos de origem relevantes a este indicador (clarificação Q1, Opção C). */
+  citacoes?: CitacaoOrigem[];
+}
+
+const { indicador, contextoInicial, citacoes = [] } = Astro.props;
+
+const memoria = computarVisaoMemoria(datasetPadrao, indicador.sigla, contextoInicial);
+const campusNome =
+  obterCampiDisponiveis().find((c) => c.slug === contextoInicial.campus)?.nome ??
+  contextoInicial.campus;
+const ancoraRastreabilidade = `#rastreabilidade-pilar-${indicador.pilarNumero ?? 1}`;
+---
+
+<details class="memoria" data-memoria={indicador.sigla}>
+  <summary class="memoria-alternar">Ver memória de cálculo</summary>
+  {
+    memoria && (
+      <div class="memoria-corpo">
+        <p class="memoria-contexto">
+          Valores apurados para <strong>{campusNome}</strong> em{' '}
+          <strong>{contextoInicial.ano}</strong>.
+        </p>
+
+        <div class="memoria-rolagem">
+          <table class="memoria-tabela">
+            <caption>
+              Variáveis da fórmula de {indicador.sigla} — {campusNome}, {contextoInicial.ano}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Símbolo</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Valor ({contextoInicial.ano})</th>
+                <th scope="col">Unidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              {memoria.variaveis.map((variavel) => (
+                <tr
+                  data-memoria-variavel-linha={indicador.sigla}
+                  data-memoria-simbolo={variavel.simbolo}
+                >
+                  <td class="col-simbolo">
+                    <code>{variavel.simbolo}</code>
+                  </td>
+                  <td class="col-nome">{variavel.nome}</td>
+                  <td
+                    class:list={['col-valor', { 'badge-indisponivel': !variavel.disponivel }]}
+                    data-memoria-variavel-valor={indicador.sigla}
+                    data-memoria-simbolo={variavel.simbolo}
+                  >
+                    {variavel.valorFormatado}
+                  </td>
+                  <td class="col-unidade">{variavel.unidade}</td>
+                </tr>
+              ))}
+              {memoria.variaveis.length === 0 && (
+                <tr>
+                  <td colspan="4">Sem variáveis intermediárias declaradas.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memoria-rolagem memoria-historico">
+          <table class="memoria-tabela">
+            <caption>
+              Variação das variáveis de {indicador.sigla} por ano — {campusNome}
+            </caption>
+            <thead>
+              <tr data-memoria-hist-anos={indicador.sigla}>
+                <th scope="col">Variável</th>
+                {memoria.historico.anos.map((ano) => (
+                  <th
+                    scope="col"
+                    data-memoria-hist-ano={ano}
+                    aria-current={ano === memoria.historico.anoAtivo ? 'true' : undefined}
+                  >
+                    {ano}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody data-memoria-historico-corpo={indicador.sigla}>
+              {memoria.historico.linhas.map((linha) => (
+                <tr data-memoria-hist-linha={linha.simbolo}>
+                  <th scope="row">
+                    <code>{linha.simbolo}</code>
+                  </th>
+                  {memoria.historico.anos.map((ano) => {
+                    const valor = linha.valoresPorAno[ano] ?? 'Dado indisponível';
+                    return (
+                      <td
+                        class:list={[{ 'badge-indisponivel': valor === 'Dado indisponível' }]}
+                        data-memoria-hist-valor={indicador.sigla}
+                        data-memoria-simbolo={linha.simbolo}
+                        data-memoria-ano={ano}
+                      >
+                        {valor}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="memoria-formula">
+          <p class="memoria-linha">
+            <span class="memoria-rotulo">Fórmula:</span>
+            <span data-memoria-formula-declarada={indicador.sigla}>{memoria.formulaDeclarada}</span>
+          </p>
+          <p class="memoria-linha">
+            <span class="memoria-rotulo">Com os valores de {contextoInicial.ano}:</span>
+            <span class="memoria-substituida" data-memoria-formula-substituida={indicador.sigla}>
+              {memoria.formulaSubstituida}
+            </span>
+          </p>
+          <p class="sr-only" data-memoria-acessivel={indicador.sigla}>
+            {memoria.formulaSubstituidaAcessivel}
+          </p>
+          <p
+            class="memoria-nota"
+            data-memoria-nota={indicador.sigla}
+            style={memoria.nota ? '' : 'display: none;'}
+          >
+            {memoria.nota ?? ''}
+          </p>
+          <p class="memoria-linha memoria-linha-final">
+            <span class="memoria-rotulo">Valor apurado:</span>
+            <span
+              class:list={['memoria-valor-final', { 'badge-indisponivel': !memoria.disponivel }]}
+              data-memoria-valor-final={indicador.sigla}
+            >
+              {memoria.valorFinalFormatado}
+            </span>
+            <span
+              class="memoria-unidade"
+              data-memoria-valor-final-unidade={indicador.sigla}
+              style={memoria.unidadeJaNoValor || !memoria.disponivel ? 'display: none;' : ''}
+            >
+              {memoria.unidade}
+            </span>
+          </p>
+        </div>
+
+        {citacoes.length > 0 && (
+          <div class="memoria-citacoes">
+            <p class="memoria-citacoes-rotulo">Arquivos de origem (rastreabilidade do pilar):</p>
+            <ul class="memoria-citacoes-lista">
+              {citacoes.map((citacao) => (
+                <li>
+                  <a href={ancoraRastreabilidade}>{citacao.rotulo}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    )
+  }
+</details>
+
+<style>
+  .memoria {
+    border: 1px solid var(--color-border);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    background: var(--color-surface);
+    margin-top: -1px;
+    padding: 0 1.35rem 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  .memoria-alternar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.8rem 0 0.6rem;
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .memoria-alternar::-webkit-details-marker {
+    display: none;
+  }
+
+  .memoria-alternar::before {
+    content: '▸';
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+
+  .memoria[open] .memoria-alternar::before {
+    transform: rotate(90deg);
+  }
+
+  .memoria-alternar:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .memoria-contexto {
+    margin: 0 0 0.65rem;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .memoria-rolagem {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .memoria-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+
+  .memoria-tabela caption {
+    text-align: left;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    padding-bottom: 0.4rem;
+  }
+
+  .memoria-tabela th,
+  .memoria-tabela td {
+    border: 1px solid var(--color-border);
+    padding: 0.35rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .memoria-tabela thead th {
+    background: var(--color-emerald-50);
+    color: var(--color-emerald-700);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .col-simbolo code {
+    font-weight: 700;
+    color: var(--color-primary-dark);
+  }
+
+  .col-valor {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .memoria-formula {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .memoria-linha {
+    margin: 0;
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+  }
+
+  .memoria-rotulo {
+    color: var(--color-muted);
+    margin-right: 0.3rem;
+  }
+
+  .memoria-substituida {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .memoria-nota {
+    margin: 0.25rem 0 0;
+    font-size: 0.78rem;
+    color: var(--color-notice-text);
+  }
+
+  .memoria-linha-final {
+    margin-top: 0.4rem;
+    align-items: baseline;
+  }
+
+  .memoria-valor-final {
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+
+  .memoria-unidade {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .badge-indisponivel {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: var(--color-badge-unavailable);
+    color: var(--color-badge-unavailable-text);
+  }
+
+  .memoria-citacoes {
+    margin-top: 0.8rem;
+    border-top: 1px dashed var(--color-border);
+    padding-top: 0.6rem;
+  }
+
+  .memoria-citacoes-rotulo {
+    margin: 0 0 0.25rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .memoria-citacoes-lista {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .memoria-citacoes-lista a {
+    color: var(--color-primary-dark);
+  }
+
+  .memoria-citacoes-lista a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>

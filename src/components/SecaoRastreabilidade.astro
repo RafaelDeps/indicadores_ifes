@@ -1,0 +1,193 @@
+---
+/**
+ * Seção de rastreabilidade por pilar (spec 025, US3 — clarificação Q1, Opção C).
+ *
+ * Build time apenas: a listagem e a disponibilidade vêm de `obterRastreabilidadePilar`,
+ * que reutiliza `carregarDownloads`/`portaoAberto` — as MESMAS regras da página
+ * `/dados`. Nenhuma marcação ou rotulagem própria vive aqui (clarificação Q3,
+ * Opção A): o que `/dados` decidir, esta seção reflete.
+ */
+import type { RastreabilidadePilar } from '../lib/rastreabilidade';
+import { formatBytesLegivel } from '../lib/formatters';
+
+export interface Props {
+  rastreabilidade: RastreabilidadePilar;
+  base: string;
+}
+
+const { rastreabilidade, base } = Astro.props;
+const baseNormalizada = base.endsWith('/') ? base : `${base}/`;
+
+const agregados = rastreabilidade.artefatos.filter((a) => a.natureza === 'agregado');
+const insumos = rastreabilidade.artefatos.filter((a) => a.natureza === 'dado-pessoal');
+const ordem = [...agregados, ...insumos];
+---
+
+<section
+  id={rastreabilidade.secaoId}
+  class="rastreabilidade"
+  aria-labelledby={`${rastreabilidade.secaoId}-titulo`}
+>
+  <h2 id={`${rastreabilidade.secaoId}-titulo`}>Dados de origem deste pilar</h2>
+  <p class="rastreabilidade-descricao">
+    Estes são os arquivos que alimentam os indicadores deste pilar. Os valores do painel são
+    transcritos do relatório oficial; com os arquivos abaixo você confere os números por conta
+    própria. A listagem e as regras de disponibilidade são as mesmas da página
+    <a href={`${baseNormalizada}dados/`}>Dados para download</a>.
+  </p>
+
+  {
+    rastreabilidade.avisoPortao && (
+      <aside class="rastreabilidade-aviso" role="status">
+        <p class="rastreabilidade-aviso-texto">{rastreabilidade.avisoPortao}</p>
+      </aside>
+    )
+  }
+
+  <ul class="rastreabilidade-lista">
+    {
+      ordem.map((artefato) => (
+        <li class="rastreabilidade-item">
+          <div class="rastreabilidade-item-corpo">
+            <p class="rastreabilidade-rotulo">{artefato.rotulo}</p>
+            <p class="rastreabilidade-meta">
+              <span class="rastreabilidade-arquivo">{artefato.arquivo}</span>
+              <span> · atualizado em {artefato.atualizadoEmFormatado}</span>
+              {artefato.bytes !== null && <span> · {formatBytesLegivel(artefato.bytes)}</span>}
+              {artefato.origem && <span> · Origem: {artefato.origem}</span>}
+              {artefato.revisao && <span> · Revisão: {artefato.revisao}</span>}
+            </p>
+            {!artefato.disponivel && artefato.motivoIndisponivel && (
+              <p class="rastreabilidade-motivo">{artefato.motivoIndisponivel}</p>
+            )}
+          </div>
+          {artefato.disponivel && (
+            <a
+              class="rastreabilidade-baixar"
+              href={`${baseNormalizada}${artefato.caminhoPublico}`}
+              download
+            >
+              Baixar
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .rastreabilidade {
+    margin-top: 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface);
+    padding: 1.25rem 1.35rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .rastreabilidade-descricao {
+    margin: 0 0 0.9rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    max-width: 60ch;
+  }
+
+  .rastreabilidade-aviso {
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .rastreabilidade-aviso-texto {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .rastreabilidade-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .rastreabilidade-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .rastreabilidade-item-corpo {
+    min-width: 0;
+  }
+
+  .rastreabilidade-rotulo {
+    margin: 0 0 0.15rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .rastreabilidade-meta {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .rastreabilidade-arquivo {
+    font-family: monospace;
+  }
+
+  .rastreabilidade-motivo {
+    margin: 0.25rem 0 0;
+    font-size: 0.78rem;
+    color: var(--color-notice-text);
+  }
+
+  .rastreabilidade-baixar {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
+  }
+
+  .rastreabilidade-baixar:hover {
+    border-color: var(--color-primary);
+    background: var(--color-emerald-50);
+  }
+
+  .rastreabilidade-baixar:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 540px) {
+    .rastreabilidade-item {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .rastreabilidade-baixar {
+      text-align: center;
+    }
+  }
+</style>

@@ -52,12 +52,11 @@
 pendencias:
   - id: emenda-principio-iv
     descricao: >-
-      Emenda MAJOR do Princípio IV na constitution (1.1.0 -> 2.0.0), com data de
-      emenda e Sync Impact Report no cabeçalho do arquivo. Publicar dado pessoal
-      no site público contraria o Princípio IV como está escrito; a decisão D-01
-      exige a emenda, não uma interpretação.
+      Emenda MAJOR do Princípio IV na constitution (2.0.0 -> 3.0.0), com data de
+      emenda e Sync Impact Report no cabeçalho do arquivo. Autoriza a publicação
+      de insumos brutos e fixtures de auditoria para o Raio-X do Indicador.
     registro: .specify/memory/constitution.md
-    contem: '**Version**: 2.0.0'
+    contem: '**Version**: 3.0.0'
     aviso_visitante: >-
       A publicação dos arquivos de origem está suspensa até a revisão
       institucional dos dados pessoais ser concluída.

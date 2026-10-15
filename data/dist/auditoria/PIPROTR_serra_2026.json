@@ -1,0 +1,56 @@
+{
+  "indicador": "PIPROTR",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2026,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2026_1.xlsx",
+      "revisao": "2026-1"
+    },
+    {
+      "arquivo": "listagem_2026_2.xlsx",
+      "revisao": "2026-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "CT",
+      "rotulo": "Contratos de Transferência de Tecnologia",
+      "unidade": "Contratos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "CL",
+      "rotulo": "Contratos de Licenciamento",
+      "unidade": "Contratos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    },
+    {
+      "papel": "parcela",
+      "simbolo": "CC",
+      "rotulo": "Contratos de Cessão",
+      "unidade": "Contratos",
+      "tipoContagem": "contagem",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    }
+  ]
+}

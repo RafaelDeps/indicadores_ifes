@@ -343,7 +343,7 @@ function resolverPendencia(crua: PendenciaCrua, raizRepo: string): PendenciaGove
 }
 
 /** `gateAberto = toda pendência resolvida`. Sem flag manual (data-model.md). */
-export function portaoAberto(raizRepo: string): boolean {
+export function portaoAberto(raizRepo: string = process.cwd()): boolean {
   return carregarPendencias(raizRepo).every((p) => p.resolvida);
 }
 
@@ -353,7 +353,7 @@ export function portaoAberto(raizRepo: string): boolean {
  * O primeiro aviso vence em vez de concatenar: três avisos somados soam como
  * três problemas e sugerem que o visitante precisa resolver algo.
  */
-export function avisoVisitante(raizRepo: string): string {
+export function avisoVisitante(raizRepo: string = process.cwd()): string {
   const bloqueantes = carregarPendencias(raizRepo).filter((p) => !p.resolvida);
   for (const pendencia of bloqueantes) {
     if (pendencia.avisoVisitante) return pendencia.avisoVisitante;

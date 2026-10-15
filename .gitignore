@@ -46,6 +46,10 @@ venv/
 public/dados/*
 !public/dados/.gitkeep
 
+# Fixtures de auditoria (feature 026): geradas pelo ETL em data/dist/auditoria/
+# e copiadas/limpas pelo portão de governança em public/auditoria/.
+public/auditoria/*
+
 
 # Pacotes parciais e de desenvolvimento de campus
 data/dist/indicadores_*.zip

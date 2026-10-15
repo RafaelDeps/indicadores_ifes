@@ -1,0 +1,3198 @@
+{
+  "indicador": "NTPP",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2025,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2025_1.xlsx",
+      "revisao": "2025-1"
+    },
+    {
+      "arquivo": "listagem_2025_2.xlsx",
+      "revisao": "2025-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "unica",
+      "simbolo": "PRE",
+      "rotulo": "Projetos Registrados em Execução",
+      "unidade": "Projetos",
+      "tipoContagem": "contagem",
+      "apurado": 451,
+      "detalhado": true,
+      "campos": [
+        "projeto",
+        "status",
+        "inicio",
+        "fim",
+        "campus"
+      ],
+      "registros": [
+        {
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2029-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "status": "Active",
+          "inicio": "2022-11-28T00:00:00",
+          "fim": "2029-12-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Otimização da Eficiência Energética do Uso de Gás na Siderurgia usando Neuro-Evolução",
+          "status": "Concluded",
+          "inicio": "2022-12-01T00:00:00",
+          "fim": "2026-09-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2028-07-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Ações de Eficiência Energética associadas ao uso de Fontes Alternativas - Estudo de Caso do IFES/Campus Serra",
+          "status": "Active",
+          "inicio": "2023-09-01T00:00:00",
+          "fim": "2027-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cidades e Prédios Inteligentes 2.2",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2027-06-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2027-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-07-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "status": "Concluded",
+          "inicio": "2024-03-01T00:00:00",
+          "fim": "2026-06-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Jogos Educacionais para Auxiliar o Processo de Ensino-Aprendizagem no Ensino Médio",
+          "status": "Active",
+          "inicio": "2024-08-01T00:00:00",
+          "fim": "2026-11-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Kit didático utilizando uma planta piloto de correias transportadora",
+          "status": "Active",
+          "inicio": "2024-04-09T00:00:00",
+          "fim": "2028-04-09T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "status": "Active",
+          "inicio": "2024-07-31T00:00:00",
+          "fim": "2027-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "CLASSIFICAÇÃO DE IMAGENS DE OCT COM IA INTERPRETÁVEL",
+          "status": "Concluded",
+          "inicio": "2024-08-01T00:00:00",
+          "fim": "2026-07-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino em Engenharia Utilizando Tecnologias do Laboratório Maker",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ANÁLISE FACIAL EM SELFIES PARA IDENTIFICAÇÃO DE ANSIEDADE E DEPRESSÃO EM PACIENTES GESTANTES",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de Aquisição de Dados e Aprendizado de Máquina em planta piloto de Aciaria LD",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2028-07-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Centros de Excelência na Gestão Energética e na Siderurgia: Integrando Transformação Digital, Manufatura e Sustentabilidade.",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2027-12-23T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estoicismo Red Pill: a apropriação da Filosofia Clássica por uma agenda política contemporânea",
+          "status": "Concluded",
+          "inicio": "2025-09-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas \nOrientada a Agentes",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Implementação de Técnicas de IA para Melhoria de Processos em Laminadores de Tiras a Quente",
+          "status": "Concluded",
+          "inicio": "2025-08-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VibroLearn: Um Framework para Diagnóstico de Falhas em Máquinas Industriais",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2027-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "status": "Active",
+          "inicio": "2025-04-05T00:00:00",
+          "fim": "2028-04-05T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Inteligência artificial explicável para diagnóstico cardiovascular: transformando a interpretação de ecgs na atenção à saúde",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2028-07-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "status": "Active",
+          "inicio": "2025-04-10T00:00:00",
+          "fim": "2028-04-09T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Feira Digital: Uma plataforma de Conexão Direta entre Produtores e Consumidores.",
+          "status": "Active",
+          "inicio": "2025-08-01T00:00:00",
+          "fim": "2027-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Módulo de Hidroponia Autônomo usando um agente IA",
+          "status": "Active",
+          "inicio": "2025-05-01T00:00:00",
+          "fim": "2028-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "status": "Concluded",
+          "inicio": "2025-09-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação de patologias da coluna vertebral a partir de imagens de Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net.",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2027-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Tecnologias de Prototipagem e Simulação CAD/CAE no Ensino de Física e Engenharia com Aplicações na Agricultura de Precisão e Processos de Fabricação Mecânica",
+          "status": "Concluded",
+          "inicio": "2025-09-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "EXPERIMENTOS DIDÁTICOS EM FÍSICA COM O AUXILIO DO ARDUINO",
+          "status": "Concluded",
+          "inicio": "2025-09-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana\nSustentável",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estudo e Implementação do Protocolo OPC UA como Camada de Comunicação para Dispositivos IoT",
+          "status": "Active",
+          "inicio": "2025-09-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Automatização de módulos didáticos para ensino da disciplina de Instalações Elétricas",
+          "status": "Concluded",
+          "inicio": "2025-09-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise da Efetividade de Programas de Formação Continuada De Professores Utilizando Técnicas de Ciência de Dados e Inteligência Artificial: Um Estudo Aplicado aos Dados do Cefope/ES",
+          "status": "Active",
+          "inicio": "2025-09-29T00:00:00",
+          "fim": "2027-09-29T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Propos - Automatização de documentos",
+          "status": "Active",
+          "inicio": "2025-12-01T00:00:00",
+          "fim": "2026-11-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Transformação Digital da Avaliação Pedagógica do PNLD: Da Pesquisa à Inovação",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificador de Briquetes usando Visão Computacional.",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-07-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Ecos e reflexos do livro de Affonso Claudio \"Insurreição do Queimado. Episódio da Província do Espírito Santo\"",
+          "status": "Concluded",
+          "inicio": "2025-03-21T00:00:00",
+          "fim": "2026-04-24T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Recuperação de Conhecimento em Documentos com Conteúdo Textual e Visual para o SUFRAMA-GPT",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2027-05-04T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Engenharia de Tráfego para Aplicações de Ciência de Dados Intensiva",
+          "status": "Concluded",
+          "inicio": "2024-08-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE UM SISTEMA INTELIGENTE PARA O CONTROLE DE ELETRODOS DE FORNOS DE FERROLIGAS PARA APLICAÇÕES MULTICLIENTE",
+          "status": "Active",
+          "inicio": "2024-04-01T00:00:00",
+          "fim": "2026-12-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SOLUÇÕES TEXT-TO-SQL PARA IAGROGPT – A ASSISTENTE VIRTUAL INTELIGENTE\nDA AGROPECUÁRIA BRASILEIRA",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-03-25T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistemas inteligentes de gerenciamento energético",
+          "status": "Active",
+          "inicio": "2025-06-01T00:00:00",
+          "fim": "2027-06-30T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Otimização Processual com Inteligência Artificial",
+          "status": "Active",
+          "inicio": "2025-02-19T00:00:00",
+          "fim": "2026-12-19T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Machine learning e deep learning aplicados à detecção e ao diagnóstico de falhas em processos industriais.",
+          "status": "Concluded",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de recomendação baseado em Inteligência Computacional para manejo de culturas de morango infestadas por ácaros-rajados",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Medidor de Desgaste de Furo de Lança de Convertedores LD",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-10-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Otimização do protótipo de medição de desgaste dos furos do bico de lança de convertedores LD",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Robô Seguidor de Linha usando o ESP32",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelagem dos processos do Programa de Pós-graduação em Computação Aplicada",
+          "status": "Concluded",
+          "inicio": "2024-11-01T00:00:00",
+          "fim": "2025-10-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Algoritmos de Inteligência Artificial para Aumentar a Precisão da Medição dos Furos de Lanças do Convertedor LD.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Kits Educativos com Robótica e IA",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Construção Modular de Sistemas Ciberfísicos: Explorando a Abordagem Metodológica com ROS",
+          "status": "Concluded",
+          "inicio": "2024-11-01T00:00:00",
+          "fim": "2025-10-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Sistemas Ciberfísicos para Fábricas Inteligentes: Integração de ROS e micro-ROS com Dispositivos IoT.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Otimização do processo de atualização da base de conhecimento de agentes conversacionais",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Construção de Experimentos Automatizados – protótipo motor V8",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de uma caneta eletrônica para Air Writing: uma abordagem híbrida baseada em dispositivos e visão computacional",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino de Processos de Fabricação Utilizando Tecnologias do Laboratório Maker",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aplicação de roteamento na origem para ciência de dados intensiva",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programabilidade de recursos de rede para aplicações de Ciência de Dados Intensiva",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Inteligência Artificial para Auxílio na Inspeção de Navios",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino de Instrumentação Industrial Utilizando Tecnologias do Laboratório Maker",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema web para detecção e contagem de ácaros (tetranychus urticae, phytoseiulus macropilis e neoseiulus californicus) em culturas capixabas de morango usando deep learning",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Educação STEAM: Construção de Robôs Como Integração de Conhecimentos",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Monitoramento Remoto para Manutenção Preventiva e Economia de Energia",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IDENTIFICAÇÃO DE ANSIEDADE E DEPRESSÃO VIA ANÁLISE FACIAL EM BASE DE DADOS REDUZIDA",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Investigação do OpenFace para análise facial em selfies na identificação de depressão e ansiedade",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Identificação de depressão e ansiedade via transferência de aprendizado",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um aplicativo para coleta de dados com captura passiva de selfies",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um dispositivo para medição de desgaste de correias transportadoras.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção Online numa planta piloto de rasgos e furos em correias transportadoras usando visão computacional.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Medição Online numa planta piloto de desalinhamento em correias transportadoras usando visão computacional",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Braço Robótico Organizador de Cores Com acesso Remoto",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aprendizado de Máquina em Dispositivos Embarcados: Soluções para Cidades Inteligentes",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Construção de um Sistema Online para Registro, Análise e Acompanhamento dos Raio-X de Tórax.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização de Conditional Variational Autoencoder para Análise de Sinais EEG em Pacientes Pós-AVC",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise de Sinais EEG em Pacientes Pós-AVC com Conditional Variational Autoencoder e Redução Dimensional via UMAP",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Aplicações Web para Fábricas Inteligentes: Explorando o Potencial do Python e dos Dispositivos da Internet das Coisas (IoT)",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programação de Robôs Manipuladores Kuka",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-03-10T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Gerenciamento de recursos de rede para aplicações de Ciência de Dados Intensiva",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Engenharia de tráfego para aplicações de Ciência de Dados Intensiva",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Injustiça econômica versus injustiça simbólica: uma análise das eleições municipais no Espírito Santo à Luz da Teoria Crítica de Nancy Fraser.",
+          "status": "Concluded",
+          "inicio": "2024-09-01T00:00:00",
+          "fim": "2025-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Injustiça econômica versus injustiça simbólica: uma análise da disputa eleitoral no município de Serra.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Injustiça econômica versus injustiça simbólica: uma análise da disputa eleitoral no município de Vitória.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Um estudo sobre geração e detecção de DeepFake de Voz",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Comparação de Métodos de Detecção de DeepFake de voz",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "O estudo de degradações e ruídos em áudios",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Criação de base de dados de deepfake de voz em língua portuguesa com diferentes sotaques",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise Computacional de Características Estéticas Faciais e Dentárias a partir de Imagens Digitais",
+          "status": "Active",
+          "inicio": "2025-09-29T00:00:00",
+          "fim": "2027-09-29T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Geração Automática de Laudos Médicos a Partir de Imagens Usando Image Captioning",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Investigação e Desenvolvimento de Modelos de Detecção de Ataques DDoS com Aprendizado de Máquina",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise de características faciais para identificação de sinais depressão e ansiedade",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-08-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação de imagens de OCT utilizando Deep Learning",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Impressa: Esculturas 3D de artesãos locais com filamento de material reciclado",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Chatbot para Recuperação de Informação em Documentos com Conteúdo Textual e Visual.",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Soluções Text-To-SQL para o IAGROGPT: Um Assistente Virtual Inteligente para a Agropecuária Brasileira",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Education Modernization Brazil, Colombia, Europe - the new era of digital higher education cooperation - EMBRACE",
+          "status": "Concluded",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programa Polos Olímpicos de Treinamento Intensivo (POTI)",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estudo de viabilidade para desenvolvimento de ambiente experimental para desenvolvimento de tecnologias em Indústria 4.0 e Internet",
+          "status": "Active",
+          "inicio": "2018-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Implantação e Operação de Meios e Serviços de Redes de Comunicação Avançadas",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Laboratório de Educação em Desenvolvimento de Soluções (LEDS)",
+          "status": "Active",
+          "inicio": "2013-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IAmHere - Chamadas Por Reconhecimento Facial",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Conecta Fapes",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SprintLAB - Laboratório de Prototipação Acelerada",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SmartIdea - Validação de Problemas e Ideias",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelagem Conceitual de Doenças e Pragas Recorrentes em Frutos de Morangueiro",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Identificação de transtornos mentais comuns e abuso de álcool/drogas no âmbito da atenção primária à saúde: Desenvolvimento de instrumentos informatizados de rastreio e avaliação diagnóstica",
+          "status": "Active",
+          "inicio": "2018-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Solução Web/mobile baseada em Inteligência Computacional para identificação de infestação por ácaros rajados (Tetranychus urticae) em culturas de morango",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema para Predição de Transtornos Mentais Comuns na Atenção Primária a Saúde: Parte II",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programa em Rede: Rede de Laboratórios de Educação em Desenvolvimento de Soluções (LEDS)",
+          "status": "Active",
+          "inicio": "2017-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programa de extensão: Programa LEDS - Laboratório de Extensão e Desenvolvimento de Sistema",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programa IFES Para Todos",
+          "status": "Active",
+          "inicio": "2018-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Roteamento na origem para engenharia de tráfego em redes científicas com uso intensivo de dados",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Descentralização do Tratamento de Resíduo Sólido para produção de biocombustível sustentável: SKID Indústria 4.0",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Plataforma Robótica Autônoma com Braço Robótico e Identificação de Objetos Baseada em ROS",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Construção e desenvolvimento de uma sistema de controle de uma Estrutura Robótica de Reabilitação (ERR) baseada no framework ROS.",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LabMaker 4.0: capacitando professores para a cultura maker e tecnologias da indústria 4.0",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Jovens Inventores: O poder da Tecnologia Maker no Desenvolvimento Social",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Laboratório IFMaker Serra: um ambiente colaborativo de aprendizagem e desenvolvimento de soluções",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Introdução a programação de computadores com ênfase na resolução de problemas",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Teatro Mundo",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cineclube Nova",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Levantamento das Referencias Culturais de Queimado",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PRONEM: Otimização da Eficiência Energética do Uso de Gás na Siderurgia usando Neuro-Evolução",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Conectando Talentos: Robótica e Programação no IFES-Serra",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Física ao Alcance de todos",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PROGRAMA DE CAPACITAÇÃO DE RECURSOS HUMANOS NA PÓS-GRADUAÇÃO PROCAP 2025 MESTRADO",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cadeira de Rodas Autônomas",
+          "status": "Active",
+          "inicio": "2014-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Oficinas 4.0",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax Priori-X.",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Medição de Cascão em Lança de Convertedores usando Visão Computaciomnal",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Instituto de Inteligência Computacional Aplicada - I2CA",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Mina Digital de Rochas Ornamentais: plataforma de integração da lavra à comercialização usando tecnologia Blockchain",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Sensor Óptico aplicado à Bioengenharia de Tecidos",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Fibras Ópticas Poliméricas com Novos Materiais Utilizando Técnicas Sustentáveis e de Baixo Custo",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Núcleo de Pesquisa e Inovação em Fotônica e Sensoriamento Avançado (FOTONS)",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Impressão 3D para pesquisa em biologia molecular",
+          "status": "Active",
+          "inicio": "2018-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sensor Óptico Aplicado à Descelularização de Órgãos",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Nanosensor de baixo custo para monitoramento de agrotóxicos em alimentos",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "EDITAL FAPES N 10/2024 - PROCAP 2025 MESTRADO",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PROCAP_PROPECAUT 2024",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Pós-graduação em Energias Renovávei",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PROCAP_PROPECAUT 2024 - EDITAL FAPES N 13/2023",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Laboratório de Extensão em Desenvolvimento de Sistemas (LEDS)",
+          "status": "Active",
+          "inicio": "2015-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IntegraCar. Inscrição dos imóveis rurais de propriedade ou posse do Estado do Espírito Santo no Cadastro Ambiental Rural (CAR)",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Grávida Digital - Desenvolvimento de um software baseado em dispositivos móveis para identificação de depressão, ansiedade e estresse na gestação",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Projeto de Formação Curso de Pós-Graduação Lato Sensu em Gestão da Inovação",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Implantação do Parque Científico e Tecnológico do InovaSerra PCTec InovaSerra",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Fortalecimento do Núcleo Incubador do Campus Serra do Ifes",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Pós-Graduação Lato Sensu em Gestão da Inovação - UnAC / Ifes Serra",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "NRI (Núcleo de Relações Internacionais)",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PROGRAMA REGULAR DE PROMOÇÃO DA CULTURA E DA ARTE NO IFES CAMPUS SERRA",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Processos mentais e vida financeira saudável: do endividamento ao investimento",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Grupo de Pesquisa Governança e Mercados - GeM",
+          "status": "Concluded",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Núcleo de Gestão, Empreendedorismo e Inovação ? NUGEIN",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SOF Serviço de Orientação Financeira (unidade Ifes Serra)",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Núcleo Incubador de Empreendimentos IFES Serra",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Projeto de Extensão - Finanças Pessoais Até Você",
+          "status": "Concluded",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Projeto de Extensão - Serviço de Orientação Financeira unidade Ufes",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programa de Extensão - Programa de Educação Financeira",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LAMPEX: Laboratório Modelo de Práticas de Extensão",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Comissão de Criação do Polo de Inovação Tecnológica do Ifes Campus Serra",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Coordenação Adjunta do Pronatec no Campus Serra do Ifes.",
+          "status": "Active",
+          "inicio": "2015-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avanços em Tecnologias Semânticas:Contribuições Metodológicas e Aplicações",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avaliação de SARS-COV-2 em águas residuárias e estabelecimento de sistemas de divulgação de dados",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Mobilidade Elétrica no Estado do Espírito Santo",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Tecnologias inovadoras aplicadas a vigilância da Tuberculose e HIV",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Interoperabilidade Semântica de Informações em Segurança Pública",
+          "status": "Active",
+          "inicio": "2015-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Kit de Transformação Digital para prédios Inteligentes",
+          "status": "Active",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "APOIO ao Laboratorio de Cidades Inteligentes CIDIG - CPID 2.2",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "GTA Tecnologia da Informação - Technologias Habilitadoras",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Sistema Inteligente para o Controle de Eletrodos de Fornos de Ferroligas para Aplicações Multicliente SCNE24",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estudo das operações de monitoramento em refinarias de petróleo usando veículos aéreos não tripulados.",
+          "status": "Active",
+          "inicio": "2015-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Astronomia na Escola",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PUR 192/2023: INDÚSTRIA 4.0 FABLAB TECH",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PUR 193/2023: CAPACITAÇÃO PARA INDÚSTRIA 4.0",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SEMEANDO CIÊNCIA, ASTRONOMIA E ASTRONAUTICA NA AMAZONIA OCIDENTAL DO BRASIL",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Dispositivos point of care para diagnóstico e avaliação de terapias da Atrofia Muscular Espinhal (AME)",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DIAGNÓSTICO SITUACIONAL SOBRE USO DE DROGAS NO ESPÍRITO SANTO",
+          "status": "Concluded",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Implementação e Desenvolvimento do Serviço de Aconselhamento Genético em Oncogenética fundamentado em Testes Genéticos no HUCAM/Espírito Santo",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um dispositivo multiplex de baixo custo para detecção de glifosato e micotoxinas em amostras de café",
+          "status": "Concluded",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de detecção multiplex para agroquímicos baseado em substratos de óxido de grafeno e nanomaterais plasmônicos por RAMAN/SERS",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema IoT Inteligente de Eficiência Energética",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Experimentos Didáticos em Física",
+          "status": "Active",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Jovens com deficiência no Ensino Superior e no mundo de trabalho: das práticas educacionais à efetiva inclusão social",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise do uso de fontes renováveis na produção de CaC2",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Uma Análise da Violência Contra a Mulher",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Formação White Belt Six Sigma e Lean manufacturing nível 1 online ao vivo ou presencial",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de fusão de sensores para posicionamento milimétrico em tempo real, em ambientes sem sinal de GPS",
+          "status": "Concluded",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Influencia das Propriedades da escória e Padrões operacionais na Eficiência do Slag Splashing",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Núcleo emergente em aplicações de inteligência artificial voltadas para redes programáveis",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Definição e Avaliação da maturidade organizacional de empreendimentos incubados no Núcleo Incubador do Campus Serra",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Jovens Aprendizes do IFES Serra",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "STEM",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Morpheus JR",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Programa de extensão SprintLAB",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ConectaFapes - ConectaFapes: Uma plataforma de apoio à Pesquisa, Desenvolvimento e Inovação",
+          "status": "Concluded",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LEDS - Laboratório de Extensão em Desenvolvimento de Sistemas",
+          "status": "Active",
+          "inicio": "2012-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ROBÓTICA PARA PESSOAS COM AUTISMO NO IFES SERRA",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE PROTÓTIPO DE UM SISTEMA DE CONTROLE DE ELETRODOS DE FORNOS DE FERROLIGAS PARA APLICAÇÕES MULTICLIENTE",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Robótica e tecnologia para todos RoboTec For All",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Monitoramento de desgaste de correias transportadoras",
+          "status": "Active",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IntegraCAR: Inscrição dos imóveis rurais de propriedade ou posse do Estado do Espírito Santo no Cadastro Ambiental Rural",
+          "status": "Active",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Impacto da COVID-19 durante a gestação no neurodesenvolvimento da criança",
+          "status": "Active",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Integração de Dados para Busca de Marcadores Biológicos de Transtornos do Neurodesenvolvimento",
+          "status": "Active",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ConectaFapes: Uma plataforma de apoio à Pesquisa, Desenvolvimento e Inovação",
+          "status": "Active",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": "2026-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de uma Inteligência Computacional Autônoma (ICA) para monitoramento e controle automático de um alto forno",
+          "status": "Active",
+          "inicio": "2021-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "O \"Preço do Tempo\" no Judiciário: Aplicação de Inteligência Artificial Explicável e Análise de Sobrevivência na Justiça Federal",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Automação da Interpretação e Geração de Laudos de Espirometria com Inteligência Artificial",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Interpretabilidade em Modelos de Predição de Falhas em Fios Diamantados e Suporte à Decisão Baseada em IA para Gestão de Garantias e Performance na Indústria de Rochas Ornamentais",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de Recomendação Visual para Rochas Ornamentais usando Redes Neurais Siamesas em Ambiente Web",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de Triagem para Detecção de Sangramento (Hemorragia Intracraniana) em imagens de Tomografia Computadorizada",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Reidentificação Visual de Tartarugas Marinhas com Redes Neurais Siamesas: Um Estudo sobre o Dataset SeaTurtleID2022",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Towards Brazilian Portuguese Automatic Open Question Generation Using Transformer-based Models",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cross Native?Translated Evaluation of Transformer-Based Vision Models for Brazilian Portuguese Image Captioning",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sumarização Automática de Artigos de Notícias em Português: Da Extração à Abstração com Abordagens Clássicas e Modelos Neurais",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento do Sistema BIT: Busca Inteligente de Texto",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Triagem Automatizada de Currículos usando Busca Vetorial e Modelos de Linguagem de Larga Escala",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "a definir",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avaliação de Estratégias para Geração Automática de Relatórios Radiológicos com Modelos Multimodais e Detecção Visual",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Um Ambiente Multi-Agente para Conversão de Consultas em Linguagem Natural para SQL Utilizando Modelos Neurais Multi-Idiomas",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Zoe: A Conversational Recommender System for E-Commerce Powered by Retrieval-Augmented Generation (RAG",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação de grãos de café usando a rede neural Mask R-CNN (título provisório)",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estudo e prototipação de dispositivo de baixo custo e conectividade de longo alcance para aplicações de sensoriamento em rede",
+          "status": "In Progress",
+          "inicio": "2017-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DevStar: Serviço de avaliação de equipes ágeis",
+          "status": "In Progress",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Um Estudo de caso do uso de Leds Up: Projeto Mapa do bem",
+          "status": "In Progress",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Arquitetura de baixo custo para Desktop Virtual para Ensino remoto baseada em Nuvem e Redes definidas por Software",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Orquestração de funções virtualizadas para um ambiente de ensino",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção de Ataques de Negação de Serviço Com Aprendizado de Máquina e Telemetria de Dados Temporais de Nuvem",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Orquestração integrada de serviços virtualizados em nuvens híbridas usando computação em nuvem e redes programáveis",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE AUTOMAÇÃO PARA UMA ESTAÇÃO DE TRATAMENTO DE EFLUENTES DE MINÉRIO: Aplicação do sistema 800xA",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema Automatizado para Medição de Empeno em Placas de Aço Utilizando Sensoriamento LiDAR e Processamento de Nuvens de Pontos",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Reconhecimento de Gestos de Mãos utilizando Redes Neurais Autoencoder e Transformada MODWT",
+          "status": "In Progress",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "De micro-expressões faciais para macro-expressões usando método de magnificação de vídeo euleriana",
+          "status": "In Progress",
+          "inicio": "2016-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Emprego de Gestos Estáticos e Dinâmicos para Interação de um Ser Humano com um Robô Móvel",
+          "status": "In Progress",
+          "inicio": "2011-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Visão Computacional Aplicada a Exames de Imagens para Diagnósticos de Patologias na Coluna Vertebral",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SÍNTESE DE FALA EM PORTUGUÊS BRASILEIRO UTILIZANDO DEEP LEARNING",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Diagnóstico de falhas em rolamentos de motores elétricos industriais com a aplicação de Machine Learning: estudo comparativo de desempenho dos modelos utilizando sinais de vibração e de corrente elétrica",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção Automática de Símbolos Gráficos em Projetos de Proteção Contra Incêndio com YOLOv12",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Automatic Detection of Seafloor Bedforms Using Bathymetric Data",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Deep Learning Aplicada à Determinação da Vida Útil de Rolamentos de Motores Elétricos",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aplicação de Técnicas de Deep Learning ao Diagnóstico de Patologias da Coluna Vertebral",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de Aquisição de Sinais para Construção de Modelos de Diagnóstico de Falhas em Processos Industriais",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "A Proposal for Quality Classification of Cocoa Beans Using Convolutional Neural Networks",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção de itens de segurança em ambientes de trabalho com a aplicação de Deep Learning",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DIAGNÓSTICO DE FALHA EM VENTILADORES DE PROCESSOS DE FORNOS DE PELOTIZAÇÃO UTILIZANDO ALGORITMOS DE MACHINE LEARNING",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Metodologias Computacionais Aplicadas para Avaliação em Tempo Real de Funcões Instrumentadas de Segurança em um Sistema de Segurança Funcional",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "A Sailor in a Big Green Boat:Video Information Extraction Using LLM-Based Keyframe Descriptions",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Tecnologia 3D no Ensino de Válvulas de Controle: Modelagem e Impressão de Modelos Didáticos para Melhorar o Processo de Ensino-Aprendizagem",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LabMaker 4.0: capacitando professores em Impressão 3D",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LabMaker 4.0: capacitando professores em Introdução ao Arduino",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LabMaker 4.0: capacitando professores em Manufatura Subtrativa",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Maker, Indústria 4.0, Modelagem 3D e Robótica",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Maker, Indústria 4.0, Manufatura Aditiva e Manufatura Subtrativa",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Maker, Indústria 4.0 e Robótica",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Maker, Indústria 4.0 e Impressão 3D",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "LabMaker 4.0: capacitando professores em Modelagem 3D",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Nas ondas do rádio, na frequência da língua portuguesa",
+          "status": "In Progress",
+          "inicio": "2017-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "A abordagem do triângulo amoroso em \"A cartomante\" e em \"A causa secreta\", de Machado de Assis",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "O Grande Gatsby: diálogos entre a literatura e o cinema",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelo ILP para Investigar a Implantação de Instâncias VNF em uma Rede com Roteamento por Segmento",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelo Matemático para otimização de propriedades familiares utilizando integração lavoura-pecuária.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelo Matemático para o Problema da Grade de Horário Escolar Considerando Custo Pedagógico e Preferências Docentes: Estudo de Caso do Instituto Federal do Espírito Santo ? Campus Cachoeiro de Itapemirim.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelo de Programação Linear Inteira para Otimização do Transporte na Colheita Florestal",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Algoritmo Genético para a Otimização do Problema do Sequenciamento de Tarefas com Produção Multi-Estágio, Máquinas Paralelas e Tempo de Setup: Estudo de Caso da Logística do Beneficiamento de Rochas Ornamentais.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Controle logístico de um Pátio de Placas de Aço com Empilhamento Utilizando Lógica Fuzzy",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Otimização da gestão de uma instalação elétrica real com sistema de armazenamento de energia e geração distribuída utilizando Simulated Annealing",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Combinando Physics Informed Neural Network com Programação Linear para Otimização do Gerenciamento de Reservatórios de Petróleo",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aplicação de Redes LSTM na Classificação de Emoções a partir de Sinais de EEG",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Sistema IoT para Automação Residencial com ESP32 e Firebase",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aprendizado de Máquina em Dispositivos Embarcados: Soluções para Cidades Inteligentes - Desenvolvimento de algoritmos de Machine Learning para Sistema Embarcado a partir de séries temporais (PT 14418)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aprendizado de Máquina em Dispositivos Embarcados: Soluções para Cidades Inteligentes - Desenvolvimento de algoritmos de Machine Learning para Sistema Embarcado a partir de imagens/vídeos (PT14420)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aprendizado de Máquina em Dispositivos Embarcados: Soluções para Cidades Inteligentes - Medição e modelagem de peças para projetos aplicáveis a Cidades Inteligentes (PT 14422)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aprendizado de Máquina em Dispositivos Embarcados: Soluções para Cidades Inteligentes - Impressão peças para encapsulamento de protótipos aplicáveis a Cidades Inteligentes (PT 14425)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de uma caneta eletrônica para Air Writing: uma abordagem híbrida baseada em dispositivos e visão computacional - Sincronização do algoritmo de controle da caneta eletrônica com o Air Writing (PT 13968)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de uma caneta eletrônica para Air Writing: uma abordagem híbrida baseada em dispositivos e visão computacional - Desenvolvimento e programação da caneta eletrônica para Air Writing (PT 13969)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de uma caneta eletrônica para Air Writing: uma abordagem híbrida baseada em dispositivos e visão computacional - Modelagem e desenvolvimento de peças em 3D para integração caneta eletrônica e Air Writing (PT 13970)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Educação STEAM: Construção de Robôs Como Integração de Conhecimentos - Desenvolvimento da parte eletrônica de robôs de competição (PT 14184)",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico - Interface de Visualização e Sistema de Alertas do Robô VitaBot (PT 17950)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas - Avaliação de Redes Neurais Profundas na Detecção de Manipulação de Imagens (PT 17944)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico - Sistema de Detecção térmica e Hot Spots (pontos de aquecimento) do Robô VitaBot (PT 17948)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico - Desenvolvimento do Sistema de Detecção Corporal do Robô VitaBot (PT 17947)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas - Interface Gráfica para Análise de Detecção de Imagens Manipuladas do VeriScan (PT 17946)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas - Preparação de Bases de Imagens Manipuladas para Sistemas de Detecção Automatizada (PT 17945)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico - Montagem Estrutural e Integração de Componentes do Robô VitaBot (PT 17949)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Maker, Indústria 4.0, Manufatura Aditiva e Manufatura Subtrativa (Plano de Trabalho) - Jovens Inventores: O poder da Tecnologia Maker no Desenvolvimento Social (Projeto de Extensão)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Cultura Maker, Indústria 4.0, Modelagem 3D e Robótica (Plano de Trabalho) - Jovens Inventores: O poder da Tecnologia Maker no Desenvolvimento Social (Projeto de Extensão)",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização de Redes Neurais Artificiais para identificação de cartéis em processos de licitação do ramo de óleo e gás",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Visão Computacional Aplicada a Medição Dimensional de Placas de Aço",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE UM ASSISTENTE VIRTUAL INTELIGENTE PARA ACIONAMENTO DE DISPOSITIVOS DE UMA RESIDÊNCIA POR COMANDOS DE VOZ E OUTRAS APLICAÇÕES",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Ensinando Movimentos a um Robô Humanoide por Meio de Inteligência Artificial",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SISTEMA DE ANÁLISE INTELIGENTE E CONFERÊNCIA AUTOMÁTICA DAS FORMAÇÕES DE TRENS NA EFVM UTILIZANDO VISÃO COMPUTACIONAL",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de Predição de Impacto de Condições Climáticas Severas na Distribuição de Energia.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "INSPEÇÃO DE FACHADAS DE EDIFÍCIOS UTILIZANDO DRONES E VISÃO COMPUTACIONAL",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE UM SISTEMA DE VISÃO COMPUTACIONAL PARA A CLASSIFICAÇÃO DE BRIQUETES DE MINÉRIO DE FERRO EM ÍNTEGROS E NÃO ÍNTEGROS",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Construção de um Algoritmo usando Inteligência Artificial para Medições de Desgaste de Face da Lança de Convertedores",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "UMA ARQUITETURA UNIFICADA DE REDES NEURAIS PROFUNDAS DE CLASSIFICAÇÃO E REGRESSÃO APLICADAS AO PROBLEMA DE LOCALIZAÇÃO GLOBAL POR IMAGEM",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise das temperaturas e velocidade de propagação da frente de combustão in-situ em reservatórios de óleos pesado",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise de Arquiteturas Baseadas em Transformers na Transcrição de Fala e Descrição de Áudio de Fundo Simultâneos em Cenários Sonoros Mistos",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ROTULAGEM AUTOMÁTICA DE IMAGENS DA WEB COM BUSCA EM LARGURA: UM ESTUDO DE CASO NA COMPETIÇÃO DOG BREED IDENTIFICATION",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Visão computacional aplicada a contagem de suínos",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Image Stitching como ferramenta de apoio no cadastro ambiental rural",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Extração de características de espectrogramas para detecção de defeitos em rolamentos usando autoenconders",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Ética em Inteligência Artificial",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Um Arcabouço Universal Para A Avaliação De Datasets Cruzados No Diagnóstico De Falhas Em Rolamentos",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aplicação de técnicas de aprendizado de máquina tradicionais na predição de complicações do infarto do miocárdio",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Implementação e Avaliação de Modelos de Aprendizado de Máquina no Framework VibroLearn",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Espaço Não formar de Ensino e Aprendizagem",
+          "status": "In Progress",
+          "inicio": "2022-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "APLICAÇÃO DE UM MÉTODO COMPUTACIONAL PARA PREVISÃO DE GERAÇÃO DE UM SISTEMA FOTOVOLTAICO DE 119 KW",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "AVALIAÇÃO DO EFEITO DA SUJIDADE EM SISTEMAS FOTOVOLTAICOS NA REGIÃO METROPOLITANA DE VITÓRIA/ES",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PREVISIBILIDADE NO CONSUMO ENERGÉTICO EM INSTITUIÇÃO PÚBLICA UTILIZANDO RNA",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização de sistema inteligente no processo de seleção de variáveis dos parâmetros de controle de fornos de queima de pelota de minério",
+          "status": "In Progress",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de medidor de particulado óptico",
+          "status": "In Progress",
+          "inicio": "2017-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Uma Ferramenta de Integração Semântica Integrada ao Arcabouço BASS",
+          "status": "In Progress",
+          "inicio": "2014-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Integração do Sincap com Sistemas de Saúde",
+          "status": "In Progress",
+          "inicio": "2014-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelagem de Objetivos para Levantamento de Requisitos do Sincap",
+          "status": "In Progress",
+          "inicio": "2014-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Modelagem Conceitual no Domínio de Doação de Órgãos",
+          "status": "In Progress",
+          "inicio": "2014-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Isolated Sign Language Recognition through Skeleton Image Representation",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Extracting Fields in Brazilian National Driver?s License: A Study Focusing on Deep Learning Text Recognition Methods",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "AVALIANDO A TRANSFERÊNCIA DE APRENDIZADO NA ANÁLISE DE RADIOGRAFIAS TORÁCICAS: UM ESTUDO DE CASO COM A BASE BRASILEIRA BRAX",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "CROSS NATIVE-TRANSLATED EVALUATION OF TRANSFORMER-BASED VISION MODELS FOR BRAZILIAN PORTUGUESE IMAGE CAPTIONING",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PREVISÃO DE DEMANDA DE CURTO PRAZO USANDO APRENDIZADO DE MÁQUINA COM DADOS POR TELEMETRIA: UM ESTUDO DE CASO NO BRASIL",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Extração De Regiões de Interesse da Carteira Nacional de Habilitação Utilizando Visão Computacional",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DEEP LEARNING APLICADO AO DIAGNÓSTICO DE PATOLOGIAS A PARTIR DE IMAGENS DE RAIO-X DE TÓRAX",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento do algoritmo de visão computacional do Air Writing para caneta eletrônica e pontos de interesse",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "An LLM-based Solution for Text-to-ES Translation",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Identificação de Sinais de Depressão e Ansiedade em Gestantes a partir de Selfies e Características Vocais",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Land-use and Land-cover Segmentation in the context of Brazilian Rural Environmental Registry",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Reducing Computational Overhead in Skeleton-based Isolated Sign Language Recognition through Optimized Keypoint Subset Selection",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Organização de Base de Dados Geoespacial para Identificação de Uso e Cobertura no contexto do CAR",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Sistema de Visualização Interativa de Segmentação Geoespacial no Contexto do CAR",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Section-Level Inconsistency Detection in Safety Data Sheets Using Structured LLM Prompting",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação e Localização de Achados Patológicos em Radiografias torácicas",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Proposta de um Modelo Baseado na Família de Normas ISO 56000 para Gestão da Inovação e da Propriedade Intelectual no Polo InovaSerra",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Um Sistema de Gestão de Incubadoras de Empresas baseado no modelo CERNE",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Proposta de Modelo de Atendimento às Entidades Detentoras de IG por Incubadoras de Empreendimentos: Experiência da Incubadora do Ifes",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização do Power BI na área de meio ambiente em uma mineradora do estado do Espírito Santo",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um software para gestão de avaliação por competências e planejamento de desenvolvimento individual",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "CLOUD COMPUTING: ESTUDO SOBRE A SUA ESTRUTURA E OS PRINCIPAIS TIPOS DE SERVIÇOS APLICANDO EM UMA CORPORAÇÃO",
+          "status": "In Progress",
+          "inicio": "2014-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Plataforma de Inteligência Artificial Simbólica para programação de redes definidas por software",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Inteligência Artificial para implantação de sistema Open RAN em nuvem",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Fremework para Teste de Autonomia de Software",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Orchestração de redes Abertas",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aplicações de voz para Prédios inteligentes",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Plataforma de experimentação P4",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SErviços de Visão computacional para Prédios Inteligentes",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "njustiça econômica versus injustiça simbólica: uma análise da disputa eleitoral no município de Vila Velha.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um minicurso de visão computacional utilizando dados da planta piloto",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "INSPEÇÃO EM CADEIAS DE ISOLADORES DE VIDRO EM LINHAS DE TRANSMISSÃO DE 345KV UTILIZANDO INTELIGÊNCIA ARTIFICIAL",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IMPACT OF SYNTHETIC DATA GENERATED BY A BETA-VARIATIONAL AUTOENCODER ON SPEECH EMOTION RECOGNITION",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ANÁLISE DE ESPECTROS RAMAN DE SÍNTER POR MEIO DE TÉCNICAS DE APRENDIZADO NÃO SUPERVISIONADO: UMAP E β-VAE NA EXTRAÇÃO DE CARACTERÍSTICAS LATENTES E GERAÇÃO DE DADOS SINTÉTICOS",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "VISÃO COMPUTACIONAL APLICADA À SEGURANÇA EM ESPAÇOS CONFINADOS",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "CÁLCULO DE EMPENO EM PLACAS DE AÇO UTILIZANDO VISÃO COMPUTACIONAL",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SUPERVISÃO E CONTROLE DE NÍVEL COM LÓGICA FUZZY: UMA INTEGRAÇÃO BASEADA EM OPC",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "GESTÃO DE PROJETOS BASEADA EM ANÁLISE PREDITIVA: UM FRAMEWORK PARA PREVISÃO DE RISCOS E CUSTOS",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Uma Proposta de Sistema para Geração de código Python a partir de uma descrição de requisitos de um Sistema de Informação: Uma Abordagem com Large Language Model",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "APRENDIZADO DINÂMICO E INTERATIVO: APLICAÇÃO DE JOGO SÉRIO NO ENSINO DE MANUFATURA ENXUTA",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise e documentação de um sistema de simulados online para o Ifes",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Proposta de aplicativo móvel para planejamento financeiro pessoal",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Chatbot Orquestrador",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IMPLEMENTAÇÃO DE UM SISTEMA DE SUPERVISÃO, CONTROLE E AQUISIÇÃO DE DADOS APLICADO A UMA PLANTA PILOTO DE CONVERTEDOR LD",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estudo da influência da penetração do jato de oxigênio sobre a geração de splashing em Fornos Elétricos a Arco usando Modelo Físico a Frio",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Influência da altura e do bico da lança, vazão de gás e da viscosidade da escória no SLAG SPLASINHG em Modelo a Frio do Convertedor",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "MEDIÇÃO DE LARGURA DE PLACAS DE AÇO USANDO VISÃO COMPUTACIONAL",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "AUTOMAÇÃO DE UM FILTRO DE DEPOEIRAMENTO",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Redes neurais com mecanismos de atenção aplicadas à classificação de imagens de rochas ornamentais.",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "APLICAÇÃO DA MAGNIFICAÇÃO DE VÍDEO LAGRANGEANA NO PRÉ-PROCESSAMENTO DE IMAGENS NA DETECÇÃO DE DEEPFAKES",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DETECÇÃO DE FRAUDES EM OPERAÇÕES DE ANTECIPAÇÃO DE RECEBÍVEIS VIA NOTAS FISCAIS COM APRENDIZADO DE MÁQUINA",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "APRENDIZADO PROFUNDO APLICADO À DETEÇÃO DE DEEPFAKES",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utizando LLM para a construção de um chatbot para atendimento de dúvidas em português sobre programação",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização de ferramentas de Inteligência de Negócios no monitoramento de Incêndios Florestais no Brasil.",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Comparação das técnincas Comparação de três Xboost, Random forest, Decision tree na classificação de Crimes",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção de Deepfakes com Filtros de Alta Frequência em uma Arquitetura Híbrida de Redes Neurais Convolucionais e Vision Transformers",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Previsão da Produção de Ovos com Séries Temporais Multivariadas a partir de Dados de Granjas Comerciais",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação de imagens de rochas ornamentais utilizando Vision Transformer",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção de EPI em Serviços Automotivos utilizando Técnicas de Deep Learning",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "The Jus Programming Language: Towards a Functional Language for Secure and Verifiable Smart Contracts on Tezos",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Previsão de Vazão e Nível de Água do Rio Itapemirim usando rede Perceptron Multi-Camada Otimizado por Neural Architecture Search",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação de Esquizofrenia via Microestados de Eletroencefalograma usando Redes Neurais Convolucionais",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Segmentação de imagens de TC cerebral usando técnicas clássicas de processamento digital de imagens",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "AudioTools: uma Aplicação Web para Edição de Áudio",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Um aplicativo móvel de apostas do jogo Valorant em Kotlin com backend em Solidity na blockchain Ethereum",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "TrampoCerto: um site de busca de vagas de empregos",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "GEAR: ferramenta web de gestão documental",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Mapeamento das notas do Enem por município do Espírito Santo",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise comparativa das linguagens de contratos inteligentes",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Protótipo de plataforma de integração da lavra à comercialização usando tecnologia Blockchain",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Correlação entre parâmetros de fresamento, propriedades mecânicas e microestrutura do aço SAE 1045: uma abordagem baseada em inteligência artificial",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção de deepfakes em vídeo em tempo real",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Detecção de Deepfakes de áudio sob influência de sotaques no português brasileiro e no espanhol latino-americano",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação da Esquizofrenia em Sinais de EEG por Redes Neurais em Grafos com Modelagem Espaço-Temporal de Conectividade Funcional Dinâmica",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Mapeamento Hidrográfico via Redes Neurais",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Classificação Automática de Rochas Ornamentais com Rede Neural Siamesa",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aprendizado Profundo Aplicado à Deteção de Deepfakes",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Integração de Bases de dados sobre violência contra a mulher em uma análise espacial e temporal",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Uma proposta de detecção de Deepfake utilizando magnificação de vídeo Euleriana",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Predição de Explosões Solares modelado por Séries Temporais Multivariadas: um estudo comparativo de arquiteturas Transformers",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "IntegraCAR: Integração do Cadastro Ambiental Rural no Estado do Espírito Santo",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Path-Aware Network by Residue Number System : Intrinsic Path Verification and High-Performance Routing",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "FRAMEWORK PARA SUPORTE À CIÊNCIA DE DADOS INTENSIVA EM REDES CIENTES DE CAMINHO USANDO ROTEAMENTO DE FONTE POLKA",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "ANÁLISE AUTOMÁTICA DE LOGS MALICIOSOS EM UMA REDE DE CIBERSEGURANÇA",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "SOLUÇÕES DE APRENDIZADO DE MÁQUINA PARA DETECÇÃO PRECOCE DE ATAQUES DE NEGAÇÃO DE SERVIÇO EM TEMPO REAL",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "INTEGRAÇÃO DE SOLUÇÕES DE APRENDIZADO DE MÁQUINA AO KERNEL LINUX USANDO EBPF E XDP PARA MITIGAÇÃO DE ATAQUES DE NEGAÇÃO DE SERVIÇO",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Aplicação de Roteamento de Fonte para Fatiamento em Redes 5G",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Planejamento de Redes Ópticas Elásticas",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Planejamento de Dietas com Receitas Completas",
+          "status": "In Progress",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "PLANEJAMENTO DE AQUISIÇÃO DE TECNOLOGIA DE INFORMAÇÃO BASEADO EM TEORIA DA DECISÃO E MACHINE LEARNING",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Adaptação dinâmica de modelos de processos de negócio com IA generativa.",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Entrevistas de Elicitação de Processos apoiadas por LLMs",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Mineração de Processos aplicado ã Siderurgia",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Extração de Restrições e Regras de Negócio de Processos de Negócio apoiada por PLN e LLMs.",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização de Sistemas de Recomendação no Varejo Farmacêutico",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Transformações entre Modelos de Processos baseados em notações Declarativas e Imperativas.",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DATAGED: UM DATA MART DO CADASTRO GERAL DE EMPREGADOS E DESEMPREGADOS",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Suporte Semântico na Geração de Massas de Dados para Testes de Software",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Integração de Normas de Segurança da Informação e Proteção de Dados",
+          "status": "In Progress",
+          "inicio": "2020-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Integração Semântica em Dados Abertos de Despesa Governamental",
+          "status": "In Progress",
+          "inicio": "2019-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Estimativa não destrutiva da porosidade de briquetes de minério de ferro por meio de visão computacional e inteligência artificial",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Previsão da Produção de Ovos com Séries Temporais Multivariadas a Partir de Dados de Granjas Comerciais",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de uma Aplicação Gamificada para Auxílio no Combate à Procrastinação",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avaliação de modelos de linguagem simples para geração de relatórios de mudanças em imagens rurais",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Redes neurais baseadas em física para prever comportamento anisotrópico em aço impresso em 3D",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Extração de Informação e Compliance de Contratos: Auditoria assistida por ontologias para gestão de ativos e serviços",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Jogos Sérios na Educação Tecnológica: Desenvolvimento de um simulador de estratégia para capacitação financeira e administrativa",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Utilização de Modelos de Linguagens Amplos para Geração de Explicações Contrafactuais Confiáveis e Inteligíveis",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Melhorando a Correção de Contratos Inteligentes: Validação de Especificações Formais Baseada em LLM",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Neuroevolução Gramatical: Um Estudo de Caso para Predição de Séries Temporais",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Entre ética na Filosofia e Inteligência Artificial: Uma Análise Semântica Computacional da Estrutura Conceitual da Ética em IA",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de um Videogame com Técnicas de Low-Code",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Otimização da Eficiência Energética do Uso de Gás na Siderurgia Usando Neuro-Evolução",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Derivação de Arquiteturas de Redes Neurais para Predição de Séries Temporais por Evolução Gramatical",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Simulador didático para o ensino de farmacologia e fisiologia: ação de drogas colinérgicas e adrenérgicas sobre o sistema cardiovascular",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Análise e Segmentação de Perfis em Formação Continuada usando Mineração de Dados Educacionais",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Inteligência Artificial Explicável aplicada a Grafos de Conhecimento para Interações Medicamentosas",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Escalabilidade e Desempenho de Métodos Robustos de Regressão em Dados com Outliers",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Avaliação Computacional de Técnicas de Imputação de Dados Faltantes em Bases Estatísticas",
+          "status": "In Progress",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Redes PPI como Conhecimento Estruturado em Modelos CNN Aplicados à Detecção de Câncer",
+          "status": "In Progress",
+          "inicio": "2024-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        },
+        {
+          "projeto": "DESENVOLVIMENTO DE UM SENSOR VIRTUAL PARA PREVISÃO DE SUPERFÍCIE ESPECÍFICA DO MINÉRIO DE FERRO PÓS-PRENSA",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Interfaces Web para Fábricas Inteligentes: Explorando o Potencial do Python",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Módulo Cidadão: Desenvolvimento de um Aplicativo Mobile para Registro de Problemas de Infraestrutura Pública",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Geração de código apoiada pelo ChatGPT: um estudo de caso na implementação do back-end de um sistema para bibliotecas",
+          "status": "Concluded",
+          "inicio": "2025-01-01T00:00:00",
+          "fim": "2025-12-31T00:00:00",
+          "campus": "Serra"
+        },
+        {
+          "projeto": "Desenvolvimento de Modelo de Tarifação Dinâmica para Incentivo à Mobilidade Elétrica na Área de Concessão da ELFSM",
+          "status": "In Progress",
+          "inicio": "2023-01-01T00:00:00",
+          "fim": null,
+          "campus": "Serra"
+        }
+      ]
+    }
+  ]
+}

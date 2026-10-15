@@ -1,0 +1,75 @@
+{
+  "indicador": "PINV",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2025,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2025_1.xlsx",
+      "revisao": "2025-1"
+    },
+    {
+      "arquivo": "listagem_2025_2.xlsx",
+      "revisao": "2025-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "parcela",
+      "simbolo": "TAFPPI",
+      "rotulo": "Total de Aporte em Pesquisa e Pós-Graduação",
+      "unidade": "R$",
+      "tipoContagem": "soma",
+      "apurado": 25954326.84,
+      "detalhado": true,
+      "campos": [
+        "projeto",
+        "codigo",
+        "valor",
+        "fonte"
+      ],
+      "registros": [
+        {
+          "projeto": "Otimização Processual com Inteligência Artificial",
+          "codigo": "PJ 8429",
+          "valor": 846326.84,
+          "fonte": "Recursos orçamentários próprios do TRE-ES descentralizados ao IFES via TED"
+        },
+        {
+          "projeto": "Núcleo Otimizado e Virtualizado para Aplicações de Inteligência Artificial (NOVA-IA)",
+          "codigo": "PJ 8503",
+          "valor": 10000000.0,
+          "fonte": "MCTI/FINEP/FNDCT - Chamada Pública Infraestrutura de Pesquisa - PRÓ-INFRA 2024"
+        },
+        {
+          "projeto": "Núcleo Otimizado e Virtualizado para Aplicações de Inteligência Artificial para a Indústria (NOVA-IA INDÚSTRIA)",
+          "codigo": "PJ 8504",
+          "valor": 15000000.0,
+          "fonte": "MCTI/FINEP/FNDCT/Centros Temáticos"
+        },
+        {
+          "projeto": "Recuperação de Conhecimento em Documentos com Conteúdo Textual e Visual para o SUFRAMA-GPT",
+          "codigo": "PJ 9152",
+          "valor": 108000.0,
+          "fonte": "Intelliway Tecnologia LTDA"
+        }
+      ]
+    },
+    {
+      "papel": "denominador",
+      "simbolo": "OCC",
+      "rotulo": "Orçamento Total de Capital e Custeio",
+      "unidade": "R$",
+      "tipoContagem": "soma",
+      "apurado": null,
+      "detalhado": false,
+      "campos": [],
+      "registros": []
+    }
+  ]
+}

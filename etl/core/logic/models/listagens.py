@@ -20,6 +20,8 @@ class EstudanteListagem:
     situacao: str | None
     forma_ingresso: str | None
     forma_matricula_cota: str | None
+    nome: str | None = None
+    curso: str | None = None
 
 
 @dataclass

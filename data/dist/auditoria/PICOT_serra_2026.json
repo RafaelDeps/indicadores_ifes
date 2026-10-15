@@ -1,0 +1,3283 @@
+{
+  "indicador": "PICOT",
+  "campus": "serra",
+  "campusNome": "Serra",
+  "ano": 2026,
+  "geradoEm": "2026-10-15",
+  "fontes": [
+    {
+      "arquivo": "exports_canonical.zip",
+      "revisao": null
+    },
+    {
+      "arquivo": "listagem_2026_1.xlsx",
+      "revisao": "2026-1"
+    },
+    {
+      "arquivo": "listagem_2026_2.xlsx",
+      "revisao": "2026-2"
+    }
+  ],
+  "componentes": [
+    {
+      "papel": "numerador",
+      "simbolo": "NTECPP",
+      "rotulo": "Estudantes Cotistas em Pesquisa",
+      "unidade": "Estudantes",
+      "tipoContagem": "contagem",
+      "apurado": 102,
+      "detalhado": true,
+      "campos": [
+        "nome",
+        "matricula",
+        "curso"
+      ],
+      "registros": [
+        {
+          "nome": "Guilherme do Carmo Souza",
+          "matricula": "20261BSI0029",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Stéphany Lahass Silva",
+          "matricula": "20201TIIMI0292",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Samuel Ferreira Alves",
+          "matricula": "20221BSI0480",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Breno Ferreira dos Santos Pazini",
+          "matricula": "20251TIIMI0353",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Eduardo Barros de Lima",
+          "matricula": "20241BSI0378",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "ERNANI BRANDAO NASCIMENTO",
+          "matricula": "20231MPCA0050",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Jordana Correia Aguiar",
+          "matricula": "20222CECA0331",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Maria Eduarda da Cruz Ferreira",
+          "matricula": "20232TIIMI0152",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "THIAGO AUGUSTO DE CARVALHO",
+          "matricula": "20221BSI0323",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Vinicius Costa Marcelos",
+          "matricula": "20251CECA0245",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Heitor Mendes de Oliveira",
+          "matricula": "20232BSI0271",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Higor Soares Pereira",
+          "matricula": "20251CECA0156",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "GIANLUCAS DE JESUS SILVA",
+          "matricula": "20251CECA0229",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Waleska Sulke dos Santos",
+          "matricula": "20221CECA0402",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Pammela Vicenti Ribeiro",
+          "matricula": "20252MPECA0206",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Luiz Felipe Alvarenga Alves",
+          "matricula": "20231CECA0133",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "David de Assis",
+          "matricula": "20222BSI0466",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rafael Biancardi da Silva",
+          "matricula": "20261BSI0282",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Nicolas Soares Nascimento",
+          "matricula": "20251CECA0270",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Enzo Medeiros Agnez",
+          "matricula": "20231CECA0095",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Manuelly Soares Silva",
+          "matricula": "20231TMEMI0193",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Enzo Versiani Rodrigues Lima",
+          "matricula": "20241TMEMI0131",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Marcos Daniel Pereira Da Silva",
+          "matricula": "20242TMEMI0172",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "SOPHIA DE LIMA MORAIS",
+          "matricula": "20242TMEMI0334",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Isabely Soares Marcelino",
+          "matricula": "20252CECA0255",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Mayke Willans Christo Pereira",
+          "matricula": "20242MPCA0068",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Carlos Henrique Santos das Neves de Almeida Feu",
+          "matricula": "20262BSI0277",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "João Victor Ferreira Abrêu",
+          "matricula": "20231CECA0141",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Júlia Rosa Celante",
+          "matricula": "20221CECA0216",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Akilanny Silva cruz",
+          "matricula": "20232TIIMI0128",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Luciana David Gonçalves",
+          "matricula": "20231TIIMI0170",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Ana Beatriz Lopes Borges",
+          "matricula": "20242TIIMI0354",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Isaac Pratti Silva",
+          "matricula": "20251BSI0370",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Daniel Henrique Moreira Vaquimax",
+          "matricula": "20261TIIMI0121",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "raquel nascimento neres",
+          "matricula": "20241BSI0343",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Larissa Maciel Santos",
+          "matricula": "20232BSI0247",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Leticia Comissário da Silva",
+          "matricula": "20241BSI0254",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Enzo Mandelli Pinheiro Rodrigues",
+          "matricula": "20241CECA0190",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Johnny Anjos Alves Pereira",
+          "matricula": "20251CECA0300",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Rara Perozini Barroca",
+          "matricula": "20231CECA0079",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Pedro Daniel Trigueiro Bilé",
+          "matricula": "20231CECA0109",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Maria Rita Mendes Nunes",
+          "matricula": "20242TMEMI0202",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Leandro Everton Alves Costa",
+          "matricula": "20241CECA0298",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Israel Magalhães do Carmo",
+          "matricula": "20222BSI0407",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Davidson Carvalho dos Santos",
+          "matricula": "20222BSI0431",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Lannay Itauana Coelho Caldas",
+          "matricula": "20242BSI0540",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "MAXINE AMORIM SILVA GOIS",
+          "matricula": "20252BSI0305",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Kauã Alexandre Bernardes",
+          "matricula": "20232TIIMI0187",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Raíssa Andrade Dutra",
+          "matricula": "20241BSI0386",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "JULIA LOUIZE SILVA BARBOSA",
+          "matricula": "20261BSI0347",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Maria Júlia Leopoldo Barros",
+          "matricula": "20232TIIMI0101",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Jules Santos Campos",
+          "matricula": "20242BSI0311",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Marcos Vinicius batista dos anjos",
+          "matricula": "20262TMEMI0169",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Gustavo Schaider Brum Ferreira",
+          "matricula": "20232CECA0470",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Davi Miranda Soares",
+          "matricula": "20231CECA0087",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Isabela Gimenes Magalhães Ribeiro",
+          "matricula": "20251CECA0369",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Elisa Andrade de Jesus",
+          "matricula": "20242BSI0354",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Eduarda Nascimento Coelho",
+          "matricula": "20241BSI0351",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Amanda Ferreira De Souza",
+          "matricula": "20242MPCA0076",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Vitor Hugo Vervloet",
+          "matricula": "20222BSI0415",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Amanda Paiva de Souza Silveira",
+          "matricula": "20242TIIMI0320",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Allicia Rocha dos Santos",
+          "matricula": "20231BSI0392",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Luma Tavares Lopes de Souza",
+          "matricula": "20232BSI0220",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Pedro Renã da Silva Moreira",
+          "matricula": "20232BSI0387",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Erick Machado Ferreira",
+          "matricula": "20242BSI0338",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ilanna dos Reis Cardoso",
+          "matricula": "20242BSI0346",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Arthur Fabrício da Silva Pires de Oliveira",
+          "matricula": "20251TMEMI0031",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Victória da Silva Maciel",
+          "matricula": "20261FICOCA0285",
+          "curso": "Operador de Computador - ASAS"
+        },
+        {
+          "nome": "Wilsiman Santos Evangelista Silva",
+          "matricula": "20241BSI0211",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "DANILO DA SILVA ALVAREZ",
+          "matricula": "20242CECA0478",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Luiz Philipe Augusto Rosa",
+          "matricula": "20251TIIMI0230",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Marcelo Gustavo Ezequiel da Silva",
+          "matricula": "20231CECA0346",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Davi Marins Almeida",
+          "matricula": "20252BSI0461",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Anna Clara Araujo Fontis Serafim",
+          "matricula": "20242TMEMI0024",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Gabriel Barbosa Lucas",
+          "matricula": "20201BSI0397",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rafael de Jesus Gonçalves",
+          "matricula": "20251BSI0175",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Roger Kauã Rosa Abade",
+          "matricula": "20252BSI0372",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Pedro Henrique Groner Nascimento",
+          "matricula": "20242BSI0460",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Nassom Lacôrt Oliveira",
+          "matricula": "20252TIIMI0262",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Daniel Emerich de Castro",
+          "matricula": "20252TMEMI0331",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Luiz Felipe Elizeta dos Santos",
+          "matricula": "20231BSI0406",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Carlos Eduardo De Carvalho Barbosa",
+          "matricula": "20252BSI0178",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ana Rúbia Ramos Vicente",
+          "matricula": "20241MPCA0147",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Carlos Henrique Costa Matos",
+          "matricula": "20241MPCA0120",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Bruno Lorenzo Thomaz Marques",
+          "matricula": "20262MPECA0106",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Enzo Salamão Roseiro",
+          "matricula": "20211CECA0277",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "George Matheus Santos de Oliveira",
+          "matricula": "20182BSI0256",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "LEONARDO VINICIUS DE BRITO REIS",
+          "matricula": "20242MPECA0500",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Alvaro Vinicius de Almeida Martins",
+          "matricula": "20241MPCA0163",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gustavo Amora Basílio",
+          "matricula": "20231MPCA0076",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Vinícius Gomes Caetano",
+          "matricula": "20261MPCA0160",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Petar Veljovic",
+          "matricula": "20261MPCA0135",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Calebe Ferreira Albertino",
+          "matricula": "20251MPCA0242",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Stanrley Barbosa da Silva",
+          "matricula": "20251MPCA0200",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Ana Carolina Ichimura",
+          "matricula": "20171BSI0138",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Camila Fornaciari Volponi",
+          "matricula": "20191BSI0409",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Adailton Saraiva",
+          "matricula": "20241MPCA0139",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Jean Carlos Penas",
+          "matricula": "20251MPCA0226",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gean Paulo Oliveira Souza",
+          "matricula": "20242MPCA0084",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Sostenes Dias de Oliveira Junior",
+          "matricula": "20261MPCA0178",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Ricardo Souza de Oliveira",
+          "matricula": "20232MPCA0442",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Ramon de Holanda Nascimento",
+          "matricula": "20251MPCA0234",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        }
+      ]
+    },
+    {
+      "papel": "denominador",
+      "simbolo": "NEP",
+      "rotulo": "Total de Estudantes em Pesquisa",
+      "unidade": "Estudantes",
+      "tipoContagem": "contagem",
+      "apurado": 388,
+      "detalhado": true,
+      "campos": [
+        "nome",
+        "projeto",
+        "papel",
+        "matricula",
+        "curso"
+      ],
+      "registros": [
+        {
+          "nome": "Harian Adami Chagas Radaelli",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Kauã Mateus de Barros Terra",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Bruna Ramos Rocha",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Mariana Lopes de Gouvea",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Luan Otoni de Oliveira",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20251BSI0116",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Victor Gabriel Brenner Dicberner",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Guilherme do Carmo Souza",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20261BSI0029",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Beatriz Auer Mariano",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Mateus Lannes Cunha",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student Researcher",
+          "matricula": "20252MPECA0141",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Maressa Karen Henrique da Silva",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Stéphany Lahass Silva",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20201TIIMI0292",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Luísa Coutinho Pimentel dos Santos",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Felipe Costabeber Schneider",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Gabriele Maria Modesto Luciano",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20251BSI0345",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Daiane Geraldino Guerra",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20231TPMI0015",
+          "curso": "Técnico em Informática - Campus Serra"
+        },
+        {
+          "nome": "João Pedro Zamborlini Barcellos",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20241BSI0440",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Samuel Ferreira Alves",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20221BSI0480",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "João Pedro Spinassé Viana",
+          "projeto": "A necessidade de metodologias e ferramentas adequadas para avaliação, desenvolvimento e validação de ideias no contexto dos habitats e ambientes de  inovação.",
+          "papel": "Student",
+          "matricula": "20221BSI0242",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Marcos Ribeiro De Souza",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Breno Ferreira dos Santos Pazini",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": "20251TIIMI0353",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Eduardo Barros de Lima",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": "20241BSI0378",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Luiz Sampaio Horta",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "ERNANI BRANDAO NASCIMENTO",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": "20231MPCA0050",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "BRUNA RUPP RUELA",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": "20232MPCA0019",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Dalvan Ribeiro de Almeida",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Jordana Correia Aguiar",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": "20222CECA0331",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Maria Eduarda da Cruz Ferreira",
+          "projeto": "Implantação de uma estação meteorológica automática para estudos de geração de energia e planejamento energético",
+          "papel": "Student",
+          "matricula": "20232TIIMI0152",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "ENZO HUBNER MOURA DE ANDRADE",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": "20241BSI0149",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Miguel Malini Louvem",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Lucas Vieira da Silva",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": "20211BSI0054",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "THIAGO AUGUSTO DE CARVALHO",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": "20221BSI0323",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Davi Henrique Comério",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": "20241BSI0157",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Vinicius Costa Marcelos",
+          "projeto": "Mina Digital de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": "20251CECA0245",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Heitor Mendes de Oliveira",
+          "projeto": "Otimização da Eficiência Energética do Uso de Gás na Siderurgia usando Neuro-Evolução",
+          "papel": "Student",
+          "matricula": "20232BSI0271",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Caio Lopes De Oliveira",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20242MPECA0012",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Higor Soares Pereira",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20251CECA0156",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Fabio Celio Souza Segundo",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20251CECA0032",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Rômulo Duani da Silva",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20212CECA0210",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "João Vitor Barcellos Leite da Silva",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20241TMEMI0107",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "GIANLUCAS DE JESUS SILVA",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20251CECA0229",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Waleska Sulke dos Santos",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20221CECA0402",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Pammela Vicenti Ribeiro",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20252MPECA0206",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Amanda Frasson Nascimento Martins",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20232CECA0453",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "MATEUS DA ROCHA GUIMARAES",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Bernardo Ferri Schirmer",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20231CECA0265",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Luiz Felipe Alvarenga Alves",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20231CECA0133",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "DIEGO MENDES GARCIA",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20222CECA0498",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "David de Assis",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student",
+          "matricula": "20222BSI0466",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "João Guilherme Lourenço De Souza",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student Researcher",
+          "matricula": "20242MPECA0020",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Igor Rodrigues Cassimiro",
+          "projeto": "Uso de Inteligência Artificial para o Monitoramento do Estado de Correias Transportadoras",
+          "papel": "Student Researcher",
+          "matricula": "20242MPECA0055",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Rafael Biancardi da Silva",
+          "projeto": "Ações de Eficiência Energética associadas ao uso de Fontes Alternativas - Estudo de Caso do IFES/Campus Serra",
+          "papel": "Student",
+          "matricula": "20261BSI0282",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Nicolas Soares Nascimento",
+          "projeto": "Ações de Eficiência Energética associadas ao uso de Fontes Alternativas - Estudo de Caso do IFES/Campus Serra",
+          "papel": "Student",
+          "matricula": "20251CECA0270",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Thiago Machado De Oliveira",
+          "projeto": "Ações de Eficiência Energética associadas ao uso de Fontes Alternativas - Estudo de Caso do IFES/Campus Serra",
+          "papel": "Student",
+          "matricula": "20171CECA70161",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Yuri Vieira Melo",
+          "projeto": "Ações de Eficiência Energética associadas ao uso de Fontes Alternativas - Estudo de Caso do IFES/Campus Serra",
+          "papel": "Student",
+          "matricula": "20231CECA0222",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Kellen Moura Ferreira",
+          "projeto": "Cidades e Prédios Inteligentes 2.2",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Emanuel Norjosa Luz",
+          "projeto": "Cidades e Prédios Inteligentes 2.2",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Enzo Medeiros Agnez",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20231CECA0095",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Katarina Veljovic",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20232TIIMI0012",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Daniel Nascimento de Oliveira",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20252TMEMI0048",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "João Amaro Marins",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20251TMEMI0139",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "João Pedro Vervloet Gonçalves",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20252TMEMI0145",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Manuelly Soares Silva",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20231TMEMI0193",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Enzo Versiani Rodrigues Lima",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20241TMEMI0131",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Murilo Ferreira Marcelino",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20231TIIMI0251",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Luiza Couceiro Costa",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Marcos Daniel Pereira Da Silva",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20242TMEMI0172",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "SOPHIA DE LIMA MORAIS",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20242TMEMI0334",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Isabely Soares Marcelino",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Student",
+          "matricula": "20252CECA0255",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Pablo France Salarolli",
+          "projeto": "Robótica e Tecnologia, kits educacionais – RoboTech 4.0",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "João Paulo Pereira Eliotério",
+          "projeto": "Laboratório Espaço Energia: avanços na mobilidade elétrica com a implantação de eletroposto para recarga de veículos elétricos",
+          "papel": "Student",
+          "matricula": "20212CECA0112",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Marcela Starling Ferreira Lage",
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Mayke Willans Christo Pereira",
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "papel": "Student",
+          "matricula": "20242MPCA0068",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Sofia de Alcantara Silva",
+          "projeto": "Definição de Processo de Desenvolvimento de Software baseado em Métodos Ágeis aplicado ao ConectaFAPES",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Carlos Henrique Santos das Neves de Almeida Feu",
+          "projeto": "Desenvolvimento de Jogos Educacionais para Auxiliar o Processo de Ensino-Aprendizagem no Ensino Médio",
+          "papel": "Student",
+          "matricula": "20262BSI0277",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rafael Lemgruber Francischetto",
+          "projeto": "Desenvolvimento de Jogos Educacionais para Auxiliar o Processo de Ensino-Aprendizagem no Ensino Médio",
+          "papel": "Student",
+          "matricula": "20251TIIMI0299",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Marlyson Rodrigues Souza",
+          "projeto": "Desenvolvimento de Jogos Educacionais para Auxiliar o Processo de Ensino-Aprendizagem no Ensino Médio",
+          "papel": "Student",
+          "matricula": "20251TIIMI0256",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Leonardo Gonçalves Batista",
+          "projeto": "Kit didático utilizando uma planta piloto de correias transportadora",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "João Victor Ferreira Abrêu",
+          "projeto": "Kit didático utilizando uma planta piloto de correias transportadora",
+          "papel": "Student",
+          "matricula": "20231CECA0141",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Júlia Rosa Celante",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20221CECA0216",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Akilanny Silva cruz",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20232TIIMI0128",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Arthur Candido Maria",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20261CECA0014",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "vitoria gomes fagundes",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Alice Lourenço dos Reis",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20232BSI0492",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Luciana David Gonçalves",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20231TIIMI0170",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Ana Beatriz Lopes Borges",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20242TIIMI0354",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Isaac Pratti Silva",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20251BSI0370",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "JOAO VITOR OLIVEIRA SCHEIDEGGER",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20242BSI0125",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "KARYNA MARTINS CARBAS",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20232BSI0360",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Davi Campos Sutil",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20232BSI0450",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Daniel Henrique Moreira Vaquimax",
+          "projeto": "Desenvolvimento de um Sistema Baseado em Inteligência Artificial para Análise de Raio-X de Tórax “Priori-RX”.",
+          "papel": "Student",
+          "matricula": "20261TIIMI0121",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "raquel nascimento neres",
+          "projeto": "CLASSIFICAÇÃO DE IMAGENS DE OCT COM IA INTERPRETÁVEL",
+          "papel": "Student",
+          "matricula": "20241BSI0343",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Larissa Maciel Santos",
+          "projeto": "CLASSIFICAÇÃO DE IMAGENS DE OCT COM IA INTERPRETÁVEL",
+          "papel": "Student",
+          "matricula": "20232BSI0247",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Leticia Comissário da Silva",
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "papel": "Student Researcher",
+          "matricula": "20241BSI0254",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ícaro Lessa Secchin",
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "papel": "Student Researcher",
+          "matricula": "20231CECA0150",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Enzo Mandelli Pinheiro Rodrigues",
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "papel": "Student Researcher",
+          "matricula": "20241CECA0190",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Johnny Anjos Alves Pereira",
+          "projeto": "Desenvolvimento de Materiais Didáticos Inovadores Para o Ensino de Disciplinas Técnicas com Tecnologias da Indústria 4.0",
+          "papel": "Student Researcher",
+          "matricula": "20251CECA0300",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Rara Perozini Barroca",
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino em Engenharia Utilizando Tecnologias do Laboratório Maker",
+          "papel": "Student Researcher",
+          "matricula": "20231CECA0079",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Pedro Daniel Trigueiro Bilé",
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino em Engenharia Utilizando Tecnologias do Laboratório Maker",
+          "papel": "Student Researcher",
+          "matricula": "20231CECA0109",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Maria Rita Mendes Nunes",
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino em Engenharia Utilizando Tecnologias do Laboratório Maker",
+          "papel": "Student Researcher",
+          "matricula": "20242TMEMI0202",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Leandro Everton Alves Costa",
+          "projeto": "Desenvolvimento de Materiais de Apoio para o Ensino em Engenharia Utilizando Tecnologias do Laboratório Maker",
+          "papel": "Student Researcher",
+          "matricula": "20241CECA0298",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Gabriela Prajo Beretta",
+          "projeto": "ANÁLISE FACIAL EM SELFIES PARA IDENTIFICAÇÃO DE ANSIEDADE E DEPRESSÃO EM PACIENTES GESTANTES",
+          "papel": "Student",
+          "matricula": "20251BSI0302",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Israel Magalhães do Carmo",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": "20222BSI0407",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Davidson Carvalho dos Santos",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": "20222BSI0431",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Leticia Rizato",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": "20231TIIMI0162",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "VALENTINA SOBRAL ENDRINGER",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": "20242TIIMI0184",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Ana Carolina Brunetti da Silva Baltazar",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": "20242TIIMI0214",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Vitor de Barros Coelho",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Anyssa Satimi Komati Andrade",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": "20242TSIS1299",
+          "curso": "Tecnologia em Sistemas para Internet"
+        },
+        {
+          "nome": "NICOLAS KAUA MENDES FARIAS",
+          "projeto": "BPM Pós-Gestão - Automação Inteligente para Programas de Pós-graduação",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Guilherme Prasser Zumerle",
+          "projeto": "Sistema de Aquisição de Dados e Aprendizado de Máquina em planta piloto de Aciaria LD",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "João victor nascimento ribeiro",
+          "projeto": "Sistema de Aquisição de Dados e Aprendizado de Máquina em planta piloto de Aciaria LD",
+          "papel": "Student",
+          "matricula": "20232BSI0174",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Lannay Itauana Coelho Caldas",
+          "projeto": "Sistema de Aquisição de Dados e Aprendizado de Máquina em planta piloto de Aciaria LD",
+          "papel": "Student",
+          "matricula": "20242BSI0540",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "SOPHIA GOMES SCARDUA",
+          "projeto": "Estoicismo Red Pill: a apropriação da Filosofia Clássica por uma agenda política contemporânea",
+          "papel": "Student",
+          "matricula": "20242TIIMI0095",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Sophia Serra Garcia",
+          "projeto": "Estoicismo Red Pill: a apropriação da Filosofia Clássica por uma agenda política contemporânea",
+          "papel": "Student",
+          "matricula": "20241TMEMI0310",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Arthur Valentim Caldeira",
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas \nOrientada a Agentes",
+          "papel": "Student",
+          "matricula": "20222BSI0024",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "MAXINE AMORIM SILVA GOIS",
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas \nOrientada a Agentes",
+          "papel": "Student",
+          "matricula": "20252BSI0305",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Joaquim Estefan Vivas",
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas \nOrientada a Agentes",
+          "papel": "Student",
+          "matricula": "20251TIIMI0205",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Myllena Furtado Toniato",
+          "projeto": "Avaliação de Erros Gramaticais e Aderência ao Tópico de Redações Dissertativas-Argumentativas \nOrientada a Agentes",
+          "papel": "Student",
+          "matricula": "20232BSI0379",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Sofia Alves Figueredo",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20242TIIMI0290",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Elson Ramos Athaydes",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20232BSI0468",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Lucas Stefanelli Vieira Stefanelli",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20242BSI0028",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rafael Bernardi Primo",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20242TIIMI0338",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Lucca Richa Campagnoli",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20251TIIMI0221",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Francisco Leal Alves",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20232TIIMI0047",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Kauã Alexandre Bernardes",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20232TIIMI0187",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Raíssa Andrade Dutra",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20241BSI0386",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Thiago Almeida Deps Caldeira",
+          "projeto": "Gerenciador de Denúncias da Delegacia Especializada de Proteção à Pessoa Idosa",
+          "papel": "Student",
+          "matricula": "20202BSI0136",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "José Otávio de Souza Lessa",
+          "projeto": "Implementação de Técnicas de IA para Melhoria de Processos em Laminadores de Tiras a Quente",
+          "papel": "Student",
+          "matricula": "20242BSI0079",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "JULIA LOUIZE SILVA BARBOSA",
+          "projeto": "VibroLearn: Um Framework para Diagnóstico de Falhas em Máquinas Industriais",
+          "papel": "Student",
+          "matricula": "20261BSI0347",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Arthur Corona Pimentel",
+          "projeto": "VibroLearn: Um Framework para Diagnóstico de Falhas em Máquinas Industriais",
+          "papel": "Student Researcher",
+          "matricula": "20242CECA0460",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Adriano Rocha Angelo dos Santos",
+          "projeto": "VibroLearn: Um Framework para Diagnóstico de Falhas em Máquinas Industriais",
+          "papel": "Researcher",
+          "matricula": "20232MPCA0213",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Pedro Mariani Coelho",
+          "projeto": "VibroLearn: Um Framework para Diagnóstico de Falhas em Máquinas Industriais",
+          "papel": "Researcher",
+          "matricula": "20241MPCA0104",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Pedro Antunes de Brito",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20251BSI0272",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Maria Júlia Leopoldo Barros",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20232TIIMI0101",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Victória Kallas Libardi da Penha",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20232CECA0100",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Jules Santos Campos",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20242BSI0311",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Gabriel Henrique de Sousa Costa",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20251CECA0350",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Mateus Guimarães Coutinho",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20252TPMAI0180",
+          "curso": "Técnico em Automação Industrial - Campus Serra"
+        },
+        {
+          "nome": "Marcos Vinicius batista dos anjos",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20262TMEMI0169",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Guilherme Parreira",
+          "projeto": "Traçador de Curva I-V para Usina Fotovoltaica",
+          "papel": "Student",
+          "matricula": "20251CECA0024",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Eloah Leocádio de Moura",
+          "projeto": "Inteligência artificial explicável para diagnóstico cardiovascular: transformando a interpretação de ecgs na atenção à saúde",
+          "papel": "Student",
+          "matricula": "20261BSI0037",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Lucas Silverio Gums",
+          "projeto": "Inteligência artificial explicável para diagnóstico cardiovascular: transformando a interpretação de ecgs na atenção à saúde",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Analice Clarindo Gomes",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Student",
+          "matricula": "20222CECA0480",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Gustavo Schaider Brum Ferreira",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Student",
+          "matricula": "20232CECA0470",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Nicolas Ciarelli Schultz",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Student",
+          "matricula": "20242CECA0060",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Davi Miranda Soares",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Student",
+          "matricula": "20231CECA0087",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Arthur Miranda",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Keslley Will Aguiar",
+          "projeto": "Transformação Digital e Gestão Energética: Microrredes como uma rota para um futuro sustentável",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Caio Mario Carletti",
+          "projeto": "Feira Digital: Uma plataforma de Conexão Direta entre Produtores e Consumidores.",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Marco Antonio Andrade de Oliveira",
+          "projeto": "Feira Digital: Uma plataforma de Conexão Direta entre Produtores e Consumidores.",
+          "papel": "Student",
+          "matricula": "20252CECA0115",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Eduarda Ferrari Dias",
+          "projeto": "Feira Digital: Uma plataforma de Conexão Direta entre Produtores e Consumidores.",
+          "papel": "Student",
+          "matricula": "20251BSI0418",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Julia Neiva Gomes",
+          "projeto": "Feira Digital: Uma plataforma de Conexão Direta entre Produtores e Consumidores.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Isabela Gimenes Magalhães Ribeiro",
+          "projeto": "Desenvolvimento de um Módulo de Hidroponia Autônomo usando um agente IA",
+          "papel": "Student",
+          "matricula": "20251CECA0369",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Elisa Andrade de Jesus",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Student",
+          "matricula": "20242BSI0354",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ana Júlia Caetano Martins",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Student",
+          "matricula": "20261MPCA0143",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Eduarda Nascimento Coelho",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Student",
+          "matricula": "20241BSI0351",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Amanda Ferreira De Souza",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Student",
+          "matricula": "20242MPCA0076",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Jeorge Terci Gasperazzo",
+          "projeto": "Soluções de aprendizado de máquina para detecção e mitigação de ataques de negação de serviço em Scrubbing Centers",
+          "papel": "Student",
+          "matricula": "20242MPCA0033",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Bárbara Lima de Almeida Giglio",
+          "projeto": "DESENVOLVIMENTO DE KITS DIDÁTICOS PARA O ENSINO DE ENGENHARIA DE CONTROLE E AUTOMAÇÃO",
+          "papel": "Student",
+          "matricula": "20242CECA0486",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Arthur Alexandre Goulart Souza",
+          "projeto": "DESENVOLVIMENTO DE KITS DIDÁTICOS PARA O ENSINO DE ENGENHARIA DE CONTROLE E AUTOMAÇÃO",
+          "papel": "Student",
+          "matricula": "20242CECA0192",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Fabio Rodrigo Fernandes de Oliveira",
+          "projeto": "Classificação de patologias da coluna vertebral a partir de imagens de Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net.",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Maria Caitana Pascoal Banhos",
+          "projeto": "Classificação de patologias da coluna vertebral a partir de imagens de Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net.",
+          "papel": "Student",
+          "matricula": "20252BSI0062",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Vitor Hugo Vervloet",
+          "projeto": "Classificação de patologias da coluna vertebral a partir de imagens de Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net.",
+          "papel": "Student",
+          "matricula": "20222BSI0415",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "João Pedro Nascimento da Silva",
+          "projeto": "Classificação de patologias da coluna vertebral a partir de imagens de Tomografia Computadorizada e Ressonância Magnética utilizando as redes YOLOv12 e U-Net.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Nicoly Ferreira Dos Santos Pazini",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Student",
+          "matricula": "20241TIIMI0020",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Pedro Henrique Albani Nunes",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Student",
+          "matricula": "20232BSI0123",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Amanda Paiva de Souza Silveira",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Student",
+          "matricula": "20242TIIMI0320",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Alice Barbosa Belchior",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Student",
+          "matricula": "20242TSIS0330",
+          "curso": "Tecnologia em Sistemas para Internet"
+        },
+        {
+          "nome": "Allicia Rocha dos Santos",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Student",
+          "matricula": "20231BSI0392",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Matheus Santos Rodrigues",
+          "projeto": "VeriScan: Inteligência Computacional Aplicada à Detecção de Imagens Manipuladas",
+          "papel": "Student",
+          "matricula": "20242TIIMI0273",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Maria Clara Peterle de Souza",
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico",
+          "papel": "Student",
+          "matricula": "20242TMEMI0199",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Wallace da Costa Ferreira dos Santos",
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico",
+          "papel": "Student",
+          "matricula": "20242TIIMI0192",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "TERTULIANO DOS SANTOS JUNIOR",
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico",
+          "papel": "Student",
+          "matricula": "20232BSI0069",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Luma Tavares Lopes de Souza",
+          "projeto": "VitaBot: Robô de Resgate e Inspeção com Sensoriamento Visual e Térmico",
+          "papel": "Student",
+          "matricula": "20232BSI0220",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Pedro Renã da Silva Moreira",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Student",
+          "matricula": "20232BSI0387",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Dafne Fernandes Piovesan",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Student",
+          "matricula": "20251MPCA0161",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Elton Douglas Silva",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Erick Machado Ferreira",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Student",
+          "matricula": "20242BSI0338",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ilanna dos Reis Cardoso",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Student",
+          "matricula": "20242BSI0346",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Gustavo Firme Fiorot",
+          "projeto": "ChatRad: Um Sistema de Conversação Multimodal para Análise Automatizada de Radiografias Torácicas",
+          "papel": "Student",
+          "matricula": "20232BSI0433",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Arthur Fabrício da Silva Pires de Oliveira",
+          "projeto": "Tecnologias de Prototipagem e Simulação CAD/CAE no Ensino de Física e Engenharia com Aplicações na Agricultura de Precisão e Processos de Fabricação Mecânica",
+          "papel": "Student",
+          "matricula": "20251TMEMI0031",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Victória da Silva Maciel",
+          "projeto": "Tecnologias de Prototipagem e Simulação CAD/CAE no Ensino de Física e Engenharia com Aplicações na Agricultura de Precisão e Processos de Fabricação Mecânica",
+          "papel": "Student",
+          "matricula": "20261FICOCA0285",
+          "curso": "Operador de Computador - ASAS"
+        },
+        {
+          "nome": "Faye Manski Queiroz",
+          "projeto": "EXPERIMENTOS DIDÁTICOS EM FÍSICA COM O AUXILIO DO ARDUINO",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Bruno da Fonseca Chevitarese",
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "papel": "Student Researcher",
+          "matricula": "20231BSI0082",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Wilsiman Santos Evangelista Silva",
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "papel": "Student Researcher",
+          "matricula": "20241BSI0211",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Douglas de Oliveira Alkimim",
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "papel": "Student Researcher",
+          "matricula": "20201CECA0058",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "João Paulo Schaffel Bremenkamp",
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "papel": "Student Researcher",
+          "matricula": "20241TMEMI0034",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Gustavo Saraiva Mariano",
+          "projeto": "Sistema Computacional para Pré-Diagnóstico de Câncer de Mama Utilizando Redes Neurais Convolucionais e Agentes Inteligentes",
+          "papel": "Student Researcher",
+          "matricula": "20232BSI0131",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Lavinia Lima Rodrigues",
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana\nSustentável",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Ana Clara Dalvin Del Piero",
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana\nSustentável",
+          "papel": "Student",
+          "matricula": "20242TMEMI0377",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Maria Clara de Moura e Silva Barcelos",
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana\nSustentável",
+          "papel": "Student",
+          "matricula": "20242TMEMI0180",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "RIAN DEZAN DOS SANTOS",
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana\nSustentável",
+          "papel": "Student",
+          "matricula": "20242TMEMI0270",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "DANILO DA SILVA ALVAREZ",
+          "projeto": "Prototipação de Estufas Inteligentes e Hortas Automatizadas: Desenvolvendo Soluções para Agricultura Urbana\nSustentável",
+          "papel": "Student",
+          "matricula": "20242CECA0478",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Luiz Philipe Augusto Rosa",
+          "projeto": "Estudo e Implementação do Protocolo OPC UA como Camada de Comunicação para Dispositivos IoT",
+          "papel": "Student",
+          "matricula": "20251TIIMI0230",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Marcelo Gustavo Ezequiel da Silva",
+          "projeto": "Estudo e Implementação do Protocolo OPC UA como Camada de Comunicação para Dispositivos IoT",
+          "papel": "Student",
+          "matricula": "20231CECA0346",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Iago Moraes De Marchi",
+          "projeto": "Automatização de módulos didáticos para ensino da disciplina de Instalações Elétricas",
+          "papel": "Student",
+          "matricula": "20252TMEMI0307",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Leonardo Cruz de Andrade",
+          "projeto": "Análise da Efetividade de Programas de Formação Continuada De Professores Utilizando Técnicas de Ciência de Dados e Inteligência Artificial: Um Estudo Aplicado aos Dados do Cefope/ES",
+          "papel": "Student",
+          "matricula": "20252MPCAU0047",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Walter Guilherme Candeia",
+          "projeto": "Propos - Automatização de documentos",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Arthur Dutra Recco",
+          "projeto": "Propos - Automatização de documentos",
+          "papel": "Student",
+          "matricula": "20242BSI0265",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Iuri Rodrigues Oliveira",
+          "projeto": "Correção Automática de Redações com Modelos de Linguagem",
+          "papel": "Student",
+          "matricula": "20242TIIMI0052",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Ryan Gabriel Freitas Sena",
+          "projeto": "Correção Automática de Redações com Modelos de Linguagem",
+          "papel": "Student",
+          "matricula": "20261BSI0185",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Leonardo Herkenhoff Barreto",
+          "projeto": "Arquitetura Adaptativa em Malha Fechada para Mitigação de Ataques DDoS utilizando eBPF/XDP e Aprendizado de Máquina",
+          "papel": "Student",
+          "matricula": "20251MPCA0145",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Davi Marins Almeida",
+          "projeto": "Arquitetura Adaptativa em Malha Fechada para Mitigação de Ataques DDoS utilizando eBPF/XDP e Aprendizado de Máquina",
+          "papel": "Student",
+          "matricula": "20252BSI0461",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Alan Pancieri Berger Saar",
+          "projeto": "Arquitetura Adaptativa em Malha Fechada para Mitigação de Ataques DDoS utilizando eBPF/XDP e Aprendizado de Máquina",
+          "papel": "Student",
+          "matricula": "20251MPCA0030",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "João Victor Barbosa Alves",
+          "projeto": "Desenvolvimento de Plataforma Robótica Modular para Missões de Resgate com Navegação Autônoma e Percepção Inteligente",
+          "papel": "Student",
+          "matricula": "20251CECA0016",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Sofia Valvassori Bandeira",
+          "projeto": "Desenvolvimento de Plataforma Robótica Modular para Missões de Resgate com Navegação Autônoma e Percepção Inteligente",
+          "papel": "Student",
+          "matricula": "20252TMEMI0269",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Anna Clara Araujo Fontis Serafim",
+          "projeto": "Desenvolvimento de Plataforma Robótica Modular para Missões de Resgate com Navegação Autônoma e Percepção Inteligente",
+          "papel": "Student",
+          "matricula": "20242TMEMI0024",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Amanda Santos Silva",
+          "projeto": "Desenvolvimento e Avaliação de Desempenho de Robôs Competitivos de Sumô e Futebol",
+          "papel": "Student",
+          "matricula": "20222CECA0528",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Lucas Costabeber Schneider",
+          "projeto": "Desenvolvimento e Avaliação de Desempenho de Robôs Competitivos de Sumô e Futebol",
+          "papel": "Student",
+          "matricula": "20252TMEMI0170",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Eduardo Silva Novoletti",
+          "projeto": "Desenvolvimento e Avaliação de Desempenho de Robôs Competitivos de Sumô e Futebol",
+          "papel": "Student",
+          "matricula": "20251CECA0121",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Lucas Alves Ferreira",
+          "projeto": "Sistema Inteligente de Diagnóstico e Recomendação de Eficiência Energética (SIDREE) Baseado em Modelagem e Dados de Consumo de Eletricidade do Ifes Campus Serra.",
+          "papel": "Student",
+          "matricula": "20242MPECA0276",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Gabriel Alves da Conceição Abreu",
+          "projeto": "Desenvolvimento de Soluções Digitais Baseadas em Dados para Educação Financeira e Inovação Social no Contexto do LIEFIS",
+          "papel": "Student",
+          "matricula": "20242BSI0168",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Thiago Nunes de Assis",
+          "projeto": "Desenvolvimento de Soluções Digitais Baseadas em Dados para Educação Financeira e Inovação Social no Contexto do LIEFIS",
+          "papel": "Student",
+          "matricula": "20261BSI0100",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Gabriel Barbosa Lucas",
+          "projeto": "Desenvolvimento de Soluções Digitais Baseadas em Dados para Educação Financeira e Inovação Social no Contexto do LIEFIS",
+          "papel": "Student",
+          "matricula": "20201BSI0397",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rafael de Jesus Gonçalves",
+          "projeto": "Desenvolvimento de Soluções Digitais Baseadas em Dados para Educação Financeira e Inovação Social no Contexto do LIEFIS",
+          "papel": "Student",
+          "matricula": "20251BSI0175",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Samiya Harumi Komati Andrade",
+          "projeto": "Desenvolvimento de Soluções Digitais Baseadas em Dados para Educação Financeira e Inovação Social no Contexto do LIEFIS",
+          "papel": "Student",
+          "matricula": "20222BSI0040",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Pedro Santos Soto",
+          "projeto": "Modelagem Conceitual, Implementação e Avaliação de Plataforma de Espaço Inteligente para Ambientes Institucionais",
+          "papel": "Student",
+          "matricula": "20252TMEMI0234",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Maria Eduarda Vitorino Eler",
+          "projeto": "Modelagem Conceitual, Implementação e Avaliação de Plataforma de Espaço Inteligente para Ambientes Institucionais",
+          "papel": "Student",
+          "matricula": "20211BSI0291",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ravi Resende Lopes",
+          "projeto": "Modelagem Conceitual, Implementação e Avaliação de Plataforma de Espaço Inteligente para Ambientes Institucionais",
+          "papel": "Student",
+          "matricula": "20252TIIMI0319",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Lucas Sena da Silva Machado",
+          "projeto": "Modelagem Conceitual, Implementação e Avaliação de Plataforma de Espaço Inteligente para Ambientes Institucionais",
+          "papel": "Student",
+          "matricula": "20252BSI0038",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Roger Kauã Rosa Abade",
+          "projeto": "Desenvolvimento de um Sistema Inteligente para Gestão e Monitoramento de Laboratórios\nMultiusuários em Instituições de Ensino",
+          "papel": "Student",
+          "matricula": "20252BSI0372",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Davi Eduardo Nascimento Ribeiro",
+          "projeto": "ChatRad 2.0: Desenvolvimento de uma Plataforma para Análise Automatizada de Imagens Médicas",
+          "papel": "Student",
+          "matricula": "20221CECA0127",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Gian Lucca Decoté Paneto Neves",
+          "projeto": "NOVA-IA Indústria (Núcleo Otimizado e Virtualizado para Aplicações de Inteligência Artificial para Indústria): um estudo sobre uso de PINNs no processo de sinter",
+          "papel": "Student",
+          "matricula": "20241BSI0106",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "CAIO LUCAS DA SILVA NASCIMENTO",
+          "projeto": "Verificação de Consistência em Sistemas de IA Neuro-Simbólica",
+          "papel": "Student",
+          "matricula": "20252BSI0070",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Pedro Henrique Groner Nascimento",
+          "projeto": "OTIMIZAÇÃO DA LOGÍSTICA DE CARROS TORPEDO NO TRANSPORTE DE FERRO GUSA PARA A ACIARIA",
+          "papel": "Student",
+          "matricula": "20242BSI0460",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Nassom Lacôrt Oliveira",
+          "projeto": "Desenvolvimento de Materiais Didáticos Acessíveis com Tecnologias Maker para Apoio ao Ensino de Estudantes com Necessidades Específicas",
+          "papel": "Student",
+          "matricula": "20252TIIMI0262",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Daniel Emerich de Castro",
+          "projeto": "Desenvolvimento de Materiais Didáticos Acessíveis com Tecnologias Maker para Apoio ao Ensino de Estudantes com Necessidades Específicas",
+          "papel": "Student",
+          "matricula": "20252TMEMI0331",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Pedro Henrique Oliveira Santos Piva Palazzo",
+          "projeto": "Cidadão Digital: Desenvolvimento de um Super Aplicativo Mobile para Integração de Serviços Públicos e Cidadania na Grande Vitória/ES",
+          "papel": "Student",
+          "matricula": "20261BSI0436",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Eduardo Erlacher Melo",
+          "projeto": "Cidadão Digital: Desenvolvimento de um Super Aplicativo Mobile para Integração de Serviços Públicos e Cidadania na Grande Vitória/ES",
+          "papel": "Student",
+          "matricula": "20242TIIMI0028",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Daniel Guimarães de Oliveira",
+          "projeto": "Cidadão Digital: Desenvolvimento de um Super Aplicativo Mobile para Integração de Serviços Públicos e Cidadania na Grande Vitória/ES",
+          "papel": "Student",
+          "matricula": "20261BSI0096",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Cleber de Jesus Salustiano",
+          "projeto": "INTELIGÊNCIA ARTIFICIAL PARA MONITORAMENTO DE SAÚDE MENTAL A PARTIR DA ANÁLISE DE FACE E VOZ",
+          "papel": "Student",
+          "matricula": "20251MPCA0170",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Caio Mario Carletti Vilela Santos",
+          "projeto": "Classificador de Briquetes usando Visão Computacional.",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Antonio Ricardo Alexandre Brasil",
+          "projeto": "COMBATE INTEGRADO À DESINFORMAÇÃO: UM SISTEMA MULTIMODAL PARA DETECÇÃO DE DEEPFAKES",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Italo Lourenço Trindade",
+          "projeto": "COMBATE INTEGRADO À DESINFORMAÇÃO: UM SISTEMA MULTIMODAL PARA DETECÇÃO DE DEEPFAKES",
+          "papel": "Researcher",
+          "matricula": "20252MPCAU0144",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Giovanna Scalfoni Sales",
+          "projeto": "COMBATE INTEGRADO À DESINFORMAÇÃO: UM SISTEMA MULTIMODAL PARA DETECÇÃO DE DEEPFAKES",
+          "papel": "Researcher",
+          "matricula": "20261MPCA0151",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gideão Pelegrino de Abreu",
+          "projeto": "COMBATE INTEGRADO À DESINFORMAÇÃO: UM SISTEMA MULTIMODAL PARA DETECÇÃO DE DEEPFAKES",
+          "papel": "Researcher",
+          "matricula": "20232MPCA0280",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Samla Azevedo Tavares",
+          "projeto": "COMBATE INTEGRADO À DESINFORMAÇÃO: UM SISTEMA MULTIMODAL PARA DETECÇÃO DE DEEPFAKES",
+          "papel": "Researcher",
+          "matricula": "20251MPCA0064",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gustavo Zacché Aguiar De Souza",
+          "projeto": "Núcleo Otimizado e Virtualizado para Aplicações de Inteligência Artificial para a Indústria (NOVA-IA INDÚSTRIA)",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "MATHEUS XAVIER MELOTTI",
+          "projeto": "Análise Computacional de Características Estéticas Faciais e Dentárias a partir de Imagens Digitais",
+          "papel": "Student",
+          "matricula": "20252MPCAU0179",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Rafael Afonso Dos Anjos",
+          "projeto": "Análise Computacional de Características Estéticas Faciais e Dentárias a partir de Imagens Digitais",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Luiz Felipe Elizeta dos Santos",
+          "projeto": "Desenvolvimento de Predição de consumo de gás na siderurgia usando AutoML",
+          "papel": "Student",
+          "matricula": "20231BSI0406",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Gabriel Faitanin Dantas",
+          "projeto": "Justiça econômica versus justiça simbólica: uma análise das eleições de 2026 à Luz da Teoria Crítica de Nancy Fraser.",
+          "papel": "Student",
+          "matricula": "20261TMEMI0136",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Gabriela Campagna de Rezende",
+          "projeto": "Justiça econômica versus justiça simbólica: uma análise das eleições de 2026 à Luz da Teoria Crítica de Nancy Fraser.",
+          "papel": "Student",
+          "matricula": "20261TMEMI0160",
+          "curso": "Técnico em Mecatrônica Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Miguel de Oliveira Maioli",
+          "projeto": "Justiça econômica versus justiça simbólica: uma análise das eleições de 2026 à Luz da Teoria Crítica de Nancy Fraser.",
+          "papel": "Student",
+          "matricula": "20251TIIMI0272",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Carlos Barroca Faria",
+          "projeto": "Educação Ambiental Crítica e Sustentabilidade no Território: Fortalecimento do Núcleo de Educação Ambiental do Campus Serra/Ifes",
+          "papel": "Student",
+          "matricula": "20251CECA0059",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Carlos Eduardo De Carvalho Barbosa",
+          "projeto": "Educação Ambiental Crítica e Sustentabilidade no Território: Fortalecimento do Núcleo de Educação Ambiental do Campus Serra/Ifes",
+          "papel": "Student",
+          "matricula": "20252BSI0178",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rodolfo de Figueiredo Dalvi",
+          "projeto": "Classificação de imagens de OCT utilizando Deep Learning",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Luiz Felipe Castello Del Caro",
+          "projeto": "Sensor Óptico Aplicado à Descelularização de Órgãos",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Laísa Bernabé do Carmo",
+          "projeto": "Implantação do Parque Científico e Tecnológico do InovaSerra PCTec InovaSerra",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Gustavo Martins Tavares",
+          "projeto": "Implantação do Parque Científico e Tecnológico do InovaSerra PCTec InovaSerra",
+          "papel": "Researcher",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Ana Rúbia Ramos Vicente",
+          "projeto": "Uma Análise da Violência Contra a Mulher",
+          "papel": "Researcher",
+          "matricula": "20241MPCA0147",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Yuri Celeste Pulier",
+          "projeto": "Diagnóstico Precoce Da Doença De Parkinson Utilizando Aprendizado Profundo Multimodal: Uma Abordagem De Fusão Intermediária Entre Neuroimagem E Biometria Motora",
+          "papel": "Student",
+          "matricula": "20261MPCA0046",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Eduarda Rodrigues Simões",
+          "projeto": "Estudo sobre Evasão nos Cursos do Instituto Federal do Espírito Santo",
+          "papel": "Student",
+          "matricula": "20261MPCA0038",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Moisés Ruschel Schorr",
+          "projeto": "O \"Preço do Tempo\" no Judiciário: Aplicação de Inteligência Artificial Explicável e Análise de Sobrevivência na Justiça Federal",
+          "papel": "Student",
+          "matricula": "20252MPCAU0233",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Estêvão Redinz Mansur",
+          "projeto": "Automação da Interpretação e Geração de Laudos de Espirometria com Inteligência Artificial",
+          "papel": "Student",
+          "matricula": "20252MPCAU0187",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Vitor Maestri Paiva",
+          "projeto": "Interpretabilidade em Modelos de Predição de Falhas em Fios Diamantados e Suporte à Decisão Baseada em IA para Gestão de Garantias e Performance na Indústria de Rochas Ornamentais",
+          "papel": "Student",
+          "matricula": "20251MPCA0153",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Carlos Henrique Costa Matos",
+          "projeto": "Sistema de Recomendação Visual para Rochas Ornamentais usando Redes Neurais Siamesas em Ambiente Web",
+          "papel": "Student",
+          "matricula": "20241MPCA0120",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Melina Schneider Campo Dall'Orto",
+          "projeto": "Sistema de Triagem para Detecção de Sangramento (Hemorragia Intracraniana) em imagens de Tomografia Computadorizada",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Mateus Neves Merçon",
+          "projeto": "Reidentificação Visual de Tartarugas Marinhas com Redes Neurais Siamesas: Um Estudo sobre o Dataset SeaTurtleID2022",
+          "papel": "Student",
+          "matricula": "20242MPCA0017",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Luiz Sabiano Ferreira Medeiros",
+          "projeto": "Avaliação de Arquiteturas de Geração Aumentada por Recuperação em Manuais Normativos Governamentais em Português do Brasil",
+          "papel": "Student",
+          "matricula": "20232MPCA0329",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Rodrigo De Nadai Grigoleto",
+          "projeto": "Avaliação de Algoritmos de Aprendizado de Máquina para Estimativa de Esforço em Projetos de Software a partir de Descrições Textuais de Requisitos",
+          "papel": "Student",
+          "matricula": "20232MPCA0310",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Eduardo dos Santos Lopes",
+          "projeto": "Sistema de Perguntas e Respostas em Português Baseado em Arquiteturas Transformers para Apoio ao Ensino de Programação",
+          "papel": "Student",
+          "matricula": "20241MPCA0090",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gustavo Pereira e Raylander Guimarães Ramos",
+          "projeto": "Avaliação Automática de Redações Narrativas do Ensino Fundamental usando Modelos de Linguagem de Grande Escala",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "João B. Guedes Neto, Márcio Ribeiro e Mirella C. M. Christ",
+          "projeto": "Análise Visual da Relação entre Repasse de Recursos Financeiros e Desempenho das Escolas Estaduais do Espírito Santo",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Luís Felippe Coutinho de Carvalho",
+          "projeto": "Um Ambiente Multi-Agente para Conversão de Consultas em Linguagem Natural para SQL Utilizando Modelos Neurais Multi-Idiomas",
+          "papel": "Student",
+          "matricula": "20241MPCA0082",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Danilo Xavier Valle",
+          "projeto": "Zoe: A Conversational Recommender System for E-Commerce Powered by Retrieval-Augmented Generation (RAG",
+          "papel": "Student",
+          "matricula": "20241MPCA0023",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Igor Garcia Lube",
+          "projeto": "Classificação de grãos de café usando a rede neural Mask R-CNN (título provisório)",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Diego Pasti",
+          "projeto": "DevStar: Serviço de avaliação de equipes ágeis",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Maria Luiza Guimarães",
+          "projeto": "Um Estudo de caso do uso de Leds Up: Projeto Mapa do bem",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Renan Campagnaro Soprani",
+          "projeto": "Arquitetura de baixo custo para Desktop Virtual para Ensino remoto baseada em Nuvem e Redes definidas por Software",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Gelinton Pablo Mariano",
+          "projeto": "Orquestração de funções virtualizadas para um ambiente de ensino",
+          "papel": "Student",
+          "matricula": "20251MPCA0013",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "LUCIANO BIANCARDI FIORINO",
+          "projeto": "Detecção de Ataques de Negação de Serviço Com Aprendizado de Máquina e Telemetria de Dados Temporais de Nuvem",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Laudelino Azerêdo dos Santos",
+          "projeto": "Orquestração integrada de serviços virtualizados em nuvens híbridas usando computação em nuvem e redes programáveis",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Bruno Lorenzo Thomaz Marques",
+          "projeto": "PROJETO E IMPLEMENTAÇÃO DE PLATAFORMA DE CONTROLE EMBARCADO PARA UM ROBÔ MÓVEL DIFERENCIAL TIPO LAGARTA",
+          "papel": "Student",
+          "matricula": "20262MPECA0106",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Enzo Salamão Roseiro",
+          "projeto": "IDENTIFICAÇÃO EXPERIMENTAL, MODELAGEM E CONTROLE DE VELOCIDADE DE UM MOTOR CC: UMA ANÁLISE COMPARATIVA ENTRE AS TÉCNICAS PI E FUZZY-PI",
+          "papel": "Student",
+          "matricula": "20211CECA0277",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Filipe Viana Canisky",
+          "projeto": "Detecção e classificação de arritmias cardíacas a partir de sinais de eletrocardiogramas utilizando redes neurais",
+          "papel": "Student",
+          "matricula": "20211CECA0269",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Fernando Henrique Cruz de Andrade",
+          "projeto": "Reconhecimento de Gestos de Mãos utilizando Redes Neurais Autoencoder e Transformada MODWT",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Wdnei Ribeiro Paixão",
+          "projeto": "De micro-expressões faciais para macro-expressões usando método de magnificação de vídeo euleriana",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Rafael Nicchio Valverde",
+          "projeto": "Emprego de Gestos Estáticos e Dinâmicos para Interação de um Ser Humano com um Robô Móvel",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Pedro Dalvi Boina",
+          "projeto": "Detecção Automática de Símbolos Gráficos em Projetos de Proteção Contra Incêndio com YOLOv12",
+          "papel": "Student",
+          "matricula": "20242MPECA0039",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Larissa M. Freguete",
+          "projeto": "Automatic Detection of Seafloor Bedforms Using Bathymetric Data",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "VINICIUS DE MOURA SIQUEIRA",
+          "projeto": "Deep Learning Aplicada à Determinação da Vida Útil de Rolamentos de Motores Elétricos",
+          "papel": "Student",
+          "matricula": "20242MPECA0403",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Fernando Fernandes Guizã",
+          "projeto": "Aplicação de Técnicas de Deep Learning ao Diagnóstico de Patologias da Coluna Vertebral",
+          "papel": "Student",
+          "matricula": "20242MPECA0187",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Mateus Falcão",
+          "projeto": "Sistema de Aquisição de Sinais para Construção de Modelos de Diagnóstico de Falhas em Processos Industriais",
+          "papel": "Student",
+          "matricula": "20242MPECA0381",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Brenda Bayerl Pinheiro",
+          "projeto": "A Proposal for Quality Classification of Cocoa Beans Using Convolutional Neural Networks",
+          "papel": "Student",
+          "matricula": "20242MPECA0438",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "ÁLVARO SEVERO MARCUS",
+          "projeto": "Detecção de itens de segurança em ambientes de trabalho com a aplicação de Deep Learning",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "FELIPE FELLER DAS CANDEIAS",
+          "projeto": "DIAGNÓSTICO DE FALHA EM VENTILADORES DE PROCESSOS DE FORNOS DE PELOTIZAÇÃO UTILIZANDO ALGORITMOS DE MACHINE LEARNING",
+          "papel": "Student",
+          "matricula": "20232MPECA0155",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Marcio Fonseca Granato",
+          "projeto": "Metodologias Computacionais Aplicadas para Avaliação em Tempo Real de Funcões Instrumentadas de Segurança em um Sistema de Segurança Funcional",
+          "papel": "Student",
+          "matricula": "20242MPECA0349",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Murilo Rossoni Delesposte",
+          "projeto": "Construção de uma estrutura robótica de reabilitação e o desenvolvimento de um sistema de controle de sensores e atuadores de baixo custo utilizando o framework ROS (Robot Operating System).",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Isabela Garcia Tissianel",
+          "projeto": "Desenvolvimento de um sistema de controle de códigos embarcados para leitura dos sensores e movimentação dos atuadores em uma placa microcontrolada.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Arthur Fernandes de Paiva Costa",
+          "projeto": "Projeto e construção de uma estrutura robótica de reabilitação na forma de uma luva robótica utilizando impressora 3D.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Thayana Carpes",
+          "projeto": "Nas ondas do rádio, na frequência da língua portuguesa",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Sabrina de Souza Dias",
+          "projeto": "A abordagem do triângulo amoroso em \"A cartomante\" e em \"A causa secreta\", de Machado de Assis",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Artur Gabriel de Jesus Ventura",
+          "projeto": "O Grande Gatsby: diálogos entre a literatura e o cinema",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "George Matheus Santos de Oliveira",
+          "projeto": "Concepção de uma Plataforma Web de Questionários Interativos para Apoio à Aprendizagem Ativa e Avaliação Formativa",
+          "papel": "Student",
+          "matricula": "20182BSI0256",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Pedro Henrique Nascimento Vieira",
+          "projeto": "Cultura Maker, Indústria 4.0, Modelagem 3D e Robótica (Plano de Trabalho) - Jovens Inventores: O poder da Tecnologia Maker no Desenvolvimento Social (Projeto de Extensão)",
+          "papel": "Student",
+          "matricula": "20242CECA0214",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "JOSÉ GERALDO SILVA COSTA",
+          "projeto": "Utilização de Redes Neurais Artificiais para identificação de cartéis em processos de licitação do ramo de óleo e gás",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Rodrigo de Souza Lima",
+          "projeto": "Visão Computacional Aplicada a Medição Dimensional de Placas de Aço",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "LEONARDO VINICIUS DE BRITO REIS",
+          "projeto": "DESENVOLVIMENTO DE UM ASSISTENTE VIRTUAL INTELIGENTE PARA ACIONAMENTO DE DISPOSITIVOS DE UMA RESIDÊNCIA POR COMANDOS DE VOZ E OUTRAS APLICAÇÕES",
+          "papel": "Student",
+          "matricula": "20242MPECA0500",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Pedro Luiz Regattieri da Cunha",
+          "projeto": "Ensinando Movimentos a um Robô Humanoide por Meio de Inteligência Artificial",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Alysson Frizzera Baumgarten",
+          "projeto": "UMA ARQUITETURA UNIFICADA DE REDES NEURAIS PROFUNDAS DE CLASSIFICAÇÃO E REGRESSÃO APLICADAS AO PROBLEMA DE LOCALIZAÇÃO GLOBAL POR IMAGEM",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Israel Nardoto Barboza",
+          "projeto": "Análise das temperaturas e velocidade de propagação da frente de combustão in-situ em reservatórios de óleos pesado",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Alvaro Vinicius de Almeida Martins",
+          "projeto": "Pig detection with synthetic trained computer vision models",
+          "papel": "Student",
+          "matricula": "20241MPCA0163",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Luiz Eduardo Gagno Amancio",
+          "projeto": "Desenvolvimento de uma Plataforma de Treinamento de Gramática da Língua Inglesa",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Lorhan de Souza",
+          "projeto": "Desenvolvimento de um sistema web voltado para moto clubes.",
+          "papel": "Student",
+          "matricula": "20182BSI0078",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Marcos Vinicius Mendes Faria",
+          "projeto": "Visão computacional aplicada a contagem de suínos",
+          "papel": "Student",
+          "matricula": "20251MPCA0269",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Tomir Domingo Sshmite Junior",
+          "projeto": "Image Stitching como ferramenta de apoio no cadastro ambiental rural",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Alexandre Fortunato Ribeiro",
+          "projeto": "Ética em Inteligência Artificial",
+          "papel": "Student",
+          "matricula": "20232MPCA0159",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Jhovany Paulo Schelemberg Murgia",
+          "projeto": "Aplicação de técnicas de aprendizado de máquina tradicionais na predição de complicações do infarto do miocárdio",
+          "papel": "Student",
+          "matricula": "20252MPCAU0039",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Dyrceu M.Freitas",
+          "projeto": "Utilização de sistema inteligente no processo de seleção de variáveis dos parâmetros de controle de fornos de queima de pelota de minério",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Daniella Araújo Fraga dos Santos",
+          "projeto": "Desenvolvimento de medidor de particulado óptico",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Arthur Teixera Transpadini",
+          "projeto": "Uma Ferramenta de Integração Semântica Integrada ao Arcabouço BASS",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Italo Lourenço",
+          "projeto": "Integração do Sincap com Sistemas de Saúde",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Rafael Broédel",
+          "projeto": "Modelagem de Objetivos para Levantamento de Requisitos do Sincap",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Lucas Dipré",
+          "projeto": "Modelagem Conceitual no Domínio de Doação de Órgãos",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Gustavo Amora Basílio",
+          "projeto": "TRIAGEM PRECOCE DE SAÚDE MENTAL COM INTELIGÊNCIA ARTIFICIAL: ANÁLISE DE SELFIES DE GESTANTES DE ALTO RISCO",
+          "papel": "Student",
+          "matricula": "20231MPCA0076",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Rafael de Almeida Viana Gusmão",
+          "projeto": "Imporving LULC Classification of Espirito Santo Territory via Transfer Learning",
+          "papel": "Student",
+          "matricula": "20261MPCA0054",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Vinícius Gomes Caetano",
+          "projeto": "Optimizing False Alarms in Automated PPE Violation Detection",
+          "papel": "Student",
+          "matricula": "20261MPCA0160",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Thiago Borges Pereira",
+          "projeto": "Active learning for fast PPE dataset annotation",
+          "papel": "Student",
+          "matricula": "20261MPCA0020",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Petar Veljovic",
+          "projeto": "Análise Experimental do Desempenho, Eficiência e Generalização de Modelos YOLO para Detecção de Objetos",
+          "papel": "Student",
+          "matricula": "20261MPCA0135",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Pablo Matheus Sattamini Belmiro",
+          "projeto": "An LLM-based Solution for Text-to-ES Translation",
+          "papel": "Student",
+          "matricula": "20252MPCAU0225",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Calebe Ferreira Albertino",
+          "projeto": "Land-use and Land-cover Segmentation in the context of Brazilian Rural Environmental Registry",
+          "papel": "Student",
+          "matricula": "20251MPCA0242",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Daniele Leite Vieira dos Santos",
+          "projeto": "Reducing Computational Overhead in Skeleton-based Isolated Sign Language Recognition through Optimized Keypoint Subset Selection",
+          "papel": "Student",
+          "matricula": "20232MPCA0027",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Arthur Rafael Vital Ribeiro",
+          "projeto": "Organização de Base de Dados Geoespacial para Identificação de Uso e Cobertura no contexto do CAR",
+          "papel": "Student",
+          "matricula": "20242BSI0516",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Vinícius Reinholz de Oliveira",
+          "projeto": "Sistema de Visualização Interativa de Segmentação Geoespacial no Contexto do CAR",
+          "papel": "Student",
+          "matricula": "20242BSI0508",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Josias Neves Jardim Borba",
+          "projeto": "Section-Level Inconsistency Detection in Safety Data Sheets Using Structured LLM Prompting",
+          "papel": "Student",
+          "matricula": "20231BSI0171",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "LIVIA PINTO ROCHA LIMA",
+          "projeto": "Sistema Low Code Aplicado ao Planejamento de Manutenção: Otimização e Controle de Malha Ferroviária em uma Indústria Siderúrgica",
+          "papel": "Student",
+          "matricula": "20191CECA70085",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "LUCAS DOMINICINI ZORZAL e VINÍCIUS CORDEIRO BRITO CARDOSO",
+          "projeto": "CLOUD COMPUTING: ESTUDO SOBRE A SUA ESTRUTURA E OS PRINCIPAIS TIPOS DE SERVIÇOS APLICANDO EM UMA CORPORAÇÃO",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Bruno Moreto de Oliveira",
+          "projeto": "Plataforma de Inteligência Artificial Simbólica para programação de redes definidas por software",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Lucas Carrafa",
+          "projeto": "Inteligência Artificial para implantação de sistema Open RAN em nuvem",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Wagner Porto Ferreira",
+          "projeto": "Fremework para Teste de Autonomia de Software",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Mellyssa Stephanny de Jesus Mendes",
+          "projeto": "Orchestração de redes Abertas",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Joao Vitor Ferrerei",
+          "projeto": "Aplicações de voz para Prédios inteligentes",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Perseu Fernandes",
+          "projeto": "Plataforma de experimentação P4",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Luis Felippe Klein Faria",
+          "projeto": "SMALL BERTAPLICADOÀANÁLISEDESENTIMENTOSEM CRÍTICAS CINEMATOGRÁFICAS: VIABILIDADE DE MODELOS COMPACTOSDELINGUAGEMEMAMBIENTESDEBAIXOCUSTO COMPUTACIONAL",
+          "papel": "Student",
+          "matricula": "20152CECA70076",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Thiago Pinto Wandekoken",
+          "projeto": "Estudo da influência da penetração do jato de oxigênio sobre a geração de splashing em Fornos Elétricos a Arco usando Modelo Físico a Frio",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "João Paulo Mafort Santos",
+          "projeto": "Influência da altura e do bico da lança, vazão de gás e da viscosidade da escória no SLAG SPLASINHG em Modelo a Frio do Convertedor",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "ELVIS CANDEIAS SILVA",
+          "projeto": "MEDIÇÃO DE LARGURA DE PLACAS DE AÇO USANDO VISÃO COMPUTACIONAL",
+          "papel": "Student",
+          "matricula": "20232MPECA0066",
+          "curso": "Mestrado Profissional em Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Izabella Campos Trarbach",
+          "projeto": "AUTOMAÇÃO DE UM FILTRO DE DEPOEIRAMENTO",
+          "papel": "Student",
+          "matricula": "20191CECA70069",
+          "curso": "Engenharia de Controle e Automação"
+        },
+        {
+          "nome": "Danilo Baptista Nascimento",
+          "projeto": "APLICAÇÃO DA MAGNIFICAÇÃO DE VÍDEO LAGRANGEANA NO PRÉ-PROCESSAMENTO DE IMAGENS NA DETECÇÃO DE DEEPFAKES",
+          "papel": "Student",
+          "matricula": "20251MPCA0285",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Stanrley Barbosa da Silva",
+          "projeto": "DETECÇÃO DE FRAUDES EM OPERAÇÕES DE ANTECIPAÇÃO DE RECEBÍVEIS VIA NOTAS FISCAIS COM APRENDIZADO DE MÁQUINA",
+          "papel": "Student",
+          "matricula": "20251MPCA0200",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Guilherme Neves Bleidão",
+          "projeto": "Utilização de ferramentas de Inteligência de Negócios no monitoramento de Incêndios Florestais no Brasil.",
+          "papel": "Student",
+          "matricula": "20202BSI0098",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Ana Carolina Ichimura",
+          "projeto": "Comparação das técnincas Comparação de três Xboost, Random forest, Decision tree na classificação de Crimes",
+          "papel": "Student",
+          "matricula": "20171BSI0138",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Marilio Freire de Almeida",
+          "projeto": "Previsão de tipos de câncer humano, integrando redes de interação de proteínas e dados ômicos, usando Redes Neurais",
+          "papel": "Student",
+          "matricula": "20241MPCA0058",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Luann Ferreira de Almeida",
+          "projeto": "Predição de Desempenho em Avaliações Formativas na Rede Estadual do Espírito Santo com Técnicas de Mineração de Dados Educacionais e Aprendizado Supervisionado",
+          "papel": "Student",
+          "matricula": "20232MPCA0167",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Willian Macedo Rodrigues",
+          "projeto": "Predição de métricas de desempenho em cenários simulados de Blockchain usando técnicas de aprendizado de máquina",
+          "papel": "Student",
+          "matricula": "20232MPCA0175",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Farley Correia Sardinha",
+          "projeto": "A Dinâmica da Proficiência em Física no Espírito Santo: Uma Análise Longitudinal de Fatores Socioestruturais via Processo KDD (2011?2023)",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Camila Fornaciari Volponi",
+          "projeto": "PetDiverse: Sistema web de Adoção de Diversas Espécies de Animais Domésticos",
+          "papel": "Student",
+          "matricula": "20191BSI0409",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Isadora Laurindo Brandão",
+          "projeto": "Seleção de Características na Predição da emissão de Carbono de um Convertedor de Aciaria",
+          "papel": "Student",
+          "matricula": "20221BSI0013",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Marianna Almeida Santos",
+          "projeto": "PatriScan: um aplicativo móvel offline-first para o processo de inventário de materiais permanentes",
+          "papel": "Student",
+          "matricula": "20192BSI0240",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rafael Xavier Braga",
+          "projeto": "Preço Perto: Desenvolvimento de um aplicativo mobile de busca de preços baseado em geolocalização",
+          "papel": "Student",
+          "matricula": "20182BSI0353",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Claudio Patrocinio Junior",
+          "projeto": "Correlação entre parâmetros de fresamento, propriedades mecânicas e microestrutura do aço SAE 1045: uma abordagem baseada em inteligência artificial",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Antonio Cesar Andrade Martins Filho",
+          "projeto": "Classificação de defeitos de laminação em aços longos por visão computacional",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Vitor Miller de Toledo",
+          "projeto": "Classificação automática de defeitos de laminação em aços longos por visão computacional",
+          "papel": "Student",
+          "matricula": "20261MPCA0011",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "João Vitor Maciel Vianna",
+          "projeto": "Classificação da Esquizofrenia em Sinais de EEG por Redes Neurais em Grafos com Modelagem Espaço-Temporal de Conectividade Funcional Dinâmica",
+          "papel": "Student",
+          "matricula": "20252MPCAU0250",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Eduardo Henrique Próspero Souza",
+          "projeto": "Mapeamento Hidrográfico via Redes Neurais",
+          "papel": "Student",
+          "matricula": "20251MPCA0250",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Ricardo Zorzal Davila",
+          "projeto": "Predição de Explosões Solares modelado por Séries Temporais Multivariadas: um estudo comparativo de arquiteturas Transformers",
+          "papel": "Student",
+          "matricula": "20241MPCA0031",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Eliza Karyn dos Santos de Oliveira",
+          "projeto": "Suporte ao Desenvolvimento de Sistema Interativo e Preparação de Dados no Contexto do CAR",
+          "papel": "Student",
+          "matricula": "20242TIIMI0036",
+          "curso": "Técnico em Informática para Internet Integrado ao Ensino Médio"
+        },
+        {
+          "nome": "Letícia Sartorato Zanchetta",
+          "projeto": "Desenvolvimento de Rotinas Administrativo-Financeiras e Gestão de Pessoas em Projetos Científicos",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Amanda Souza",
+          "projeto": "SOLUÇÕES DE APRENDIZADO DE MÁQUINA PARA DETECÇÃO PRECOCE DE ATAQUES DE NEGAÇÃO DE SERVIÇO EM TEMPO REAL",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Adailton Saraiva",
+          "projeto": "Aplicação de Roteamento de Fonte para Fatiamento em Redes 5G",
+          "papel": "Student",
+          "matricula": "20241MPCA0139",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Renan Cosmo",
+          "projeto": "Planejamento de Redes Ópticas Elásticas",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Rafael Herzog Ramos",
+          "projeto": "Planejamento de Dietas com Receitas Completas",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "André Boechat Felipe",
+          "projeto": "PLANEJAMENTO DE AQUISIÇÃO DE TECNOLOGIA DE INFORMAÇÃO BASEADO EM TEORIA DA DECISÃO E MACHINE LEARNING",
+          "papel": "Student",
+          "matricula": "20251MPCA0196",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Jean Carlos Penas",
+          "projeto": "Adaptação dinâmica de modelos de processos de negócio com IA generativa.",
+          "papel": "Student",
+          "matricula": "20251MPCA0226",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Aline dos Santos Laranja Vileforte",
+          "projeto": "Entrevistas de Elicitação de Processos apoiadas por LLMs",
+          "papel": "Student",
+          "matricula": "20232MPCA0094",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Matheus Oliveira Jagi",
+          "projeto": "Mineração de Processos aplicado ã Siderurgia",
+          "papel": "Student",
+          "matricula": "20242MPCA0025",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gean Paulo Oliveira Souza",
+          "projeto": "Extração de Restrições e Regras de Negócio de Processos de Negócio apoiada por PLN e LLMs.",
+          "papel": "Student",
+          "matricula": "20242MPCA0084",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Humberto Tozetti Carlos",
+          "projeto": "Utilização de Sistemas de Recomendação no Varejo Farmacêutico",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Danielle Silva de Castro",
+          "projeto": "Transformações entre Modelos de Processos baseados em notações Declarativas e Imperativas.",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Débora Frassi Cardoso",
+          "projeto": "Suporte Semântico na Geração de Massas de Dados para Testes de Software",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Dornélio Móri Junior",
+          "projeto": "Integração de Normas de Segurança da Informação e Proteção de Dados",
+          "papel": "Student",
+          "matricula": "20232MPCA0434",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Gustavo Collistet Britto",
+          "projeto": "Integração Semântica em Dados Abertos de Despesa Governamental",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Rafael Mofati Campos",
+          "projeto": "Estimativa não destrutiva da porosidade de briquetes de minério de ferro por meio de visão computacional e inteligência artificial",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Paulo Ricardo Pereira Gomes",
+          "projeto": "Feedback Confiável no Ensino de Programação: Uma abordagem neuro-simbólica para redução de alucinações lógicas em SLMs",
+          "papel": "Student",
+          "matricula": "20252MPCAU0160",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Diego Rodrigues Perez Pacheco",
+          "projeto": "Extração de Informação Legal em Diários Oficiais: Um pipeline baseado em grafos de conhecimento e lógica formal para auditoria de contratos públicos",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "Sostenes Dias de Oliveira Junior",
+          "projeto": "Uma Arquitetura Neuro-Simbólica para Verificação de Sistemas Multiagentes sob Incerteza e Inconsistência",
+          "papel": "Student",
+          "matricula": "20261MPCA0178",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Hellesandro Gonzaga de Carvalho",
+          "projeto": "Avaliação de modelos de linguagem simples para geração de relatórios de mudanças em imagens rurais",
+          "papel": "Student",
+          "matricula": "20251MPCA0110",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "José Humberto da Silva Castro Junior",
+          "projeto": "Extração de Informação e Compliance de Contratos: Auditoria assistida por ontologias para gestão de ativos e serviços",
+          "papel": "Student",
+          "matricula": "20261MPCA0070",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Ricardo Souza de Oliveira",
+          "projeto": "Jogos Sérios na Educação Tecnológica: Desenvolvimento de um simulador de estratégia para capacitação financeira e administrativa",
+          "papel": "Student",
+          "matricula": "20232MPCA0442",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Cristian da Silva Anterio",
+          "projeto": "Utilização de Modelos de Linguagens Amplos para Geração de Explicações Contrafactuais Confiáveis e Inteligíveis",
+          "papel": "Student",
+          "matricula": "20241MPCA0015",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Mauricio Jastrow Uhlig",
+          "projeto": "Melhorando a Correção de Contratos Inteligentes: Validação de Especificações Formais Baseada em LLM",
+          "papel": "Student",
+          "matricula": "20241MPCA0066",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "SERENNA FERRARI LIMA",
+          "projeto": "Neuroevolução Gramatical: Um Estudo de Caso para Predição de Séries Temporais",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        },
+        {
+          "nome": "CAIO CESAR OLIVA CORONEL",
+          "projeto": "Derivação de Arquiteturas de Redes Neurais para Predição de Séries Temporais por Evolução Gramatical",
+          "papel": "Student",
+          "matricula": "20202BSI0039",
+          "curso": "Sistemas de Informação"
+        },
+        {
+          "nome": "Rômulo Pelição de Farias",
+          "projeto": "Inteligência Artificial Explicável aplicada a Grafos de Conhecimento para Interações Medicamentosas",
+          "papel": "Student",
+          "matricula": "20252MPCAU0080",
+          "curso": "Mestrado Profissional em Computação Aplicada - UNAC"
+        },
+        {
+          "nome": "Ramon de Holanda Nascimento",
+          "projeto": "Escalabilidade e Desempenho de Métodos Robustos de Regressão em Dados com Outliers",
+          "papel": "Student",
+          "matricula": "20251MPCA0234",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Rodrigo Carvalho de Faria",
+          "projeto": "Avaliação Computacional de Técnicas de Imputação de Dados Faltantes em Bases Estatísticas",
+          "papel": "Student",
+          "matricula": "20251MPCA0137",
+          "curso": "Mestrado Profissional em Computação Aplicada"
+        },
+        {
+          "nome": "Marcos Fernando Barbosa dos Santos",
+          "projeto": "Desenvolvimento de Modelo de Tarifação Dinâmica para Incentivo à Mobilidade Elétrica na Área de Concessão da ELFSM",
+          "papel": "Student",
+          "matricula": null,
+          "curso": null
+        }
+      ]
+    }
+  ]
+}
